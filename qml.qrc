@@ -2,13 +2,12 @@
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
         <file>qml/Main.qml</file>
-
         <file>qml/pages/Login.qml</file>
         <file>qml/pages/Index.qml</file>
-
-        <file>qml/components/HttpRequest.qml</file>
         <file>qml/components/TouchFx.qml</file>
-
-        <file>qml/libs/Utils.js</file>
+        <file>qml/components/JSONListModel.qml</file>
+        <file>qml/components/CustomButton.qml</file>
+        <file>qml/js/Utils.js</file>
+        <file>qml/js/JsonPath.js</file>
     </qresource>
 </RCC>

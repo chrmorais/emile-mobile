@@ -1,5 +1,7 @@
 .pragma library
 
+.import QtQuick 2.0 as QtQuick
+
 // doc for QML javascript functions and types:
 // http://doc.qt.io/qt-5/qtqml-javascript-functionlist.html
 
@@ -214,22 +216,23 @@ function stripStr(str, start, length) {
  * @return {QML Object}
  */
 function createComponent(path, parent, args, incubated, incubatedCallback) {
+    path = path.indexOf(".qml") === -1 ? path + ".qml" : path
     var component = Qt.createComponent(Qt.resolvedUrl(path))
-    if (component.status === Component.Ready) { // if component exists and is ok
+    if (component.status === QtQuick.Component.Ready) { // if component exists and is ok
         if (!incubated) {
             return component.createObject(parent, args)
         } else {
             var incubator = component.incubateObject(parent, args)
-            if (incubator.status !== Component.Ready) {
+            if (incubator.status !== QtQuick.Component.Ready) {
                 incubator.onStatusChanged = function(status) {
-                    if (status === Component.Ready)
+                    if (status === QtQuick.Component.Ready)
                         incubatedCallback(incubator.object)
                 }
             } else {
-                console.log("Object is ready immediately!")
+                incubatedCallback(incubator.object)
             }
         }
-    } else if (component.status === Component.Error) {
+    } else if (component.status === QtQuick.Component.Error) {
         console.log("Error loading component: " + component.errorString());
     }
     return null
