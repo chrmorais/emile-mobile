@@ -21,7 +21,7 @@ Page {
     signal successLogin()
 
     function requestLogin() {
-        jsonHttpRequest.requestType   = "post"
+        jsonHttpRequest.requestType   = "POST"
         jsonHttpRequest.requestParams = JSON.stringify({"email":email.text,"password":password.text})
         jsonHttpRequest.requestSource = "login/"
      }
