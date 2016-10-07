@@ -98,8 +98,7 @@ Item {
             jsonModel.append(objectArray);
             return;
         } else {
-            for (var key in objectArray)
-                jsonModel.append(objectArray[key]);
+            jsonModel.append(objectArray);
         }
     }
 
