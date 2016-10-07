@@ -14,8 +14,8 @@ ApplicationWindow {
     height: 520
     visible: true
 
-    property int debug: 0
-    property int isIOS: Qt.platform.os === "ios" ? 1 : 0
+    property bool debug: 0
+    property bool isIOS: Qt.platform.os === "ios"
 
     property int user_logged_in: 0
     property var user_profile_data: ({})
