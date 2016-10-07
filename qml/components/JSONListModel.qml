@@ -84,7 +84,7 @@ Item {
         }
 
         jsonlistmodel.state = "running"
-        xhr.send(requestParams);
+        xhr.send(JSON.stringify(requestParams));
     }
 
     onJsonChanged: updateJSONModel()
