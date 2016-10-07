@@ -22,7 +22,7 @@ Page {
 
     function requestLogin() {
         jsonHttpRequest.requestType   = "post"
-        jsonHttpRequest.requestParams = JSON.stringify({"user":email.text,"password":password.text})
+        jsonHttpRequest.requestParams = JSON.stringify({"email":email.text,"password":password.text})
         jsonHttpRequest.requestSource = "login/"
      }
 
