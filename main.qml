@@ -15,7 +15,6 @@ ApplicationWindow {
         id: jsonListModel
         source: "http://127.0.0.1:5000/login"
         requestMethod: "POST"
-        query: "$"
         onStateChanged: {
             if (jsonListModel.state === "ready")
                 username = jsonListModel.model.get(0)['attributes']['displayName'].toString()
