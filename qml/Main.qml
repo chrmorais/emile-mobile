@@ -66,7 +66,7 @@ ApplicationWindow {
 
     JSONListModel {
         id: jsonHttpRequest
-        baseUrl: "https://emile-server.herokuapp.com/"
+        baseUrl: "http://127.0.0.1:5000/"
         baseImagesUrl: "https://emile-server.herokuapp.com/media/"
         onError: warning("Error!", jsonHttpRequest.message)
     }

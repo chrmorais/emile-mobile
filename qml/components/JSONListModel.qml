@@ -57,19 +57,12 @@ Item {
         var xhr = new XMLHttpRequest;
 
         xhr.open(requestType, requestSource.indexOf("http") === -1 ? baseUrl + requestSource : requestSource, true);
-        xhr.setRequestHeader("Content-Type", requestContentType)
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         xhr.onerror = function() {
             error()
             jsonlistmodel.state = "finished";
         }
-
-        if (userServiceName && userServicePassword)
-            xhr.setRequestHeader("Authorization", requestAuthorization)
-
-        if (customHeaders.length > 0)
-            for (var i = 0; i < customHeaders.length; i++)
-                xhr.setRequestHeader(customHeaders[i].key, customHeaders[i].value)
 
         xhr.onreadystatechange = function() {
             resultCode = xhr.status;
@@ -84,7 +77,7 @@ Item {
         }
 
         jsonlistmodel.state = "running"
-        xhr.send(JSON.stringify(requestParams));
+        xhr.send(requestParams);
     }
 
     onJsonChanged: updateJSONModel()

@@ -22,8 +22,8 @@ Page {
 
     function requestLogin() {
         jsonHttpRequest.requestType   = "POST"
-        jsonHttpRequest.requestParams = JSON.stringify({"email":email.text,"password":password.text})
-        jsonHttpRequest.requestSource = "login/"
+        jsonHttpRequest.requestParams = "email=" + email.text + "&password=" + password.text
+        jsonHttpRequest.requestSource = "login"
      }
 
     function isValidLoginForm() {
