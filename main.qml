@@ -21,50 +21,69 @@ ApplicationWindow {
         }
     }
 
-    SwipeView {
-        id: swipeView
+    StackView {
+        id: stackView
         anchors.fill: parent
 
-        Item {
-            ColumnLayout {
-                anchors.centerIn: parent
-
-                Label {
-                    font.pixelSize: 30
-                    text: "Emile"
-                    Layout.preferredWidth: login.width
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                TextField {
-                    id: login
-                    placeholderText: qsTr("Login")
-                }
-                TextField {
-                    id: password
-                    placeholderText: qsTr("Password")
-                    echoMode: TextInput.Password
-                }
-                Label {
-                    id: errorMessage
-                    color: "red"
-                    Layout.preferredWidth: login.width
-                    horizontalAlignment: Text.AlignHCenter
-                    text: (jsonListModel.httpStatus == 401) ? "Login failed!" : (jsonListModel.count > 0) ? "Welcome " + username + "!" : ""
-                }
-                Button {
-                    id: loginButton
-                    Layout.preferredWidth: login.width
-                    text: "login"
+        initialItem: ListView {
+//            anchors.fill: parent
+            model: crudModel
+            delegate: Text {
+                text: modelData.name
+                MouseArea {
+                    anchors.fill: parent
                     onClicked: {
-                        jsonListModel.requestParams = "email=" + login.text + "&password=" + password.text
-                        jsonListModel.load()
+                        stackView.push(component, {"source":modelData.root_folder + "/" + modelData.main_qml})
                     }
-                }
-                BusyIndicator {
-                    anchors.horizontalCenter: loginButton.horizontalCenter
-                    running: jsonListModel.state === "loading"
                 }
             }
         }
+        Component {
+            id: component
+            Loader {
+                id: loader
+            }
+        }
+//         Item {
+//             ColumnLayout {
+//                 anchors.centerIn: parent
+// 
+//                 Label {
+//                     font.pixelSize: 30
+//                     text: "Emile"
+//                     Layout.preferredWidth: login.width
+//                     horizontalAlignment: Text.AlignHCenter
+//                 }
+//                 TextField {
+//                     id: login
+//                     placeholderText: qsTr("Login")
+//                 }
+//                 TextField {
+//                     id: password
+//                     placeholderText: qsTr("Password")
+//                     echoMode: TextInput.Password
+//                 }
+//                 Label {
+//                     id: errorMessage
+//                     color: "red"
+//                     Layout.preferredWidth: login.width
+//                     horizontalAlignment: Text.AlignHCenter
+//                     text: (jsonListModel.httpStatus == 401) ? "Login failed!" : (jsonListModel.count > 0) ? "Welcome " + username + "!" : ""
+//                 }
+//                 Button {
+//                     id: loginButton
+//                     Layout.preferredWidth: login.width
+//                     text: "login"
+//                     onClicked: {
+//                         jsonListModel.requestParams = "email=" + login.text + "&password=" + password.text
+//                         jsonListModel.load()
+//                     }
+//                 }
+//                 BusyIndicator {
+//                     anchors.horizontalCenter: loginButton.horizontalCenter
+//                     running: jsonListModel.state === "loading"
+//                 }
+//             }
+//         }
     }
 }

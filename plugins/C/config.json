@@ -1,0 +1,4 @@
+{
+    "name": "Funcionarios",
+    "main_qml": "funcionarios.qml"
+}
