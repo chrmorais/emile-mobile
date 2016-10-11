@@ -36,7 +36,6 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
