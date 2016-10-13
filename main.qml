@@ -1,7 +1,7 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
-import QMob.Meg 1.0 as Meg
+//import QMob.Meg 1.0 as Meg
 
 ApplicationWindow {
     visible: true
@@ -9,16 +9,9 @@ ApplicationWindow {
     height: 480
     title: qsTr("Hello World")
 
-    property string username
-
-    Meg.JSONListModel {
+    JSONListModel {
         id: jsonListModel
-        source: "http://127.0.0.1:5000/login"
         requestMethod: "POST"
-        onStateChanged: {
-            if (jsonListModel.state === "ready")
-                username = jsonListModel.model.get(0)['attributes']['displayName'].toString()
-        }
     }
 
     StackView {
@@ -26,64 +19,33 @@ ApplicationWindow {
         anchors.fill: parent
 
         initialItem: ListView {
-//            anchors.fill: parent
             model: crudModel
-            delegate: Text {
-                text: modelData.name
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.push(component, {"source":modelData.root_folder + "/" + modelData.main_qml})
+            anchors.centerIn: parent
+            delegate: Rectangle {
+                width: parent.width / 2
+                height: 30
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Rectangle {
+                    width: modelName.width
+                    height: modelName.height
+                    color: "#fff"
+
+                    Text {
+                        id: modelName
+                        text: modelData.name
+                        font.pointSize: 25
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                var pageSource = "%1/%2".arg(modelData.root_folder).arg(modelData.main_qml)
+                                stackView.push(Qt.resolvedUrl(pageSource), {"configJson":modelData})
+                            }
+                        }
                     }
                 }
             }
         }
-        Component {
-            id: component
-            Loader {
-                id: loader
-            }
-        }
-//         Item {
-//             ColumnLayout {
-//                 anchors.centerIn: parent
-// 
-//                 Label {
-//                     font.pixelSize: 30
-//                     text: "Emile"
-//                     Layout.preferredWidth: login.width
-//                     horizontalAlignment: Text.AlignHCenter
-//                 }
-//                 TextField {
-//                     id: login
-//                     placeholderText: qsTr("Login")
-//                 }
-//                 TextField {
-//                     id: password
-//                     placeholderText: qsTr("Password")
-//                     echoMode: TextInput.Password
-//                 }
-//                 Label {
-//                     id: errorMessage
-//                     color: "red"
-//                     Layout.preferredWidth: login.width
-//                     horizontalAlignment: Text.AlignHCenter
-//                     text: (jsonListModel.httpStatus == 401) ? "Login failed!" : (jsonListModel.count > 0) ? "Welcome " + username + "!" : ""
-//                 }
-//                 Button {
-//                     id: loginButton
-//                     Layout.preferredWidth: login.width
-//                     text: "login"
-//                     onClicked: {
-//                         jsonListModel.requestParams = "email=" + login.text + "&password=" + password.text
-//                         jsonListModel.load()
-//                     }
-//                 }
-//                 BusyIndicator {
-//                     anchors.horizontalCenter: loginButton.horizontalCenter
-//                     running: jsonListModel.state === "loading"
-//                 }
-//             }
-//         }
     }
 }
