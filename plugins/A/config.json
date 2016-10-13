@@ -1,4 +1,5 @@
 {
     "name": "Alunos",
-    "main_qml": "alunos.qml"
+    "main_qml": "alunos.qml",
+    "index_fields": ["username"]
 }

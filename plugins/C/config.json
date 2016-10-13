@@ -1,4 +1,5 @@
 {
     "name": "Funcionarios",
-    "main_qml": "funcionarios.qml"
+    "main_qml": "funcionarios.qml",
+    "index_fields": ["username"]
 }
