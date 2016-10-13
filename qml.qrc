@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>JSONListModel.qml</file>
         <file>plugins.qrc</file>
     </qresource>
 </RCC>
