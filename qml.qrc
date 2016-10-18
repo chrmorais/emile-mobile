@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>components/DateChooser.qml</file>
+        <file>components/ListItem.qml</file>
+        <file>components/Persistence.js</file>
+        <file>components/RoundedImage.qml</file>
+        <file>components/Snackbar.qml</file>
+        <file>components/Toast.qml</file>
+        <file>components/TouchFx.qml</file>
+    </qresource>
+</RCC>
