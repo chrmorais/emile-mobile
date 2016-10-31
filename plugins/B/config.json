@@ -1,5 +1,0 @@
-{
-    "name": "Professores",
-    "main_qml": "professores.qml",
-    "index_fields": ["username"]
-}
