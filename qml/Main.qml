@@ -98,19 +98,19 @@ ApplicationWindow {
         }
     }
 
-    Connections {
-        target: toolBar
-        onActionExec: {
-            switch (actionName) {
-                case "goback":
-                    pageStack.pop()
-                    break
-                case "openMenu":
-                    menu.open()
-                    break
-            }
-        }
-    }
+//    Connections {
+//        target: toolBar
+//        onActionExec: {
+//            switch (actionName) {
+//                case "goback":
+//                    pageStack.pop()
+//                    break
+//                case "openMenu":
+//                    menu.open()
+//                    break
+//            }
+//        }
+//    }
 
     Loader {
         id: menuLoader
