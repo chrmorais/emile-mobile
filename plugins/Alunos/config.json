@@ -1,0 +1,25 @@
+{
+    "name": "Alunos",
+    "description": "A page to manager students",
+    "index_fields": ["username", "email"],
+    "pages": [
+        {
+            "main_qml": "Alunos.qml",
+            "menu_name": "Alunos plugin Page1",
+            "icon_name": "comments"
+        },
+        {
+            "main_qml": "Alunos.qml",
+            "menu_name": "Alunos plugin Page2",
+            "icon_name": "check"
+        }
+    ],
+    "profile_fields": [
+        {"type":"string","field_type":"textfield","lenght":"150","field_name":"username"},
+        {"type":"string","field_type":"textarea","lenght":"250","field_name":"endereco"},
+        {"type":"char","field_type":"radio","lenght":"1","field_name":"sexo","field_labelvalue":[{"masculino":"M"},{"feminino":"F"}]},
+        {"type":"string","field_type":"datepicker","lenght":"10","field_name":"data_nascimento"},
+        {"type":"string","field_type":"textfield","lenght":"80","field_name":"matricula"},
+        {"type":"string","field_type":"textfield","lenght":"80","field_name":"email"}
+    ]
+}
