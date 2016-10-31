@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 
     return app.exec();
 }
