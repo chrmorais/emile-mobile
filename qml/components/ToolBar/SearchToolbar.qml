@@ -1,7 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
 
-import "AwesomeIcon/" as Awesome
+import "../AwesomeIcon/" as Awesome
 
 Item {
     width: parent.width * 0.45
