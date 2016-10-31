@@ -1,8 +1,8 @@
 import QtQuick 2.7
+import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.0
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 
 import "components/"
@@ -10,52 +10,128 @@ import "js/Utils.js" as Util
 
 ApplicationWindow {
     id: window
-    width: 360
-    height: 520
+    width: 380
+    height: 620
     visible: true
 
-    property bool debug: false
     property bool isIOS: Qt.platform.os === "ios"
 
+    property QtObject menu
     property int user_logged_in: 0
     property var user_profile_data: ({})
 
-    readonly property color colorAccent: "#c5e1a5"
-    readonly property color colorPrimary: "#607d8b"
-    readonly property color colorPrimaryDark: "#444444"
-    readonly property color colorWindowBackground: "#eeeeee"
-    readonly property color colorWindowForeground: "#607d8b"
+    // a array to store the app pages loaded after user loggin or startup
+    property var menuPages: []
 
+    // alias to app toolBar - pages can access the toolbar by this alias
+    property alias toolBar: window.header
+
+    // alias to current page (the active page) in the PageStack
     property alias currentPage: pageStack.currentItem
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
         messageDialog.title = title
-        messageDialog.detailedText = message
-        messageDialog.accepted.connect(function() {
-            if (acceptedCallback)
+        messageDialog.informativeText = message
+
+        if (acceptedCallback) {
+            messageDialog.accepted.connect(function() {
                 acceptedCallback()
-        })
-        messageDialog.rejected.connect(function() {
-            if (rejectedCallback)
+            })
+        }
+        if (negativeButtonText && rejectedCallback) {
+            messageDialog.rejected.connect(function() {
                 rejectedCallback()
-        })
+            })
+        }
+
         messageDialog.open()
     }
 
     function isUserLoggedIn() {
-        return parseInt(settings.user_logged_in) === 1
+        return true //parseInt(settings.user_logged_in) === 1
     }
 
-    function setPage(pageName, pageArgs) {
-        var pageTemp = {"url":"pages/Login.qml","name":"Login"}
-        if (isUserLoggedIn()) {
-            while (pageStack.depth > 1) pageStack.pop()
-            pageTemp = {"url":"pages/Index.qml","name":"Início"}
+    /**
+      * iterate the plugins from crudModel to load all plugin pages.
+      * Each plugin can define more of one page, so each page will be put into array
+      * that will be available for menu on navigation drawer to display the app pages for the user
+      */
+    function loadMenuPages() {
+        // pages already loaded ? return
+        if (menuPages.length > 0)
+            return
+        var pageObject = {}
+        for (var i = 0; i < crudModel.length; i++) { // from each plugin
+            for (var j = 0; j < crudModel[i].pages.length; j++) { // iterate the pages from current plugin
+                pageObject = crudModel[i].pages[j]
+                // append the plugin config json - to turn available for the object page
+                pageObject.configJson = crudModel[i]
+                menuPages.push(pageObject)
+            }
         }
-        pageStack.replace(Qt.resolvedUrl(pageTemp.url), pageArgs || {})
     }
 
-    Component.onCompleted: setPage()
+    /**
+      * create a string with the qml page url to push in pagestack.
+      * @param string pageUrl the url from qml page to push in pagestack
+      * @param object args a object with property values to pass to page
+      * @param bool clearPageStack a flag to define if clear pageStack
+      */
+    function setPage(pageUrl, args, clearPageStack) {
+        var pageTemp = pageUrl || "pages/Login.qml"
+        if (isUserLoggedIn()) {
+            loadMenuPages()
+            pageTemp = pageUrl || "pages/Index.qml"
+            menuLoader.active = true
+            toolbarLoader.active = true
+        }
+        if (clearPageStack) {
+            while (pageStack.depth > 1)
+                pageStack.pop()
+        }
+        pageStack.replace(Qt.resolvedUrl(pageTemp), args || {})
+    }
+
+    Component.onCompleted: {
+        setPage()
+
+        // if is desktop, open window centralized
+        if (!isIOS && Qt.platform.os !== "android") {
+            setX(Screen.width / 2 - width / 2)
+            setY(Screen.height / 2 - height / 2)
+        }
+    }
+
+    Connections {
+        target: toolBar
+        onActionExec: {
+            switch (actionName) {
+                case "goback":
+                    pageStack.pop()
+                    break
+                case "openMenu":
+                    menu.open()
+                    break
+            }
+        }
+    }
+
+    Loader {
+        id: menuLoader
+        active: false
+        source: "components/Menu.qml"
+    }
+
+    Loader {
+        id: toolbarLoader
+        active: false
+        source: "components/ToolBar.qml"
+        onLoaded: {
+            window.header = item
+            toolBar.backgroundColor = appSettings.theme.colorPrimary
+            toolBar.backgroundBorderColor = appSettings.theme.colorPrimary
+        }
+    }
 
     Settings {
         id: settings
@@ -65,10 +141,8 @@ ApplicationWindow {
     }
 
     JSONListModel {
-        id: jsonHttpRequest
-        baseUrl: "http://127.0.0.1:5000/"
-        baseImagesUrl: "https://emile-server.herokuapp.com/media/"
-        onError: warning("Error!", jsonHttpRequest.message)
+        id: jsonListModel
+        source: appSettings.rest_service.baseUrl
     }
 
     MessageDialog {
@@ -80,6 +154,9 @@ ApplicationWindow {
         id: pageStack
         focus: true
         anchors.fill: parent
+
+        // any page like login, logout and lostPassword does not display the ToolBar
+        onCurrentItemChanged: toolBar.visible = !currentItem.hideToolBar
 
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
