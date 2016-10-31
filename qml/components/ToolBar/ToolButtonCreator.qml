@@ -1,0 +1,22 @@
+import QtQuick 2.7
+import QtQuick.Controls 2.0
+
+import "AwesomeIcon/" as Awesome
+
+ToolButton {
+    id: toolButton
+    width: visible ? toolButton.width : 0
+    height: parent.height
+    onClicked: actionExec(action) // known dynamically, is a signal from ToolBar the root parent of this item
+    contentItem: Awesome.AwesomeIcon {
+        id: toolButtonIcon
+        size: 20
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+        }
+    }
+
+    property string action
+    property alias iconName: toolButtonIcon.name
+}

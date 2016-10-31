@@ -14,10 +14,13 @@
         <file>qml/components/Menu.qml</file>
         <file>qml/components/TouchFx.qml</file>
 
+        <file>qml/components/ToolBar/Toolbar.qml</file>
+        <file>qml/components/ToolBar/SearchToolbar.qml</file>
+        <file>qml/components/ToolBar/ToolButtonCreator.qml</file>
+
         <file>qml/components/AwesomeIcon/Awesome.js</file>
         <file>qml/components/AwesomeIcon/FontAwesome.otf</file>
         <file>qml/components/AwesomeIcon/AwesomeIcon.qml</file>
-        <file>qml/components/MaterialIcon/MaterialIcon.qrc</file>
 
         <file>qml/pages/Index.qml</file>
         <file>qml/pages/Login.qml</file>
