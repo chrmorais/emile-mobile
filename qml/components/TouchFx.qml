@@ -53,6 +53,7 @@ MouseArea {
 
     Rectangle {
         id: focusCircle
+        antialiasing: true
         anchors.centerIn: parent
         width: focused ? focusedState ? focusWidth : Math.min(parent.width - 8, focusWidth + 12) : parent.width/5
         height: width
@@ -73,7 +74,7 @@ MouseArea {
         Timer {
             id: focusTimer
             repeat: true
-            interval: 250
+            interval: 50
             running: focused
             onTriggered: focusCircle.focusedState = !focusCircle.focusedState
         }
@@ -96,11 +97,11 @@ MouseArea {
                 if (fillSizeAnimation.running) {
                     fillOpacityAnimation.stop()
                     closeAnimation.start()
-                    circleItem.destroy(500)
+                    circleItem.destroy(100)
                 } else {
                     showFocus = true
                     fadeAnimation.start()
-                    circleItem.destroy(800)
+                    circleItem.destroy(300)
                 }
             }
 
@@ -112,6 +113,7 @@ MouseArea {
                 Rectangle {
                     id: circleRectangle
                     opacity: 0
+                    antialiasing: true
                     color: viewColor
                     width: radius * 2
                     height: radius * 2
@@ -129,13 +131,13 @@ MouseArea {
                     NumberAnimation {
                         id: fillOpacityAnimation
                         running: true
-                        target: circleRectangle; property: "opacity"; duration: 350;
+                        target: circleRectangle; property: "opacity"; duration: 150;
                         from: 0; to: 1; easing.type: Easing.InOutQuad
                     }
 
                     NumberAnimation {
                         id: fadeAnimation
-                        target: circleRectangle; property: "opacity"; duration: 350;
+                        target: circleRectangle; property: "opacity"; duration: 150;
                         from: 1; to: 0; easing.type: Easing.InOutQuad
                     }
 
@@ -143,12 +145,12 @@ MouseArea {
                         id: closeAnimation
 
                         NumberAnimation {
-                            target: circleRectangle; property: "opacity"; duration: 350;
+                            target: circleRectangle; property: "opacity"; duration: 150;
                             from: 0; to: 1; easing.type: Easing.InOutQuad
                         }
 
                         NumberAnimation {
-                            target: circleRectangle; property: "opacity"; duration: 350;
+                            target: circleRectangle; property: "opacity"; duration: 150;
                             from: 1; to: 0; easing.type: Easing.InOutQuad
                         }
                     }
@@ -165,6 +167,7 @@ MouseArea {
                     clip: true
                     smooth: true
                     visible: false
+                    antialiasing: true
                     anchors.fill: parent
                     radius: Math.max(width/2, height/2)
                 }
