@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/plugins">
-        <file alias="A/config.json">plugins/A/config.json</file>
-        <file alias="A/alunos.qml">plugins/A/alunos.qml</file>
-        <file alias="B/config.json">plugins/B/config.json</file>
-        <file alias="B/professores.qml">plugins/B/professores.qml</file>
-        <file alias="C/config.json">plugins/C/config.json</file>
-        <file alias="C/funcionarios.qml">plugins/C/funcionarios.qml</file>
+        <file alias="Alunos/config.json">plugins/Alunos/config.json</file>
+        <file alias="Alunos/Alunos.qml">plugins/Alunos/Alunos.qml</file>
+        <file alias="Alunos/AlunoProfile.qml">plugins/Alunos/AlunoProfile.qml</file>
+
+        <file alias="Professores/Professores.qml">plugins/Professores/Professores.qml</file>
+        <file alias="Professores/config.json">plugins/Professores/config.json</file>
     </qresource>
 </RCC>
