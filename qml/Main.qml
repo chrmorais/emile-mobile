@@ -23,9 +23,6 @@ ApplicationWindow {
     // a array to store the app pages loaded after user loggin or startup
     property var menuPages: []
 
-    // alias to app toolBar - pages can access the toolbar by this alias
-    property alias toolBar: window.header
-
     // alias to current page (the active page) in the PageStack
     property alias currentPage: pageStack.currentItem
 
@@ -48,7 +45,7 @@ ApplicationWindow {
     }
 
     function isUserLoggedIn() {
-        return parseInt(settings.user_logged_in) === 1
+        return true //parseInt(settings.user_logged_in) === 1
     }
 
     /**
@@ -83,7 +80,6 @@ ApplicationWindow {
             loadMenuPages()
             pageTemp = pageUrl || "pages/Index.qml"
             menuLoader.active = true
-            toolbarLoader.active = true
         }
         if (clearPageStack) {
             while (pageStack.depth > 1)
