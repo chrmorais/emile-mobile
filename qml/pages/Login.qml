@@ -1,6 +1,6 @@
 import QtQuick 2.6
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 import "../components/"
@@ -11,7 +11,7 @@ Page {
     objectName: "Login"
     background: Rectangle {
         anchors.fill: parent
-        color: colorWindowBackground
+        color: appSettings.theme.colorWindowBackground
     }
 
     property int hideToolbar: 1
@@ -21,9 +21,10 @@ Page {
     signal successLogin()
 
     function requestLogin() {
-        jsonHttpRequest.requestType   = "POST"
-        jsonHttpRequest.requestParams = "email=" + email.text + "&password=" + password.text
-        jsonHttpRequest.requestSource = "login"
+        jsonListModel.requestMethod = "POST"
+        jsonListModel.requestParams = JSON.stringify({"email":email.text,"password":password.text})
+        jsonListModel.source += "login/"
+        jsonListModel.load()
      }
 
     function isValidLoginForm() {
@@ -56,14 +57,14 @@ Page {
     }
 
     Connections {
-        target: jsonHttpRequest
-        onCountChanged: {
-            switch (jsonHttpRequest.resultCode) {
-                case 404:
+        target: jsonListModel
+        onHttpStatusChanged: {
+            switch (jsonListModel.httpStatus) {
+                case 405:
                     alert("Error!", "Email or password is invalid. Try again!");
                     break;
-                case 200:
-                    requestResult = jsonHttpRequest.model
+                case 404: //200:
+                    requestResult = jsonListModel.model
                     successLogin()
                     break;
                 default:
@@ -89,10 +90,10 @@ Page {
     BusyIndicator {
         id: busyIndicator
         antialiasing: true
-        visible: jsonHttpRequest.state === "running"
+        visible: jsonListModel.state === "running"
         anchors {
             top: parent.top
-            topMargin: !isIOS ? 25 : 10
+            topMargin: 20
             horizontalCenter: parent.horizontalCenter
         }
     }
@@ -118,11 +119,11 @@ Page {
 
                 Label {
                     id: brand
-                    text: "Émile Mobile"
-                    color: "#607D8B"
+                    text: appSettings.name
+                    color: appSettings.theme.colorPrimary
                     anchors.centerIn: parent
                     font {
-                        pointSize: 30
+                        pointSize: appSettings.theme.superBigFontSize
                         weight: Font.Bold
                     }
                 }
@@ -131,7 +132,7 @@ Page {
             TextField {
                 id: email
                 width: window.width - (window.width*0.15)
-                color: "#607D8B"
+                color: appSettings.theme.colorPrimary
                 inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
                 text: "Email"
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -139,10 +140,10 @@ Page {
                     y: (email.height-height) - (email.bottomPadding / 2)
                     width: email.width
                     height: email.activeFocus ? 2 : 1
-                    color: "#607D8B"
+                    color: appSettings.theme.colorPrimary
                     border {
                         width: 1
-                        color: "#607D8B"
+                        color: appSettings.theme.colorPrimary
                     }
                 }
                 onFocusChanged: {
@@ -156,7 +157,7 @@ Page {
             TextField {
                 id: password
                 width: window.width - (window.width*0.15)
-                color: "#607D8B"
+                color: appSettings.theme.colorPrimary
                 echoMode: TextInput.Normal
                 text: "Password"
                 font.letterSpacing: 1
@@ -166,10 +167,10 @@ Page {
                     y: (password.height-height) - (password.bottomPadding / 2)
                     width: password.width
                     height: password.activeFocus ? 2 : 1
-                    color: "#607D8B"
+                    color: appSettings.theme.colorPrimary
                     border {
                         width: 1
-                        color: "#607D8B"
+                        color: appSettings.theme.colorPrimary
                     }
                 }
                 onFocusChanged: {
@@ -190,10 +191,10 @@ Page {
 
             CustomButton {
                 id: loginButton
-                enabled: !lockerButtons.running && jsonHttpRequest.state !== "running"
+                enabled: !lockerButtons.running && jsonListModel.state !== "running"
                 text: "LOG IN"
-                textColor: colorAccent
-                backgroundColor: colorPrimary
+                textColor: appSettings.theme.colorAccent
+                backgroundColor: appSettings.theme.colorPrimary
                 radius: 25
                 onClicked: {
                     lockerButtons.running = true
@@ -205,8 +206,8 @@ Page {
                 id: lostPasswordButton
                 enabled: !lockerButtons.running || !loginSuccessCountdown.running
                 text: "LOST PASSWORD"
-                textColor: colorPrimary
-                backgroundColor: colorAccent
+                textColor: appSettings.theme.colorPrimary
+                backgroundColor: appSettings.theme.colorAccent
                 radius: 25
                 onClicked: {
                     lockerButtons.start()
