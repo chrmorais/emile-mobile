@@ -1,7 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>JSONListModel.qml</file>
+        <file>qml/Main.qml</file>
+
+        <file>qml/js/Utils.js</file>
+
+        <file>qml/components/CustomButton.qml</file>
+        <file>qml/components/JSONListModel.qml</file>
+        <file>qml/components/TouchFx.qml</file>
+
+        <file>qml/pages/Index.qml</file>
+        <file>qml/pages/Login.qml</file>
+
         <file>plugins.qrc</file>
     </qresource>
 </RCC>
