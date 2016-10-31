@@ -47,47 +47,6 @@ Drawer {
                     width: parent.width
                     fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/menu-temp.png"
-
-                    ColumnLayout {
-                        spacing: 15
-                        Layout.fillWidth: true
-
-                        Image {
-                            smooth: true
-                            width: 100
-                            height: 100
-                            source: "qrc:/assets/default-user-profile.png"
-
-                            anchors {
-                                left: parent.left
-                                leftMargin: 15
-                                top: parent.top
-                                topMargin: 20
-                            }
-
-                            TouchFx {
-                                circular: true
-                                anchors.fill: parent
-                                onClicked: profileImageChange()
-                            }
-                        }
-
-                        Label {
-                            text: user_profile_data.name || ""
-                            color: appSettings.theme.colorHintText
-                            font {
-                                bold: true
-                                pointSize: 12
-                                weight: Font.DemiBold
-                            }
-                        }
-
-                        Label {
-                            text: user_profile_data.email || ""
-                            color: appSettings.theme.colorHintText
-                            font.pointSize: 10
-                        }
-                    }
                 }
 
                 Repeater {
