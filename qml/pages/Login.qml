@@ -123,7 +123,7 @@ Page {
                     color: appSettings.theme.colorPrimary
                     anchors.centerIn: parent
                     font {
-                        pointSize: appSettings.theme.superBigFontSize
+                        pointSize: appSettings.theme.extraBigFontSize
                         weight: Font.Bold
                     }
                 }
