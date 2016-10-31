@@ -48,7 +48,7 @@ ApplicationWindow {
     }
 
     function isUserLoggedIn() {
-        return true //parseInt(settings.user_logged_in) === 1
+        return parseInt(settings.user_logged_in) === 1
     }
 
     /**
@@ -122,17 +122,6 @@ ApplicationWindow {
         source: "components/Menu.qml"
     }
 
-    Loader {
-        id: toolbarLoader
-        active: false
-        source: "components/ToolBar.qml"
-        onLoaded: {
-            window.header = item
-            toolBar.backgroundColor = appSettings.theme.colorPrimary
-            toolBar.backgroundBorderColor = appSettings.theme.colorPrimary
-        }
-    }
-
     Settings {
         id: settings
 
@@ -154,9 +143,6 @@ ApplicationWindow {
         id: pageStack
         focus: true
         anchors.fill: parent
-
-        // any page like login, logout and lostPassword does not display the ToolBar
-        onCurrentItemChanged: toolBar.visible = !currentItem.hideToolBar
 
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
