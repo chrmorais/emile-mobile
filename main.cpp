@@ -1,11 +1,11 @@
 #include <QDir>
 #include <QDebug>
 #include <QJsonArray>
+#include <QQmlContext>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QRegularExpression>
-#include <QQmlContext>
 #include <QGuiApplication>
+#include <QRegularExpression>
 #include <QQmlApplicationEngine>
 
 QJsonArray loadPlugins()
@@ -28,7 +28,19 @@ QJsonArray loadPlugins()
             }
         }
     }
+    pluginsQrc.close();
     return crudArray;
+}
+
+QVariantMap loadAppConfig()
+{
+    QFile file;
+    file.setFileName(":/appSettings.json");
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString settings(file.readAll());
+    file.close();
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(settings.toUtf8());
+    return jsonDocument.object().toVariantMap();
 }
 
 int main(int argc, char *argv[])
@@ -37,7 +49,9 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
+    QQmlContext *context = engine.rootContext();
+    context->setContextProperty("appSettings", loadAppConfig());
+    context->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 
     return app.exec();
