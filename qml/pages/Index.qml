@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.0
 Page {
     id: page
     objectName: "Index"
+    title: "Home"
 
     Text {
         anchors.centerIn: parent
