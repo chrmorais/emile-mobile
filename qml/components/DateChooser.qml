@@ -8,11 +8,14 @@ Column {
     spacing: 0
 
     property alias message: label.text
-    property string valueSelected // month-day-year
-    property string monthName: __month.model[__month.currentIndex]
 
-    property string day: (__day.currentIndex < 10 ? "0" : "") + daysToShow[__day.currentIndex]
-    property string month: (__month.currentIndex < 9 ? "0" : "") + (__month.currentIndex + 1)
+    // month-day-year
+    property string valueSelected
+
+    property string dateChooser
+
+    property string day: daysToShow[__day.currentIndex]
+    property int month: __month.currentIndex + 1
     property int year: __year.model[__year.currentIndex]
 
     property var daysToShow: []
@@ -21,16 +24,25 @@ Column {
         "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
     ]
 
+    signal updateDate()
+
+    onDayChanged: updateDate()
+    onMonthChanged: updateDate()
+    onYearChanged: updateDate()
+
+    onUpdateDate: {
+        dateChooser = [(month < 10 ? "0" : "") + month, (day < 10 ? "0" : "") + day, year].join("-")
+    }
+
     Component.onCompleted: {
         // if selected date isset - will turn the selected day, month and year
-        var valuesToSelect = valueSelected.length ? valueSelected.split("-") : []
+        var valuesToSelect = valueSelected ? valueSelected.split("-") : []
 
         // create the years list
         var currentYear = new Date().getFullYear()
         var yearsToShowTemp = []
-        for (var i = currentYear-90; i <= currentYear-15; i++)
+        for (var i = currentYear-100; i <= currentYear; i++)
             yearsToShowTemp.push(i)
-        yearsToShowTemp.reverse() // reorder the list
         yearsToShow = yearsToShowTemp // to fix the bind with array type
 
         // create the days list
