@@ -64,7 +64,7 @@ Drawer {
                             menu.close()
                             if (!selected) {
                                 var pageSource = "%1/%2".arg(menuPages[index].configJson.root_folder).arg(menuPages[index].main_qml)
-                                pageStack.push(Qt.resolvedUrl(pageSource), {"configJson":menuPages[index].configJson})
+                                pushPage(pageSource, {"configJson":menuPages[index].configJson}) // defined in the Main.qml
                             }
                         }
                     }
