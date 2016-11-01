@@ -24,6 +24,20 @@ function debugme(funcName, status, jsonObject) {
 }
 
 /**
+* iterate a object for search the value for key set in keyName param
+* @return string a empty string if none value is found in object
+*/
+function getObjectValueByKey(object, keyName) {
+    if (!keyName)
+        return ""
+    for (var item in object) {
+        if (keyName && object.hasOwnProperty(keyName))
+            return object[keyName] !== undefined ? object[keyName] : ""
+    }
+    return ""
+}
+
+/**
  * get the current timestamp
  * @return {integer}
  */
