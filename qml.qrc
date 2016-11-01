@@ -15,6 +15,7 @@
         <file>qml/components/TouchFx.qml</file>
 
         <file>qml/components/ToolBar/CustomToolBar.qml</file>
+        <file>qml/components/ToolBar/MenuCreator.qml</file>
         <file>qml/components/ToolBar/SearchToolbar.qml</file>
         <file>qml/components/ToolBar/ToolButtonCreator.qml</file>
 
