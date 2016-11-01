@@ -24,9 +24,26 @@ function debugme(funcName, status, jsonObject) {
 }
 
 /**
-* iterate a object for search the value for key set in keyName param
-* @return string a empty string if none value is found in object
-*/
+ * iterate a list to order values in reverse mode - Numeric values only
+ * @param {array} list a javascript array to sort the list
+ * @return array the list sorted by values
+ */
+function reverseList(list) {
+    var arrayTemp = list
+
+    arrayTemp.sort(function (a,b) {
+        return b - a
+    });
+
+    return arrayTemp;
+}
+
+/**
+ * iterate a object for search the value for key set in keyName param
+ * @param {object} object a qml object to find value
+ * @param {string} keyName the name of the key to find into object param
+ * @return string the value for keyName if found, otherwise a empty string
+ */
 function getObjectValueByKey(object, keyName) {
     if (!keyName)
         return ""
