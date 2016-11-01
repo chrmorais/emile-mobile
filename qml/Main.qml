@@ -102,12 +102,12 @@ ApplicationWindow {
         target: header
         onActionExec: {
             switch (actionName) {
-                case "goback":
-                    pageStack.pop()
-                    break
-                case "openMenu":
-                    menu.open()
-                    break
+            case "goback":
+                pageStack.pop()
+                break
+            case "openMenu":
+                menu.open()
+                break
             }
         }
     }
