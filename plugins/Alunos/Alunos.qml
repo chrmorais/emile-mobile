@@ -13,10 +13,6 @@ Page {
         MenuItem {
             text: "Select all"
             onTriggered: selectAll()
-        },
-        MenuItem {
-            text: "Sort by name"
-            onTriggered: console.log("sort not implemented")
         }
     ]
 
@@ -87,8 +83,7 @@ Page {
     }
 
     onConfigJsonChanged: {
-        if (!configJson.index_fields.length)
-            return
+        if (!configJson.index_fields.length) return
         var arrayTemp = []
         for (var i = 0; i < configJson.index_fields.length; i++)
             arrayTemp.push(configJson.index_fields[i])
@@ -96,70 +91,16 @@ Page {
     }
 
     Component.onCompleted: {
-        //        jsonListModel.debug = true
-        //        jsonListModel.requestMethod = "GET"
-        //        jsonListModel.source = "https://emile-server.herokuapp.com/users"
-        //        jsonListModel.load()
+        jsonListModel.debug = true
+        jsonListModel.requestMethod = "GET"
+        jsonListModel.source = "https://emile-server.herokuapp.com/users"
+        jsonListModel.load()
     }
 
-    ListModel {
-        id: theModel
-
-        ListElement {
-            itemId: 10
-            username: "José"
-            email: "jose@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 11
-            username: "João"
-            email: "joao@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 12
-            username: "Maria"
-            email: "maria@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 13
-            username: "Pedro"
-            email: "pedro@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 16
-            username: "Marta"
-            email: "marta@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 18
-            username: "Zuleide"
-            email: "zuleide@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 19
-            username: "Mário"
-            email: "mario@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 28
-            username: "Raquel"
-            email: "raquel@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 26
-            username: "Camila"
-            email: "camila@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 12
-            username: "André"
-            email: "andre@ifba.edu.br"
-        }
-        ListElement {
-            itemId: 13
-            username: "Carla"
-            email: "carla@ifba.edu.br"
-        }
+    BusyIndicator {
+        id: loading
+        anchors.centerIn: parent
+        visible: listView.count === 0
     }
 
     Component {
@@ -177,12 +118,8 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: {
-                var args = {"title": primaryLabelText, "actionId": model.actionId}
-                pageStack.push(Qt.resolvedUrl("AlunoProfile.qml"), args)
-            }
-
             onPressAndHold: updateItem(index, listView.itemAt(wrapper.x, wrapper.y))
+            onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": model.id})
         }
     }
 
@@ -191,7 +128,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: theModel // jsonListModel.model
+        model: jsonListModel.model
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
@@ -201,6 +138,6 @@ Page {
     }
 
     AppComponents.FloatingButton {
-        onClicked: pageStack.push(Qt.resolvedUrl("AlunoProfile.qml"), {"action": "newRegister"})
+        onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"action": "newRegister"}) // pushPage is from Main.qml
     }
 }
