@@ -12,7 +12,7 @@ Page {
     property list<MenuItem> subMenuToolBarItens: [
         MenuItem {
             text: "Select all"
-            onTriggered: updateSelected(true)
+            onTriggered: selectAll()
         },
         MenuItem {
             text: "Sort by name"
@@ -32,8 +32,6 @@ Page {
     // a dynamic state visible by ToolBar to bind the ToolBar state mode
     property string toolBarState: selectedIndex.length > 0 ? "actions" : "normal"
 
-    onToolBarStateChanged: console.log("toolBarState: " + toolBarState)
-
     // a list of actions to display in ToolBar
     property var toolBarActions: [
         ({"action": "remove", "iconName": "trash", "when": "actions"}),
@@ -47,27 +45,19 @@ Page {
     function removeItems() {
         // after each item is removed, qml reorder the list.
         // then, we will uses descending order
-        selectedIndex.sort(function (a,b) {
-            return b - a
-        })
+        selectedIndex = Util.reverseList(selectedIndex)
 
         for (var i = 0; i < selectedIndex.length; i++)
             theModel.remove(selectedIndex[i])
 
         // reset the selectedIndex array
-        var arrayTemp = []
-        selectedIndex = arrayTemp
+        var fixBind = []
+        selectedIndex = fixBind
     }
 
-    function updateSelected(turnSelected) {
-        var item = ({})
-        for (var i = 0; i < listView.count; ++i) {
-            item = listView.contentItem.children[i]
-            if (turnSelected)
-                updateItem(i, item)
-            else
-                item.selected = false
-        }
+    function selectAll() {
+        for (var i = 0; i < listView.count; ++i)
+            updateItem(i, listView.contentItem.children[i])
     }
 
     function actionExec(actionName) {
@@ -76,13 +66,13 @@ Page {
             removeItems()
             break
         case "cancel":
-            updateSelected(false)
+            selectAll()
             break
         }
     }
 
     onUpdateItem: {
-        // it's necessary to make binding with array
+        // necessary to make binding with array
         var arrayTemp = selectedIndex
 
         // if the item is selected and user pressAndHolder again,
@@ -124,7 +114,6 @@ Page {
             itemId: 11
             username: "João"
             email: "joao@ifba.edu.br"
-            profileImage: "qrc:/assets/default-user-profile.png"
         }
         ListElement {
             itemId: 12

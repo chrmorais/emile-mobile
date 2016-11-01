@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import "../../qml/components/FormBuilder"
+//import "../../qml/components/FormBuilder"
 import "../../qml/components/" as AppComponents
 
 Page {
@@ -21,15 +21,17 @@ Page {
     // the action needs to be set in this property
     property string action: "view"
 
-    // define a custom action button to display in toolbar
-    property var customToolButtons: [
-        ({"iconName": "save", "actionName": "save", "visible": true}),
-        ({"iconName": "pencil", "actionName": "save", "visible": true})
+    property string toolBarState: "goback"
+
+    // a list of actions to display in ToolBar
+    property var toolBarActions: [
+        ({"action": "save", "iconName": "floppy_o", "when": "normal"})
     ]
 
-    property string toolBarState
-
-    property var toolBarActions: ["goback"]
+    function actionExec(actionName) {
+        if (actionName === "save") // implementar aqui o processo de salvar no banco local e no remoto
+            console.log("formBuilder callback: " + JSON.stringify(formBuilder.formData))
+    }
 
     function loadDetails() {
         // fazer requisição para pegar os detalhes do aluno passando o ID
@@ -37,20 +39,12 @@ Page {
         // com objetos contendo o nome, o tipo de dado, o tipo do campo e o valor e etc.
     }
 
-    Connections {
-        target: toolBar // is a alias to app header defined in Main.qml
-        onActionExec: {
-            if (actionName === "save") // implementar aqui o processo de salvar no banco local e no remoto
-                console.log("formBuilder callback: " + JSON.stringify(formBuilder.formData))
-        }
-    }
-
-    FormBuilder {
-        id: formBuilder
-        formJson: fields
-        action: page.action
-        onFormUpdate: console.log("data: " + JSON.stringify(data))
-    }
+//    FormBuilder {
+//        id: formBuilder
+//        formJson: fields
+//        action: page.action
+//        onFormUpdate: console.log("data: " + JSON.stringify(data))
+//    }
 
     AppComponents.FloatingButton {
         visible: action === "view" || action === "edition"
