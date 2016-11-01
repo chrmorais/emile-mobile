@@ -3,6 +3,7 @@
 #include <QJsonArray>
 #include <QQmlContext>
 #include <QJsonObject>
+#include <QQuickStyle>
 #include <QJsonDocument>
 #include <QGuiApplication>
 #include <QRegularExpression>
@@ -46,6 +47,7 @@ QVariantMap loadAppConfig()
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QQuickStyle::setStyle("Material");
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
