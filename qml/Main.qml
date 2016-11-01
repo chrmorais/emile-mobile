@@ -79,7 +79,7 @@ ApplicationWindow {
         if (isUserLoggedIn()) {
             loadMenuPages()
             pageTemp = pageUrl || "pages/Index.qml"
-            menuLoader.active = true
+            menuLoader.active = toolBarLoader.active = true
         }
         if (clearPageStack) {
             while (pageStack.depth > 1)
@@ -98,24 +98,31 @@ ApplicationWindow {
         }
     }
 
-//    Connections {
-//        target: toolBar
-//        onActionExec: {
-//            switch (actionName) {
-//                case "goback":
-//                    pageStack.pop()
-//                    break
-//                case "openMenu":
-//                    menu.open()
-//                    break
-//            }
-//        }
-//    }
+    Connections {
+        target: header
+        onActionExec: {
+            switch (actionName) {
+                case "goback":
+                    pageStack.pop()
+                    break
+                case "openMenu":
+                    menu.open()
+                    break
+            }
+        }
+    }
 
     Loader {
         id: menuLoader
         active: false
         source: "components/Menu.qml"
+    }
+
+    Loader {
+        id: toolBarLoader
+        active: false
+        source: "components/ToolBar/CustomToolBar.qml"
+        onLoaded: window.header = item
     }
 
     Settings {
