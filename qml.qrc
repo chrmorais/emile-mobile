@@ -13,6 +13,7 @@
         <file>qml/components/ListItem.qml</file>
         <file>qml/components/Menu.qml</file>
         <file>qml/components/TouchFx.qml</file>
+        <file>qml/components/DateChooser.qml</file>
 
         <file>qml/components/ToolBar/CustomToolBar.qml</file>
         <file>qml/components/ToolBar/SearchToolbar.qml</file>
