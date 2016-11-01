@@ -23,8 +23,10 @@ ApplicationWindow {
     // a array to store the app pages loaded after user loggin or startup
     property var menuPages: []
 
-    // alias to current page (the active page) in the PageStack
+    // a reference to the current page in the application
     property alias currentPage: pageStack.currentItem
+
+    signal pageChanged()
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
         messageDialog.title = title
@@ -46,6 +48,16 @@ ApplicationWindow {
 
     function isUserLoggedIn() {
         return true //parseInt(settings.user_logged_in) === 1
+    }
+
+    function pushPage(pageUrl, args) {
+        pageStack.push(Qt.resolvedUrl(pageUrl), args)
+        pageChanged()
+    }
+
+    function popPage() {
+        pageStack.pop()
+        pageChanged()
     }
 
     /**
