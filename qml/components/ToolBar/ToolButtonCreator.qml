@@ -7,10 +7,9 @@ ToolButton {
     id: toolButton
     width: visible ? toolButton.width : 0
     height: parent.height
-    onClicked: actionExec(action) // known dynamically, is a signal from ToolBar the root parent of this item
+    onClicked: actionExec(action) // known dynamically, is a signal from ToolBar (the root parent of this item)
     contentItem: Awesome.AwesomeIcon {
         id: toolButtonIcon
-        size: 20
         anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
@@ -19,4 +18,5 @@ ToolButton {
 
     property string action
     property alias iconName: toolButtonIcon.name
+    property alias iconColor: toolButtonIcon.color
 }
