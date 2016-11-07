@@ -6,6 +6,9 @@ Drawer {
     id: menu
 
     property int listItemIndexPages: 0
+    property color menuItemLabelColor: "#fff"
+    property color menuItemBackgroundColor: "transparent"
+
     signal profileImageChange()
 
     // window is ApplicationWindow in Main.qml
@@ -55,16 +58,14 @@ Drawer {
                     ListItem {
                         id: listItem
                         width: menu.width
-                        backgroundColor: appSettings.theme.colorPrimary
-                        primaryLabelText: menuPages[index].menu_name
-                        primaryLabelColor: appSettings.theme.textColorPrimary
-                        selected: currentPage.visible_name === primaryLabelText
-                        primaryImageIcon: Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml")).createObject(primaryAction, {"name":menuPages[index].icon_name, "color":"#fff"})
+                        primaryLabelText: modelData.menu_name
+                        selected: modelData.menu_name === currentPage.objectName
+                        primaryImageIcon: Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml")).createObject(primaryAction, {"name":modelData.icon_name, "color": primaryLabelColor, "anchors.verticalCenter": primaryAction.verticalCenter})
                         onClicked: {
                             menu.close()
                             if (!selected) {
-                                var pageSource = "%1/%2".arg(menuPages[index].configJson.root_folder).arg(menuPages[index].main_qml)
-                                pushPage(pageSource, {"configJson":menuPages[index].configJson}) // defined in the Main.qml
+                                var pageSource = "%1/%2".arg(modelData.configJson.root_folder).arg(modelData.main_qml)
+                                pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name})
                             }
                         }
                     }
