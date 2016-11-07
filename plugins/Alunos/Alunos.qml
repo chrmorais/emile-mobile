@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 2.0
 
+import "functions.js" as AlunoFunc
 import "../../qml/js/Utils.js" as Util
 import "../../qml/components/" as AppComponents
 
@@ -12,74 +13,31 @@ Page {
     property list<MenuItem> subMenuToolBarItens: [
         MenuItem {
             text: "Select all"
-            onTriggered: selectAll()
+            onTriggered: AlunoFunc.selectAll()
         }
     ]
 
-    // the plugin config.json as object
-    property var configJson: ({})
+    property ListModel listModel: jsonListModel.model
+    property string searchText: "olá"
 
-    // the fields visible for current listView
-    property var fieldsVisible: []
-
-    // a list of itens selected in the ListView
-    property var selectedIndex: []
-
-    // a dynamic state visible by ToolBar to bind the ToolBar state mode
+    // make a binding with toolbar
     property string toolBarState: selectedIndex.length > 0 ? "actions" : "normal"
 
-    // a list of actions to display in ToolBar
+    property var configJson: ({})
+    property var fieldsVisible: []
+    property var selectedIndex: []
     property var toolBarActions: [
-        ({"action": "remove", "iconName": "trash", "when": "actions"}),
+        ({"action": "delete", "iconName": "trash", "when": "actions"}),
+        ({"action": "search", "iconName": "search", "when": "normal"}),
     ]
 
-    // set by ToolBar when user search any thing
-    property string searchTerm
-
-    signal updateItem(var index, var item)
-
-    function removeItems() {
-        // after each item is removed, qml reorder the list.
-        // then, we will uses descending order
-        selectedIndex = Util.reverseList(selectedIndex)
-
-        for (var i = 0; i < selectedIndex.length; i++)
-            theModel.remove(selectedIndex[i])
-
-        // reset the selectedIndex array
-        var fixBind = []
-        selectedIndex = fixBind
-    }
-
-    function selectAll() {
-        for (var i = 0; i < listView.count; ++i)
-            updateItem(i, listView.contentItem.children[i])
-    }
-
+    // called by ToolBar on action click
     function actionExec(actionName) {
-        switch(actionName) {
-        case "remove":
-            removeItems()
-            break
-        case "cancel":
-            selectAll()
-            break
-        }
+        AlunoFunc.exec(actionName)
     }
 
-    onUpdateItem: {
-        // necessary to make binding with array
-        var arrayTemp = selectedIndex
-
-        // if the item is selected and user pressAndHolder again,
-        // the item will be deselect and removed from selectedIndex array
-        if (item.selected)
-            arrayTemp.splice(arrayTemp.indexOf(index), 1)
-        else
-            arrayTemp.push(index)
-
-        selectedIndex = arrayTemp
-        item.selected = !item.selected
+    onSearchTextChanged: {
+        console.log("search term changed: " + searchText)
     }
 
     onConfigJsonChanged: {
@@ -90,17 +48,25 @@ Page {
         fieldsVisible = arrayTemp
     }
 
-    Component.onCompleted: {
-        jsonListModel.debug = true
-        jsonListModel.requestMethod = "GET"
-        jsonListModel.source = "https://emile-server.herokuapp.com/users"
-        jsonListModel.load()
+    onVisibleChanged: {
+        if (visible) { // is the active page, start a request!
+            if (jsonListModel.model) jsonListModel.model.clear()
+            AlunoFunc.httpRequest("users")
+        }
     }
+
+    Component.onCompleted: AlunoFunc.httpRequest("users")
 
     BusyIndicator {
         id: loading
         anchors.centerIn: parent
-        visible: listView.count === 0
+        visible: listView.count === 0 && jsonListModel.state !== "ready"
+    }
+
+    AppComponents.NoItem {
+        z: listView.z + 1
+        visible: listView.count === 0 && !loading.visible
+        onClicked: AlunoFunc.httpRequest("users")
     }
 
     Component {
@@ -118,7 +84,7 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onPressAndHold: updateItem(index, listView.itemAt(wrapper.x, wrapper.y))
+            onPressAndHold: AlunoFunc.addSelectedItem(index, listView.itemAt(wrapper.x, wrapper.y), false)
             onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": model.id})
         }
     }
@@ -128,7 +94,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: jsonListModel.model
+        model: listModel
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
@@ -138,6 +104,6 @@ Page {
     }
 
     AppComponents.FloatingButton {
-        onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"action": "newRegister"}) // pushPage is from Main.qml
+        onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"action": "newRegister"})
     }
 }
