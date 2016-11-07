@@ -63,7 +63,7 @@ Item {
     property bool darkBackground: false
 
     property color selectedColor: "#f0ffff"
-    property color backgroundColor: selected ? Qt.rgba(0,0,0,0.15) : "#fff"
+    property color backgroundColor: "transparent"
 
     property int badgeRadius: 9999
     property int badgeborderWidth: 0
@@ -81,7 +81,7 @@ Item {
         id: rect
         clip: true
         anchors.fill: parent
-        color: backgroundColor
+        color: selected ? Qt.darker(selectedColor, 2.0) : backgroundColor
         antialiasing: radius > 0
 
         Behavior on color {
