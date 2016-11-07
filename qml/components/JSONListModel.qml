@@ -10,13 +10,23 @@ Item {
     property string requestParams: ""
     property string requestMethod: "GET"
     property string contentType: "application/x-www-form-urlencoded"
-    property alias count: listModel.count
-    property ListModel model: ListModel { id: listModel }
+    property int count
+    property ListModel model
 
     QtObject {
         id: privateProperties
         property string json: ""
         onJsonChanged: updateJSONModel()
+    }
+
+    Component {
+        id: listModelComponent
+        ListModel { dynamicRoles: true }
+    }
+
+    function createNewModel(parent) {
+        var newModel = listModelComponent.createObject(parent);
+        return newModel;
     }
 
     state: "null"
@@ -26,6 +36,15 @@ Item {
         State { name: "error"},
         State { name: "loading"}
     ]
+
+    onStateChanged: {
+        if (state === "ready" || state === "error") {
+            source = ""
+            requestParams = ""
+            requestMethod = "GET"
+            contentType = "application/x-www-form-urlencoded"
+        }
+    }
 
     function load() {
         var xhr = new XMLHttpRequest;
@@ -39,6 +58,8 @@ Item {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 rootItem.httpStatus = xhr.status;
                 if (rootItem.httpStatus >= 200 && rootItem.httpStatus <= 299) {
+                    // fix not state changed when result is a same of previous request!
+                    privateProperties.json = ""
                     privateProperties.json = xhr.responseText;
                 } else {
                     rootItem.errorString = qsTr("The server returned error ") + xhr.status;
@@ -56,7 +77,8 @@ Item {
     }
 
     function updateJSONModel() {
-        listModel.clear();
+        if (model !== null && model.count > 0)
+            model.clear();
 
         if (privateProperties.json === "") {
             rootItem.errorString = qsTr("The server returned an empty response!");
@@ -64,12 +86,15 @@ Item {
             return;
         }
 
+        var modelTemp = createNewModel(rootItem)
+
         var objectArray = JSON.parse(privateProperties.json);
         for (var key in objectArray) {
             var jo = objectArray[key];
-            listModel.append(jo);
+            modelTemp.append(jo);
         }
-
+        rootItem.count = modelTemp.count;
+        rootItem.model = modelTemp;
         rootItem.state = "ready";
     }
 }
