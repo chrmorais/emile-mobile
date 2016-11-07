@@ -2,6 +2,7 @@
     <qresource prefix="/plugins">
         <file alias="Alunos/config.json">plugins/Alunos/config.json</file>
         <file alias="Alunos/Alunos.qml">plugins/Alunos/Alunos.qml</file>
+        <file alias="Alunos/functions.js">plugins/Alunos/functions.js</file>
         <file alias="Alunos/AlunoProfile.qml">plugins/Alunos/AlunoProfile.qml</file>
 
         <file alias="Professores/Professores.qml">plugins/Professores/Professores.qml</file>
