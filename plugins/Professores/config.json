@@ -5,8 +5,8 @@
     "pages": [
         {
             "main_qml": "Professores.qml",
-            "menu_name": "Professores Page1",
-            "icon_name": "cart_plus"
+            "menu_name": "CRUD Professores",
+            "icon_name": "coffee"
         }
     ]
 }
