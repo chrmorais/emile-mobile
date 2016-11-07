@@ -129,6 +129,10 @@ ApplicationWindow {
         id: menuLoader
         active: false
         source: "components/Menu.qml"
+        onLoaded: {
+            item.menuItemLabelColor = appSettings.theme.textColorPrimary
+            item.menuItemBackgroundColor = appSettings.theme.colorPrimary
+        }
     }
 
     Loader {
