@@ -9,7 +9,7 @@ Item {
     height: text.height
 
     property string name
-    property int size: 24
+    property int size: 20
     property bool rotate: widget.name.match(/.*-rotate/) !== null
     property bool valid: text.implicitWidth > 0
     property bool shadow: false
