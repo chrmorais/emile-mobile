@@ -21,6 +21,11 @@ ToolBar {
         State {
             name: "goback"
             PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "goback" }
+        },
+        State {
+            name: "search"
+            PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "cancel" }
+            PropertyChanges { target: searchToolbar; visible: true }
         }
     ]
 
@@ -49,13 +54,23 @@ ToolBar {
             optionsToolbarMenu.open()
 
         // after a click from any action, the toolBar needs to be reseted!
-        else if (actionName === "goback" && toolBar.state === "actions")
+        else if (actionName === "goback" && (toolBar.state === "actions" || toolBar.state === "search"))
+            toolBar.state = "normal"
+
+        // after a click from any action, the toolBar needs to be reseted!
+        else if (actionName === "search" && toolBar.state === "normal")
+            toolBar.state = "search"
+
+        // after a click from any action, the toolBar needs to be reseted!
+        else if (actionName === "cancel" && toolBar.state === "search")
             toolBar.state = "normal"
 
         // if current page define a function to receiver action message
         // set the action name send from click by user to the current page
         else if (currentPage.actionExec)
             currentPage.actionExec(actionName)
+
+        console.log("action name: " + actionName)
     }
 
     Connections {
@@ -66,7 +81,7 @@ ToolBar {
             var fixBinding = []
 
             // hide the search input on each page changed
-            searchComponent.searchSection.visible = false
+            searchToolbar.visible = false
 
             // reset the actions for each page
             toolBar.toolBarActions = fixBinding
@@ -85,11 +100,6 @@ ToolBar {
                 toolBarActions = toolBarActionsTemp
             }
 
-            // if current page has search support, when user enter a text in the textfield
-            // from searchComponent, the string from search input will be pass to the page
-            if (currentPage.searchText)
-                currentPage.searchText = searchComponent.searchText
-
             // if current page uses actions in toolbar will be set
             // else the defaults actions will be set to ToolBar actions
             if (currentPage.toolBarActions) {
@@ -103,37 +113,67 @@ ToolBar {
 
     RowLayout {
         id: toolBarItens
+        width: parent.width
+        height: parent.height
         anchors.fill: parent
+        Layout.fillWidth: true
 
         ToolButtonCreator {
             id: toolButtonDrawer
-            anchors.left: toolBarItens.left
-            iconName: "bars"
+            iconColor: appSettings.theme.textColorPrimary
+            anchors {
+                left: toolBarItens.left
+                leftMargin: 0
+            }
+        }
+
+        Label {
+            id: title
+            clip: true
+            width: visible ? toolBarItens.width * 0.60 : 0
+            visible: toolBar.state === "normal" || toolBar.state === "goback"
+            elide: Text.ElideRight
+            text: currentPage.title || ""
+            wrapMode: Text.WordWrap
+            color: appSettings.theme.textColorPrimary
+            font {
+                weight: Font.DemiBold
+                pointSize: 10
+            }
+            anchors {
+                left: toolButtonDrawer.right
+                leftMargin: 10
+                verticalCenter: parent.verticalCenter
+            }
         }
 
         SearchToolbar {
-            id: searchComponent
-            currentPageTitle: currentPage.title
-            visible: toolBar.state === "normal" || toolBar.state === "goback"
+            id: searchToolbar
+            visible: toolBar.state == "search"
+            onSearchTextChanged: if (currentPage.searchText) currentPage.searchText = searchToolbar.searchText
             anchors {
-                left: toolButtonDrawer.right
-                leftMargin: 5
+                left: title.right
+                leftMargin: 10
+                verticalCenter: parent.verticalCenter
             }
         }
 
         Repeater {
-            id: toolButtonsRepeater
+            id: toolBarActionsRepeater
             model: toolBarActions
-            onItemAdded: toolButtonsRepeater.lastChildren = item
-
-            ToolButtonCreator {
-                parent: toolBarItens;  action: modelData.action; iconName: modelData.iconName
-                visible: toolBar.state == modelData.when
-                anchors.right: index == 0 ? toolBarItens.right : toolButtonsRepeater.lastChildren.left
+            anchors {
+                right: toolBarItens.right
+                rightMargin: 10
+                verticalCenter: parent.verticalCenter
             }
 
-            // keep the last item added to define the anchor based in the last item
-            property Item lastChildren
+            ToolButtonCreator {
+                parent: toolBarItens
+                action: modelData.action
+                iconName: modelData.iconName
+                iconColor: toolButtonDrawer.iconColor
+                visible: toolBar.state === modelData.when
+            }
         }
     }
 }
