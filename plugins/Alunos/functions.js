@@ -45,8 +45,11 @@ function deleteFromList() {
     // so, we needs to uses descending order
     selectedIndex = Util.reverseList(selectedIndex)
 
-    for (var i = 0; i < selectedIndex.length; i++)
+    for (var i = 0; i < selectedIndex.length; i++) {
+        var userFromModel = listModel.get(selectedIndex[i])
+        httpRequest("delete_user/%1".arg(userFromModel.id), null, "POST")
         listModel.remove(selectedIndex[i])
+    }
 
     var fixBind = []
     selectedIndex = fixBind
@@ -57,10 +60,10 @@ function selectAll() {
         addSelectedItem(i, listView.contentItem.children[i], true)
 }
 
-function httpRequest(url, args, method) {
+function httpRequest(path, args, method) {
     jsonListModel.debug = true
     jsonListModel.requestMethod = method || "GET"
-    jsonListModel.source = url || "https://emile-server.herokuapp.com/users"
+    jsonListModel.source = "https://emile-server.herokuapp.com/%1".arg(path)
     jsonListModel.requestParams = args ? Util.serialize(args) : ""
     jsonListModel.load()
 }
@@ -73,7 +76,7 @@ function saveLocal(fieldName, fieldValue) {
 }
 
 function saveRemote() {
-    var url = "https://emile-server.herokuapp.com/%1".arg(action === "edit" ? "update_user/"+userId : "add_user")
-    httpRequest(url, formData, "POST")
+    var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user")
+    httpRequest(path, formData, "POST")
     toast.show("Saving...")
 }
