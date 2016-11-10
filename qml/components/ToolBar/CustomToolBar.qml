@@ -141,21 +141,43 @@ ToolBar {
             }
         }
 
-        Repeater {
-            id: toolBarActionsRepeater
-            model: toolBarActions
-            anchors {
-                right: toolBarItens.right
-                rightMargin: 10
-                verticalCenter: parent.verticalCenter
-            }
+        ToolButtonCreator {
+            id: toolButtonSave
+            action: "save"
+            iconName: "save"
+            iconColor: defaultTextColor
+            visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            anchors.right: toolButtonDelete.left
+        }
 
-            ToolButtonCreator {
-                parent: toolBarItens
-                action: modelData.action
-                iconName: modelData.iconName
-                iconColor: toolButtonDrawer.iconColor
-                visible: toolBar.state === modelData.when
+        ToolButtonCreator {
+            id: toolButtonDelete
+            action: "delete"
+            iconName: "trash"
+            iconColor: defaultTextColor
+            visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            anchors.right: toolButtonSearch.left
+        }
+
+        ToolButtonCreator {
+            id: toolButtonSearch
+            action: "search"
+            iconName: "search"
+            iconColor: defaultTextColor
+            visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
+            anchors.right: toolButtonMenuList.left
+        }
+
+        ToolButtonCreator {
+            id: toolButtonMenuList
+            action: "submenu"
+            iconName: "ellipsis_v"
+            iconColor: defaultTextColor
+            visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
+            anchors.right: parent.right
+
+            MenuCreator {
+                id: optionsToolbarMenu
             }
         }
     }
