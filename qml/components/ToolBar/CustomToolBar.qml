@@ -102,11 +102,7 @@ ToolBar {
 
         ToolButtonCreator {
             id: toolButtonDrawer
-            iconColor: appSettings.theme.textColorPrimary
-            anchors {
-                left: toolBarItens.left
-                leftMargin: 0
-            }
+            iconColor: defaultTextColor
         }
 
         Label {
