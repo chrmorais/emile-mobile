@@ -23,6 +23,18 @@ function debugme(funcName, status, jsonObject) {
     console.log("-------")
 }
 
+function sortArrayByObjectKey(key) {
+    var sortOrder = 1;
+    if (key[0] === "-") {
+        sortOrder = -1;
+        key = key.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
 /**
  * iterate a list to order values in reverse mode - Numeric values only
  * @param {array} list a javascript array to sort the list
