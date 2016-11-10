@@ -20,7 +20,7 @@ Page {
     property string searchText: ""
 
     // make a binding with toolbar
-    property string toolBarState: selectedIndex.length > 0 ? "actions" : "normal"
+    property string toolBarState: selectedIndex.length > 0 ? "action" : "normal"
 
     property var configJson: ({})
     property var fieldsVisible: []
