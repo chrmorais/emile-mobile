@@ -8,9 +8,9 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "Alunos"
+    title: "Lista de Alunos"
 
-    property list<MenuItem> subMenuToolBarItens: [
+    property list<MenuItem> toolBarMenuList: [
         MenuItem {
             text: "Select all"
             onTriggered: AlunoFunc.selectAll()
