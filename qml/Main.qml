@@ -119,7 +119,7 @@ ApplicationWindow {
         onActionExec: {
             switch (actionName) {
             case "goback":
-                pageStack.pop()
+                popPage()
                 break
             case "openMenu":
                 menu.open()
