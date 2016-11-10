@@ -73,11 +73,15 @@ ApplicationWindow {
         for (var i = 0; i < crudModel.length; i++) { // from each plugin
             for (var j = 0; j < crudModel[i].pages.length; j++) { // iterate the pages from current plugin
                 pageObject = crudModel[i].pages[j]
+                if (!pageObject.menu_name)
+                    continue
                 // append the plugin config json - to turn available for the object page
                 pageObject.configJson = crudModel[i]
                 menuPages.push(pageObject)
             }
         }
+        menuPages.sort(Util.sortArrayByObjectKey("order_priority"))
+        menuPages.reverse()
     }
 
     /**
