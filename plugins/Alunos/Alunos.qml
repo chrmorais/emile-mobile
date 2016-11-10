@@ -17,7 +17,6 @@ Page {
         }
     ]
 
-    property ListModel listModel: jsonListModel.model
     property string searchText: "olá"
 
     // make a binding with toolbar
