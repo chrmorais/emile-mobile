@@ -15,7 +15,7 @@ ToolBar {
             PropertyChanges { target: toolButtonDrawer; iconName: "bars"; action: "openMenu" }
         },
         State {
-            name: "actions"
+            name: "action"
             PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "cancel" }
         },
         State {
