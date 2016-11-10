@@ -75,6 +75,8 @@ ApplicationWindow {
                 pageObject = crudModel[i].pages[j]
                 if (!pageObject.menu_name)
                     continue
+                if (!pageObject.order_priority)
+                    pageObject.order_priority = 0
                 // append the plugin config json - to turn available for the object page
                 pageObject.configJson = crudModel[i]
                 menuPages.push(pageObject)
