@@ -22,8 +22,7 @@ Button {
         font.bold: true
     }
 
-    TouchFx {
-        circular: __backgroundButton.radius > 5
+    MouseArea {
         anchors.fill: parent
         onClicked: __customButton.clicked()
     }
