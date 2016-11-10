@@ -46,9 +46,9 @@ function deleteFromList() {
     selectedIndex = Util.reverseList(selectedIndex)
 
     for (var i = 0; i < selectedIndex.length; i++) {
-        var userFromModel = listModel.get(selectedIndex[i])
+        var userFromModel = jsonListModel.model.get(selectedIndex[i])
         httpRequest("delete_user/%1".arg(userFromModel.id), null, "POST")
-        listModel.remove(selectedIndex[i])
+        jsonListModel.model.remove(selectedIndex[i])
     }
 
     var fixBind = []
