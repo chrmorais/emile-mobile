@@ -98,10 +98,7 @@ ToolBar {
 
     RowLayout {
         id: toolBarItens
-        width: parent.width
-        height: parent.height
         anchors.fill: parent
-        Layout.fillWidth: true
 
         ToolButtonCreator {
             id: toolButtonDrawer
