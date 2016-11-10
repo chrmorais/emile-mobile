@@ -105,23 +105,28 @@ ToolBar {
             iconColor: defaultTextColor
         }
 
-        Label {
+        Item {
             id: title
-            clip: true
-            width: visible ? toolBarItens.width * 0.60 : 0
+            width: visible ? parent.width * 0.55 : 0
+            height: parent.height
             visible: toolBar.state === "normal" || toolBar.state === "goback"
-            elide: Text.ElideRight
-            text: currentPage.title || ""
-            wrapMode: Text.WordWrap
-            color: appSettings.theme.textColorPrimary
-            font {
-                weight: Font.DemiBold
-                pointSize: 10
-            }
             anchors {
                 left: toolButtonDrawer.right
                 leftMargin: 10
                 verticalCenter: parent.verticalCenter
+            }
+
+            Text {
+                clip: true
+                width: parent.width
+                elide: Text.ElideRight
+                text: currentPage.title || ""
+                color: defaultTextColor
+                anchors.verticalCenter: parent.verticalCenter
+                font {
+                    weight: Font.DemiBold
+                    pointSize: 10
+                }
             }
         }
 
