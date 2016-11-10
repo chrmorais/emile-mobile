@@ -17,7 +17,7 @@ Page {
         }
     ]
 
-    property string searchText: "olá"
+    property string searchText: ""
 
     // make a binding with toolbar
     property string toolBarState: selectedIndex.length > 0 ? "actions" : "normal"
@@ -25,10 +25,7 @@ Page {
     property var configJson: ({})
     property var fieldsVisible: []
     property var selectedIndex: []
-    property var toolBarActions: [
-        ({"action": "delete", "iconName": "trash", "when": "actions"}),
-        ({"action": "search", "iconName": "search", "when": "normal"}),
-    ]
+    property var toolBarActions: ["search", "delete"]
 
     // called by ToolBar on action click
     function actionExec(actionName) {
