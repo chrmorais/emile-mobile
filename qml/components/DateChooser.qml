@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import QtQuick.Extras 1.4
 
 Column {
     objectName: "DateChooser"
@@ -35,9 +36,6 @@ Column {
     }
 
     Component.onCompleted: {
-        // if selected date isset - will turn the selected day, month and year
-        var valuesToSelect = valueSelected ? valueSelected.split("-") : []
-
         // create the years list
         var currentYear = new Date().getFullYear()
         var yearsToShowTemp = []
@@ -50,13 +48,21 @@ Column {
         for (i = 1; i <= 31; i++)
             daysToShowTemp.push(i)
         daysToShow = daysToShowTemp
+    }
 
-        // if valueSelected isset turn the values selected
-        if (valuesToSelect.length) {
-            __day.currentIndex = parseInt(valuesToSelect[1]) - 1
-            __month.currentIndex = parseInt(valuesToSelect[0].substring(1,2)) - 1
-            __year.currentIndex = parseInt(valuesToSelect[2]) + 3
-        }
+    onValueSelectedChanged: {
+        // if selected date isset - will turn the selected day, month and year
+        var currentYear = new Date().getFullYear()
+        if (!valueSelected)
+            return;
+
+        var valuesToSelect = valueSelected.split("-")
+        if (!valuesToSelect.length)
+            return;
+
+        dateTumbler.setCurrentIndexAt(0, parseInt(valuesToSelect[1]) - 1, 0)
+        dateTumbler.setCurrentIndexAt(1, parseInt(valuesToSelect[0]) - 1, 0)
+        dateTumbler.setCurrentIndexAt(2, 100 - (currentYear - parseInt(valuesToSelect[2])), 0)
     }
 
     Label {
@@ -74,41 +80,27 @@ Column {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Tumbler {
-            id: __day
-            model: daysToShow
-            visibleItemCount: 4
+            id: dateTumbler
             antialiasing: true
-            width: 10
+            width: parent.width
             clip: true
-            font {
-                pointSize: 12
-                weight: Font.DemiBold
-            }
-        }
 
-        Tumbler {
-            id: __month
-            model: monthsToShow
-            visibleItemCount: 4
-            antialiasing: true
-            width: 160
-            clip: true
-            font {
-                pointSize: 12
-                weight: Font.DemiBold
+            TumblerColumn {
+                id: __day
+                model: daysToShow
+                width: parent.width / 3.5
             }
-        }
 
-        Tumbler {
-            id: __year
-            model: yearsToShow
-            visibleItemCount: 4
-            antialiasing: true
-            width: 10
-            clip: true
-            font {
-                pointSize: 12
-                weight: Font.DemiBold
+            TumblerColumn {
+                id: __month
+                model: monthsToShow
+                width: parent.width / 2.5
+            }
+
+            TumblerColumn {
+                id: __year
+                model: yearsToShow
+                width: parent.width / 3.5
             }
         }
     }
