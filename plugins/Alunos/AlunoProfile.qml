@@ -18,9 +18,7 @@ Page {
 
     property var fieldsData
     property var formData: ({})
-    property var toolBarActions: [
-        ({"action": "save", "iconName": "floppy_o", "when": "goback"})
-    ]
+    property var toolBarActions: ["save"]
 
     property bool editable: action === "view" || action === "edit"
 
@@ -36,9 +34,8 @@ Page {
 
     Component.onCompleted: {
         fieldsData = Qt.binding(function() { return jsonListModel.model.get(0) })
-        if (action !== "newRegister") {
+        if (action !== "newRegister")
             AlunoFunc.httpRequest("/user_details/"+userId, null, "GET")
-        }
     }
 
     AppComponents.Toast {
