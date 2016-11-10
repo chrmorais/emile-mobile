@@ -179,6 +179,6 @@ Page {
         id: actionFloatingButton
         iconName: "pencil"
         onClicked: action = "edit"
-        visible: action === "view" || action === "edit"
+        visible: !loading.visible && (action === "view" || action === "edit")
     }
 }
