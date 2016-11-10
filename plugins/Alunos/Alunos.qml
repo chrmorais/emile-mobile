@@ -90,7 +90,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: listModel
+        model: jsonListModel.model
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
