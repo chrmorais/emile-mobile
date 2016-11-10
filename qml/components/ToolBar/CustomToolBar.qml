@@ -72,44 +72,26 @@ ToolBar {
         // set the action name send from click by user to the current page
         else if (currentPage.actionExec)
             currentPage.actionExec(actionName)
-
-        console.log("action name: " + actionName)
     }
 
     Connections {
         target: window
         onPageChanged: {
-            // to fix bind with array when new item is pushed
-            // and qml not emit sigal changed!
-            var fixBinding = []
-
-            // hide the search input on each page changed
-            searchToolbar.visible = false
-
-            // reset the actions for each page
-            toolBar.toolBarActions = fixBinding
-
-            // if current page has menu items in ToolBar submenu, will be set
-            if (currentPage.subMenuToolBarItens && currentPage.subMenuToolBarItens.length > 0) {
-                optionsToolbarMenu.reset()
-
-                for (var i = 0; i < currentPage.subMenuToolBarItens.length; i++)
-                    optionsToolbarMenu.addItem(currentPage.subMenuToolBarItens[i])
-
-                // append submenu object into actions list to turn submenu available in normal state
-                // the array temp is to fix dynamic array bind
-                var toolBarActionsTemp = toolBarActions
-                toolBarActionsTemp.push(submenu)
-                toolBarActions = toolBarActionsTemp
-            }
+            var fixBind             = []
+            hasMenuList             = false
+            toolBarActions          = fixBind
+            searchToolbar.visible   = false
 
             // if current page uses actions in toolbar will be set
-            // else the defaults actions will be set to ToolBar actions
-            if (currentPage.toolBarActions) {
-                toolBarActionsTemp = currentPage.toolBarActions
-                if (submenu.when)
-                    toolBarActionsTemp.push(submenu)
-                toolBarActions = toolBarActionsTemp
+            if (currentPage.toolBarActions)
+                toolBarActions = currentPage.toolBarActions
+
+            // if current page has menu items in ToolBar submenu, will be set
+            if (currentPage.toolBarMenuList && currentPage.toolBarMenuList.length > 0) {
+                hasMenuList = true
+                optionsToolbarMenu.reset() // clear old itens if exists
+                for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
+                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i])
             }
         }
     }
