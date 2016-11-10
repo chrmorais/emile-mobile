@@ -45,7 +45,7 @@ Page {
     BusyIndicator {
         id: loading
         anchors.centerIn: parent
-        visible: !pageFlickable.visible
+        visible: !pageFlickable.visible || jsonListModel.state === "loading"
     }
 
     Flickable {
