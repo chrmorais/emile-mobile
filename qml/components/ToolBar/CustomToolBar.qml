@@ -29,6 +29,9 @@ ToolBar {
         }
     ]
 
+    // the color to icons and page title text
+    property color defaultTextColor: "#fff"
+
     /**
      * a list of objects to the toolbar actions.
      * each page must be set the lists for the visible itens that will be use in the page
