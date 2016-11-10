@@ -6,7 +6,8 @@
         {
             "main_qml": "Alunos.qml",
             "menu_name": "CRUD Alunos",
-            "icon_name": "graduation_cap"
+            "icon_name": "graduation_cap",
+            "order_priority": 10
         }
     ]
 }
