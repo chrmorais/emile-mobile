@@ -1,0 +1,23 @@
+{
+    "name": "Session",
+    "description": "Pages to login/logout in application",
+    "pages": [
+        {
+            "main_qml": "Index.qml",
+            "menu_name": "Home",
+            "icon_name": "home",
+            "order_priority": 100
+        },
+        {
+            "main_qml": "Login.qml",
+            "menu_name": "",
+            "icon_name": ""
+        },
+        {
+            "main_qml": "Logout.qml",
+            "menu_name": "Logout",
+            "icon_name": "sign_out",
+            "order_priority": -1
+        }
+    ]
+}
