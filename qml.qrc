@@ -4,7 +4,6 @@
         <file>assets/menu-temp.png</file>
 
         <file>qml/Main.qml</file>
-
         <file>qml/js/Utils.js</file>
 
         <file>qml/components/CustomButton.qml</file>
@@ -25,9 +24,6 @@
         <file>qml/components/AwesomeIcon/Awesome.js</file>
         <file>qml/components/AwesomeIcon/FontAwesome.otf</file>
         <file>qml/components/AwesomeIcon/AwesomeIcon.qml</file>
-
-        <file>qml/pages/Index.qml</file>
-        <file>qml/pages/Login.qml</file>
 
         <file>plugins.qrc</file>
     </qresource>
