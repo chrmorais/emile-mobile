@@ -91,10 +91,10 @@ ApplicationWindow {
       * @param bool clearPageStack a flag to define if clear pageStack
       */
     function setPage(pageUrl, args, clearPageStack) {
-        var pageTemp = pageUrl || "pages/Login.qml"
+        var pageTemp = pageUrl || "/plugins/Session/Login.qml"
         if (isUserLoggedIn()) {
             loadMenuPages()
-            pageTemp = pageUrl || "pages/Index.qml"
+            pageTemp = pageUrl || "/plugins/Session/Index.qml"
             menuLoader.active = toolBarLoader.active = true
         }
         if (clearPageStack) {
