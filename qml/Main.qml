@@ -56,7 +56,6 @@ ApplicationWindow {
     }
 
     function popPage() {
-        currentPage.deleteLater()
         pageStack.pop()
         pageChanged()
     }
