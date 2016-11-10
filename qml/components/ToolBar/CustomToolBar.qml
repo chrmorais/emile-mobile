@@ -29,9 +29,6 @@ ToolBar {
         }
     ]
 
-    // a default object with submenu to ToolBar
-    property var submenu: ({"action": "submenu", "iconName": "ellipsis_v", "when": "normal"})
-
     /**
      * a list of objects to the toolbar actions.
      * each page must be set the lists for the visible itens that will be use in the page
