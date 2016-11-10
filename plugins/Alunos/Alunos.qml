@@ -9,7 +9,7 @@ import "../../qml/components/" as AppComponents
 Page {
     id: page
     title: "Lista de Alunos"
-    //objectName: "Crud Alunos"
+    objectName: "Crud Alunos"
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
