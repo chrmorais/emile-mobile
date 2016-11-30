@@ -4,9 +4,8 @@ import QtQuick.Controls 2.0
 Page {
     id: page
 
-    property var json: ({})
-    property var configJson: ({})
-    onJsonChanged: console.log(JSON.stringify(json))
+    property var json: {}
+    property var configJson: {}
 
     Component.onCompleted: {
         jsonListModel.source += "/disciplina_em_andamento/" + user_profile_data.login
@@ -23,18 +22,20 @@ Page {
     Column {
         visible: !busyIndicator.visible
         spacing: 15
-        anchors {
-            top: parent.top
-            topMargin: 15
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
         Label {
             text: "Disciplina em andamento:"
             anchors.horizontalCenter: parent.horizontalCenter
-            font {
-                pointSize: 14
-                weight: Font.DemiBold
+            font { pointSize: 14; weight: Font.DemiBold }
+        }
+
+        Row {
+            spacing: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            Label {
+                text: json.turma.disciplina_id.codigo + " - " + json.turma.disciplina_id.nome
             }
         }
 
@@ -43,44 +44,14 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                id: codDisciplina
-                text: json.turma.disciplina_id.codigo
-            }
-
-            Label {
-                text: "-"
-            }
-
-            Label {
-                id: nomeDisciplina
-                text: json.turma.disciplina_id.nome
-            }
-        }
-
-        Row {
-            spacing: 5
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            Label {
-                text: json.data_inicio_aula
-            }
-
-            Label {
-                text: "-"
-            }
-
-            Label {
-                text: json.data_fim_aula
+                text: json.data_inicio_aula + " - " + json.data_fim_aula
             }
         }
 
         Label {
             text: "Deseja fazer a chamada?"
             anchors.horizontalCenter: parent.horizontalCenter
-            font {
-                pointSize: 9
-                weight: Font.DemiBold
-            }
+            font { pointSize: 9; weight: Font.DemiBold }
         }
 
         Button {
@@ -97,14 +68,10 @@ Page {
     Button {
         id: actionCancelButton
         text: "Ignorar"
+        anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
         onClicked: {
             // listar as disciplinas lecionadas pelo professor para o dia corrente
             // será implementado em um review posterior
-        }
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.bottom
-            bottomMargin: 15
         }
     }
 }
