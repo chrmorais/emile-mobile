@@ -1,0 +1,13 @@
+{
+    "name": "Chamada",
+    "description": "Plugin para realizar chamada de alunos por turma",
+    "index_fields": [],
+    "pages": [
+        {
+            "main_qml": "Index.qml",
+            "menu_name": "Chamada",
+            "icon_name": "hand_paper_o",
+            "order_priority": 10
+        }
+    ]
+}

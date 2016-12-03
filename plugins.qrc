@@ -12,5 +12,10 @@
         <file alias="Session/Login.qml">plugins/Session/Login.qml</file>
         <file alias="Session/Logout.qml">plugins/Session/Logout.qml</file>
         <file alias="Session/config.json">plugins/Session/config.json</file>
+
+        <file alias="Chamada/Index.qml">plugins/Chamada/Index.qml</file>
+        <file alias="Chamada/config.json">plugins/Chamada/config.json</file>
+        <file alias="Chamada/user-default.png">plugins/Chamada/user-default.png</file>
+        <file alias="Chamada/RealizarChamada.qml">plugins/Chamada/RealizarChamada.qml</file>
     </qresource>
 </RCC>
