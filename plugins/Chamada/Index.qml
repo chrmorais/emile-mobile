@@ -8,7 +8,7 @@ Page {
     property var configJson: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "/disciplina_em_andamento/" + user_profile_data.login
+        jsonListModel.source += "/disciplina_em_andamento/" + user_profile_data.id
         jsonListModel.load()
         json = Qt.binding(function() { return jsonListModel.model.get(0) })
     }
@@ -58,10 +58,7 @@ Page {
             id: actionStartButton
             text: "Realizar a chamada"
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: {
-                // pushPage(configJson.root_folder+"/RealizarChamada.qml", {"turmaId": json.turma.id})
-                // será implementado no próximo review
-            }
+            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"turmaId": json.turma.id})
         }
     }
 
