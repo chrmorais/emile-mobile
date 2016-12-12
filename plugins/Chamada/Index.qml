@@ -58,7 +58,7 @@ Page {
             id: actionStartButton
             text: "Realizar a chamada"
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"turmaId": json.turma.id})
+            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"turmaId": json.turma.id,"aula_id":json.aula.id})
         }
     }
 

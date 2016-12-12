@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 
 Page {
     title: "Realizar chamada"
+    property int aulaId: 0
     property int turmaId: 0
     property bool checkedAll: true
     property var chamada: ({})
@@ -22,7 +23,7 @@ Page {
             onTriggered: {
                 var chamadaTemp = chamada
                 for(var key in chamadaTemp)
-                    chamadaTemp[key].status = checkedAll ? "F" : "P";
+                    chamadaTemp[key].status = checkedAll ? "F" : "P"
                 chamada = chamadaTemp
                 checkedAll = !checkedAll
             }
@@ -30,7 +31,19 @@ Page {
     ]
 
     function requestToSave() {
-        // implementar após serviço rest disponibilizar url, parâmetros e etc.
+        chamada = {
+            "aula_id": aulaId,
+            "chamada": chamada
+        }
+        jsonListModel.requestMethod = "POST"
+        jsonListModel.requestParams = chamada
+        jsonListModel.source += "/registrar_chamada/"
+        jsonListModel.load()
+        jsonListModel.stateChanged.connect(function() {
+            // after get server response, close the current page
+            if (jsonListModel.state === "ready")
+                popPage(); // is a function from Main.qml
+        })
     }
 
     function actionExec(actionusername) {
@@ -39,20 +52,18 @@ Page {
     }
 
     Component.onCompleted: {
-        chamada["turma_id"] = turmaId
-        jsonListModel.debug = true
         jsonListModel.source += "alunos_turma/" + turmaId
         jsonListModel.load()
     }
 
-    function save(username, id, username, useremail, status) {
+    function save(username, alunoId, username, useremail, status) {
         var objectTemp = chamada
         objectTemp[username] = {
-            "id": id,
+            "aluno_id": alunoId,
             "status": status,
             "username": username,
             "useremail": useremail
-        };
+        }
         chamada = objectTemp
     }
 
