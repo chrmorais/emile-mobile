@@ -37,16 +37,11 @@ ToolBar {
      */
     property var toolBarActions: []
 
-    // define a Menu object to append dynamic sub-itens from currentPage
-    property MenuCreator optionsToolbarMenu : MenuCreator { }
-
-    // this signal is emited when user click in any action button in toolbar.
-    // will sent the action name as parameter
+    // emited when user click in any button from toolbar sending the action name
     signal actionExec(var actionName)
 
-    // if current page define a list of itens to submenu (the last item displayed in ToolBar),
-    // the itens will be append into a dropdown list. So, whewn user click in the list,
-    // the menu needs to be opened here! because the page not know the submenu item
+    // if current page defines a list of itens to submenu (the last item displayed in ToolBar),
+    // the itens will be append into a dropdown list
     onActionExec: {
         if (actionName === "submenu" && optionsToolbarMenu != null)
             optionsToolbarMenu.open();
@@ -75,7 +70,7 @@ ToolBar {
                 hasMenuList = true;
                 optionsToolbarMenu.reset();
                 for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
-                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i])
+                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i]);
             }
         }
     }
