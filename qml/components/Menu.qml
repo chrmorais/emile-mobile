@@ -4,6 +4,8 @@ import QtQuick.Controls 2.0
 
 Drawer {
     id: menu
+    width: window.width * 0.85; height: window.height
+    dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property int listItemIndexPages: 0
     property color menuItemLabelColor: "#fff"
@@ -11,19 +13,16 @@ Drawer {
 
     signal profileImageChange()
 
-    // window is ApplicationWindow in Main.qml
-    Component.onCompleted: {
-        menu.height = window.height
-        menu.width = window.width * 0.85
-        menu.dragMargin = Qt.styleHints.startDragDistance
-        window.menu = menu
+    function getIcon(parentItem, iconName, color) {
+        var component = Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml"));
+        component.createObject(parentItem, {"name":iconName,"color": color});
     }
 
     Connections {
         target: window
         onWidthChanged: menu.width = window.width * window.width > window.height ? 0.60 : 0.85
         onHeightChanged: menu.height = window.height
-        onCurrentPageChanged: if (menu.visible) close()
+        onCurrentPageChanged: if (menu.visible) close();
     }
 
     Flickable {
@@ -39,16 +38,12 @@ Drawer {
 
             Column {
                 id: content
-                width: parent.width
-                anchors.fill: parent
+                width: parent.width; anchors.fill: parent
 
                 Image {
                     id: drawerImage
-                    clip: true
-                    cache: true
-                    asynchronous: true
-                    width: parent.width
-                    fillMode: Image.PreserveAspectFit
+                    clip: true; cache: true; asynchronous: true
+                    width: parent.width;fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/menu-temp.png"
                 }
 
@@ -60,12 +55,12 @@ Drawer {
                         width: menu.width
                         primaryLabelText: modelData.menu_name
                         selected: modelData.menu_name === currentPage.objectName
-                        primaryImageIcon: Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml")).createObject(primaryAction, {"name":modelData.icon_name, "color": primaryLabelColor, "anchors.verticalCenter": primaryAction.verticalCenter})
+                        primaryImageIcon: getIcon(primaryAction, modelData.icon_name, primaryLabelColor)
                         onClicked: {
-                            menu.close()
+                            menu.close();
                             if (!selected) {
-                                var pageSource = "%1/%2".arg(modelData.configJson.root_folder).arg(modelData.main_qml)
-                                pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name})
+                                var pageSource = "%1/%2".arg(modelData.configJson.root_folder).arg(modelData.main_qml);
+                                pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name});
                             }
                         }
                     }
