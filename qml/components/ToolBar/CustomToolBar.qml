@@ -136,7 +136,7 @@ ToolBar {
             anchors.right: parent.right
             visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
 
-            MenuCreator { id: optionsToolbarMenu; }
+            CustomMenu { id: optionsToolbarMenu }
         }
     }
 }
