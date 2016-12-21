@@ -7,6 +7,7 @@ Page {
     objectName: "Logout"
 
     Component.onCompleted: {
+        window.menu.enabled = false;
         window.isUserLoggedIn = false;
         window.userProfileData = {};
     }
