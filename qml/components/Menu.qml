@@ -7,6 +7,7 @@ Drawer {
     width: window.width * 0.85; height: window.height
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
+    property bool enabled: true
     property int listItemIndexPages: 0
     property color menuItemLabelColor: "#fff"
     property color menuItemBackgroundColor: "transparent"
