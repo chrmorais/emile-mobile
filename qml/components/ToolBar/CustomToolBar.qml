@@ -6,6 +6,8 @@ import "../AwesomeIcon/" as Awesome
 
 ToolBar {
     id: toolBar
+    visible: window.menu && window.menu.enabled
+    height: visible ? 54 : 0
     state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
     states: [
         State {
