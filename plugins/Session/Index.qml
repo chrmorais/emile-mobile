@@ -1,19 +1,16 @@
-import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 Page {
     id: page
-    objectName: "Home"
     title: "Home"
+    objectName: "Home"
 
     Text {
         anchors.centerIn: parent
-        text: "Wellcome to the Emile!"
+        text: qsTr("Wellcome to the Emile!")
         color: appSettings.theme.colorPrimary
-        font {
-            bold: true
-            pointSize: 20
-        }
+        font { bold: true; pointSize: 20 }
     }
 }
