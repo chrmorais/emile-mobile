@@ -5,15 +5,11 @@ import "../AwesomeIcon/" as Awesome
 
 ToolButton {
     id: toolButton
-    width: visible ? toolButton.width : 0
-    height: parent.height
-    onClicked: actionExec(action) // known dynamically, is a signal from ToolBar (the root parent of this item)
+    width: visible ? toolButton.width : 0; height: parent.height
+    onClicked: actionExec(action)
     contentItem: Awesome.AwesomeIcon {
         id: toolButtonIcon
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
-        }
+        anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
     }
 
     property string action
