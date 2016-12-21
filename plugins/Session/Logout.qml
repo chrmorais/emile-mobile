@@ -16,7 +16,7 @@ Page {
     }
 
     Timer {
-        running: true; interval: 3000
+        running: true; interval: 1000
         onTriggered: setPage(null, null, true);
     }
 }
