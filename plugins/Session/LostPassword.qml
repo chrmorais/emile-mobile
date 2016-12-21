@@ -7,6 +7,10 @@ import "../../qml/components/AwesomeIcon/"
 
 Page {
     id: page
+    background: Rectangle {
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     function isValidLostPasswordForm() {
         if (!email.text && !cpf.text) {
