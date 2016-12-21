@@ -69,22 +69,21 @@ ApplicationWindow {
         menuPages.reverse();
     }
 
-    function setPage(pageUrl, args, clearPageStack) {
-        var pageTemp = pageUrl || "/plugins/Session/Login.qml";
-        if (settings.isUserLoggedIn) {
+    function setIndexPage(clearPageStack) {
+        var pageUrl = "/plugins/Session/Login.qml";
+        if (isUserLoggedIn) {
             loadMenuPages();
-            pageTemp = pageUrl || "/plugins/Session/Index.qml";
-            menuLoader.active = toolBarLoader.active = true;
+            pageUrl = "/plugins/Session/Index.qml";
         }
         if (clearPageStack) {
             while (pageStack.depth > 1)
                 pageStack.pop();
         }
-        pageStack.replace(Qt.resolvedUrl(pageTemp), args || {});
+        pageStack.replace(Qt.resolvedUrl(pageUrl), {});
     }
 
     Component.onCompleted: {
-        setPage();
+        setIndexPage();
         if (!isIOS && Qt.platform.os !== "android") {
             setX(Screen.width / 2 - width / 2);
             setY(Screen.height / 2 - height / 2);
@@ -107,17 +106,21 @@ ApplicationWindow {
 
     Loader {
         id: menuLoader
-        active: false; source: "components/Menu.qml"
+        asynchronous: true
+        active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
-            item.menuItemLabelColor = appSettings.theme.textColorPrimary
-            item.menuItemBackgroundColor = appSettings.theme.colorPrimary
+            window.menu = item
+            window.menu.menuItemLabelColor = appSettings.theme.textColorPrimary
+            window.menu.menuItemBackgroundColor = appSettings.theme.colorPrimary
+            toolBarLoader.active = true
         }
     }
 
     Loader {
         id: toolBarLoader
+        asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
-        onLoaded: window.header = item
+        onLoaded: window.header = toolBarLoader.item
     }
 
     Settings {
