@@ -13,7 +13,7 @@ Button {
     contentItem: Text {
         id: __customButtonText
         elide: Text.ElideRight; font.bold: true
-        text: __customButton.text; opacity: enabled ? 1.0 : 0.5
+        text: __customButton.text.toUpperCase(); opacity: enabled ? 1.0 : 0.5
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
     }
 
