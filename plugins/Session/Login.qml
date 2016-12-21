@@ -14,6 +14,8 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
+    Component.onCompleted: if (window.menu) window.menu.enabled = false;
+
     property int hideToolbar: 1
     property var requestResult: {}
 
@@ -48,7 +50,7 @@ Page {
     Timer {
         id: loginPopShutdown
         repeat: false; running: false; interval: 1000
-        onTriggered: setPage()
+        onTriggered: setPage(null, null, true);
     }
 
     Connections {
@@ -61,7 +63,7 @@ Page {
             case 200:
                 window.userProfileData = jsonListModel.model.get(0);
                 window.isUserLoggedIn = true;
-                loginPopShutdown.start()
+                loginPopShutdown.start();
                 break;
             default:
                 alert("Error!", "Failed to connect to the server!")
