@@ -35,17 +35,18 @@ Page {
             anchors { top: parent.top; left: parent.left; topMargin: isIOS ? 15 : 40; leftMargin: 15 }
 
             Item {
-                width: 25; height: 25
+                width: 16; height: width
+                anchors.verticalCenter: parent.verticalCenter
 
                 AwesomeIcon {
-                    size: parent.height; color: "#fff"
-                    name: "arrow_back"; anchors.centerIn: parent
+                    size: parent.height; color: brand.color
+                    name: "arrow_left"; anchors.centerIn: parent
                 }
 
                 MouseArea { anchors.fill: parent; onClicked: popPage() }
             }
 
-            Text { text: qsTr("Back to login"); color: "#fff"; font.pointSize: 12 }
+            Text { text: qsTr("Back to login"); anchors.verticalCenter: parent.verticalCenter; color: brand.color; font.pointSize: 12 }
         }
 
         Column {
