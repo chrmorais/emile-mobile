@@ -7,7 +7,7 @@ Page {
     objectName: "Logout"
 
     Component.onCompleted: {
-        window.userLoggedIn = false;
+        window.isUserLoggedIn = false;
         window.userProfileData = {};
     }
 
@@ -17,6 +17,6 @@ Page {
 
     Timer {
         interval: 3000
-        onTriggered: setPage(null, null, true)
+        onTriggered: setPage(null, null, true);
     }
 }
