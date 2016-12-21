@@ -63,19 +63,19 @@ ToolBar {
     Connections {
         target: window
         onPageChanged: {
-            var fixBind             = []
-            hasMenuList             = false
-            toolBarActions          = fixBind
-            searchToolbar.visible   = false
+            var fixBind = []
+            hasMenuList = false
+            toolBarActions = fixBind
+            searchToolbar.visible = false
 
             if (currentPage.toolBarActions)
-                toolBarActions = currentPage.toolBarActions
+                toolBarActions = currentPage.toolBarActions;
 
             if (currentPage.toolBarMenuList && currentPage.toolBarMenuList.length > 0) {
-                hasMenuList = true
-                optionsToolbarMenu.reset()
+                hasMenuList = true;
+                optionsToolbarMenu.reset();
                 for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
-                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i])
+                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i]);
             }
         }
     }
