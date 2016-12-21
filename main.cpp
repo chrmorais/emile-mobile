@@ -36,7 +36,7 @@ QJsonArray loadPlugins()
 QVariantMap loadAppConfig()
 {
     QFile file;
-    file.setFileName(":/appSettings.json");
+    file.setFileName(":/settings.json");
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString settings(file.readAll());
     file.close();

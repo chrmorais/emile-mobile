@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>appSettings.json</file>
+        <file>settings.json</file>
         <file>assets/menu-temp.png</file>
 
         <file>qml/Main.qml</file>
