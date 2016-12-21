@@ -39,10 +39,6 @@ ApplicationWindow {
         messageDialog.open();
     }
 
-    function isUserLoggedIn() {
-        return true //parseInt(settings.isUserLoggedIn) === 1
-    }
-
     function pushPage(pageUrl, args) {
         pageStack.push(Qt.resolvedUrl(pageUrl), args);
         pageChanged();
@@ -74,8 +70,8 @@ ApplicationWindow {
     }
 
     function setPage(pageUrl, args, clearPageStack) {
-        var pageTemp = pageUrl || "/plugins/Session/Login.qml"
-        if (isUserLoggedIn()) {
+        var pageTemp = pageUrl || "/plugins/Session/Login.qml";
+        if (settings.isUserLoggedIn) {
             loadMenuPages();
             pageTemp = pageUrl || "/plugins/Session/Index.qml";
             menuLoader.active = toolBarLoader.active = true;
