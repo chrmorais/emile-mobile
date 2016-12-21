@@ -7,8 +7,6 @@ import "../AwesomeIcon/" as Awesome
 ToolBar {
     id: toolBar
     state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
-
-    // the states define and change the current appearance(icons and buttons) of toolbar
     states: [
         State {
             name: "normal"
@@ -29,11 +27,8 @@ ToolBar {
         }
     ]
 
-    // the color to icons and page title text
-    property color defaultTextColor: "#fff"
-
-    // flag to simpilfy bind when dynamic pages has menu list
     property bool hasMenuList: false
+    property color defaultTextColor: "#fff"
 
     /**
      * a list of objects to the toolbar actions.
@@ -49,29 +44,20 @@ ToolBar {
     // will sent the action name as parameter
     signal actionExec(var actionName)
 
+    // if current page define a list of itens to submenu (the last item displayed in ToolBar),
+    // the itens will be append into a dropdown list. So, whewn user click in the list,
+    // the menu needs to be opened here! because the page not know the submenu item
     onActionExec: {
-        // if current page define a list of itens to submenu (the last item displayed in ToolBar),
-        // the itens will be append into a dropdown list. So, whewn user click in the list,
-        // the menu needs to be opened here! because the page not know the submenu item
         if (actionName === "submenu" && optionsToolbarMenu != null)
-            optionsToolbarMenu.open()
-
-        // after a click from any action, the toolBar needs to be reseted!
+            optionsToolbarMenu.open();
         else if (actionName === "goback" && (toolBar.state === "actions" || toolBar.state === "search"))
-            toolBar.state = "normal"
-
-        // after a click from any action, the toolBar needs to be reseted!
+            toolBar.state = "normal";
         else if (actionName === "search" && toolBar.state === "normal")
-            toolBar.state = "search"
-
-        // after a click from any action, the toolBar needs to be reseted!
+            toolBar.state = "search";
         else if (actionName === "cancel" && toolBar.state === "search")
-            toolBar.state = "normal"
-
-        // if current page define a function to receiver action message
-        // set the action name send from click by user to the current page
+            toolBar.state = "normal";
         else if (currentPage.actionExec)
-            currentPage.actionExec(actionName)
+            currentPage.actionExec(actionName);
     }
 
     Connections {
@@ -82,14 +68,12 @@ ToolBar {
             toolBarActions          = fixBind
             searchToolbar.visible   = false
 
-            // if current page uses actions in toolbar will be set
             if (currentPage.toolBarActions)
                 toolBarActions = currentPage.toolBarActions
 
-            // if current page has menu items in ToolBar submenu, will be set
             if (currentPage.toolBarMenuList && currentPage.toolBarMenuList.length > 0) {
                 hasMenuList = true
-                optionsToolbarMenu.reset() // clear old itens if exists
+                optionsToolbarMenu.reset()
                 for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
                     optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i])
             }
