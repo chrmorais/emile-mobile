@@ -79,7 +79,7 @@ ToolBar {
         id: toolBarItens
         anchors.fill: parent
 
-        ToolButtonCreator {
+        CustomToolButton {
             id: toolButtonDrawer
             iconColor: defaultTextColor
         }
@@ -105,7 +105,7 @@ ToolBar {
             anchors { left: title.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
         }
 
-        ToolButtonCreator {
+        CustomToolButton {
             id: toolButtonSave
             iconColor: defaultTextColor
             action: "save"; iconName: "save"
@@ -113,7 +113,7 @@ ToolBar {
             visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
-        ToolButtonCreator {
+        CustomToolButton {
             id: toolButtonDelete
             iconColor: defaultTextColor
             action: "delete"; iconName: "trash"
@@ -121,7 +121,7 @@ ToolBar {
             visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
-        ToolButtonCreator {
+        CustomToolButton {
             id: toolButtonSearch
             iconColor: defaultTextColor
             action: "search"; iconName: "search"
@@ -129,7 +129,7 @@ ToolBar {
             visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
         }
 
-        ToolButtonCreator {
+        CustomToolButton {
             id: toolButtonMenuList
             iconColor: defaultTextColor
             action: "submenu"; iconName: "ellipsis_v"
