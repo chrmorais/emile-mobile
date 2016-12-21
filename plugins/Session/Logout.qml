@@ -18,6 +18,6 @@ Page {
 
     Timer {
         running: true; interval: 1000
-        onTriggered: setPage(null, null, true);
+        onTriggered: setIndexPage(true);
     }
 }
