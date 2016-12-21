@@ -1,10 +1,10 @@
-import QtQuick 2.6
+import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
-import "../components/"
-import "../js/Utils.js" as Util
+import "../../qml/components/"
+import "../../qml/js/Utils.js" as Util
 
 Page {
     id: loginPage
@@ -15,44 +15,39 @@ Page {
     }
 
     property int hideToolbar: 1
-    property var requestResult: ({})
-
-    signal loginSubmit()
-    signal successLogin()
+    property var requestResult: {}
 
     function requestLogin() {
+        if (!isValidLoginForm())
+            return;
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify({"email":email.text,"password":password.text})
         jsonListModel.source += "login/"
         jsonListModel.load()
-     }
+    }
 
     function isValidLoginForm() {
         if (email.text === "Email" || email.text.length === 0) {
-            alert("Error!", "Enter your Email!")
-            return false
+            alert("Error!", "Enter your Email!");
+            return false;
         } else if (!Util.isValidEmail(email.text)) {
-            alert("Error!", "Invalid Email!")
-            return false
+            alert("Error!", "Invalid Email!");
+            return false;
         } else if (password.text === "Password" || password.text.length === 0) {
-            alert("Error!", "Enter your password!")
-            return false
+            alert("Error!", "Enter your password!");
+            return false;
         }
-        return true
+        return true;
     }
 
     Timer {
         id: lockerButtons
-        repeat: false
-        running: false
-        interval: 100
+        repeat: false; running: false; interval: 100
     }
 
     Timer {
-        id: loginSuccessCountdown
-        repeat: false
-        running: false
-        interval: 1000
+        id: loginPopShutdown
+        repeat: false; running: false; interval: 1000
         onTriggered: setPage()
     }
 
@@ -60,30 +55,17 @@ Page {
         target: jsonListModel
         onHttpStatusChanged: {
             switch (jsonListModel.httpStatus) {
-                case 405:
-                    alert("Error!", "Email or password is invalid. Try again!");
-                    break;
-                case 404: //200:
-                    requestResult = jsonListModel.model
-                    successLogin()
-                    break;
-                default:
-                    alert("Error!", "Failed to connect to the server!")
+            case 405:
+                alert("Error!", "Email or password is invalid. Try again!");
+                break;
+            case 200:
+                window.userProfileData = jsonListModel.model.get(0);
+                window.isUserLoggedIn = true;
+                loginPopShutdown.start()
+                break;
+            default:
+                alert("Error!", "Failed to connect to the server!")
             }
-        }
-    }
-
-    Connections {
-        target: loginPage
-        onLoginSubmit: {
-            if (isValidLoginForm())
-                requestLogin() //signal
-        }
-        onSuccessLogin: {
-            window.user_logged_in = 1
-            window.user_profile_data = JSON.stringify(requestResult)
-            requestResult = null
-            loginSuccessCountdown.start()
         }
     }
 
@@ -91,11 +73,7 @@ Page {
         id: busyIndicator
         antialiasing: true
         visible: jsonListModel.state === "running"
-        anchors {
-            top: parent.top
-            topMargin: 20
-            horizontalCenter: parent.horizontalCenter
-        }
+        anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
     }
 
     Flickable {
@@ -106,45 +84,35 @@ Page {
 
         Column {
             id: content
-            width: parent.width * 0.90
-            height: parent.height
             spacing: 25
+            width: parent.width * 0.90; height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
-                width: parent.width
-                height: parent.height * 0.40
                 color: "transparent"
+                width: parent.width; height: parent.height * 0.40
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Label {
                     id: brand
-                    text: appSettings.name
-                    color: appSettings.theme.colorPrimary
                     anchors.centerIn: parent
-                    font {
-                        pointSize: appSettings.theme.extraBigFontSize
-                        weight: Font.Bold
-                    }
+                    text: appSettings.name; color: appSettings.theme.colorPrimary
+                    font { pointSize: appSettings.theme.extraBigFontSize; weight: Font.Bold }
                 }
             }
 
             TextField {
                 id: email
-                width: window.width - (window.width*0.15)
-                color: appSettings.theme.colorPrimary
-                inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
                 text: "Email"
+                color: appSettings.theme.colorPrimary
+                width: window.width - (window.width*0.15)
+                inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
                 anchors.horizontalCenter: parent.horizontalCenter
                 background: Rectangle {
-                    y: (email.height-height) - (email.bottomPadding / 2)
-                    width: email.width
-                    height: email.activeFocus ? 2 : 1
                     color: appSettings.theme.colorPrimary
-                    border {
-                        width: 1
-                        color: appSettings.theme.colorPrimary
-                    }
+                    y: (email.height-height) - (email.bottomPadding / 2)
+                    width: email.width; height: email.activeFocus ? 2 : 1
+                    border { width: 1; color: appSettings.theme.colorPrimary }
                 }
                 onFocusChanged: {
                     if (email.focus)
@@ -156,22 +124,17 @@ Page {
 
             TextField {
                 id: password
-                width: window.width - (window.width*0.15)
-                color: appSettings.theme.colorPrimary
-                echoMode: TextInput.Normal
                 text: "Password"
-                font.letterSpacing: 1
+                color: appSettings.theme.colorPrimary
+                width: window.width - (window.width*0.15)
+                echoMode: TextInput.Normal; font.letterSpacing: 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 inputMethodHints: Qt.ImhNoPredictiveText
                 background: Rectangle {
-                    y: (password.height-height) - (password.bottomPadding / 2)
-                    width: password.width
-                    height: password.activeFocus ? 2 : 1
                     color: appSettings.theme.colorPrimary
-                    border {
-                        width: 1
-                        color: appSettings.theme.colorPrimary
-                    }
+                    y: (password.height-height) - (password.bottomPadding / 2)
+                    width: password.width; height: password.activeFocus ? 2 : 1
+                    border { width: 1; color: appSettings.theme.colorPrimary }
                 }
                 onFocusChanged: {
                     if (password.focus && password.text == "Password") {
@@ -192,26 +155,24 @@ Page {
             CustomButton {
                 id: loginButton
                 enabled: !lockerButtons.running && jsonListModel.state !== "running"
-                text: "LOG IN"
-                textColor: appSettings.theme.colorAccent
+                text: qsTr("LOG IN");
+                radius: 25; textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
-                radius: 25
                 onClicked: {
                     lockerButtons.running = true
-                    loginSubmit() //signal
+                    requestLogin();
                 }
             }
 
             CustomButton {
                 id: lostPasswordButton
-                enabled: !lockerButtons.running || !loginSuccessCountdown.running
-                text: "LOST PASSWORD"
-                textColor: appSettings.theme.colorPrimary
+                enabled: !lockerButtons.running || !loginPopShutdown.running
+                text: qsTr("LOST PASSWORD")
+                radius: 25; textColor: appSettings.theme.colorPrimary
                 backgroundColor: appSettings.theme.colorAccent
-                radius: 25
                 onClicked: {
-                    lockerButtons.start()
-                    pageStack.push(Qt.resolvedUrl("LostPassword.qml"))
+                    lockerButtons.start();
+                    pushPage("qrc:/plugins/Session/LostPassword.qml");
                 }
             }
         }
