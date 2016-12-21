@@ -2,40 +2,29 @@ import QtQuick 2.7
 
 Item {
     id: rootItem
+    state: "null"
+    states: [
+        State {name: "null"},
+        State {name: "ready"},
+        State {name: "error"},
+        State {name: "loading"}
+    ]
 
-    property bool debug: false
+    property int count
     property int httpStatus
+    property bool debug: false
     property string source: ""
     property string errorString: ""
     property string requestParams: ""
     property string requestMethod: "GET"
     property string contentType: "application/x-www-form-urlencoded"
-    property int count
     property ListModel model
 
     QtObject {
         id: privateProperties
         property string json: ""
-        onJsonChanged: updateJSONModel()
+        onJsonChanged: updateJSONModel();
     }
-
-    Component {
-        id: listModelComponent
-        ListModel { dynamicRoles: true }
-    }
-
-    function createNewModel(parent) {
-        var newModel = listModelComponent.createObject(parent);
-        return newModel;
-    }
-
-    state: "null"
-    states: [
-        State { name: "null" },
-        State { name: "ready"},
-        State { name: "error"},
-        State { name: "loading"}
-    ]
 
     onStateChanged: {
         if (state === "ready" || state === "error") {
@@ -49,7 +38,7 @@ Item {
     function load() {
         var xhr = new XMLHttpRequest;
         xhr.open(requestMethod, (requestMethod === "GET") ? source + "?" + requestParams : source);
-        xhr.setRequestHeader('Content-type', contentType);
+        xhr.setRequestHeader("Content-type", contentType);
         xhr.onerror = function() {
             rootItem.errorString = qsTr("Cannot connect to server!");
             rootItem.state = "error";
@@ -59,7 +48,7 @@ Item {
                 rootItem.httpStatus = xhr.status;
                 if (rootItem.httpStatus >= 200 && rootItem.httpStatus <= 299) {
                     // fix not state changed when result is a same of previous request!
-                    privateProperties.json = ""
+                    privateProperties.json = "";
                     privateProperties.json = xhr.responseText;
                 } else {
                     rootItem.errorString = qsTr("The server returned error ") + xhr.status;
@@ -71,9 +60,9 @@ Item {
                 }
             }
         }
-        xhr.send(requestParams)
-        rootItem.errorString = ""
-        rootItem.state = "loading"
+        xhr.send(requestParams);
+        rootItem.errorString = "";
+        rootItem.state = "loading";
     }
 
     function updateJSONModel() {
@@ -86,15 +75,9 @@ Item {
             return;
         }
 
-        var modelTemp = createNewModel(rootItem)
-
         var objectArray = JSON.parse(privateProperties.json);
-        for (var key in objectArray) {
-            var jo = objectArray[key];
-            modelTemp.append(jo);
-        }
-        rootItem.count = modelTemp.count;
-        rootItem.model = modelTemp;
+        for (var key in objectArray)
+            mode.append(objectArray[key]);
         rootItem.state = "ready";
     }
 }
