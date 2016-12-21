@@ -75,7 +75,7 @@ ToolBar {
                 hasMenuList = true;
                 optionsToolbarMenu.reset();
                 for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
-                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i]);
+                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i])
             }
         }
     }
@@ -91,26 +91,15 @@ ToolBar {
 
         Item {
             id: title
-            width: visible ? parent.width * 0.55 : 0
-            height: parent.height
+            width: visible ? parent.width * 0.55 : 0; height: parent.height
             visible: toolBar.state === "normal" || toolBar.state === "goback"
-            anchors {
-                left: toolButtonDrawer.right
-                leftMargin: 10
-                verticalCenter: parent.verticalCenter
-            }
+            anchors { left: toolButtonDrawer.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
 
             Text {
-                clip: true
-                width: parent.width
-                elide: Text.ElideRight
-                text: currentPage.title || ""
-                color: defaultTextColor
+                clip: true; width: parent.width; elide: Text.ElideRight
+                text: currentPage.title || ""; color: defaultTextColor
                 anchors.verticalCenter: parent.verticalCenter
-                font {
-                    weight: Font.DemiBold
-                    pointSize: 10
-                }
+                font { weight: Font.DemiBold; pointSize: 10 }
             }
         }
 
@@ -118,51 +107,41 @@ ToolBar {
             id: searchToolbar
             visible: toolBar.state == "search"
             onSearchTextChanged: if (currentPage.searchText) currentPage.searchText = searchToolbar.searchText
-            anchors {
-                left: title.right
-                leftMargin: 10
-                verticalCenter: parent.verticalCenter
-            }
+            anchors { left: title.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
         }
 
         ToolButtonCreator {
             id: toolButtonSave
-            action: "save"
-            iconName: "save"
             iconColor: defaultTextColor
-            visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            action: "save"; iconName: "save"
             anchors.right: toolButtonDelete.left
+            visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         ToolButtonCreator {
             id: toolButtonDelete
-            action: "delete"
-            iconName: "trash"
             iconColor: defaultTextColor
-            visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            action: "delete"; iconName: "trash"
             anchors.right: toolButtonSearch.left
+            visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         ToolButtonCreator {
             id: toolButtonSearch
-            action: "search"
-            iconName: "search"
             iconColor: defaultTextColor
-            visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
+            action: "search"; iconName: "search"
             anchors.right: toolButtonMenuList.left
+            visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
         }
 
         ToolButtonCreator {
             id: toolButtonMenuList
-            action: "submenu"
-            iconName: "ellipsis_v"
             iconColor: defaultTextColor
-            visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
+            action: "submenu"; iconName: "ellipsis_v"
             anchors.right: parent.right
+            visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
 
-            MenuCreator {
-                id: optionsToolbarMenu
-            }
+            MenuCreator { id: optionsToolbarMenu; }
         }
     }
 }
