@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
 
@@ -10,20 +10,13 @@ import "js/Utils.js" as Util
 
 ApplicationWindow {
     id: window
-    width: 380
-    height: 620
-    visible: true
-
-    property bool isIOS: Qt.platform.os === "ios"
+    width: 380; height: 620; visible: true
 
     property QtObject menu
-    property int user_logged_in: 0
-    property var user_profile_data: ({})
-
-    // a array to store the app pages loaded after user loggin or startup
     property var menuPages: []
-
-    // a reference to the current page in the application
+    property var userProfileData: {}
+    property bool isUserLoggedIn: false
+    property bool isIOS: Qt.platform.os === "ios"
     property alias currentPage: pageStack.currentItem
 
     signal pageChanged()
@@ -34,85 +27,71 @@ ApplicationWindow {
 
         if (acceptedCallback) {
             messageDialog.accepted.connect(function() {
-                acceptedCallback()
-            })
+                acceptedCallback();
+            });
         }
         if (negativeButtonText && rejectedCallback) {
             messageDialog.rejected.connect(function() {
-                rejectedCallback()
-            })
+                rejectedCallback();
+            });
         }
 
-        messageDialog.open()
+        messageDialog.open();
     }
 
     function isUserLoggedIn() {
-        return true //parseInt(settings.user_logged_in) === 1
+        return true //parseInt(settings.isUserLoggedIn) === 1
     }
 
     function pushPage(pageUrl, args) {
-        pageStack.push(Qt.resolvedUrl(pageUrl), args)
-        pageChanged()
+        pageStack.push(Qt.resolvedUrl(pageUrl), args);
+        pageChanged();
     }
 
     function popPage() {
-        pageStack.pop()
-        pageChanged()
+        pageStack.pop();
+        pageChanged();
     }
 
-    /**
-      * iterate the plugins from crudModel to load all plugin pages.
-      * Each plugin can define more of one page, so each page will be put into array
-      * that will be available for menu on navigation drawer to display the app pages for the user
-      */
     function loadMenuPages() {
-        // pages already loaded ? return
         if (menuPages.length > 0)
-            return
+            return;
         var pageObject = {}
-        for (var i = 0; i < crudModel.length; i++) { // from each plugin
-            for (var j = 0; j < crudModel[i].pages.length; j++) { // iterate the pages from current plugin
-                pageObject = crudModel[i].pages[j]
+        for (var i = 0; i < crudModel.length; i++) {
+            for (var j = 0; j < crudModel[i].pages.length; j++) {
+                pageObject = crudModel[i].pages[j];
                 if (!pageObject.menu_name)
-                    continue
+                    continue;
                 if (!pageObject.order_priority)
-                    pageObject.order_priority = 0
-                // append the plugin config json - to turn available for the object page
-                pageObject.configJson = crudModel[i]
-                menuPages.push(pageObject)
+                    pageObject.order_priority = 0;
+                // append the plugin config json
+                pageObject.configJson = crudModel[i];
+                menuPages.push(pageObject);
             }
         }
-        menuPages.sort(Util.sortArrayByObjectKey("order_priority"))
-        menuPages.reverse()
+        menuPages.sort(Util.sortArrayByObjectKey("order_priority"));
+        menuPages.reverse();
     }
 
-    /**
-      * create a string with the qml page url to push in pagestack.
-      * @param string pageUrl the url from qml page to push in pagestack
-      * @param object args a object with property values to pass to page
-      * @param bool clearPageStack a flag to define if clear pageStack
-      */
     function setPage(pageUrl, args, clearPageStack) {
         var pageTemp = pageUrl || "/plugins/Session/Login.qml"
         if (isUserLoggedIn()) {
-            loadMenuPages()
-            pageTemp = pageUrl || "/plugins/Session/Index.qml"
-            menuLoader.active = toolBarLoader.active = true
+            loadMenuPages();
+            pageTemp = pageUrl || "/plugins/Session/Index.qml";
+            menuLoader.active = toolBarLoader.active = true;
         }
         if (clearPageStack) {
             while (pageStack.depth > 1)
-                pageStack.pop()
+                pageStack.pop();
         }
-        pageStack.replace(Qt.resolvedUrl(pageTemp), args || {})
+        pageStack.replace(Qt.resolvedUrl(pageTemp), args || {});
     }
 
     Component.onCompleted: {
-        setPage()
-
-        // if is desktop, open window centralized
+        setPage();
         if (!isIOS && Qt.platform.os !== "android") {
-            setX(Screen.width / 2 - width / 2)
-            setY(Screen.height / 2 - height / 2)
+            setX(Screen.width / 2 - width / 2);
+            setY(Screen.height / 2 - height / 2);
         }
     }
 
@@ -121,19 +100,18 @@ ApplicationWindow {
         onActionExec: {
             switch (actionName) {
             case "goback":
-                popPage()
-                break
+                popPage();
+                break;
             case "openMenu":
-                menu.open()
-                break
+                menu.open();
+                break;
             }
         }
     }
 
     Loader {
         id: menuLoader
-        active: false
-        source: "components/Menu.qml"
+        active: false; source: "components/Menu.qml"
         onLoaded: {
             item.menuItemLabelColor = appSettings.theme.textColorPrimary
             item.menuItemBackgroundColor = appSettings.theme.colorPrimary
@@ -142,16 +120,14 @@ ApplicationWindow {
 
     Loader {
         id: toolBarLoader
-        active: false
-        source: "components/ToolBar/CustomToolBar.qml"
+        active: false; source: "components/ToolBar/CustomToolBar.qml"
         onLoaded: window.header = item
     }
 
     Settings {
         id: settings
-
-        property alias user_profile_data: window.user_profile_data
-        property alias user_logged_in: window.user_logged_in
+        property alias isUserLoggedIn: window.isUserLoggedIn
+        property alias userProfileData: window.userProfileData
     }
 
     JSONListModel {
@@ -166,31 +142,26 @@ ApplicationWindow {
 
     StackView {
         id: pageStack
-        focus: true
-        anchors.fill: parent
+        focus: true; anchors.fill: parent
 
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
-                pageStack.pop()
+                pageStack.pop();
             else
-                event.accepted = false
+                event.accepted = false;
         }
 
         pushEnter: Transition {
             PropertyAnimation {
                 property: "opacity"
-                from: 0
-                to: 1
-                duration: 450
+                from: 0; to: 1; duration: 350
             }
         }
 
         popExit: Transition {
             PropertyAnimation {
                 property: "opacity"
-                from: 1
-                to: 0
-                duration: 550
+                from: 1; to: 0; duration: 350
             }
         }
     }
