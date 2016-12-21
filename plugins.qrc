@@ -5,9 +5,6 @@
         <file alias="Alunos/functions.js">plugins/Alunos/functions.js</file>
         <file alias="Alunos/AlunoProfile.qml">plugins/Alunos/AlunoProfile.qml</file>
 
-        <file alias="Professores/Professores.qml">plugins/Professores/Professores.qml</file>
-        <file alias="Professores/config.json">plugins/Professores/config.json</file>
-
         <file alias="Session/Index.qml">plugins/Session/Index.qml</file>
         <file alias="Session/Login.qml">plugins/Session/Login.qml</file>
         <file alias="Session/Logout.qml">plugins/Session/Logout.qml</file>
