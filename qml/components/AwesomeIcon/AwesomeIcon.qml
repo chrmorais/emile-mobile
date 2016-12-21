@@ -9,7 +9,7 @@ Item {
     anchors.verticalCenter: parent.verticalCenter
 
     property string name
-    property int size: 20
+    property alias size: text.font.pointSize
     property bool shadow: false
     property bool valid: text.implicitWidth > 0
     property bool rotate: widget.name.match(/.*-rotate/) !== null
@@ -27,7 +27,7 @@ Item {
         color: widget.color; style: shadow ? Text.Raised : Text.Normal
         font {
             weight: Font.Light
-            pointSize: widget.size
+            pointSize: 20
             family: fontAwesome.name
         }
 
