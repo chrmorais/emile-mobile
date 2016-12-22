@@ -9,10 +9,10 @@
         <file>qml/components/CustomButton.qml</file>
         <file>qml/components/DateChooser.qml</file>
         <file>qml/components/JSONListModel.qml</file>
+        <file>qml/components/EmptyList.qml</file>
         <file>qml/components/FloatingButton.qml</file>
         <file>qml/components/ListItem.qml</file>
         <file>qml/components/Menu.qml</file>
-        <file>qml/components/NoItem.qml</file>
         <file>qml/components/Snackbar.qml</file>
         <file>qml/components/Toast.qml</file>
 
