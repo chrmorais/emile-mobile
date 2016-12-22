@@ -10,7 +10,7 @@ Drawer {
     property bool enabled: true
     property int listItemIndexPages: 0
     property color menuItemLabelColor: "#fff"
-    property color menuItemBackgroundColor: "transparent"
+    property alias menuBackgroundColor: menuRectangle.color
 
     signal profileImageChange()
 
@@ -33,6 +33,7 @@ Drawer {
         boundsBehavior: Flickable.StopAtBounds
 
         Rectangle {
+            id: menuRectangle
             anchors.fill: parent
             color: appSettings.theme.colorPrimary
             anchors.horizontalCenter: parent.horizontalCenter
