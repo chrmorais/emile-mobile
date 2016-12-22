@@ -4,15 +4,9 @@ import QtQuick.Controls 2.0
 
 Item {
     id: listItem
-    width: parent.width
-    height: 60
-    antialiasing: true
-    opacity: enabled ? 1 : 0.6
-    implicitHeight: height
-    anchors {
-        left: parent ? parent.left : undefined
-        right: parent ? parent.right : undefined
-    }
+    antialiasing: true; opacity: enabled ? 1 : 0.6
+    width: parent.width; height: 60; implicitHeight: height
+    anchors { left: parent ? parent.left : undefined; right: parent ? parent.right : undefined }
     implicitWidth: {
         var width = listItem.margins * 2
 
@@ -79,11 +73,9 @@ Item {
 
     Rectangle {
         id: rect
-        clip: true
-        anchors.fill: parent
+        clip: true; anchors.fill: parent
         color: selected ? Qt.darker(selectedColor, 2.0) : backgroundColor
         antialiasing: radius > 0
-
         Behavior on color {
             ColorAnimation { duration: 200 }
         }
@@ -93,25 +85,14 @@ Item {
         id: badgeComponent
 
         Rectangle {
-            radius: badgeRadius
-            color: badgeBackgroundColor
-            anchors {
-                verticalCenter: parent.verticalCenter
-                horizontalCenter: parent.horizontalCenter
-            }
-            border {
-                width: badgeborderWidth
-                color: badgeborderColor
-            }
+            radius: badgeRadius; color: badgeBackgroundColor
+            border { width: badgeborderWidth; color: badgeborderColor }
+            anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
 
             Text {
                 anchors.centerIn: parent
-                text: badgeText
-                color: "#fff"
-                font {
-                    weight: Font.DemiBold
-                    pointSize: 10
-                }
+                text: badgeText; color: "#fff"
+                font { weight: Font.DemiBold; pointSize: 10 }
             }
         }
     }
@@ -119,47 +100,31 @@ Item {
     RowLayout {
         id: row
         spacing: 12
-        anchors {
-            fill: listItem
-            leftMargin: listItem.margins
-            rightMargin: listItem.margins
-        }
+        anchors { fill: listItem; leftMargin: listItem.margins; rightMargin: listItem.margins }
 
         Item {
             id: primaryAction
-            width: 40
-            height: parent.height
+            width: 40; height: parent.height
             visible: primaryActionLoader.active || primaryAction.children.length > 3 || primaryImageIconAction.source != ""
 
             Loader {
                 id: primaryActionLoader
-                width: primaryAction.width * 0.75
-                height: width
                 anchors.centerIn: parent
-                asynchronous: true
-                active: badgeText.length > 0
                 sourceComponent: badgeComponent
+                width: primaryAction.width * 0.75; height: width
+                asynchronous: true; active: badgeText.length > 0
             }
 
             Image {
                 id: primaryImageIconAction
+                asynchronous: true; antialiasing: true
+                width: primaryAction.width * 0.75; height: width
                 visible: !primaryActionLoader.active || source.length > 0
-                width: primaryAction.width * 0.75
-                height: width
-                asynchronous: true
-                antialiasing: true
                 fillMode: Image.Stretch
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
-            MouseArea {
-                onClicked: listItem.clicked()
-                onPressAndHold: listItem.pressAndHold()
-                anchors.fill: parent
-            }
+            MouseArea { onClicked: listItem.clicked(); onPressAndHold: listItem.pressAndHold(); anchors.fill: parent }
         }
 
         ColumnLayout {
@@ -172,32 +137,25 @@ Item {
 
             Text {
                 id: __primaryLabelItem
-                Layout.alignment: Qt.AlignVCenter
                 Layout.fillWidth: true
                 elide: Text.ElideRight
-                visible: text != ""
-                textFormat: Text.RichText
-                color: "#333"
-                fontSizeMode: Text.Fit
+                Layout.alignment: Qt.AlignVCenter
+                color: "#333"; fontSizeMode: Text.Fit
+                visible: text != ""; textFormat: Text.RichText
+                font { weight: Font.DemiBold; pointSize: 14 }
                 anchors {
                     top: __secondaryLabelItem.visible ? parent.top : undefined
                     topMargin: __secondaryLabelItem.visible ? 10 : 0
                     verticalCenter: __secondaryLabelItem.visible ? undefined : parent.verticalCenter
                 }
-                font {
-                    weight: Font.DemiBold
-                    pointSize: 14
-                }
             }
 
             Label {
                 id: __secondaryLabelItem
-                visible: text != "" && __primaryLabelItem.text
                 Layout.alignment: Qt.AlignVCenter
-                elide: Text.ElideRight
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                color: "#777"
-                font.pointSize: 12
+                color: "#777"; font.pointSize: 12
+                visible: text != "" && __primaryLabelItem.text
+                elide: Text.ElideRight; wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 Component.onCompleted: text = text.length > 32 ? text.substring(0, 30) + "..." : text
                 anchors {
                     bottom: __primaryLabelItem.visible ? parent.bottom : undefined
@@ -215,8 +173,7 @@ Item {
 
         Item {
             id: secondaryAction
-            width: 40
-            height: parent.height
+            width: 40; height: parent.height
             visible: (secondaryAction.children > 2 || secondaryImageIconAction.source.length > 0 || secondaryImageIconAction.source.length !== undefined)
 
             Image {
@@ -234,14 +191,9 @@ Item {
 
     Rectangle {
         id: divider
-        width: parent.width
-        height: 1
-        antialiasing: true
-        visible: showSeparator
+        width: parent.width; height: 1
+        antialiasing: true; visible: showSeparator
         color: Qt.rgba(0,0,0,0.1)
-        anchors {
-            bottom: parent.bottom
-            leftMargin: separatorInset
-        }
+        anchors { bottom: parent.bottom; leftMargin: separatorInset }
     }
 }
