@@ -1,9 +1,5 @@
 {
     "name": "Emile",
-    "description": "Emile is a mobile app to educational activities",
-    "version": "1.0",
-    "category": "educational",
-    "locale": "pt_BR",
     "rest_service": {
         "userServiceName": "",
         "userServicePassword": "",
@@ -11,18 +7,14 @@
         "baseImagesUrl": "https://emile-server.herokuapp.com/media/"
     },
     "theme": {
-        "colorIcon": "#333",
         "colorAccent": "#c5e1a5",
         "colorPrimary": "#607d8b",
         "colorHintText": "#ffffff",
-        "colorPrimaryDark": "#444444",
         "textColorPrimary": "#fff",
         "colorWindowBackground": "#eeeeee",
         "colorWindowForeground": "#607d8b",
-        "superSmallFontSize": 9,
         "smallFontSize": 12,
         "middleFontSize": 16,
-        "bigFontSize": 20,
-        "extraBigFontSize": 28
+        "bigFontSize": 20
     }
 }
