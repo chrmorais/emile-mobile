@@ -8,14 +8,14 @@ Drawer {
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
+    property color menuItemTextColor: "#ddd"
     property alias menuBackgroundColor: menuRectangle.color
-    property alias menuItemTextColor: listItem.primaryLabelColor
 
     signal profileImageChange()
 
     function getIcon(parentItem, iconName, color) {
         var component = Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml"));
-        component.createObject(parentItem, {"name":iconName,"color": color});
+        component.createObject(parentItem, {"name":iconName,"color":color});
     }
 
     Connections {
@@ -53,8 +53,9 @@ Drawer {
                     ListItem {
                         id: listItem
                         width: menu.width
+                        primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
-                        selected: modelData.menu_name === currentPage.objectName
+                        selected: modelData.menu_name === window.currentPage.objectName
                         primaryImageIcon: getIcon(primaryAction, modelData.icon_name, primaryLabelColor)
                         onClicked: {
                             menu.close();
