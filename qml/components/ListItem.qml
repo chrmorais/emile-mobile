@@ -43,7 +43,7 @@ Item {
 
     property alias primaryLabel: __primaryLabelItem
     property alias primaryLabelText: __primaryLabelItem.text
-    property color primaryLabelColor: __primaryLabelItem.color
+    property alias primaryLabelColor: __primaryLabelItem.color
 
     property alias secondaryLabel: __secondaryLabelItem
     property alias secondaryLabelText: __secondaryLabelItem.text
