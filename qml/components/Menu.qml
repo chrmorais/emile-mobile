@@ -8,8 +8,8 @@ Drawer {
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
-    property color menuItemLabelColor: "#fff"
     property alias menuBackgroundColor: menuRectangle.color
+    property alias menuItemTextColor: listItem.primaryLabelColor
 
     signal profileImageChange()
 
