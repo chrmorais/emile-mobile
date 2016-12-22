@@ -22,7 +22,6 @@ Drawer {
     Connections {
         target: window
         onWidthChanged: menu.width = window.width * window.width > window.height ? 0.60 : 0.85
-        onHeightChanged: menu.height = window.height
         onCurrentPageChanged: if (menu.visible) close();
     }
 
