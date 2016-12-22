@@ -74,7 +74,7 @@ Item {
     Rectangle {
         id: rect
         clip: true; anchors.fill: parent
-        color: selected ? Qt.darker(selectedColor, 2.0) : backgroundColor
+        color: selected ? Qt.darker(selectedColor, 1.4) : backgroundColor
         antialiasing: radius > 0
         Behavior on color {
             ColorAnimation { duration: 200 }
