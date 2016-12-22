@@ -96,7 +96,7 @@ ToolBar {
                 clip: true; width: parent.width; elide: Text.ElideRight
                 text: currentPage.title || ""; color: defaultTextColor
                 anchors.verticalCenter: parent.verticalCenter
-                font { weight: Font.DemiBold; pointSize: 10 }
+                font { weight: Font.DemiBold; pointSize: 14 }
             }
         }
 
