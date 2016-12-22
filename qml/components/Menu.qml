@@ -44,7 +44,7 @@ Drawer {
                 Image {
                     id: drawerImage
                     clip: true; cache: true; asynchronous: true
-                    width: parent.width;fillMode: Image.PreserveAspectFit
+                    width: parent.width; fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/menu-temp.png"
                 }
 
