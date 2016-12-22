@@ -99,7 +99,7 @@ Page {
                     id: brand
                     anchors.centerIn: parent
                     text: appSettings.name; color: appSettings.theme.colorPrimary
-                    font { pointSize: appSettings.theme.extraBigFontSize; weight: Font.Bold }
+                    font { pointSize: appSettings.theme.bigFontSize; weight: Font.Bold }
                 }
             }
 
