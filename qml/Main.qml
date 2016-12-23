@@ -83,6 +83,8 @@ ApplicationWindow {
         pageStack.replace(Qt.resolvedUrl(pageUrl), {});
     }
 
+    function profileImageConfigure() {}
+
     Component.onCompleted: {
         setIndexPage();
         if (!isIOS && Qt.platform.os !== "android") {
@@ -111,8 +113,9 @@ ApplicationWindow {
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
             window.menu = item
-            window.menu.menuItemLabelColor = appSettings.theme.textColorPrimary
-            window.menu.menuItemBackgroundColor = appSettings.theme.colorPrimary
+            window.menu.userInfoTextColor = appSettings.theme.colorAccent
+            window.menu.menuItemTextColor = appSettings.theme.colorPrimary
+            window.menu.menuBackgroundColor = appSettings.theme.colorWindowBackground
             toolBarLoader.active = true
         }
     }
