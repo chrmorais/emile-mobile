@@ -5,7 +5,7 @@
     "pages": [
         {
             "main_qml": "Alunos.qml",
-            "menu_name": "CRUD Alunos",
+            "menu_name": "Alunos",
             "icon_name": "graduation_cap",
             "order_priority": 10
         }
