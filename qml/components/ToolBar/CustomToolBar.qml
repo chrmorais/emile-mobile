@@ -93,7 +93,7 @@ ToolBar {
             anchors { left: toolButtonDrawer.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
 
             Text {
-                clip: true; width: parent.width; elide: Text.ElideRight
+                elide: Text.ElideRight
                 text: currentPage.title || ""; color: defaultTextColor
                 anchors.verticalCenter: parent.verticalCenter
                 font { weight: Font.DemiBold; pointSize: 14 }
