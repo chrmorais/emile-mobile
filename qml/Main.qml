@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import Qt.labs.settings 1.0
+import QtQuick.Dialogs 1.2 as QuickDialogs
 
 import "components/"
 import "js/Utils.js" as Util
