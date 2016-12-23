@@ -131,12 +131,24 @@ ApplicationWindow {
 
     Loader {
         active: isIOS
-        asynchronous: false
+        asynchronous: active
         onLoaded: iOSImagesGallery = item
         sourceComponent: QuickDialogs.FileDialog {
             folder: shortcuts.pictures
             sidebarVisible: false
             onAccepted: notificationClient.userprofileImageAsBase64(imageUploadDialog.fileUrl)
+        }
+    }
+
+    Loader {
+        active: !isIOS
+        asynchronous: active
+        sourceComponent: Connections {
+            target: androidGallery
+            onImagePathSelected: {
+                menu.userImageProfile = "file://"+imagePath;
+                //requesthttp.postFile(appSettings.rest_service.baseUrl + "/user_profile_image_upload/", [imagePath]);
+            }
         }
     }
 
