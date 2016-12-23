@@ -18,7 +18,7 @@ Drawer {
 
     function getIcon(parentItem, iconName, color) {
         var component = Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml"));
-        component.createObject(parentItem, {"name":iconName,"color":color});
+        component.createObject(parentItem, {"name":iconName,"color":color,"size":18});
     }
 
     Connections {
