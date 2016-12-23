@@ -48,13 +48,11 @@ Drawer {
                 width: parent.width; anchors.fill: parent
 
                 Image {
-                    id: drawerImage
                     clip: true; cache: true; asynchronous: true
                     width: parent.width; fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/menu-temp.png"
 
                     Column {
-                        id: userNomeEmailColumn
                         spacing: 2
                         anchors { left: parent.left; leftMargin: 15; top: parent.top; topMargin: isIOS ? 20 : 25 }
 
@@ -77,7 +75,6 @@ Drawer {
                     model: menuPages
 
                     ListItem {
-                        id: listItem
                         width: menu.width
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
