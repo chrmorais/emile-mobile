@@ -60,7 +60,7 @@ Page {
         visible: listView.count === 0 && jsonListModel.state !== "ready"
     }
 
-    AppComponents.NoItem {
+    AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
         onClicked: AlunoFunc.httpRequest("users")
