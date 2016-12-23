@@ -8,7 +8,8 @@ Drawer {
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
-    property color menuItemTextColor: "#ddd"
+    property color userInfoTextColor: "#fff"
+    property color menuItemTextColor: "#444"
     property alias menuBackgroundColor: menuRectangle.color
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
@@ -65,7 +66,7 @@ Drawer {
                         }
 
                         Label {
-                            color: "#fff"; textFormat: Text.RichText
+                            color: userInfoTextColor; textFormat: Text.RichText
                             text: userProfileData.name + "<br><b>" + userProfileData.email + "</b>"
                             font.pointSize: 12
                         }
