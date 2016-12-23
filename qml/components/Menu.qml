@@ -30,6 +30,11 @@ Drawer {
         contentHeight: Math.max(content.implicitHeight, height)
         boundsBehavior: Flickable.StopAtBounds
 
+        // adicionado para exibir o scrool lateral
+        Keys.onUpPressed: flickableScrollBar.decrease()
+        Keys.onDownPressed: flickableScrollBar.increase()
+        ScrollBar.vertical: ScrollBar { id: flickableScrollBar }
+
         Rectangle {
             id: menuRectangle
             anchors.fill: parent
