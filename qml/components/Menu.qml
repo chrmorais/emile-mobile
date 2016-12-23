@@ -50,6 +50,25 @@ Drawer {
                     clip: true; cache: true; asynchronous: true
                     width: parent.width; fillMode: Image.PreserveAspectFit
                     source: "qrc:/assets/menu-temp.png"
+
+                    Column {
+                        id: userNomeEmailColumn
+                        spacing: 2
+                        anchors { left: parent.left; leftMargin: 15; top: parent.top; topMargin: isIOS ? 20 : 25 }
+
+                        Image {
+                            id: drawerUserImageProfile
+                            width: 100; height: 100
+                            source: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
+                            MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
+                        }
+
+                        Label {
+                            color: "#fff"; textFormat: Text.RichText
+                            text: userProfileData.name + "<br><b>" + userProfileData.email + "</b>"
+                            font.pointSize: 12
+                        }
+                    }
                 }
 
                 Repeater {
