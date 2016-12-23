@@ -59,7 +59,7 @@ Drawer {
 
                         Image {
                             id: drawerUserImageProfile
-                            width: 100; height: 100
+                            width: 75; height: width
                             source: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
                             MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
                         }
