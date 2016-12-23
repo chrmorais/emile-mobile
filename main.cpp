@@ -9,6 +9,10 @@
 #include <QRegularExpression>
 #include <QQmlApplicationEngine>
 
+#ifdef Q_OS_ANDROID
+#include "android/cpp/androidgallery.h"
+#endif
+
 QJsonArray loadPlugins()
 {
     QFile pluginsQrc(":/plugins.qrc");
@@ -54,6 +58,12 @@ int main(int argc, char *argv[])
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("appSettings", loadAppConfig());
     context->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
+
+    #ifdef Q_OS_ANDROID
+        AndroidGallery androidgallery;
+        context->setContextProperty("androidGallery", &androidgallery);
+    #endif
+
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 
     return app.exec();
