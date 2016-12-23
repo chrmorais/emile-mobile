@@ -39,8 +39,7 @@ Drawer {
 
         Rectangle {
             id: menuRectangle
-            anchors.fill: parent
-            color: appSettings.theme.colorPrimary
+            color: "#fff"; anchors.fill: parent
             anchors.horizontalCenter: parent.horizontalCenter
 
             Column {
