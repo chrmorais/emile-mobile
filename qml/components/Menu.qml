@@ -11,6 +11,7 @@ Drawer {
     property color userInfoTextColor: "#fff"
     property color menuItemTextColor: "#444"
     property alias menuBackgroundColor: menuRectangle.color
+    property alias userImageProfile: drawerUserImageProfile.source
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
     signal profileImageChange()
