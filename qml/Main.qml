@@ -73,6 +73,7 @@ ApplicationWindow {
         var pageUrl = "/plugins/Session/Login.qml";
         if (isUserLoggedIn) {
             loadMenuPages();
+            if (window.menu) window.menu.enabled = true;
             pageUrl = "/plugins/Session/Index.qml";
         }
         if (clearPageStack) {
