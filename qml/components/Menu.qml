@@ -10,6 +10,7 @@ Drawer {
     property bool enabled: true
     property color menuItemTextColor: "#ddd"
     property alias menuBackgroundColor: menuRectangle.color
+    property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
     signal profileImageChange()
 
