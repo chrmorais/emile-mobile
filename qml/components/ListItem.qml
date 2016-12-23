@@ -5,7 +5,7 @@ import QtQuick.Controls 2.0
 Item {
     id: listItem
     antialiasing: true; opacity: enabled ? 1 : 0.6
-    width: parent.width; height: 60; implicitHeight: height
+    width: parent.width; height: 50; implicitHeight: height
     anchors { left: parent ? parent.left : undefined; right: parent ? parent.right : undefined }
     implicitWidth: {
         var width = listItem.margins * 2
