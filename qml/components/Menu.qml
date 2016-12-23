@@ -11,7 +11,7 @@ Drawer {
     property color userInfoTextColor: "#fff"
     property color menuItemTextColor: "#444"
     property alias menuBackgroundColor: menuRectangle.color
-    property alias userImageProfile: drawerUserImageProfile.source
+    property alias userImageProfile: drawerUserImageProfile.imgSource
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
     signal profileImageChange()
@@ -56,10 +56,10 @@ Drawer {
                         spacing: 2
                         anchors { left: parent.left; leftMargin: 15; top: parent.top; topMargin: isIOS ? 20 : 25 }
 
-                        Image {
+                        RoundedImage {
                             id: drawerUserImageProfile
                             width: 75; height: width
-                            source: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
+                            imgSource: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
                             MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
                         }
 
