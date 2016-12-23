@@ -85,7 +85,12 @@ ApplicationWindow {
         pageStack.replace(Qt.resolvedUrl(pageUrl), {});
     }
 
-    function profileImageConfigure() {}
+    function profileImageConfigure() {
+        if (isIOS)
+            iOSImagesGallery.open();
+        else
+            androidGallery.open();
+    }
 
     Component.onCompleted: {
         setIndexPage();
@@ -136,7 +141,10 @@ ApplicationWindow {
         sourceComponent: QuickDialogs.FileDialog {
             folder: shortcuts.pictures
             sidebarVisible: false
-            onAccepted: notificationClient.userprofileImageAsBase64(imageUploadDialog.fileUrl)
+            onAccepted: {
+                menu.userImageProfile = "file://"+iOSImagesGallery.fileUrl;
+                // implementar upload para o serviço rest
+            }
         }
     }
 
@@ -147,7 +155,7 @@ ApplicationWindow {
             target: androidGallery
             onImagePathSelected: {
                 menu.userImageProfile = "file://"+imagePath;
-                //requesthttp.postFile(appSettings.rest_service.baseUrl + "/user_profile_image_upload/", [imagePath]);
+                // implementar upload para o serviço rest
             }
         }
     }
