@@ -78,6 +78,7 @@ Drawer {
                         width: menu.width
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
+                        primaryLabel.font.bold: true
                         selected: modelData.menu_name === window.currentPage.objectName
                         primaryImageIcon: getIcon(primaryAction, modelData.icon_name, primaryLabelColor)
                         onClicked: {
