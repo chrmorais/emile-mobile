@@ -8,6 +8,8 @@ RESOURCES += qml.qrc plugins.qrc
 
 android: {
     QT += androidextras
+    HEADERS += android/cpp/androidgallery.h
+    SOURCES += android/cpp/androidgallery.cpp
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
