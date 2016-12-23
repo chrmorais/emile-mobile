@@ -14,6 +14,7 @@ ApplicationWindow {
     width: 380; height: 620; visible: true
 
     property QtObject menu
+    property QtObject iOSImagesGallery
     property var menuPages: []
     property var userProfileData: {}
     property bool isUserLoggedIn: false
@@ -126,6 +127,17 @@ ApplicationWindow {
         asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
         onLoaded: window.header = toolBarLoader.item
+    }
+
+    Loader {
+        active: isIOS
+        asynchronous: false
+        onLoaded: iOSImagesGallery = item
+        sourceComponent: QuickDialogs.FileDialog {
+            folder: shortcuts.pictures
+            sidebarVisible: false
+            onAccepted: notificationClient.userprofileImageAsBase64(imageUploadDialog.fileUrl)
+        }
     }
 
     Settings {
