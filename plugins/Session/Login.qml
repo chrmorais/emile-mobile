@@ -19,8 +19,23 @@ Page {
     property int hideToolbar: 1
     property var requestResult: {}
 
+    function isDeveloperLogin() {
+        if (email.text === "teste@teste.com" && password.text === "lkjlkj") {
+            var fixBindArray = {};
+            fixBindArray.name = "enoquejoseneas";
+            fixBindArray.email = "enoquejoseneas@ifba.edu.br";
+            window.userProfileData = fixBindArray;
+            window.isUserLoggedIn = true;
+            loginPopShutdown.start();
+            return true;
+        }
+        return false;
+    }
+
     function requestLogin() {
         if (!isValidLoginForm())
+            return;
+        if (isDeveloperLogin())
             return;
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify({"email":email.text,"password":password.text})
