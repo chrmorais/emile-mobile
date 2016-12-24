@@ -4,15 +4,15 @@ import QtQuick.Controls 2.0
 
 Page {
     title: "Realizar chamada"
-    property int aulaId: 0
-    property int turmaId: 0
+
+    property int classes_id: 0
+    property int lesson_id: 0
     property bool checkedAll: true
-    property var chamada: ({})
+    property var chamada: {"frequency": []};
     property var configJson: ({})
     property string toolBarState: "goback"
     property var toolBarActions: ["save"]
     property string defaultUserImage: "user-default.png"
-
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
             text: "Exibir em " + (listView.visible ? "grade" : "lista")
@@ -31,13 +31,10 @@ Page {
     ]
 
     function requestToSave() {
-        chamada = {
-            "aula_id": aulaId,
-            "chamada": chamada
-        }
+        jsonListModel.debug = true
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = chamada
-        jsonListModel.source += "/registrar_chamada/"
+        jsonListModel.source += "/frequency_register/"+lesson_id
         jsonListModel.load()
         jsonListModel.stateChanged.connect(function() {
             // after get server response, close the current page
@@ -52,19 +49,23 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.source += "alunos_turma/" + turmaId
+        jsonListModel.debug = true
+        jsonListModel.source += "students_classes/" + classes_id
         jsonListModel.load()
     }
 
-    function save(username, alunoId, username, useremail, status) {
-        var objectTemp = chamada
-        objectTemp[username] = {
-            "aluno_id": alunoId,
-            "status": status,
-            "username": username,
-            "useremail": useremail
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready")
+                gridView.model = jsonListModel.model
         }
-        chamada = objectTemp
+    }
+
+    function save(student_id, status) {
+        var objectTemp = chamada["frequency"];
+        objectTemp.push({"student_id": student_id, "status": status});
+        chamada = objectTemp;
     }
 
     Component {
@@ -101,13 +102,13 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        text: username
+                        text: name || ""
                         font.pointSize: 10
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
 
                     Label {
-                        text: useremail
+                        text: email
                         font.pointSize: 8
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -115,13 +116,13 @@ Page {
 
                 Switch {
                     id: switchStatus
-                    text: chamada !== null && chamada[username] ? chamada[username].status : "P"
+                    text: chamada !== null && chamada[name] ? chamada[name].status : "P"
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.weight: Font.DemiBold
                     checked: switchStatus.text == "P"
                     onClicked: {
                         switchStatus.text = (switchStatus.text == "F" ? "P" : "F")
-                        save(username, id, username, useremail, switchStatus.text)
+                        save(id, switchStatus.text)
                     }
                 }
             }
@@ -134,7 +135,7 @@ Page {
         Column {
             spacing: 0; width: parent.width; height: 60
 
-            Component.onCompleted: save(username, id, username, useremail, labelStatus.text);
+            Component.onCompleted: save(id, labelStatus.text);
 
             Rectangle {
                 width: parent.width; height: parent.height - 1
@@ -161,11 +162,11 @@ Page {
                         anchors { left: imgProfile.right; leftMargin: 15; verticalCenter: parent.verticalCenter }
 
                         Label {
-                            text: username
+                            text: name || ""
                         }
 
                         Label {
-                            text: useremail
+                            text: email
                         }
                     }
 
@@ -178,13 +179,13 @@ Page {
                             checked: labelStatus.text == "P"
                             onClicked: {
                                 labelStatus.text = (labelStatus.text == "F" ? "P" : "F")
-                                save(username, id, username, useremail, labelStatus.text);
+                                save(id, labelStatus.text);
                             }
                         }
 
                         Label {
                             id: labelStatus
-                            text: chamada !== null && chamada[username] ? chamada[username].status : "P"
+                            text: chamada !== null && chamada[name] ? chamada[name].status : "P"
                             anchors.verticalCenter: parent.verticalCenter
                             color: text == "F" ? "red" : "blue"
                             font.weight: Font.DemiBold
@@ -209,7 +210,7 @@ Page {
         id: gridView
         visible: false
         anchors.fill: parent
-        model: jsonListModel.model
+//        model: jsonListModel.model
         delegate: gridViewDelegate
         cellWidth: 180; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
