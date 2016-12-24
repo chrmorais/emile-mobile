@@ -9,6 +9,7 @@ Page {
     property int lesson_id: 0
     property bool checkedAll: true
     property var chamada: {"frequency": []};
+    property var checkedStatus: {}
     property var configJson: ({})
     property string toolBarState: "goback"
     property var toolBarActions: ["save"]
@@ -49,7 +50,6 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.debug = true
         jsonListModel.source += "students_classes/" + classes_id
         jsonListModel.load()
     }
@@ -63,9 +63,11 @@ Page {
     }
 
     function save(student_id, status) {
-        var objectTemp = chamada["frequency"];
-        objectTemp.push({"student_id": student_id, "status": status});
-        chamada = objectTemp;
+        console.log("student_id: " + student_id + " status: " + status);
+        chamada["frequency"].push({"student_id": student_id, "status": status});
+        var checkedStatusTemp = ({});
+        checkedStatusTemp[student_id] = status;
+        checkedStatus = checkedStatusTemp;
     }
 
     Component {
@@ -116,7 +118,7 @@ Page {
 
                 Switch {
                     id: switchStatus
-                    text: chamada !== null && chamada[name] ? chamada[name].status : "P"
+                    text: checkedStatus != null && checkedStatus[id] ? checkedStatus[id] : "P"
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.weight: Font.DemiBold
                     checked: switchStatus.text == "P"
@@ -185,7 +187,7 @@ Page {
 
                         Label {
                             id: labelStatus
-                            text: chamada !== null && chamada[name] ? chamada[name].status : "P"
+                            text: checkedStatus != null && checkedStatus[id] ? checkedStatus[id] : "P"
                             anchors.verticalCenter: parent.verticalCenter
                             color: text == "F" ? "red" : "blue"
                             font.weight: Font.DemiBold
@@ -210,7 +212,6 @@ Page {
         id: gridView
         visible: false
         anchors.fill: parent
-//        model: jsonListModel.model
         delegate: gridViewDelegate
         cellWidth: 180; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
