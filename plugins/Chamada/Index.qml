@@ -3,14 +3,22 @@ import QtQuick.Controls 2.0
 
 Page {
     id: page
+    title: "Disciplina em andamento"
 
     property var json: {}
     property var configJson: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "/disciplina_em_andamento/" + user_profile_data.id
+        jsonListModel.source += "/lesson_in_progress/2" //+ userProfileData.id
         jsonListModel.load()
-        json = Qt.binding(function() { return jsonListModel.model.get(0) })
+    }
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready")
+                json = jsonListModel.model.get(0);
+        }
     }
 
     BusyIndicator {
@@ -35,7 +43,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                text: json.turma.disciplina_id.codigo + " - " + json.turma.disciplina_id.nome
+                text: json.classes.subject_id.code + " - " + json.classes.subject_id.name
             }
         }
 
@@ -44,7 +52,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                text: json.data_inicio_aula + " - " + json.data_fim_aula
+                text: json.lesson_start_date + " - " + json.lesson_finish_date
             }
         }
 
@@ -58,7 +66,7 @@ Page {
             id: actionStartButton
             text: "Realizar a chamada"
             anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"turmaId": json.turma.id,"aula_id":json.aula.id})
+            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"lesson_id": json.id, "classes_id": json.classes.id})
         }
     }
 
