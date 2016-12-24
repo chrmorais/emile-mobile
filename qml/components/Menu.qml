@@ -16,11 +16,6 @@ Drawer {
 
     signal profileImageChange()
 
-    function getIcon(parentItem, iconName, color) {
-        var component = Qt.createComponent(Qt.resolvedUrl("AwesomeIcon/AwesomeIcon.qml"));
-        component.createObject(parentItem, {"name":iconName,"color":color,"size":18});
-    }
-
     Connections {
         target: window
         onWidthChanged: menu.width = window.width * window.width > window.height ? 0.60 : 0.85
@@ -80,7 +75,7 @@ Drawer {
                         primaryLabelText: modelData.menu_name
                         primaryLabel.font.bold: true
                         selected: modelData.menu_name === window.currentPage.objectName
-                        primaryImageIcon: getIcon(primaryAction, modelData.icon_name, primaryLabelColor)
+                        primaryImageIcon: modelData.icon_name
                         onClicked: {
                             menu.close();
                             if (!selected) {
