@@ -22,6 +22,7 @@ Page {
     function isDeveloperLogin() {
         if (email.text === "teste@teste.com" && password.text === "lkjlkj") {
             var fixBindArray = {};
+            fixBindArray.id = 2;
             fixBindArray.name = "enoquejoseneas";
             fixBindArray.email = "enoquejoseneas@ifba.edu.br";
             window.userProfileData = fixBindArray;
