@@ -10,16 +10,14 @@ Page {
     id: page
     title: "New Aluno"
     objectName: ""
+    anchors.fill: parent
 
     property int userId
-
     property string action: "view"
     property string toolBarState: "goback"
-
     property var fieldsData
     property var formData: ({})
     property var toolBarActions: ["save"]
-
     property bool editable: action === "view" || action === "edit"
 
     // called by ToolBar on action click
@@ -42,6 +40,11 @@ Page {
         id: toast
     }
 
+    AppComponents.DatePicker {
+        id: datePickerBirthdate
+        onDateSelected: textFieldBirthdate.text = (date.month + "-" + date.day + "-" + date.year)
+    }
+
     BusyIndicator {
         id: loading
         anchors.centerIn: parent
@@ -51,19 +54,15 @@ Page {
     Flickable {
         id: pageFlickable
         visible: action === "newRegister"
-        width: parent.width
-        height: parent.height
+        width: parent.width; height: parent.height
         contentHeight: Math.max(content.implicitHeight, height)
         anchors.horizontalCenter: parent.horizontalCenter
 
         Column {
             id: content
-            width: parent.width * 0.80
-            height: parent.height
-            spacing: 10
+            width: parent.width * 0.80; height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
-            topPadding: 25
-            bottomPadding: 25
+            spacing: 10; topPadding: 25; bottomPadding: 25
 
             Label {
                 id: labelName
@@ -162,11 +161,6 @@ Page {
                 onTextChanged: AlunoFunc.saveLocal("birth_date", textFieldBirthdate.text)
 
                 MouseArea { anchors.fill: parent; onClicked: datePickerBirthdate.open() }
-            }
-
-            AppComponents.DatePicker {
-                id: datePickerBirthdate
-                onDateSelected: textFieldBirthdate.text = (date.month + "-" + date.day + "-" + date.year)
             }
 
             Label {
