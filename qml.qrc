@@ -3,11 +3,14 @@
         <file>settings.json</file>
         <file>assets/menu-temp.png</file>
         <file>assets/user-default-icon.png</file>
+        <file>assets/left.svg</file>
+        <file>assets/right.svg</file>
 
         <file>qml/Main.qml</file>
         <file>qml/js/Utils.js</file>
 
         <file>qml/components/CustomButton.qml</file>
+        <file>qml/components/DatePicker.qml</file>
         <file>qml/components/DateChooser.qml</file>
         <file>qml/components/JSONListModel.qml</file>
         <file>qml/components/EmptyList.qml</file>
