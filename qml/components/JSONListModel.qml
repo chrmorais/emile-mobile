@@ -18,7 +18,7 @@ Item {
     property string requestParams: ""
     property string requestMethod: "GET"
     property string contentType: "application/x-www-form-urlencoded"
-    property ListModel model
+    property ListModel model: ListModel { }
 
     QtObject {
         id: privateProperties
@@ -28,7 +28,6 @@ Item {
 
     onStateChanged: {
         if (state === "ready" || state === "error") {
-            source = ""
             requestParams = ""
             requestMethod = "GET"
             contentType = "application/x-www-form-urlencoded"
