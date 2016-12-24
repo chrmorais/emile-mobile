@@ -29,7 +29,7 @@ Item {
 
     Popup {
         id: popup
-        x: window.width / 2 - width / 2; y: window.height / 2 - height / 2
+        x: (window.width / 2)-(width / 2); y: (window.height / 2)-(height / 2)
 
         Column {
             id: column
@@ -49,7 +49,7 @@ Item {
                         id: previousYearIcon
                         antialiasing: true
                         asynchronous: true; cache: true; clip: true
-                        source: Qt.resolvedUrl("left.svg"); width: 25; height: width
+                        source: Qt.resolvedUrl("../../assets/left.svg"); width: 25; height: width
                         anchors { left: parent.left; verticalCenter: parent.verticalCenter }
 
                         ColorOverlay {
@@ -93,7 +93,7 @@ Item {
                         id: nextYearIcon
                         antialiasing: true
                         asynchronous: true; cache: true; clip: true
-                        source: Qt.resolvedUrl("right.svg"); width: 25; height: width
+                        source: Qt.resolvedUrl("../../assets/right.svg"); width: 25; height: width
                         anchors { right: parent.right; verticalCenter: parent.verticalCenter }
 
                         ColorOverlay {
