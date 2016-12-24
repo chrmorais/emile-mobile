@@ -154,11 +154,19 @@ Page {
                 text: "Birthdate"
             }
 
-            AppComponents.DateChooser {
+            TextField {
+                id: textFieldBirthdate
                 width: parent.width
-                valueSelected: editable && fieldsData ? fieldsData.birth_date || "" : ""
-                enabled: action !== "view"
-                onDateChooserChanged: AlunoFunc.saveLocal("birth_date", dateChooser)
+                readOnly: action === "view"
+                text: editable && fieldsData ? fieldsData.birth_date || "" : ""
+                onTextChanged: AlunoFunc.saveLocal("birth_date", textFieldBirthdate.text)
+
+                MouseArea { anchors.fill: parent; onClicked: datePicker.open() }
+            }
+
+            AppComponents.DatePicker {
+                id: datePickerBirthdate
+                onDateSelected: textFieldBirthdate.text = (data.month + "-" + data.day + "-" + data.year)
             }
 
             Label {
