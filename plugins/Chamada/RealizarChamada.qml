@@ -32,9 +32,8 @@ Page {
     ]
 
     function requestToSave() {
-        jsonListModel.debug = true
         jsonListModel.requestMethod = "POST"
-        jsonListModel.requestParams = chamada
+        jsonListModel.requestParams = JSON.stringify(chamada)
         jsonListModel.source += "/frequency_register/"+lesson_id
         jsonListModel.load()
         jsonListModel.stateChanged.connect(function() {
