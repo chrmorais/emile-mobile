@@ -18,7 +18,7 @@ Item {
     property string requestParams: ""
     property string requestMethod: "GET"
     property string contentType: "application/x-www-form-urlencoded"
-    property ListModel model: ListModel { }
+    property ListModel model: ListModel { id: jsonModel }
 
     QtObject {
         id: privateProperties
@@ -65,8 +65,8 @@ Item {
     }
 
     function updateJSONModel() {
-        if (model !== null && model.count > 0)
-            model.clear();
+        if (jsonModel !== null && jsonModel.count > 0)
+            jsonModel.clear();
 
         if (privateProperties.json === "") {
             rootItem.errorString = qsTr("The server returned an empty response!");
@@ -76,7 +76,7 @@ Item {
 
         var objectArray = JSON.parse(privateProperties.json);
         for (var key in objectArray)
-            model.append(objectArray[key]);
+            jsonModel.append(objectArray[key]);
         rootItem.state = "ready";
     }
 }
