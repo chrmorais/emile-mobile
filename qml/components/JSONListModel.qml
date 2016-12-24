@@ -77,7 +77,7 @@ Item {
 
         var objectArray = JSON.parse(privateProperties.json);
         for (var key in objectArray)
-            mode.append(objectArray[key]);
+            model.append(objectArray[key]);
         rootItem.state = "ready";
     }
 }
