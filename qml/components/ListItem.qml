@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
+import "AwesomeIcon/"
+
 Item {
     id: listItem
     antialiasing: true; opacity: enabled ? 1 : 0.6
@@ -44,8 +46,7 @@ Item {
     property alias secondaryLabelColor: __secondaryLabelItem.color
 
     property alias primaryAction: primaryAction
-    property QtObject primaryImageIcon: primaryImageIconAction
-    property alias primaryImageIconSource: primaryImageIconAction.source
+    property alias primaryImageIcon: primaryImageIconAction.name
 
     property QtObject secondaryImageIcon: secondaryImageIconAction
     property alias secondaryAction: secondaryAction
@@ -115,12 +116,11 @@ Item {
                 asynchronous: true; active: badgeText.length > 0
             }
 
-            Image {
+            AwesomeIcon {
                 id: primaryImageIconAction
-                asynchronous: true; antialiasing: true
+                color: primaryLabelColor
                 width: primaryAction.width * 0.75; height: width
                 visible: !primaryActionLoader.active || source.length > 0
-                fillMode: Image.Stretch
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
