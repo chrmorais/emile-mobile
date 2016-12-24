@@ -166,7 +166,7 @@ Page {
 
             AppComponents.DatePicker {
                 id: datePickerBirthdate
-                onDateSelected: textFieldBirthdate.text = (data.month + "-" + data.day + "-" + data.year)
+                onDateSelected: textFieldBirthdate.text = (date.month + "-" + date.day + "-" + date.year)
             }
 
             Label {
