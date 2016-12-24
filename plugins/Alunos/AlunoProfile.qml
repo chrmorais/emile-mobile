@@ -161,7 +161,7 @@ Page {
                 text: editable && fieldsData ? fieldsData.birth_date || "" : ""
                 onTextChanged: AlunoFunc.saveLocal("birth_date", textFieldBirthdate.text)
 
-                MouseArea { anchors.fill: parent; onClicked: datePicker.open() }
+                MouseArea { anchors.fill: parent; onClicked: datePickerBirthdate.open() }
             }
 
             AppComponents.DatePicker {
