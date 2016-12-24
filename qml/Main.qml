@@ -11,7 +11,7 @@ import "js/Utils.js" as Util
 
 ApplicationWindow {
     id: window
-    width: 380; height: 620; visible: true
+    width: 340; height: 520; visible: true
 
     property QtObject menu
     property QtObject iOSImagesGallery
