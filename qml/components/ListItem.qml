@@ -55,7 +55,6 @@ Item {
     property bool selected: false
     property bool interactive: true
     property bool showSeparator: false
-    property bool darkBackground: false
 
     property alias backgroundColor: rect.color
     property color selectedTextColor: "#f0ffff"
