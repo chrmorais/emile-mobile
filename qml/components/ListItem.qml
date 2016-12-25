@@ -62,9 +62,9 @@ Item {
     property color selectedBackgroundColor: "#f0ffff"
 
     property int badgeRadius: 9999
-    property int badgeborderWidth: 0
+    property int badgeBorderWidth: 0
     property color badgeTextColor: "#fff"
-    property color badgeborderColor: "transparent"
+    property color badgeBorderColor: "transparent"
     property color badgeBackgroundColor: "#" + Math.random().toString(16).slice(2,8)
     property string badgeText
 
@@ -88,7 +88,7 @@ Item {
 
         Rectangle {
             radius: badgeRadius; color: badgeBackgroundColor
-            border { width: badgeborderWidth; color: badgeborderColor }
+            border { width: badgeBorderWidth; color: badgeBorderColor }
             anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
 
             Text {
