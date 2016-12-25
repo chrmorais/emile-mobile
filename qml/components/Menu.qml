@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 Drawer {
     id: menu
-    width: window.width * 0.75; height: window.height
+    width: window.width * 0.80; height: window.height
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
@@ -12,6 +12,7 @@ Drawer {
     property color menuItemTextColor: "#444"
     property alias menuBackgroundColor: menuRectangle.color
     property alias userImageProfile: drawerUserImageProfile.imgSource
+    property string pageSource: ""
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
     signal profileImageChange()
@@ -84,7 +85,7 @@ Drawer {
                         onClicked: {
                             menu.close();
                             if (!selected) {
-                                var pageSource = "%1/%2".arg(modelData.configJson.root_folder).arg(modelData.main_qml);
+                                pageSource = modelData.configJson.root_folder + "/" + modelData.main_qml;
                                 pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name});
                             }
                         }
