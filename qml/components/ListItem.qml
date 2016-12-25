@@ -155,7 +155,7 @@ Item {
                 }
             }
 
-            Label {
+            Text {
                 id: __secondaryLabelItem
                 Layout.alignment: Qt.AlignVCenter
                 color: "#777"; font.pointSize: 12
@@ -169,11 +169,7 @@ Item {
                 }
             }
 
-            MouseArea {
-                onClicked: listItem.clicked()
-                onPressAndHold: listItem.pressAndHold()
-                anchors.fill: parent
-            }
+            MouseArea { onClicked: listItem.clicked(); onPressAndHold: listItem.pressAndHold(); anchors.fill: parent }
         }
 
         Item {
