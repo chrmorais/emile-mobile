@@ -45,21 +45,19 @@ Item {
     property alias secondaryLabelText: __secondaryLabelItem.text
     property alias secondaryLabelColor: __secondaryLabelItem.color
 
-    property alias primaryImageIcon: primaryActionIcon.name
-    property alias primaryImageImage: primaryActionImage.source
+    property alias primaryIconName: primaryActionIcon.name
+    property alias primaryIconColor: primaryActionIcon.color
+    property alias primaryImageSource: primaryActionImage.source
 
-    property alias secondaryActionIcon: secondaryActionIcon.name
-    property alias secondaryActionIconColor: secondaryActionIcon.color
-
-    property QtObject secondaryImageIcon: secondaryImageIconAction
-    property alias secondaryAction: secondaryAction
-    property alias secondaryImageIconSource: secondaryImageIconAction.source
+    property alias secondaryIconName: secondaryActionIcon.name
+    property alias secondaryIconColor: secondaryActionIcon.color
+    property alias secondaryImageSource: secondaryActionImage.source
 
     property bool selected: false
     property bool interactive: true
     property bool showSeparator: false
 
-    property alias backgroundColor: rect.color
+    property color backgroundColor: "transparent"
     property color selectedTextColor: "#f0ffff"
     property color selectedBackgroundColor: "#f0ffff"
 
@@ -77,7 +75,7 @@ Item {
     Rectangle {
         id: rect
         clip: true; anchors.fill: parent
-        color: selected ? selectedBackgroundColor : color
+        color: selected ? selectedBackgroundColor : backgroundColor
         antialiasing: radius > 0
         Behavior on color {
             ColorAnimation { duration: 200 }
@@ -106,6 +104,7 @@ Item {
         anchors { fill: listItem; leftMargin: listItem.margins; rightMargin: listItem.margins }
 
         Item {
+            id: primaryAction
             width: 40; height: parent.height
             visible: primaryActionLoader.active || children.length > 3 || primaryActionImage.source != "" || primaryActionIcon.name.length > 0
 
@@ -178,10 +177,10 @@ Item {
         Item {
             id: secondaryAction
             width: 40; height: parent.height; anchors.right: parent.right
-            visible: (secondaryAction.children > 2 || secondaryImageIconAction.source.length > 0 || secondaryImageIconAction.source.length !== undefined)
+            visible: secondaryAction.children > 2 || secondaryActionImage.source.length > 0
 
             Image {
-                id: secondaryImageIconAction
+                id: secondaryActionImage
                 asynchronous: true; cache: true; clip: true
                 width: parent.width * 0.75; height: width
             }
@@ -190,7 +189,7 @@ Item {
                 id: secondaryActionIcon
                 color: primaryLabelColor
                 width: parent.width * 0.75; height: width
-                visible: !secondaryImageIconAction.visible && name.length > 0
+                visible: !secondaryActionImage.visible && name.length > 0
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
