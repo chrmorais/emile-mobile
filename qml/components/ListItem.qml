@@ -117,7 +117,7 @@ Item {
             Image {
                 id: primaryActionImage
                 asynchronous: true; cache: true; clip: true
-                width: parent.width; height: parent.height
+                width: parent.width * 0.75; height: width
                 visible: source.length > 0
             }
 
@@ -174,19 +174,16 @@ Item {
 
         Item {
             id: secondaryAction
-            width: 40; height: parent.height
+            width: 40; height: parent.height; anchors.right: parent.right
             visible: (secondaryAction.children > 2 || secondaryImageIconAction.source.length > 0 || secondaryImageIconAction.source.length !== undefined)
 
             Image {
                 id: secondaryImageIconAction
+                asynchronous: true; cache: true; clip: true
+                width: parent.width * 0.75; height: width
             }
 
-            MouseArea {
-                anchors.fill: parent
-                enabled: secondaryAction.visible
-                onClicked: listItem.clicked()
-                onPressAndHold: secondaryActionPressAndHold()
-            }
+            MouseArea { anchors.fill: parent; enabled: secondaryAction.visible; onClicked: secondaryActionClicked(); onPressAndHold: secondaryActionPressAndHold() }
         }
     }
 
