@@ -45,8 +45,8 @@ Item {
     property alias secondaryLabelText: __secondaryLabelItem.text
     property alias secondaryLabelColor: __secondaryLabelItem.color
 
-    property alias primaryAction: primaryAction
-    property alias primaryImageIcon: primaryImageIconAction.name
+    property alias primaryImageIcon: primaryActionIcon.name
+    property alias primaryImageImage: primaryActionImage.source
 
     property QtObject secondaryImageIcon: secondaryImageIconAction
     property alias secondaryAction: secondaryAction
@@ -104,9 +104,8 @@ Item {
         anchors { fill: listItem; leftMargin: listItem.margins; rightMargin: listItem.margins }
 
         Item {
-            id: primaryAction
             width: 40; height: parent.height
-            visible: primaryActionLoader.active || primaryAction.children.length > 3 || primaryImageIconAction.source != ""
+            visible: primaryActionLoader.active || children.length > 3 || primaryActionImage.source != "" || primaryActionIcon.name.length > 0
 
             Loader {
                 id: primaryActionLoader
@@ -116,11 +115,18 @@ Item {
                 asynchronous: true; active: badgeText.length > 0
             }
 
+            Image {
+                id: primaryActionImage
+                asynchronous: true; cache: true; clip: true
+                width: parent.width; height: parent.height
+                visible: source.length > 0
+            }
+
             AwesomeIcon {
-                id: primaryImageIconAction
+                id: primaryActionIcon
                 color: primaryLabelColor
-                width: primaryAction.width * 0.75; height: width
-                visible: !primaryActionLoader.active || source.length > 0
+                width: parent.width * 0.75; height: width
+                visible: (!primaryActionLoader.active || !primaryActionImage.visible) && name.length > 0
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
@@ -133,7 +139,7 @@ Item {
             Layout.alignment: Qt.AlignVCenter
             Layout.preferredHeight: parent.height
             Layout.preferredWidth: parent.width - (primaryAction.width + secondaryAction.width + 20)
-            anchors .verticalCenter: parent.verticalCenter
+            anchors.verticalCenter: parent.verticalCenter
 
             Text {
                 id: __primaryLabelItem
