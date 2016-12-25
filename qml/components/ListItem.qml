@@ -112,7 +112,7 @@ Item {
                 anchors.centerIn: parent
                 sourceComponent: badgeComponent
                 width: primaryAction.width * 0.75; height: width
-                asynchronous: true; active: badgeText.length > 0
+                asynchronous: true; active: badgeText.length > 0 && !primaryActionImage.visible
             }
 
             Image {
