@@ -57,8 +57,9 @@ Item {
     property bool showSeparator: false
     property bool darkBackground: false
 
-    property color selectedColor: "#f0ffff"
-    property color backgroundColor: "transparent"
+    property alias backgroundColor: rect.color
+    property color selectedTextColor: "#f0ffff"
+    property color selectedBackgroundColor: "#f0ffff"
 
     property int badgeRadius: 9999
     property int badgeborderWidth: 0
@@ -74,7 +75,7 @@ Item {
     Rectangle {
         id: rect
         clip: true; anchors.fill: parent
-        color: selected ? Qt.darker(selectedColor, 1.4) : backgroundColor
+        color: selected ? selectedBackgroundColor : color
         antialiasing: radius > 0
         Behavior on color {
             ColorAnimation { duration: 200 }
