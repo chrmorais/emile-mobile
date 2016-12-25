@@ -120,7 +120,7 @@ ApplicationWindow {
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
             window.menu = item
-            window.menu.userInfoTextColor = appSettings.theme.colorAccent
+            window.menu.userInfoTextColor = appSettings.theme.colorPrimary
             window.menu.menuItemTextColor = appSettings.theme.colorPrimary
             window.menu.menuBackgroundColor = appSettings.theme.colorWindowBackground
             toolBarLoader.active = true
