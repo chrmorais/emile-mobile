@@ -63,6 +63,7 @@ Item {
 
     property int badgeRadius: 9999
     property int badgeborderWidth: 0
+    property color badgeTextColor: "#fff"
     property color badgeborderColor: "transparent"
     property color badgeBackgroundColor: "#" + Math.random().toString(16).slice(2,8)
     property string badgeText
@@ -92,7 +93,7 @@ Item {
 
             Text {
                 anchors.centerIn: parent
-                text: badgeText; color: "#fff"
+                text: badgeText; color: badgeTextColor
                 font { weight: Font.DemiBold; pointSize: 10 }
             }
         }
