@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 Drawer {
     id: menu
-    width: window.width * 0.85; height: window.height
+    width: window.width * 0.75; height: window.height
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
@@ -42,26 +42,30 @@ Drawer {
                 id: content
                 width: parent.width; anchors.fill: parent
 
-                Image {
-                    clip: true; cache: true; asynchronous: true
-                    width: parent.width; fillMode: Image.PreserveAspectFit
-                    source: "qrc:/assets/menu-temp.png"
+                ColumnLayout {
+                    spacing: 15
+                    width: parent.width; height: drawerUserImageProfile.height * 1.75
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-                    Column {
-                        spacing: 2
-                        anchors { left: parent.left; leftMargin: 15; top: parent.top; topMargin: isIOS ? 20 : 25 }
+                    Rectangle { id: userInfoRec; anchors.fill: parent; color: "transparent" }
 
-                        RoundedImage {
-                            id: drawerUserImageProfile
-                            width: 75; height: width
-                            imgSource: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
-                            MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
-                        }
+                    RoundedImage {
+                        id: drawerUserImageProfile
+                        width: 75; height: width
+                        imgSource: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
+                        anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
+                        MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
+                    }
 
-                        Label {
-                            color: userInfoTextColor; textFormat: Text.RichText
-                            text: userProfileData.name + "<br><b>" + userProfileData.email + "</b>"
-                            font.pointSize: 12
+                    Label {
+                        color: userInfoTextColor; textFormat: Text.RichText
+                        text: userProfileData.name + "<br><b>" + userProfileData.email + "</b>"
+                        font.pointSize: 12
+                        horizontalAlignment: Text.AlignHCenter
+                        anchors {
+                            top: drawerUserImageProfile.bottom
+                            topMargin: 5
+                            horizontalCenter: parent.horizontalCenter
                         }
                     }
                 }
