@@ -68,7 +68,6 @@ Item {
 
     signal clicked()
     signal pressAndHold()
-
     signal secondaryActionClicked()
     signal secondaryActionPressAndHold()
 
