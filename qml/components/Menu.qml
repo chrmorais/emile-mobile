@@ -74,8 +74,9 @@ Drawer {
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
                         primaryLabel.font.bold: true
+                        primaryIconName: modelData.icon_name
                         selected: modelData.menu_name === window.currentPage.objectName
-                        primaryImageIcon: modelData.icon_name
+                        showSeparator: true
                         onClicked: {
                             menu.close();
                             if (!selected) {
