@@ -67,6 +67,7 @@ Item {
     property color badgeBorderColor: "transparent"
     property color badgeBackgroundColor: "#" + Math.random().toString(16).slice(2,8)
     property string badgeText
+    property bool badgeInRightSide: false
 
     signal clicked()
     signal pressAndHold()
@@ -113,8 +114,11 @@ Item {
                 id: primaryActionLoader
                 anchors.centerIn: parent
                 sourceComponent: badgeComponent
-                width: primaryAction.width * 0.75; height: width
                 asynchronous: true; active: badgeText.length > 0 && !primaryActionImage.visible && !primaryActionIcon.visible
+                onLoaded: {
+                    item.parent = primaryAction
+                    item.width = primaryAction.width * 0.75; item.height = width
+                }
             }
 
             Image {
@@ -178,12 +182,24 @@ Item {
         Item {
             id: secondaryAction
             width: 40; height: parent.height; anchors.right: parent.right
-            visible: secondaryAction.children > 2 || secondaryActionImage.source.length > 0
+            visible: secondaryActionLoader.active || secondaryActionImage.visible || secondaryActionIcon.visible
+
+            Loader {
+                id: secondaryActionLoader
+                anchors.centerIn: parent
+                sourceComponent: badgeComponent
+                asynchronous: true; active: badgeText.length > 0 && badgeInRightSide && !secondaryActionImage.visible && !secondaryActionIcon.visible
+                onLoaded: {
+                    item.parent = secondaryAction
+                    item.width = secondaryAction.width * 0.75; item.height = width
+                }
+            }
 
             Image {
                 id: secondaryActionImage
                 asynchronous: true; cache: true; clip: true
                 width: parent.width * 0.75; height: width
+                visible: source.length > 0
             }
 
             AwesomeIcon {
