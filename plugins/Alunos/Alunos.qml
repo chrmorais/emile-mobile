@@ -73,7 +73,7 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryImageIconSource: model.profileImage ? Util.getObjectValueByKey(model, "profileImage") : ""
+            primaryImageSource: model.profileImage ? Util.getObjectValueByKey(model, "profileImage") : ""
             primaryLabelText: fieldsVisible.length > 0 ? Util.getObjectValueByKey(model, fieldsVisible[0]) : ""
             badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1)
             secondaryLabelText: fieldsVisible.length > 1 ? Util.getObjectValueByKey(model, fieldsVisible[1]) : ""
