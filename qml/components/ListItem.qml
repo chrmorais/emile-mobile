@@ -48,6 +48,9 @@ Item {
     property alias primaryImageIcon: primaryActionIcon.name
     property alias primaryImageImage: primaryActionImage.source
 
+    property alias secondaryActionIcon: secondaryActionIcon.name
+    property alias secondaryActionIconColor: secondaryActionIcon.color
+
     property QtObject secondaryImageIcon: secondaryImageIconAction
     property alias secondaryAction: secondaryAction
     property alias secondaryImageIconSource: secondaryImageIconAction.source
@@ -181,6 +184,14 @@ Item {
                 id: secondaryImageIconAction
                 asynchronous: true; cache: true; clip: true
                 width: parent.width * 0.75; height: width
+            }
+
+            AwesomeIcon {
+                id: secondaryActionIcon
+                color: primaryLabelColor
+                width: parent.width * 0.75; height: width
+                visible: !secondaryImageIconAction.visible && name.length > 0
+                anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
             MouseArea { anchors.fill: parent; enabled: secondaryAction.visible; onClicked: secondaryActionClicked(); onPressAndHold: secondaryActionPressAndHold() }
