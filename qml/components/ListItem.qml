@@ -39,11 +39,10 @@ Item {
 
     property alias primaryLabel: __primaryLabelItem
     property alias primaryLabelText: __primaryLabelItem.text
-    property alias primaryLabelColor: __primaryLabelItem.color
+    property color primaryLabelColor: "#333"
 
     property alias secondaryLabel: __secondaryLabelItem
     property alias secondaryLabelText: __secondaryLabelItem.text
-    property alias secondaryLabelColor: __secondaryLabelItem.color
 
     property alias primaryIconName: primaryActionIcon.name
     property alias primaryIconColor: primaryActionIcon.color
@@ -130,7 +129,7 @@ Item {
 
             AwesomeIcon {
                 id: primaryActionIcon
-                color: primaryLabelColor
+                color: __primaryLabelItem.color
                 width: parent.width * 0.75; height: width
                 visible: (!primaryActionLoader.active || !primaryActionImage.visible) && name.length > 0
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
@@ -152,7 +151,7 @@ Item {
                 Layout.fillWidth: true
                 elide: Text.ElideRight
                 Layout.alignment: Qt.AlignVCenter
-                color: "#333"; fontSizeMode: Text.Fit
+                color: selected ? selectedTextColor : primaryLabelColor; fontSizeMode: Text.Fit
                 visible: text != ""; textFormat: Text.RichText
                 font { weight: Font.DemiBold; pointSize: 14 }
                 anchors {
@@ -165,7 +164,8 @@ Item {
             Text {
                 id: __secondaryLabelItem
                 Layout.alignment: Qt.AlignVCenter
-                color: "#777"; font.pointSize: 12
+                color: __primaryLabelItem.color; font.pointSize: 12
+                opacity: 0.7
                 visible: text != "" && __primaryLabelItem.text
                 elide: Text.ElideRight; wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 Component.onCompleted: text = text.length > 32 ? text.substring(0, 30) + "..." : text
@@ -204,7 +204,7 @@ Item {
 
             AwesomeIcon {
                 id: secondaryActionIcon
-                color: primaryLabelColor
+                color: __primaryLabelItem.color
                 width: parent.width * 0.75; height: width
                 visible: !secondaryActionImage.visible && name.length > 0
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
