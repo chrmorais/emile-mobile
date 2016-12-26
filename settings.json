@@ -8,11 +8,11 @@
     },
     "theme": {
         "colorAccent": "#c5e1a5",
-        "colorPrimary": "#607d8b",
-        "colorHintText": "#ffffff",
-        "textColorPrimary": "#fff",
-        "colorWindowBackground": "#eeeeee",
-        "colorWindowForeground": "#607d8b",
+        "colorPrimary": "green",
+        "colorHintText": "#fff",
+        "textColorPrimary": "#333",
+        "colorWindowBackground": "#fff",
+        "colorWindowForeground": "#333",
         "smallFontSize": 12,
         "middleFontSize": 16,
         "bigFontSize": 20
