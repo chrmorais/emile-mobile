@@ -22,13 +22,13 @@ Button {
         radius: width; implicitWidth: 48; implicitHeight: 48
         layer.effect: DropShadow {
             verticalOffset: 1; horizontalOffset: 0
-            color: shadowColor; spread: 0.7
-            samples: button.pressed ? 20 : 10
+            color: Qt.rgba(0,0,0,0.5); spread: 0.1
+            samples: button.pressed ? 35 : 25
         }
     }
 
     property bool showShadow: true
-    property color shadowColor: "#ccc"
+    property color shadowColor: appSettings.theme.colorPrimary
     property alias iconName: contentIcon.name
     property alias backgroundColor: buttonBackground.color
 }
