@@ -57,8 +57,8 @@ Item {
     property bool showSeparator: false
 
     property color backgroundColor: "transparent"
-    property color selectedTextColor: "#f0ffff"
-    property color selectedBackgroundColor: "#f0ffff"
+    property color selectedTextColor: primaryLabelColor
+    property color selectedBackgroundColor: Qt.rgba(0,0,0,0.1)
 
     property int badgeRadius: 9999
     property int badgeBorderWidth: 0
