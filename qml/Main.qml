@@ -131,7 +131,11 @@ ApplicationWindow {
         id: toolBarLoader
         asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
-        onLoaded: window.header = toolBarLoader.item
+        onLoaded: {
+            window.header = toolBarLoader.item
+            window.header.toolBarColor = appSettings.theme.colorPrimary
+            window.header.defaultTextColor = appSettings.theme.colorHintText
+        }
     }
 
     Loader {
@@ -175,6 +179,8 @@ ApplicationWindow {
     MessageDialog {
         id: messageDialog
         standardButtons: StandardButton.Ok|StandardButton.Cancel
+        property color green: "green"
+        property color darkGreen: "#c5e1a5"
     }
 
     StackView {
