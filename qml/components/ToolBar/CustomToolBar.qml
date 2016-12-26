@@ -1,13 +1,14 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import QtGraphicalEffects 1.0
 
 import "../AwesomeIcon/" as Awesome
 
 ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
-    height: visible ? 54 : 0
+    height: visible ? 50 : 0
     state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
     states: [
         State {
@@ -30,6 +31,7 @@ ToolBar {
     ]
 
     property bool hasMenuList: false
+    property string toolBarColor
     property color defaultTextColor: "#fff"
 
     /**
@@ -55,6 +57,22 @@ ToolBar {
             toolBar.state = "normal";
         else if (currentPage.actionExec)
             currentPage.actionExec(actionName);
+    }
+
+    Loader {
+        onLoaded: toolBar.background = item
+        asynchronous: true; active: toolBarColor.length > 0
+        sourceComponent: Rectangle {
+            color: toolBarColor
+            width: toolBar.width; height: toolBar.height - 2
+            layer.enabled: true
+            layer.effect: DropShadow {
+                visible: toolBar.visible
+                verticalOffset: 1; horizontalOffset: 0
+                color: toolBarColor; spread: 0.3
+                samples: 17
+            }
+        }
     }
 
     Connections {
