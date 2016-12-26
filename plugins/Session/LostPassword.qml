@@ -37,7 +37,7 @@ Page {
         Row {
             spacing: 20
             width: parent.width * 0.90; height: 25
-            anchors { top: parent.top; topMargin: 20; left: parent.left; leftMargin: 20 }
+            anchors { top: parent.top; topMargin: 12; left: parent.left; leftMargin: 20 }
 
             Item {
                 width: 16; height: width
