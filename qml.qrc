@@ -11,7 +11,6 @@
 
         <file>qml/components/CustomButton.qml</file>
         <file>qml/components/DatePicker.qml</file>
-        <file>qml/components/DateChooser.qml</file>
         <file>qml/components/JSONListModel.qml</file>
         <file>qml/components/EmptyList.qml</file>
         <file>qml/components/FloatingButton.qml</file>
