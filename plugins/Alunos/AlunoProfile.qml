@@ -31,9 +31,16 @@ Page {
     }
 
     Component.onCompleted: {
-        fieldsData = Qt.binding(function() { return jsonListModel.model.get(0) })
         if (action !== "newRegister")
             AlunoFunc.httpRequest("/user_details/"+userId, null, "GET")
+    }
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready")
+                fieldsData = jsonListModel.model.get(0);
+        }
     }
 
     AppComponents.Toast {
