@@ -94,7 +94,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: badgeText; color: badgeTextColor
-                font { weight: Font.DemiBold; pointSize: 10 }
+                font { weight: Font.DemiBold; pointSize: 12 }
             }
         }
     }
