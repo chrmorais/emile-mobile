@@ -32,7 +32,7 @@ Page {
 
     Component.onCompleted: {
         if (action !== "newRegister")
-            AlunoFunc.httpRequest("/user_details/"+userId, null, "GET")
+            AlunoFunc.httpRequest("user_details/"+userId, null, "GET")
     }
 
     Connections {
