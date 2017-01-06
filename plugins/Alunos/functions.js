@@ -63,7 +63,7 @@ function selectAll() {
 function httpRequest(path, args, method) {
     jsonListModel.debug = true
     jsonListModel.requestMethod = method || "GET"
-    jsonListModel.source = "https://emile-server.herokuapp.com/%1".arg(path)
+    jsonListModel.source += path
     jsonListModel.requestParams = args ? Util.serialize(args) : ""
     jsonListModel.load()
 }
