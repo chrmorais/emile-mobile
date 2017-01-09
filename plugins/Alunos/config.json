@@ -7,6 +7,7 @@
             "main_qml": "Alunos.qml",
             "menu_name": "Alunos",
             "icon_name": "group",
+            "roles": ["teacher"],
             "order_priority": 10
         }
     ]

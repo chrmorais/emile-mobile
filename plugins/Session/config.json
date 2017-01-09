@@ -6,6 +6,7 @@
             "main_qml": "Index.qml",
             "menu_name": "Home",
             "icon_name": "home",
+            "roles": ["teacher", "student"],
             "order_priority": 100
         },
         {
@@ -16,6 +17,7 @@
         {
             "main_qml": "Logout.qml",
             "menu_name": "Logout",
+            "roles": ["teacher", "student"],
             "icon_name": "sign_out",
             "order_priority": -1
         }
