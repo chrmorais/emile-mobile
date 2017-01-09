@@ -54,7 +54,8 @@ ApplicationWindow {
     function loadMenuPages() {
         if (menuPages.length > 0)
             return;
-        var pageObject = {}
+        var pageObject = {};
+        var menuPagesTemp = [];
         for (var i = 0; i < crudModel.length; i++) {
             for (var j = 0; j < crudModel[i].pages.length; j++) {
                 pageObject = crudModel[i].pages[j];
@@ -64,11 +65,12 @@ ApplicationWindow {
                     pageObject.order_priority = 0;
                 // append the plugin config json
                 pageObject.configJson = crudModel[i];
-                menuPages.push(pageObject);
+                menuPagesTemp.push(pageObject);
             }
         }
-        menuPages.sort(Util.sortArrayByObjectKey("order_priority"));
-        menuPages.reverse();
+        menuPagesTemp.sort(Util.sortArrayByObjectKey("order_priority"));
+        menuPagesTemp.reverse();
+        menuPages = menuPagesTemp;
     }
 
     function setIndexPage(clearPageStack) {
