@@ -75,6 +75,7 @@ Drawer {
                     model: menuPages
 
                     ListItem {
+                        visible: modelData.roles.indexOf(userProfileData.role) !== -1
                         width: menu.width
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
