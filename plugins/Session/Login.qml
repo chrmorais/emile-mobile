@@ -20,10 +20,19 @@ Page {
     property var requestResult: {}
 
     function isDeveloperLogin() {
-        if (email.text === "teste@teste.com" && password.text === "lkjlkj") {
-            var fixBindArray = {};
+        var fixBindArray = {};
+        if (email.text === "aluno@teste.com" && password.text === "lkjlkj") {
             fixBindArray.id = 2;
             fixBindArray.role = "student";
+            fixBindArray.name = "enoquejoseneas";
+            fixBindArray.email = "enoquejoseneas@ifba.edu.br";
+            window.userProfileData = fixBindArray;
+            window.isUserLoggedIn = true;
+            loginPopShutdown.start();
+            return true;
+        } else if (email.text === "professor@teste.com" && password.text === "lkjlkj") {
+            fixBindArray.id = 2;
+            fixBindArray.role = "teacher";
             fixBindArray.name = "enoquejoseneas";
             fixBindArray.email = "enoquejoseneas@ifba.edu.br";
             window.userProfileData = fixBindArray;
