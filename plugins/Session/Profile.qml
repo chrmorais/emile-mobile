@@ -26,13 +26,20 @@ Page {
             id: profileColumn
             width: page.width / 1.3 ; height: page.height
             anchors { horizontalCenter: parent.horizontalCenter }
+            topPadding: 10
             spacing: 5
 
-            RoundedImage {
-                id: drawerUserImageProfile
-                width: 95; height: width
-                imgSource: menu.userImageProfile
+            Rectangle {
+                height: drawerUserImageProfile.height + 10; width: drawerUserImageProfile.width + 10
+                border.color: "green"
                 anchors { horizontalCenter: parent.horizontalCenter }
+
+                RoundedImage {
+                    id: drawerUserImageProfile
+                    width: 95; height: width
+                    imgSource: menu.userImageProfile
+                    anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
+                }
             }
 
             Label {
