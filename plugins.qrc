@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/plugins">
+
         <file alias="Alunos/config.json">plugins/Alunos/config.json</file>
         <file alias="Alunos/Alunos.qml">plugins/Alunos/Alunos.qml</file>
         <file alias="Alunos/functions.js">plugins/Alunos/functions.js</file>
@@ -15,5 +16,7 @@
         <file alias="Chamada/RealizarChamada.qml">plugins/Chamada/RealizarChamada.qml</file>
         <file alias="Chamada/user-default.png">plugins/Chamada/user-default.png</file>
         <file alias="Chamada/config.json">plugins/Chamada/config.json</file>
+        <file alias="Chamada/TurmasDoProfessor.qml">plugins/Chamada/TurmasDoProfessor.qml</file>
+
     </qresource>
 </RCC>
