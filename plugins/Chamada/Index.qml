@@ -31,44 +31,47 @@ Page {
 
     Column {
         visible: !busyIndicator.visible
-        spacing: 15
+        spacing: 25
         anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
         Label {
             text: "Disciplina em andamento:"
             anchors.horizontalCenter: parent.horizontalCenter
-            font { pointSize: 14; weight: Font.DemiBold }
+            font { pointSize: 18; weight: Font.Bold }
         }
 
-        Row {
+        Column {
             spacing: 5
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
+                font { pointSize: 14; weight: Font.DemiBold }
                 text: json.classes.subject_id.code + " - " + json.classes.subject_id.name
+                anchors.horizontalCenter: parent.horizontalCenter
             }
-        }
-
-        Row {
-            spacing: 5
-            anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                text: json.lesson_start_date + " - " + json.lesson_finish_date
+                font { pointSize: 12; weight: Font.DemiBold }
+                text: json.lesson_start_time + " - " + json.lesson_finish_time
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
 
-        Label {
-            text: "Deseja fazer a chamada?"
-            anchors.horizontalCenter: parent.horizontalCenter
-            font { pointSize: 9; weight: Font.DemiBold }
-        }
+        Column {
+            spacing: 5
 
-        Button {
-            id: actionStartButton
-            text: "Realizar a chamada"
-            anchors.horizontalCenter: parent.horizontalCenter
-            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"lesson_id": json.id, "classes_id": json.classes.id})
+            Label {
+                text: "Deseja fazer a chamada?"
+                anchors.horizontalCenter: parent.horizontalCenter
+                font { pointSize: 16; weight: Font.Bold }
+            }
+
+            Button {
+                id: actionStartButton
+                text: "Realizar a chamada"
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"lesson_id": json.id, "classes_id": json.classes.id})
+            }
         }
     }
 
