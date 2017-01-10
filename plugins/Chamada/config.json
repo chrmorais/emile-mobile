@@ -6,7 +6,7 @@
         {
             "main_qml": "Index.qml",
             "menu_name": "Chamada",
-            "icon_name": "hand_paper_o",
+            "icon_name": "check_circle",
             "roles": ["teacher"],
             "order_priority": 10
         }

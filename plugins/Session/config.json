@@ -15,11 +15,18 @@
             "icon_name": ""
         },
         {
+            "main_qml": "Profile.qml",
+            "menu_name": "Meus dados",
+            "roles": ["teacher", "student"],
+            "icon_name": "user",
+            "order_priority": -1
+        },
+        {
             "main_qml": "Logout.qml",
             "menu_name": "Logout",
             "roles": ["teacher", "student"],
             "icon_name": "sign_out",
-            "order_priority": -1
+            "order_priority": -2
         }
     ]
 }
