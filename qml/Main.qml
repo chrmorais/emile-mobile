@@ -175,7 +175,7 @@ ApplicationWindow {
     JSONListModel {
         id: jsonListModel
         source: appSettings.rest_service.baseUrl
-        onStateChanged: if (jsonListModel.state === "ready") jsonListModel.source = appSettings.rest_service.baseUrl;
+        onStateChanged: if (state === "ready" || state === "error") jsonListModel.source = appSettings.rest_service.baseUrl;
     }
 
     MessageDialog {
