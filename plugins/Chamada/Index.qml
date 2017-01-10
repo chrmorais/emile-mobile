@@ -9,7 +9,7 @@ Page {
     property var configJson: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "/lesson_in_progress/" + userProfileData.id
+        jsonListModel.source += "lesson_in_progress/" + userProfileData.id
         jsonListModel.load()
     }
 
