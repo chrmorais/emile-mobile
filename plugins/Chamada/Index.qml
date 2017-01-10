@@ -74,9 +74,6 @@ Page {
         id: actionCancelButton
         text: "Ignorar"
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
-        onClicked: {
-            // listar as disciplinas lecionadas pelo professor para o dia corrente
-            // será implementado em um review posterior
-        }
+        onClicked: pushPage(configJson.root_folder+"/TurmasDoProfessor.qml", {})
     }
 }
