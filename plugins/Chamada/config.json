@@ -9,6 +9,13 @@
             "icon_name": "check_circle",
             "roles": ["teacher"],
             "order_priority": 10
+        },
+        {
+            "main_qml": "MinhasFaltas.qml",
+            "menu_name": "Minhas faltas",
+            "icon_name": "check_circle",
+            "roles": ["student"],
+            "order_priority": 10
         }
     ]
 }
