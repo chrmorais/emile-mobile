@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 
 Page {
     id: page
-    title: qsTr("Minhas que leciono")
+    title: qsTr("My courses")
 
     property var json: {}
 
