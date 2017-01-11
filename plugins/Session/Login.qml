@@ -184,7 +184,7 @@ Page {
                 id: loginButton
                 enabled: !lockerButtons.running && jsonListModel.state !== "running"
                 text: qsTr("LOG IN");
-                radius: 25; textColor: appSettings.theme.colorAccent
+                textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
                     lockerButtons.running = true
@@ -196,7 +196,7 @@ Page {
                 id: lostPasswordButton
                 enabled: !lockerButtons.running || !loginPopShutdown.running
                 text: qsTr("LOST PASSWORD")
-                radius: 25; textColor: appSettings.theme.colorPrimary
+                textColor: appSettings.theme.colorPrimary
                 backgroundColor: appSettings.theme.colorAccent
                 onClicked: {
                     lockerButtons.start();
