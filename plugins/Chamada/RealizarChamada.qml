@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
 Page {
+    id: page
     title: "Realizar chamada"
 
     property int lesson_id: 0
@@ -59,8 +60,10 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready")
-                gridView.model = jsonListModel.model
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var modelTemp = jsonListModel.model;
+                gridView.model = modelTemp;
+            }
         }
     }
 
