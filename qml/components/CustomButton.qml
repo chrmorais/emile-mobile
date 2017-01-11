@@ -5,11 +5,11 @@ import QtQuick.Controls.Material 2.0
 Button {
     id: __customButton
     radius: 25
-    width: buttonWidth; anchors.horizontalCenter: parent.horizontalCenter
+    anchors.horizontalCenter: parent.horizontalCenter
     background: Rectangle {
         id: __backgroundButton
         opacity: enabled ? 1 : 0.3
-        width: __customButton.width; height: __customButton.height
+        implicitWidth: 180; implicitHeight: 35
     }
     contentItem: Text {
         id: __customButtonText
@@ -18,7 +18,6 @@ Button {
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
     }
 
-    property int buttonWidth: 185
     property alias radius: __backgroundButton.radius
     property alias textColor: __customButtonText.color
     property alias backgroundColor: __backgroundButton.color
