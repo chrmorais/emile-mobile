@@ -5,15 +5,18 @@ import QtQuick.Controls 2.0
 Page {
     title: "Realizar chamada"
 
-    property int classes_id: 0
     property int lesson_id: 0
+    property int classes_id: 0
     property bool checkedAll: true
-    property var chamada: {"frequency": []};
+
+    property var configJson: {}
     property var checkedStatus: {}
-    property var configJson: ({})
-    property string toolBarState: "goback"
     property var toolBarActions: ["save"]
+    property var chamada: {"frequency": []};
+
+    property string toolBarState: "goback"
     property string defaultUserImage: "user-default.png"
+
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
             text: "Exibir em " + (listView.visible ? "grade" : "lista")
