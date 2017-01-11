@@ -66,18 +66,24 @@ Page {
                 font { pointSize: 16; weight: Font.Bold }
             }
 
-            Button {
-                id: actionStartButton
-                text: "Realizar a chamada"
+            CustomButton {
+                id: loginButton
+                enabled: !lockerButtons.running && jsonListModel.state !== "running"
+                text: qsTr("Realizar a chamada")
+                textColor: appSettings.theme.colorAccent
+                backgroundColor: appSettings.theme.colorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"lesson_id": json.id, "classes_id": json.classes.id})
             }
         }
     }
 
-    Button {
-        id: actionCancelButton
-        text: "Ignorar"
+    CustomButton {
+        id: loginButton
+        enabled: !lockerButtons.running && jsonListModel.state !== "running"
+        text: qsTr("Ignorar")
+        textColor: appSettings.theme.colorAccent
+        backgroundColor: appSettings.theme.colorPrimary
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
         onClicked: pushPage(configJson.root_folder+"/TurmasDoProfessor.qml", {})
     }
