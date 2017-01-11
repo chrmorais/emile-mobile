@@ -5,7 +5,7 @@ import "../../qml/components/"
 
 Page {
     id: page
-    title: "Disciplina em andamento"
+    title: qsTr("Courses in progress")
 
     property var json: {}
     property var configJson: {}
@@ -63,14 +63,14 @@ Page {
             spacing: 5
 
             Label {
-                text: "Deseja fazer a chamada?"
+                text: qsTr("Do you want register attendance?")
                 anchors.horizontalCenter: parent.horizontalCenter
                 font { pointSize: 16; weight: Font.Bold }
             }
 
             CustomButton {
                 enabled: !lockerButtons.running && jsonListModel.state !== "running"
-                text: qsTr("Realizar a chamada")
+                text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -81,7 +81,7 @@ Page {
 
     CustomButton {
         enabled: !lockerButtons.running && jsonListModel.state !== "running"
-        text: qsTr("Ignorar")
+        text: qsTr("My courses")
         textColor: appSettings.theme.colorAccent
         backgroundColor: appSettings.theme.colorPrimary
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
