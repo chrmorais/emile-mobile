@@ -11,8 +11,8 @@ import "../../qml/js/"
 
 Page {
     id: page
-    title: "Meus dados"
-    objectName: "Meus dados"
+    title: "My profile"
+    objectName: "My profile"
 
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
