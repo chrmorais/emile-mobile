@@ -85,7 +85,7 @@ Page {
 
             Rectangle {
                 width: parent.width * 0.70; height: 1
-                color: switchStatus.checked ? "#ccc" : "#eee"
+                color: switchStatus.checked ? appSettings.theme.colorPrimary : appSettings.theme.colorAccent
                 anchors { bottom: parent.bottom; horizontalCenter: parent.horizontalCenter }
             }
 
