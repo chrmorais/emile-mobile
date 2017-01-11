@@ -15,7 +15,7 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready") {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 var jsonTemp = jsonListModel.model.get(0);
                 json = jsonTemp;
             }
