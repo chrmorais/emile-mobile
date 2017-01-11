@@ -57,13 +57,20 @@ Page {
             spacing: 5
 
             Label {
-                text: qsTr("Do you want register attendance?")
+                text: {
+                    if (jsonListModel.state === "running")
+                        qsTr("Checkin for courses in progress...")
+                    else if (json)
+                        qsTr("Do you want register attendance?")
+                    else
+                        qsTr("None courses in progress!")
+                }
                 anchors.horizontalCenter: parent.horizontalCenter
                 font { pointSize: 16; weight: Font.Bold }
             }
 
             CustomButton {
-                enabled: jsonListModel.state !== "running"
+                enabled: json !== undefined && jsonListModel.state !== "running"
                 text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
