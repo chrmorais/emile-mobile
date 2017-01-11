@@ -3,10 +3,10 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
 Page {
-    title: "Minhas faltas"
+    title: "My attendance"
 
     Label {
-        text: "Em construção..."
+        text: "Under construction..."
         anchors.centerIn: parent.Center
         font { pointSize: 18; weight: Font.Bold }
     }
