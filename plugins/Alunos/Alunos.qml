@@ -8,8 +8,8 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "Lista de Alunos"
-    objectName: "Crud Alunos"
+    title: "List of students"
+    objectName: "Students"
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
