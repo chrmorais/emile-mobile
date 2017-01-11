@@ -36,12 +36,6 @@ Page {
         spacing: 25
         anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
-        Label {
-            text: "Disciplina em andamento:"
-            anchors.horizontalCenter: parent.horizontalCenter
-            font { pointSize: 18; weight: Font.Bold }
-        }
-
         Column {
             spacing: 5
             anchors.horizontalCenter: parent.horizontalCenter
