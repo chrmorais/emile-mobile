@@ -4,6 +4,7 @@ import QtQuick.Controls.Material 2.0
 
 Button {
     id: __customButton
+    radius: 25
     width: buttonWidth; anchors.horizontalCenter: parent.horizontalCenter
     background: Rectangle {
         id: __backgroundButton
