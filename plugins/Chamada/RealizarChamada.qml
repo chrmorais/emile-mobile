@@ -46,8 +46,8 @@ Page {
         })
     }
 
-    function actionExec(actionusername) {
-        if (actionusername == "save")
+    function actionExec(action) {
+        if (action === "save")
             requestToSave();
     }
 
