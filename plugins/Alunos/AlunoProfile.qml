@@ -10,7 +10,6 @@ Page {
     id: page
     title: "New Aluno"
     objectName: ""
-    anchors.fill: parent
 
     property int userId
     property string action: "view"
@@ -124,8 +123,8 @@ Page {
                 RadioButton {
                     text: "M"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData && fieldsData.gender === "M"
-                    enabled: action === "view" ? false : true
+                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "M"
+                    enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
 
@@ -135,8 +134,8 @@ Page {
                 RadioButton {
                     text: "F"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData && fieldsData.gender === "F"
-                    enabled: action === "view" ? false : true
+                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "F"
+                    enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
 
@@ -146,8 +145,8 @@ Page {
                 RadioButton {
                     text: "Other"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData && fieldsData.gender === "O"
-                    enabled: action === "view" ? false : true
+                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "O"
+                    enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
 
