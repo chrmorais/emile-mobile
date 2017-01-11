@@ -1,6 +1,8 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import "../../qml/components/"
+
 Page {
     id: page
     title: "Disciplina em andamento"
