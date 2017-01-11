@@ -42,13 +42,13 @@ Page {
 
             Label {
                 font { pointSize: 14; weight: Font.DemiBold }
-                text: json.classes.subject_id.code + " - " + json.classes.subject_id.name
+                text: json !== undefined ? (json.classes.subject_id.code + " - " + json.classes.subject_id.name) : ""
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 font { pointSize: 12; weight: Font.DemiBold }
-                text: json.lesson_start_time + " - " + json.lesson_finish_time
+                text: json !== undefined ? (json.lesson_start_time + " - " + json.lesson_finish_time) : ""
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
