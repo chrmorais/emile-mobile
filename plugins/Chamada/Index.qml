@@ -63,7 +63,7 @@ Page {
             }
 
             CustomButton {
-                enabled: !lockerButtons.running && jsonListModel.state !== "running"
+                enabled: jsonListModel.state !== "running"
                 text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
@@ -74,7 +74,7 @@ Page {
     }
 
     CustomButton {
-        enabled: !lockerButtons.running && jsonListModel.state !== "running"
+        enabled: jsonListModel.state !== "running"
         text: qsTr("My courses")
         textColor: appSettings.theme.colorAccent
         backgroundColor: appSettings.theme.colorPrimary
