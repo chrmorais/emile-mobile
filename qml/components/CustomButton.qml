@@ -8,13 +8,13 @@ Button {
     anchors.horizontalCenter: parent.horizontalCenter
     background: Rectangle {
         id: __backgroundButton
-        opacity: enabled ? 1 : 0.3
+        opacity: enabled ? 1 : 0.8
         implicitWidth: 180; implicitHeight: 35
     }
     contentItem: Text {
         id: __customButtonText
         elide: Text.ElideRight; font.bold: true
-        text: __customButton.text.toUpperCase(); opacity: enabled ? 1.0 : 0.5
+        text: __customButton.text.toUpperCase(); opacity: __backgroundButton.opacity
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
     }
 
