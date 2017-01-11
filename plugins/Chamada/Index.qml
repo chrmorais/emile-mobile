@@ -69,7 +69,6 @@ Page {
             }
 
             CustomButton {
-                id: loginButton
                 enabled: !lockerButtons.running && jsonListModel.state !== "running"
                 text: qsTr("Realizar a chamada")
                 textColor: appSettings.theme.colorAccent
@@ -81,7 +80,6 @@ Page {
     }
 
     CustomButton {
-        id: loginButton
         enabled: !lockerButtons.running && jsonListModel.state !== "running"
         text: qsTr("Ignorar")
         textColor: appSettings.theme.colorAccent
