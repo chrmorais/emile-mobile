@@ -26,10 +26,10 @@ Page {
         MenuItem {
             text: checkedAll ? "Desmarcar todos" : "Marcar todos"
             onTriggered: {
-                var chamadaTemp = chamada
-                for(var key in chamadaTemp)
-                    chamadaTemp[key].status = checkedAll ? "F" : "P"
-                chamada = chamadaTemp
+                var attendanceTemp = attendance
+                for(var key in attendanceTemp)
+                    attendanceTemp[key].status = checkedAll ? "F" : "P"
+                attendance = attendanceTemp
                 checkedAll = !checkedAll
             }
         }
