@@ -52,6 +52,17 @@ Page {
             requestToSave();
     }
 
+    function save(student_id, status) {
+        for (var i = 0; i < attendance["attendance"].length; ++i) {
+            if (attendance["attendance"][i].student_id && attendance["attendance"][i].student_id === student_id)
+                attendance["attendance"].splice(i,1);
+        }
+        attendance["attendance"].push({"student_id": student_id, "status": status});
+        var checkedStatusTemp = ({});
+        checkedStatusTemp[student_id] = status;
+        checkedStatus = checkedStatusTemp;
+    }
+
     Component.onCompleted: {
         jsonListModel.source += "students_classes/" + classes_id
         jsonListModel.load()
@@ -65,17 +76,6 @@ Page {
                 gridView.model = modelTemp;
             }
         }
-    }
-
-    function save(student_id, status) {
-        for (var i = 0; i < attendance["attendance"].length; ++i) {
-            if (attendance["attendance"][i].student_id && attendance["attendance"][i].student_id === student_id)
-                attendance["attendance"].splice(i,1);
-        }
-        attendance["attendance"].push({"student_id": student_id, "status": status});
-        var checkedStatusTemp = ({});
-        checkedStatusTemp[student_id] = status;
-        checkedStatus = checkedStatusTemp;
     }
 
     Component {
