@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 Page {
     id: page
-    title: "Realizar chamada"
+    title: qsTr("Student attendance")
 
     property int lesson_id: 0
     property int classes_id: 0
