@@ -75,7 +75,10 @@ Page {
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"lesson_id": json.id, "classes_id": json.classes.id})
+                onClicked: {
+                    var attendanceDate = new Date().toDateString();
+                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"lesson_id": json.id, "classes_id": json.classes.id});
+                }
             }
         }
     }
