@@ -61,6 +61,7 @@ function selectAll() {
 }
 
 function httpRequest(path, args, method) {
+    jsonListModel.debug = true
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.source += path
     jsonListModel.requestParams = args ? Util.serialize(args) : ""
@@ -75,8 +76,9 @@ function saveLocal(fieldName, fieldValue) {
 }
 
 function saveRemote() {
-    var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user")
-    httpRequest(path, formData, "POST")
-    toast.show("Saving...")
-    pageFlickable.contentY = 0
+    var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
+    formData.type = "student";
+    httpRequest(path, formData, "POST");
+    toast.show("Saving...");
+    pageFlickable.contentY = 0;
 }

@@ -16,7 +16,7 @@
         },
         {
             "main_qml": "Profile.qml",
-            "menu_name": "Meus dados",
+            "menu_name": "My profile",
             "roles": ["teacher", "student"],
             "icon_name": "user",
             "order_priority": -1

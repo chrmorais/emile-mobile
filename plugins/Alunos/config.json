@@ -5,7 +5,7 @@
     "pages": [
         {
             "main_qml": "Alunos.qml",
-            "menu_name": "Alunos",
+            "menu_name": "Students",
             "icon_name": "group",
             "roles": ["teacher"],
             "order_priority": 10
