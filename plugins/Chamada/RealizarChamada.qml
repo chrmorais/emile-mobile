@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
+import "../../qml/components/"
+
 Page {
     id: page
     title: qsTr("Student attendance")
@@ -13,8 +15,9 @@ Page {
     property var configJson: {}
     property var checkedStatus: {}
     property var toolBarActions: ["save"]
-    property var chamada: {"frequency": []};
+    property var attendance: {"attendance": []};
 
+    property string attendanceDate: ""
     property string toolBarState: "goback"
     property string defaultUserImage: "user-default.png"
 
@@ -26,16 +29,20 @@ Page {
         MenuItem {
             text: checkedAll ? "Desmarcar todos" : "Marcar todos"
             onTriggered: {
-                var chamadaTemp = chamada
-                for(var key in chamadaTemp)
-                    chamadaTemp[key].status = checkedAll ? "F" : "P"
-                chamada = chamadaTemp
+                var attendanceTemp = attendance
+                for(var key in attendanceTemp)
+                    attendanceTemp[key].status = checkedAll ? "F" : "P"
+                attendance = attendanceTemp
                 checkedAll = !checkedAll
             }
         }
     ]
 
     function requestToSave() {
+        if (!attendanceDate) {
+            alert("Atenção!", "Você precisa informar a data referente a aula desta chamada", "Ok", function() { datePicker.open(); }, "Cancelar", function() {  });
+            return;
+        }
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify(chamada)
         jsonListModel.source += "/frequency_register/"+lesson_id
@@ -50,6 +57,17 @@ Page {
     function actionExec(action) {
         if (action === "save")
             requestToSave();
+    }
+
+    function save(student_id, status) {
+        for (var i = 0; i < attendance["attendance"].length; ++i) {
+            if (attendance["attendance"][i].student_id && attendance["attendance"][i].student_id === student_id)
+                attendance["attendance"].splice(i,1);
+        }
+        attendance["attendance"].push({"student_id": student_id, "status": status});
+        var checkedStatusTemp = ({});
+        checkedStatusTemp[student_id] = status;
+        checkedStatus = checkedStatusTemp;
     }
 
     Component.onCompleted: {
@@ -67,15 +85,12 @@ Page {
         }
     }
 
-    function save(student_id, status) {
-        for (var i = 0; i < chamada["frequency"].length; ++i) {
-            if (chamada["frequency"][i].student_id && chamada["frequency"][i].student_id === student_id)
-                chamada["frequency"].splice(i,1);
+    DatePicker {
+        id: datePicker
+        onDateSelected: {
+            attendanceDate = date.month + "-" + date.day + "-" + date.year;
+            requestToSave();
         }
-        chamada["frequency"].push({"student_id": student_id, "status": status});
-        var checkedStatusTemp = ({});
-        checkedStatusTemp[student_id] = status;
-        checkedStatus = checkedStatusTemp;
     }
 
     Component {
