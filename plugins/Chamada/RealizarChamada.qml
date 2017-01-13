@@ -68,7 +68,10 @@ Page {
     }
 
     function save(student_id, status) {
-        console.log("student_id: " + student_id + " status: " + status);
+        for (var i = 0; i < chamada["frequency"].length; ++i) {
+            if (chamada["frequency"][i].student_id && chamada["frequency"][i].student_id === student_id)
+                chamada["frequency"].splice(i,1);
+        }
         chamada["frequency"].push({"student_id": student_id, "status": status});
         var checkedStatusTemp = ({});
         checkedStatusTemp[student_id] = status;
