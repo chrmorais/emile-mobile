@@ -41,6 +41,7 @@ Page {
     function requestToSave() {
         if (!attendanceDate) {
             alert("Atenção!", "Você precisa informar a data referente a aula desta chamada", "Ok", function() { datePicker.open(); }, "Cancelar", function() {  });
+            return;
         }
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify(chamada)
