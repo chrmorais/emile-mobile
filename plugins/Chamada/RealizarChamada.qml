@@ -15,6 +15,7 @@ Page {
     property var toolBarActions: ["save"]
     property var attendance: {"attendance": []};
 
+    property string attendanceDate: ""
     property string toolBarState: "goback"
     property string defaultUserImage: "user-default.png"
 
