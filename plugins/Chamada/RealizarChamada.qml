@@ -13,7 +13,7 @@ Page {
     property var configJson: {}
     property var checkedStatus: {}
     property var toolBarActions: ["save"]
-    property var chamada: {"frequency": []};
+    property var attendance: {"attendance": []};
 
     property string toolBarState: "goback"
     property string defaultUserImage: "user-default.png"
@@ -68,11 +68,11 @@ Page {
     }
 
     function save(student_id, status) {
-        for (var i = 0; i < chamada["frequency"].length; ++i) {
-            if (chamada["frequency"][i].student_id && chamada["frequency"][i].student_id === student_id)
-                chamada["frequency"].splice(i,1);
+        for (var i = 0; i < attendance["attendance"].length; ++i) {
+            if (attendance["attendance"][i].student_id && attendance["attendance"][i].student_id === student_id)
+                attendance["attendance"].splice(i,1);
         }
-        chamada["frequency"].push({"student_id": student_id, "status": status});
+        attendance["attendance"].push({"student_id": student_id, "status": status});
         var checkedStatusTemp = ({});
         checkedStatusTemp[student_id] = status;
         checkedStatus = checkedStatusTemp;
