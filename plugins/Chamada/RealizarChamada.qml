@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 
+import "../../qml/components/"
+
 Page {
     id: page
     title: qsTr("Student attendance")
@@ -37,6 +39,9 @@ Page {
     ]
 
     function requestToSave() {
+        if (!attendanceDate) {
+            datePicker.open();
+        }
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify(chamada)
         jsonListModel.source += "/frequency_register/"+lesson_id
@@ -76,6 +81,14 @@ Page {
                 var modelTemp = jsonListModel.model;
                 gridView.model = modelTemp;
             }
+        }
+    }
+
+    DatePicker {
+        id: datePicker
+        onDateSelected: {
+            attendanceDate = date.month + "-" + date.day + "-" + date.year;
+            requestToSave();
         }
     }
 
