@@ -80,9 +80,9 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var modelTemp = jsonListModel.model.get(0);
+                var modelTemp = jsonListModel.model;
                 gridView.model = modelTemp;
-                console.log("ModeltEMP = " + modelTemp)
+                console.log("ModeltEMP = " + JSON.stringify(modelTemp))
             }
         }
     }
