@@ -11,7 +11,7 @@ Page {
     property var configJson: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "lesson_in_progress/" + userProfileData.id
+        jsonListModel.source += "section_time_in_progress/" + userProfileData.id
         jsonListModel.load()
     }
 
@@ -42,13 +42,13 @@ Page {
 
             Label {
                 font { pointSize: 14; weight: Font.DemiBold }
-                text: json !== undefined ? (json.classes.subject_id.code + " - " + json.classes.subject_id.name) : ""
+                text: json !== undefined ? (json.course_section.course.code + " - " + json.course_section.course.name) : ""
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 font { pointSize: 12; weight: Font.DemiBold }
-                text: json !== undefined ? (json.lesson_start_time + " - " + json.lesson_finish_time) : ""
+                text: json !== undefined ? (json.section_time_start_time + " - " + json.section_time_finish_time) : ""
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
@@ -77,7 +77,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     var attendanceDate = new Date().toDateString();
-                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"lesson_id": json.id, "classes_id": json.classes.id});
+                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"lesson_time_id": json.id, "classes_id": json.course_section.id});
                 }
             }
         }

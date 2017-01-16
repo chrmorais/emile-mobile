@@ -8,7 +8,7 @@ Page {
     property var json: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "classes_teacher/" + userProfileData.id
+        jsonListModel.source += "course_details/" + userProfileData.id
         jsonListModel.load()
     }
 
@@ -36,22 +36,19 @@ Page {
         Repeater {
             model: json
 
-            Label {
-                text: modelData.name
-                anchors.horizontalCenter: parent.horizontalCenter
-                font { pointSize: 14; weight: Font.DemiBold }
-            }
+            Column {
 
-            Label {
-                text: modelData.subject_id.code
-                anchors.horizontalCenter: parent.horizontalCenter
-                font { pointSize: 9; weight: Font.DemiBold }
-            }
+                Label {
+                    text: name
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font { pointSize: 14; weight: Font.DemiBold }
+                }
 
-            Label {
-                text: modelData.subject_id.name
-                anchors.horizontalCenter: parent.horizontalCenter
-                font { pointSize: 9; weight: Font.DemiBold }
+                Label {
+                    text: code
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font { pointSize: 9; weight: Font.DemiBold }
+                }
             }
         }
     }

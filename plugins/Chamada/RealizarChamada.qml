@@ -45,7 +45,7 @@ Page {
         }
         jsonListModel.requestMethod = "POST"
         jsonListModel.requestParams = JSON.stringify(chamada)
-        jsonListModel.source += "/frequency_register/"+lesson_id
+        jsonListModel.source += "/student_attendance_register/"+lesson_id
         jsonListModel.load()
         jsonListModel.stateChanged.connect(function() {
             // after get server response, close the current page
@@ -71,7 +71,8 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.source += "students_classes/" + classes_id
+        console.log("classes_id: " + classes_id)
+        jsonListModel.source += "students_course_section/" + classes_id
         jsonListModel.load()
     }
 
@@ -79,8 +80,9 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var modelTemp = jsonListModel.model;
+                var modelTemp = jsonListModel.model.get(0);
                 gridView.model = modelTemp;
+                console.log("ModeltEMP = " + modelTemp)
             }
         }
     }
@@ -127,7 +129,7 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        text: name || ""
+                        text: id || ""
                         font.pointSize: 10
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
