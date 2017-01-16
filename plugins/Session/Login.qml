@@ -5,6 +5,7 @@ import QtQuick.Controls.Material 2.0
 
 import "../../qml/components/"
 import "../../qml/js/Utils.js" as Util
+import "Functions.js" as LoginFunctions
 
 Page {
     id: loginPage
@@ -19,55 +20,6 @@ Page {
     property int hideToolbar: 1
     property var requestResult: {}
 
-    function isDeveloperLogin() {
-        var fixBindArray = {};
-        if (email.text === "aluno@teste.com" && password.text === "lkjlkj") {
-            fixBindArray.id = 2;
-            fixBindArray.role = "student";
-            fixBindArray.name = "enoquejoseneas";
-            fixBindArray.email = "enoquejoseneas@ifba.edu.br";
-            window.userProfileData = fixBindArray;
-            window.isUserLoggedIn = true;
-            loginPopShutdown.start();
-            return true;
-        } else if (email.text === "professor@teste.com" && password.text === "lkjlkj") {
-            fixBindArray.id = 2;
-            fixBindArray.role = "teacher";
-            fixBindArray.name = "enoquejoseneas";
-            fixBindArray.email = "enoquejoseneas@ifba.edu.br";
-            window.userProfileData = fixBindArray;
-            window.isUserLoggedIn = true;
-            loginPopShutdown.start();
-            return true;
-        }
-        return false;
-    }
-
-    function requestLogin() {
-        if (!isValidLoginForm())
-            return;
-        if (isDeveloperLogin())
-            return;
-        jsonListModel.requestMethod = "POST"
-        jsonListModel.requestParams = JSON.stringify({"email":email.text,"password":password.text})
-        jsonListModel.source += "login/"
-        jsonListModel.load()
-    }
-
-    function isValidLoginForm() {
-        if (email.text === "Email" || email.text.length === 0) {
-            alert("Error!", "Enter your Email!");
-            return false;
-        } else if (!Util.isValidEmail(email.text)) {
-            alert("Error!", "Invalid Email!");
-            return false;
-        } else if (password.text === "Password" || password.text.length === 0) {
-            alert("Error!", "Enter your password!");
-            return false;
-        }
-        return true;
-    }
-
     Timer {
         id: lockerButtons
         repeat: false; running: false; interval: 100
@@ -76,7 +28,7 @@ Page {
     Timer {
         id: loginPopShutdown
         repeat: false; running: false; interval: 1000
-        onTriggered: setIndexPage(true);
+        onTriggered: setIndexPage(true); // setIndexPage() is a function from Main.qml
     }
 
     Connections {
@@ -188,7 +140,7 @@ Page {
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
                     lockerButtons.running = true
-                    requestLogin();
+                    LoginFunctions.requestLogin();
                 }
             }
 
@@ -200,6 +152,7 @@ Page {
                 backgroundColor: appSettings.theme.colorAccent
                 onClicked: {
                     lockerButtons.start();
+                    // pushPage() is a function from Main.qml
                     pushPage("qrc:/plugins/Session/LostPassword.qml");
                 }
             }
