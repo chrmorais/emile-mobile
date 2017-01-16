@@ -8,6 +8,7 @@
 
         <file alias="Session/Index.qml">plugins/Session/Index.qml</file>
         <file alias="Session/Login.qml">plugins/Session/Login.qml</file>
+        <file alias="Session/Functions.js">plugins/Session/Functions.js</file>
         <file alias="Session/Logout.qml">plugins/Session/Logout.qml</file>
         <file alias="Session/LostPassword.qml">plugins/Session/LostPassword.qml</file>
         <file alias="Session/Profile.qml">plugins/Session/Profile.qml</file>
