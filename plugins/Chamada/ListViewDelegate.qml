@@ -34,6 +34,8 @@ Column {
 
                 Label {
                     text: email
+                    color: appSettings.theme.colorPrimary
+                    font.pointSize: appSettings.theme.middleFontSize
                 }
             }
 
@@ -52,7 +54,7 @@ Column {
 
                 Label {
                     id: labelStatus
-                    text: checkedStatus != null && checkedStatus[id] ? checkedStatus[id] : "P"
+                    text: checkedStatus && checkedStatus[id] ? checkedStatus[id] : "P"
                     anchors.verticalCenter: parent.verticalCenter
                     color: text == "F" ? "red" : "blue"
                     font.weight: Font.DemiBold
