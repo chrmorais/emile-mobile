@@ -48,7 +48,8 @@ Page {
 
     onVisibleChanged: {
         if (visible) { // is the active page, start a request!
-            if (jsonListModel.model) jsonListModel.model.clear()
+            if (jsonListModel.model)
+                jsonListModel.model.clear();
             AlunoFunc.httpRequest("users")
         }
     }
