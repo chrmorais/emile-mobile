@@ -8,7 +8,7 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "List of students"
+    title: qsTr("List of students")
     objectName: "Students"
 
     property list<MenuItem> toolBarMenuList: [
