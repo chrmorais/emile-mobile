@@ -15,6 +15,8 @@
         <file alias="Session/config.json">plugins/Session/config.json</file>
         
         <file alias="Chamada/Index.qml">plugins/Chamada/Index.qml</file>
+        <file alias="Chamada/ListViewDelegate.qml">plugins/Chamada/ListViewDelegate.qml</file>
+        <file alias="Chamada/GridViewDelegate.qml">plugins/Chamada/GridViewDelegate.qml</file>
         <file alias="Chamada/RealizarChamada.qml">plugins/Chamada/RealizarChamada.qml</file>
         <file alias="Chamada/MinhasFaltas.qml">plugins/Chamada/MinhasFaltas.qml</file>
         <file alias="Chamada/FaltasPorDisciplina.qml">plugins/Chamada/FaltasPorDisciplina.qml</file>
