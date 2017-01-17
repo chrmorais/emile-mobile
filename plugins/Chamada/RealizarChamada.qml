@@ -71,7 +71,6 @@ Page {
     }
 
     Component.onCompleted: {
-        console.log("classes_id: " + classes_id)
         jsonListModel.source += "students_course_section/" + classes_id
         jsonListModel.load()
     }
