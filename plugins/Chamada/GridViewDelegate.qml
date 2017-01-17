@@ -22,22 +22,18 @@ Item {
             id: imgProfile
             asynchronous: true
             source: defaultUserImage
-            width: 35; height: 35
+            width: 55; height: 55
             fillMode: Image.PreserveAspectCrop
             clip: true; cache: true; smooth: true
             sourceSize { width: width; height: height }
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        Column {
-            spacing: 2
+        Label {
+            text: email
+            font.pointSize: 12
+            color: appSettings.middleFontSize
             anchors.horizontalCenter: parent.horizontalCenter
-
-            Label {
-                text: email
-                font.pointSize: 12
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
         }
 
         Switch {
