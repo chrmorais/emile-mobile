@@ -191,7 +191,7 @@ ApplicationWindow {
 
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
-                pageStack.pop();
+                popPage();
             else
                 event.accepted = false;
         }

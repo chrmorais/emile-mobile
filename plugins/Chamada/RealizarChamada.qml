@@ -71,7 +71,6 @@ Page {
     }
 
     Component.onCompleted: {
-        console.log("classes_id: " + classes_id)
         jsonListModel.source += "students_course_section/" + classes_id
         jsonListModel.load()
     }
@@ -82,7 +81,6 @@ Page {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 var modelTemp = jsonListModel.model;
                 gridView.model = modelTemp;
-                console.log("ModeltEMP = " + JSON.stringify(modelTemp))
             }
         }
     }
@@ -187,10 +185,6 @@ Page {
                     Column {
                         spacing: 2
                         anchors { left: imgProfile.right; leftMargin: 15; verticalCenter: parent.verticalCenter }
-
-                        Label {
-                            text: name || ""
-                        }
 
                         Label {
                             text: email
