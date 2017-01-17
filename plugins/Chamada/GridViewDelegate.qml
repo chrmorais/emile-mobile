@@ -31,8 +31,8 @@ Item {
 
         Label {
             text: email
-            font.pointSize: 12
-            color: appSettings.middleFontSize
+            color: appSettings.theme.colorPrimary
+            font.pointSize: appSettings.theme.middleFontSize
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
