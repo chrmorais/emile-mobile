@@ -22,6 +22,9 @@ Page {
     // called by ToolBar on action click
     function actionExec(actionName) {
         AlunoFunc.exec(actionName)
+        if(action !== "view" && action !== "edit") {
+            textFieldBirthdate.text = ""
+        }
     }
 
     onFieldsDataChanged: {
@@ -37,8 +40,10 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready")
-                fieldsData = jsonListModel.model.get(0);
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var fieldsDataTemp = jsonListModel.model.get(0);
+                fieldsData = fieldsDataTemp;
+            }
         }
     }
 
@@ -164,9 +169,9 @@ Page {
                 width: parent.width
                 readOnly: action === "view"
                 text: editable && fieldsData ? fieldsData.birth_date || "" : ""
-                onTextChanged: AlunoFunc.saveLocal("birth_date", textFieldBirthdate.text)
+                onTextChanged: AlunoFunc.saveLocal("birth_date", text)
 
-                MouseArea { anchors.fill: parent; onClicked: datePickerBirthdate.open() }
+                MouseArea { anchors.fill: parent; onClicked: action === "view" ? "" : datePickerBirthdate.open() }
             }
 
             Label {
