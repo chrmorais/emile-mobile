@@ -10,88 +10,37 @@ Page {
     title: "My attendance"
     objectName: "My attendance"
 
+    property var json: {}
     property int userId: 0
 
     Component.onCompleted: {
-        var json1 = {
-            "attendance": [{
-                    "date": "02-04-2016",
-                    "status": "P"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "F"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "P"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "F"
-                }]
-        }
-        var json2 = {
-            "attendance": [{
-                    "date": "02-04-2016",
-                    "status": "F"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "P"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "P"
-                }]
-        }
-        var json3 = {
-            "attendance": [{
-                    "date": "02-04-2016",
-                    "status": "P"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "P"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "P"
-                }]
-        }
-        var json4 = {
-            "attendance": [{
-                    "date": "02-04-2016",
-                    "status": "F"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "F"
-                }, {
-                    "date": "02-04-2016",
-                    "status": "F"
-                }]
-        }
-        if(userId === 1)
-            for (var i = 0; i < json1.attendance.length; i++) {
-                listModel.append(json1.attendance[i]);
+        jsonListModel.source += "students_attendance/" + 1 + "/" + userProfileData.id
+        jsonListModel.load()
+    }
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
             }
-        if(userId === 2)
-            for (var i = 0; i < json2.attendance.length; i++) {
-                listModel.append(json2.attendance[i]);
-            }
-        if(userId === 3)
-            for (var i = 0; i < json3.attendance.length; i++) {
-                listModel.append(json3.attendance[i]);
-            }
-        if(userId === 4)
-            for (var i = 0; i < json4.attendance.length; i++) {
-                listModel.append(json4.attendance[i]);
-            }
+        }
     }
 
     BusyIndicator {
         id: loading
         anchors.centerIn: parent
-        visible: listView.count === 0
+        visible: listView.count === 0 && jsonListModel.state !== "ready"
     }
 
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
-        onClicked: console.log("Clicou")
+        onClicked: {
+            jsonListModel.source += "students_attendance/" + 1 + "/" + userProfileData.id
+            jsonListModel.load()
+        }
     }
 
     Component {
@@ -101,7 +50,7 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryLabelText: date
+            primaryLabelText: section_time_date
             badgeText: status
             badgeBackgroundColor: status === "F" ? "red" : "blue"
 
@@ -115,7 +64,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: ListModel { id: listModel }
+        model: json
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
