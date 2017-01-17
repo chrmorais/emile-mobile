@@ -49,13 +49,21 @@ Page {
 
             Label {
                 font { pointSize: 14; weight: Font.DemiBold }
-                text: json !== undefined ? (json.course_section.course.code + " - " + json.course_section.course.name) : ""
+                text: {
+                    if (json && typeof json != "undefined")
+                        return json.course_section.course.code + " - " + json.course_section.course.name;
+                    return "";
+                }
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
                 font { pointSize: 12; weight: Font.DemiBold }
-                text: json !== undefined ? (json.section_time_start_time + " - " + json.section_time_finish_time) : ""
+                text: {
+                    if (json && typeof json != "undefined")
+                        return json.section_time_start_time + " - " + json.section_time_finish_time;
+                    return "";
+                }
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }
