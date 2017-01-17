@@ -12,8 +12,8 @@ Page {
     property int classes_id: 0
     property bool checkedAll: true
 
-    property var configJson: {}
-    property var checkedStatus: {}
+    property var configJson: ({})
+    property var checkedStatus: ({})
     property var toolBarActions: ["save"]
     property var attendance: {"attendance": []};
 
@@ -30,10 +30,14 @@ Page {
             text: checkedAll ? "Desmarcar todos" : "Marcar todos"
             onTriggered: {
                 var attendanceTemp = attendance["attendance"];
-                for (var i = 0; i < attendanceTemp.length; i++)
-                    attendanceTemp[i].status = checkedAll ? "F" : "P";
-                attendance = attendanceTemp;
+                for (var i = 0; i < attendanceTemp.length; i++) {
+                    var studentStatus = attendanceTemp[i];
+                    studentStatus.status = checkedAll ? "F" : "P";
+                    attendanceTemp[i] = studentStatus;
+                    updateStatus(studentStatus.student_id, studentStatus.status);
+                }
                 checkedAll = !checkedAll;
+                attendance["attendance"] = attendanceTemp;
             }
         }
     ]
@@ -65,13 +69,19 @@ Page {
                 attendance["attendance"].splice(i,1);
         }
         attendance["attendance"].push({"student_id": student_id, "status": status});
-        var checkedStatusTemp = ({});
-        checkedStatusTemp[student_id] = status;
-        checkedStatus = checkedStatusTemp;
+        updateStatus(student_id, status);
+    }
+
+    function updateStatus(student_id, status) {
+        var fixBind = ({});
+        if (typeof checkedStatus != "undefined")
+            fixBind = checkedStatus;
+        fixBind[student_id.toString()] = status;
+        checkedStatus = fixBind;
     }
 
     Component.onCompleted: {
-        jsonListModel.source += "students_course_section/" + classes_id
+        jsonListModel.source += "course_sections_students/" + classes_id
         jsonListModel.load()
     }
 
