@@ -29,11 +29,11 @@ Page {
         MenuItem {
             text: checkedAll ? "Desmarcar todos" : "Marcar todos"
             onTriggered: {
-                var attendanceTemp = attendance
-                for(var key in attendanceTemp)
-                    attendanceTemp[key].status = checkedAll ? "F" : "P"
-                attendance = attendanceTemp
-                checkedAll = !checkedAll
+                var attendanceTemp = attendance["attendance"];
+                for (var i = 0; i < attendanceTemp.length; i++)
+                    attendanceTemp[i].status = checkedAll ? "F" : "P";
+                attendance = attendanceTemp;
+                checkedAll = !checkedAll;
             }
         }
     ]
