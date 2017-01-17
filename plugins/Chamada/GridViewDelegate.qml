@@ -34,14 +34,8 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                text: id || ""
-                font.pointSize: 10
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            Label {
                 text: email
-                font.pointSize: 8
+                font.pointSize: 12
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }

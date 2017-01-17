@@ -38,11 +38,12 @@ Page {
     }
 
     onConfigJsonChanged: {
-        if (!configJson.index_fields.length) return
-        var arrayTemp = []
+        if (!configJson.index_fields.length)
+            return;
+        var arrayTemp = [];
         for (var i = 0; i < configJson.index_fields.length; i++)
-            arrayTemp.push(configJson.index_fields[i])
-        fieldsVisible = arrayTemp
+            arrayTemp.push(configJson.index_fields[i]);
+        fieldsVisible = arrayTemp;
     }
 
     onVisibleChanged: {
