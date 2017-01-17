@@ -13,8 +13,8 @@
         "textColorPrimary": "#333",
         "colorWindowBackground": "#fff",
         "colorWindowForeground": "#333",
-        "smallFontSize": 12,
-        "middleFontSize": 16,
-        "bigFontSize": 20
+        "smallFontSize": 10,
+        "middleFontSize": 12,
+        "bigFontSize": 16
     }
 }
