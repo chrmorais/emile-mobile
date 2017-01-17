@@ -189,10 +189,6 @@ Page {
                         anchors { left: imgProfile.right; leftMargin: 15; verticalCenter: parent.verticalCenter }
 
                         Label {
-                            text: name || ""
-                        }
-
-                        Label {
                             text: email
                         }
                     }
