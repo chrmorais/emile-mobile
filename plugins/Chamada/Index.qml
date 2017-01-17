@@ -10,9 +10,16 @@ Page {
     property var json: {}
     property var configJson: {}
 
-    Component.onCompleted: {
+    function request() {
         jsonListModel.source += "section_time_in_progress/" + userProfileData.id
         jsonListModel.load()
+    }
+
+    Component.onCompleted: request();
+
+    Connections {
+        target: window
+        onPageChanged: if (currentPage.title === page.title) request();
     }
 
     Connections {
