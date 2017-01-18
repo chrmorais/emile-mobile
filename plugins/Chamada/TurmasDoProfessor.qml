@@ -11,7 +11,6 @@ Page {
     property string root_folder: {}
 
     function request() {
-        console.log("opening request!");
         jsonListModel.debug = true;
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
         jsonListModel.load();
@@ -38,10 +37,7 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !busyIndicator.visible
-        onClicked: {
-            console.log("clicou!!!");
-            request();
-        }
+        onClicked: request();
     }
 
     Component {
