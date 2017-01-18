@@ -7,10 +7,12 @@ Page {
 
     property var json: {}
 
-    Component.onCompleted: {
+    function request() {
         jsonListModel.source += "course_sections_teacher/" + userProfileData.id
         jsonListModel.load()
     }
+
+    Component.onCompleted: request();
 
     Connections {
         target: jsonListModel
