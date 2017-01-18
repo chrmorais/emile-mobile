@@ -59,14 +59,14 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            badgeText: id
-            primaryLabelText: name
-            secondaryLabelText: code
+            badgeText: course.id
+            primaryLabelText: name + ""
+            secondaryLabelText: code + ""
 
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "userId": model.id})
+            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "courseId": id})
         }
     }
 
