@@ -11,7 +11,7 @@ Page {
     property var configJson: {}
 
     function request() {
-        jsonListModel.source += "course_sections_teacher/" + userProfileData.id;
+        jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
         jsonListModel.load();
     }
 
@@ -53,7 +53,7 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"section_times_id": json.id, "course_section_id": json.course_section.id});
+            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"section_times_id": json.id, "course_section_id": json.course_section.id});
         }
     }
 
