@@ -1,6 +1,8 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import "../../qml/components/" as AppComponents
+
 Page {
     id: page
     title: qsTr("My courses")
@@ -28,6 +30,12 @@ Page {
         id: busyIndicator
         anchors.centerIn: parent
         visible: jsonListModel.state === "loading"
+    }
+
+    AppComponents.EmptyList {
+        z: listView.z + 1
+        visible: listView.count === 0 && !loading.visible
+        onClicked: request();
     }
 
     Column {
