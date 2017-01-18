@@ -45,9 +45,9 @@ Page {
     function saveAttendenceValidateStatus() {
         // after get server response, close the current page
         if (jsonListModel.state === "ready") {
-            if (jsonListModel.httpStatus === 400)
+            if (jsonListModel.httpStatus === 200)
                 popPage(); // is a function from Main.qml
-            else if (jsonListModel.httpStatus === 200)
+            else if (jsonListModel.httpStatus === 400)
                 alert("Warning!", "The attendance date is already registered for this course section! Set another date.", "OK", function() { }, "CANCEL", function() { });
             else if (jsonListModel.httpStatus === 404)
                 alert("Warning!", "The attendance date is invalid for this course section!", "OK", function() { }, "CANCEL", function() { });
