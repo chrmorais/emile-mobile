@@ -43,8 +43,12 @@ Page {
     ]
 
     function requestToSave() {
+        if (gridView.model.count === 0){
+            alert("Warning!", "The students list is empty!");
+            return;
+        }
         if (!attendanceDate) {
-            alert("Atenção!", "Você precisa informar a data referente a aula desta chamada", "Ok", function() { datePicker.open(); }, "Cancelar", function() {  });
+            alert("Warning!", "You need to inform the attendance date for this course section!", "OK", function() { datePicker.open(); }, "CANCEL", function() { });
             return;
         }
         attendance["section_time_date"] = attendanceDate;
