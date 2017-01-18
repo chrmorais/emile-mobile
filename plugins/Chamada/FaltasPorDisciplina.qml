@@ -11,10 +11,10 @@ Page {
     objectName: "My attendance"
 
     property var json: {}
-    property int userId: 0
+    property int courseId: 0
 
     Component.onCompleted: {
-        jsonListModel.source += "students_attendance/" + 1 + "/" + userProfileData.id
+        jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
         jsonListModel.load()
     }
 
@@ -38,7 +38,7 @@ Page {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
         onClicked: {
-            jsonListModel.source += "students_attendance/" + 1 + "/" + userProfileData.id
+            jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
             jsonListModel.load()
         }
     }
