@@ -8,9 +8,11 @@ Page {
     title: qsTr("My courses")
 
     property var json: {}
-    property var configJson: {}
+    property string root_folder: {}
 
     function request() {
+        console.log("opening request!");
+        jsonListModel.debug = true;
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
         jsonListModel.load();
     }
@@ -36,7 +38,10 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !busyIndicator.visible
-        onClicked: request();
+        onClicked: {
+            console.log("clicou!!!");
+            request();
+        }
     }
 
     Component {
@@ -53,7 +58,7 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"section_times_id": json.id, "course_section_id": json.course_section.id});
+            onClicked: pushPage(root_folder+"/RealizarChamada.qml", {"section_times_id": course.id, "course_section_id": id});
         }
     }
 
