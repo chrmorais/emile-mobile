@@ -8,10 +8,11 @@ Page {
     title: qsTr("My courses")
 
     property var json: {}
+    property var configJson: {}
 
     function request() {
-        jsonListModel.source += "course_sections_teacher/" + userProfileData.id
-        jsonListModel.load()
+        jsonListModel.source += "course_sections_teacher/" + userProfileData.id;
+        jsonListModel.load();
     }
 
     Component.onCompleted: request();
@@ -38,28 +39,35 @@ Page {
         onClicked: request();
     }
 
-    Column {
-        visible: !busyIndicator.visible
-        spacing: 15
-        anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
+    Component {
+        id: listViewDelegate
 
-        Repeater {
-            model: json
+        AppComponents.ListItem {
+            id: wrapper
+            parent: listView.contentItem
+            showSeparator: true
+            badgeText: course.id
+            primaryLabelText: name + ""
+            secondaryLabelText: code + ""
 
-            Column {
+            x: ListView.view.currentItem.x
+            y: ListView.view.currentItem.y
 
-                Label {
-                    text: name
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font { pointSize: 14; weight: Font.DemiBold }
-                }
-
-                Label {
-                    text: code
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font { pointSize: 9; weight: Font.DemiBold }
-                }
-            }
+            onClicked: pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"section_times_id": json.id, "course_section_id": json.course_section.id});
         }
+    }
+
+    ListView {
+        id: listView
+        width: page.width
+        height: page.height
+        focus: true
+        model: json
+        delegate: listViewDelegate
+        cacheBuffer: width
+        onRemoveChanged: update()
+        Keys.onUpPressed: scrollBar.decrease()
+        Keys.onDownPressed: scrollBar.increase()
+        ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 }
