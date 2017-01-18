@@ -42,8 +42,20 @@ Page {
         }
     ]
 
+    function saveAttendenceValidateStatus() {
+        // after get server response, close the current page
+        if (jsonListModel.state === "ready") {
+            if (jsonListModel.httpStatus === 400)
+                popPage(); // is a function from Main.qml
+            else if (jsonListModel.httpStatus === 200)
+                alert("Warning!", "The attendance date is already registered for this course section! Set another date.", "OK", function() { }, "CANCEL", function() { });
+            else if (jsonListModel.httpStatus === 404)
+                alert("Warning!", "The attendance date is invalid for this course section!", "OK", function() { }, "CANCEL", function() { });
+        }
+    }
+
     function requestToSave() {
-        if (gridView.model.count === 0){
+        if (gridView.model.count === 0) {
             alert("Warning!", "The students list is empty!");
             return;
         }
@@ -57,11 +69,7 @@ Page {
         jsonListModel.requestParams = JSON.stringify(attendance);
         jsonListModel.source += "student_attendance_register/"+section_times_id;
         jsonListModel.load();
-        jsonListModel.stateChanged.connect(function() {
-            // after get server response, close the current page
-            if (jsonListModel.state === "ready" && jsonListModel.status === 200)
-                popPage(); // is a function from Main.qml
-        });
+        jsonListModel.stateChanged.connect(saveAttendenceValidateStatus);
     }
 
     function actionExec(action) {
@@ -92,9 +100,14 @@ Page {
     }
 
     Connections {
+        target: window
+        onPageChanged: jsonListModel.stateChanged.disconnect(saveAttendenceValidateStatus);
+    }
+
+    Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title && gridView.model.count === 0) {
                 var modelTemp = jsonListModel.model;
                 gridView.model = modelTemp;
             }
