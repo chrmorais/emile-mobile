@@ -35,7 +35,7 @@ Page {
 
     AppComponents.EmptyList {
         z: listView.z + 1
-        visible: listView.count === 0 && !loading.visible
+        visible: listView.count === 0 && !busyIndicator.visible
         onClicked: request();
     }
 
