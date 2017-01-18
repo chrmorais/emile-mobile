@@ -8,14 +8,14 @@ Page {
     id: page
     title: qsTr("Student attendance")
 
-    property int lesson_id: 0
-    property int classes_id: 0
     property bool checkedAll: true
+    property int section_times_id: 0
+    property int course_section_id: 0
 
     property var configJson: ({})
     property var checkedStatus: ({})
     property var toolBarActions: ["save"]
-    property var attendance: {"attendance": []};
+    property var attendance: {"student_attendance": []};
 
     property string attendanceDate: ""
     property string toolBarState: "goback"
@@ -29,7 +29,7 @@ Page {
         MenuItem {
             text: checkedAll ? "Desmarcar todos" : "Marcar todos"
             onTriggered: {
-                var attendanceTemp = attendance["attendance"];
+                var attendanceTemp = attendance["student_attendance"];
                 for (var i = 0; i < attendanceTemp.length; i++) {
                     var studentStatus = attendanceTemp[i];
                     studentStatus.status = checkedAll ? "F" : "P";
@@ -47,15 +47,16 @@ Page {
             alert("Atenção!", "Você precisa informar a data referente a aula desta chamada", "Ok", function() { datePicker.open(); }, "Cancelar", function() {  });
             return;
         }
-        jsonListModel.requestMethod = "POST"
-        jsonListModel.requestParams = JSON.stringify(chamada)
-        jsonListModel.source += "/student_attendance_register/"+lesson_id
-        jsonListModel.load()
+        attendance["section_time_date"] = attendanceDate;
+        jsonListModel.requestMethod = "POST";
+        jsonListModel.requestParams = JSON.stringify(attendance);
+        jsonListModel.source += "student_attendance_register/"+section_times_id;
+        jsonListModel.load();
         jsonListModel.stateChanged.connect(function() {
             // after get server response, close the current page
-            if (jsonListModel.state === "ready")
+            if (jsonListModel.state === "ready" && jsonListModel.status === 200)
                 popPage(); // is a function from Main.qml
-        })
+        });
     }
 
     function actionExec(action) {
@@ -64,11 +65,11 @@ Page {
     }
 
     function save(student_id, status) {
-        for (var i = 0; i < attendance["attendance"].length; ++i) {
-            if (attendance["attendance"][i].student_id && attendance["attendance"][i].student_id === student_id)
-                attendance["attendance"].splice(i,1);
+        for (var i = 0; i < attendance["student_attendance"].length; ++i) {
+            if (attendance["student_attendance"][i].student_id && attendance["student_attendance"][i].student_id === student_id)
+                attendance["student_attendance"].splice(i,1);
         }
-        attendance["attendance"].push({"student_id": student_id, "status": status});
+        attendance["student_attendance"].push({"student_id": student_id, "status": status});
         updateStatus(student_id, status);
     }
 
@@ -81,7 +82,7 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.source += "course_sections_students/" + classes_id
+        jsonListModel.source += "course_sections_students/" + course_section_id
         jsonListModel.load()
     }
 
