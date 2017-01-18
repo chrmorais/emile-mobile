@@ -46,14 +46,21 @@ Rectangle {
 
     MouseArea { anchors.fill: parent; onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold() }
 
-    ColumnLayout {
+    Column {
         spacing: 10
         anchors.centerIn: parent
         visible: noItemRec.visible
 
-        Awesome.AwesomeIcon {
-            size: iconSize; color: textColor; name: iconName
+        Rectangle {
+            color: "transparent"
+            width: awesomeIcon.size; height: width
             anchors.horizontalCenter: parent.horizontalCenter
+
+            Awesome.AwesomeIcon {
+                id: awesomeIcon
+                size: iconSize; color: textColor; name: iconName
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
 
         Text {
