@@ -93,8 +93,9 @@ Page {
                 backgroundColor: appSettings.theme.colorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    var attendanceDate = new Date().toDateString();
-                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"lesson_time_id": json.id, "classes_id": json.course_section.id});
+                    var date = new Date();
+                    var attendanceDate = Qt.formatDateTime(new Date(), "MM-dd-yyyy");
+                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"section_times_id": json.id, "course_section_id": json.course_section.id});
                 }
             }
         }
