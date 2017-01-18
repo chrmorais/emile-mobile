@@ -1,3 +1,4 @@
+
 import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 2.0
@@ -10,44 +11,45 @@ Page {
     title: "My attendance"
     objectName: "My attendance"
 
-    property var configJson: ({})
+    property var json: {}
+    property var configJson: {}
+
+    onConfigJsonChanged: {
+        if (!configJson.index_fields.length) return
+        var arrayTemp = []
+        for (var i = 0; i < configJson.index_fields.length; i++)
+            arrayTemp.push(configJson.index_fields[i])
+        fieldsVisible = arrayTemp
+    }
 
     Component.onCompleted: {
-        var i
-        var json = {
-            "lessons": [{
-                    "id": 1,
-                    "cod": "inf011",
-                    "name": "Padrões de Projeto"
-                }, {
-                    "id": 2,
-                    "cod": "inf009",
-                    "name": "Sistemas Operacionais"
-                }, {
-                    "id": 3,
-                    "cod": "inf012",
-                    "name": "Programação WEB"
-                }, {
-                    "id": 4,
-                    "cod": "inf010",
-                    "name": "Banco de dados 2"
-                }]
-        }
-        for (var i = 0; i < json.lessons.length; i++) {
-            listModel.append(json.lessons[i]);
+        jsonListModel.source += "students_course_sections/" + userProfileData.id
+        jsonListModel.load()
+    }
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
+            }
         }
     }
 
     BusyIndicator {
         id: loading
         anchors.centerIn: parent
-        visible: listView.count === 0
+        visible: listView.count === 0 && jsonListModel.state !== "ready"
     }
 
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
-        onClicked: console.log("Clicou")
+        onClicked: {
+            jsonListModel.source += "students_course_sections/" + userProfileData.id
+            jsonListModel.load()
+        }
     }
 
     Component {
@@ -57,14 +59,14 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryLabelText: name
-            badgeText: id
-            secondaryLabelText: cod
+            badgeText: course.id
+            primaryLabelText: name + ""
+            secondaryLabelText: code + ""
 
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "userId": model.id})
+            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "courseId": id})
         }
     }
 
@@ -73,7 +75,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: ListModel { id: listModel }
+        model: json
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
