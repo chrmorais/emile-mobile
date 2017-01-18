@@ -49,6 +49,7 @@ Page {
         }
         attendance["section_time_date"] = attendanceDate;
         jsonListModel.requestMethod = "POST";
+        jsonListModel.contentType = "application/json";
         jsonListModel.requestParams = JSON.stringify(attendance);
         jsonListModel.source += "student_attendance_register/"+section_times_id;
         jsonListModel.load();
