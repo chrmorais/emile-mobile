@@ -107,6 +107,6 @@ Page {
         textColor: appSettings.theme.colorPrimary
         backgroundColor: appSettings.theme.colorAccent
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
-        onClicked: pushPage(configJson.root_folder+"/TurmasDoProfessor.qml", {})
+        onClicked: pushPage(configJson.root_folder+"/TurmasDoProfessor.qml", {"root_folder":configJson.root_folder});
     }
 }
