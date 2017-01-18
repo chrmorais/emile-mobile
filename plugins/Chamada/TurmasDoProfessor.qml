@@ -8,7 +8,7 @@ Page {
     property var json: {}
 
     Component.onCompleted: {
-        jsonListModel.source += "course_details/" + userProfileData.id
+        jsonListModel.source += "course_sections_teacher/" + userProfileData.id
         jsonListModel.load()
     }
 
@@ -16,7 +16,7 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model.get(0);
+                var jsonTemp = jsonListModel.model;
                 json = jsonTemp;
             }
         }
