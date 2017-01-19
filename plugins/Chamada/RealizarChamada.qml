@@ -95,7 +95,7 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.debug = true
+        jsonListModel.debug = false
         jsonListModel.source += "course_sections_students/" + course_section_id
         jsonListModel.load()
     }
