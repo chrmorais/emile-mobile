@@ -3,8 +3,8 @@
     "rest_service": {
         "userServiceName": "",
         "userServicePassword": "",
-        "baseUrl": "https://emile-postgres.herokuapp.com/",
-        "baseImagesUrl": "https://emile-postgres.herokuapp.com/media/"
+        "baseUrl": "https://emile-server.herokuapp.com/",
+        "baseImagesUrl": "https://emile-server.herokuapp.com/media/"
     },
     "theme": {
         "colorAccent": "#c5e1a5",
