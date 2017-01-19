@@ -30,7 +30,7 @@ Item {
         }
 
         Label {
-            text: email
+            text: email + ""
             color: appSettings.theme.colorPrimary
             font.pointSize: appSettings.theme.middleFontSize
             anchors.horizontalCenter: parent.horizontalCenter
