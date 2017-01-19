@@ -128,7 +128,7 @@ Page {
                 RadioButton {
                     text: "M"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "M"
+                    checked: action !== "newRegister" && fieldsData !== null && fieldsData !== undefined && fieldsData.gender === "M"
                     enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
@@ -139,7 +139,7 @@ Page {
                 RadioButton {
                     text: "F"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "F"
+                    checked: action !== "newRegister" && fieldsData !== null && fieldsData !== undefined && fieldsData.gender === "F"
                     enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
@@ -150,7 +150,7 @@ Page {
                 RadioButton {
                     text: "Other"
                     width: parent.width / 3
-                    checked: action !== "newRegister" && fieldsData !== undefined && fieldsData.gender === "O"
+                    checked: action !== "newRegister" && fieldsData !== null && fieldsData !== undefined && fieldsData.gender === "O"
                     enabled: action !== "view"
 
                     ButtonGroup.group: radioOptionGroup
