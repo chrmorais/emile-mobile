@@ -95,6 +95,7 @@ Page {
     }
 
     Component.onCompleted: {
+        jsonListModel.debug = true
         jsonListModel.source += "course_sections_students/" + course_section_id
         jsonListModel.load()
     }
@@ -107,7 +108,7 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title && gridView.model.count === 0) {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 var modelTemp = jsonListModel.model;
                 gridView.model = modelTemp;
             }
