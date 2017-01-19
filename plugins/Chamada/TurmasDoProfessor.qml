@@ -11,7 +11,7 @@ Page {
     property string root_folder: {}
 
     function request() {
-        jsonListModel.debug = true;
+        jsonListModel.debug = false;
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
         jsonListModel.load();
     }
