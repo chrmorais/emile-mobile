@@ -11,6 +11,8 @@ Page {
     title: qsTr("List of students")
     objectName: "Students"
 
+    property var json;
+
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
             text: "Select all"
@@ -50,11 +52,21 @@ Page {
         if (visible) { // is the active page, start a request!
             if (jsonListModel.model)
                 jsonListModel.model.clear();
-            AlunoFunc.httpRequest("users")
+            AlunoFunc.httpRequest("students")
         }
     }
 
-    Component.onCompleted: AlunoFunc.httpRequest("users")
+    Component.onCompleted: AlunoFunc.httpRequest("students")
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
+            }
+        }
+    }
 
     BusyIndicator {
         id: loading
@@ -65,7 +77,7 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
-        onClicked: AlunoFunc.httpRequest("users")
+        onClicked: AlunoFunc.httpRequest("students")
     }
 
     Component {
@@ -80,8 +92,8 @@ Page {
             badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1)
             secondaryLabelText: fieldsVisible.length > 1 ? Util.getObjectValueByKey(model, fieldsVisible[1]) : ""
 
-            x: ListView.view.currentItem.x
-            y: ListView.view.currentItem.y
+//            x: ListView.view.currentItem.x
+//            y: ListView.view.currentItem.y
 
             onPressAndHold: AlunoFunc.addSelectedItem(index, listView.itemAt(wrapper.x, wrapper.y), false)
             onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": model.id})
