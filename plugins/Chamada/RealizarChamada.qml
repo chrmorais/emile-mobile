@@ -44,7 +44,7 @@ Page {
 
     function saveAttendenceValidateStatus() {
         // after get server response, close the current page
-        if (jsonListModel.state === "ready") {
+        if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
             if (jsonListModel.httpStatus === 200)
                 popPage(); // is a function from Main.qml
             else if (jsonListModel.httpStatus === 400)
