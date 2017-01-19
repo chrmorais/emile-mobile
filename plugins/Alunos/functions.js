@@ -61,7 +61,7 @@ function selectAll() {
 }
 
 function httpRequest(path, args, method) {
-    jsonListModel.debug = true
+    jsonListModel.debug = false
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.source += path
     jsonListModel.requestParams = args ? Util.serialize(args) : ""
