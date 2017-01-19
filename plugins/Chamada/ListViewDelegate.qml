@@ -33,7 +33,7 @@ Column {
                 anchors { left: imgProfile.right; leftMargin: 15; verticalCenter: parent.verticalCenter }
 
                 Label {
-                    text: email
+                    text: email + ""
                     color: appSettings.theme.colorPrimary
                     font.pointSize: appSettings.theme.middleFontSize
                 }
