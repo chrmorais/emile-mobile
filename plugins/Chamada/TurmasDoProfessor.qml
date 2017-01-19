@@ -52,7 +52,7 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            badgeText: course.id
+            badgeText: course !== undefined ? course.id : ""
             primaryLabelText: name + ""
             secondaryLabelText: code + ""
 
