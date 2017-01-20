@@ -11,7 +11,7 @@ Page {
     title: qsTr("List of students")
     objectName: qsTr("Students")
 
-    property var json;
+    property var json
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
@@ -32,7 +32,7 @@ Page {
 
     // called by ToolBar on action click
     function actionExec(actionName) {
-        AlunoFunc.exec(actionName)
+        AlunoFunc.exec(actionName);
     }
 
     onSearchTextChanged: {
@@ -52,7 +52,7 @@ Page {
         if (visible) { // is the active page, start a request!
             if (jsonListModel.model)
                 jsonListModel.model.clear();
-            AlunoFunc.httpRequest("students")
+            AlunoFunc.httpRequest("students");
         }
     }
 
@@ -97,12 +97,12 @@ Page {
     ListView {
         id: listView
         focus: true; cacheBuffer: width
-        visible: model && model.count > 0
+        visible: count > 0
         width: page.width; height: page.height
-        model: jsonListModel.model; delegate: listViewDelegate
+        model: json; delegate: listViewDelegate
         onRemoveChanged: update();
-        Keys.onUpPressed: scrollBar.decrease()
-        Keys.onDownPressed: scrollBar.increase()
+        Keys.onUpPressed: scrollBar.decrease();
+        Keys.onDownPressed: scrollBar.increase();
         ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 

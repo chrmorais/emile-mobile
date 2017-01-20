@@ -9,15 +9,15 @@ var actionCalls = ({
 
 function exec(fn) {
     if (actionCalls.hasOwnProperty(fn))
-        actionCalls[fn]()
+        actionCalls[fn]();
 }
 
 function addSelectedItem(index, isItemSelected, ignoreIfSelected) {
-    var arrayTemp = selectedIndex // to fix binding with array
+    var arrayTemp = selectedIndex; // to fix binding with array
 
     // if item is already in the list, return to not add index again!
     if (ignoreIfSelected && arrayTemp.indexOf(index) !== -1)
-        return
+        return;
 
     // if the item is selected and user pressAndHolder again,
     // the item will be deselect and removed from selectedIndex array
@@ -30,28 +30,24 @@ function addSelectedItem(index, isItemSelected, ignoreIfSelected) {
 }
 
 function unSelectItems() {
-    var arrayTemp = selectedIndex
-
+    var arrayTemp = selectedIndex;
     for (var i = 0; i < arrayTemp.length; i++)
-        listView.contentItem.children[selectedIndex[i]].selected = false
-
+        listView.contentItem.children[selectedIndex[i]].selected = false;
     arrayTemp.splice(0, selectedIndex.length)
-    selectedIndex = arrayTemp
+    selectedIndex = arrayTemp;
 }
 
 function deleteFromList() {
     // after each item is removed, qml reorder the list.
     // so, we needs to uses descending order
-    selectedIndex = Util.reverseList(selectedIndex)
-
+    selectedIndex = Util.reverseList(selectedIndex);
     for (var i = 0; i < selectedIndex.length; i++) {
         var userFromModel = jsonListModel.model.get(selectedIndex[i])
         httpRequest("delete_user/%1".arg(userFromModel.id), null, "POST")
         jsonListModel.model.remove(selectedIndex[i])
     }
-
-    var fixBind = []
-    selectedIndex = fixBind
+    var fixBind = [];
+    selectedIndex = fixBind;
 }
 
 function selectAll() {
@@ -60,7 +56,6 @@ function selectAll() {
 }
 
 function httpRequest(path, args, method) {
-    jsonListModel.debug = false
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.source += path
     jsonListModel.requestParams = args ? Util.serialize(args) : ""
