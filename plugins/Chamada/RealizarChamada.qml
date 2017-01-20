@@ -135,7 +135,7 @@ Page {
         visible: false
         anchors.fill: parent
         delegate: GridViewDelegate { }
-        cellWidth: 180; cellHeight: cellWidth
+        cellWidth: parent.width > parent.height ? parent.width * 0.25 : parent.width * 0.50; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
         Keys.onDownPressed: gridViewScrollBar.increase()
         ScrollBar.vertical: ScrollBar { id: gridViewScrollBar }
