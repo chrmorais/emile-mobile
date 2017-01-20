@@ -47,10 +47,6 @@ Page {
         }
     }
 
-    AppComponents.Toast {
-        id: toast
-    }
-
     AppComponents.DatePicker {
         id: datePickerBirthdate
         onDateSelected: textFieldBirthdate.text = (date.month + "-" + date.day + "-" + date.year)
