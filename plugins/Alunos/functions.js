@@ -12,7 +12,7 @@ function exec(fn) {
         actionCalls[fn]()
 }
 
-function addSelectedItem(index, item, ignoreIfSelected) {
+function addSelectedItem(index, isItemSelected, ignoreIfSelected) {
     var arrayTemp = selectedIndex // to fix binding with array
 
     // if item is already in the list, return to not add index again!
@@ -21,13 +21,12 @@ function addSelectedItem(index, item, ignoreIfSelected) {
 
     // if the item is selected and user pressAndHolder again,
     // the item will be deselect and removed from selectedIndex array
-    if (!ignoreIfSelected && item.selected)
-        arrayTemp.splice(arrayTemp.indexOf(index), 1)
+    if (!ignoreIfSelected && isItemSelected)
+        arrayTemp.splice(arrayTemp.indexOf(index), 1);
     else
-        arrayTemp.push(index)
+        arrayTemp.push(index);
 
-    selectedIndex = arrayTemp
-    item.selected = !ignoreIfSelected && item.selected ? false : true
+    selectedIndex = arrayTemp;
 }
 
 function unSelectItems() {
