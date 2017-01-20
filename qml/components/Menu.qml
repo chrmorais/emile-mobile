@@ -17,12 +17,6 @@ Drawer {
 
     signal profileImageChange()
 
-    Connections {
-        target: window
-        onWidthChanged: menu.width = window.width * window.width > window.height ? 0.60 : 0.85
-        onCurrentPageChanged: if (menu.visible) close();
-    }
-
     Flickable {
         width: parent.width
         anchors.fill: parent
