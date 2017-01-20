@@ -37,3 +37,10 @@ Makefile*
 CMakeLists.txt.user
 
 emile-mobile
+
+# Gradle
+local.properties
+local.properties~
+gradle.properties~
+gradle.properties
+.directory
