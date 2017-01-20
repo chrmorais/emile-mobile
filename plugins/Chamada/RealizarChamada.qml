@@ -70,6 +70,7 @@ Page {
         jsonListModel.source += "student_attendance_register/"+section_times_id;
         jsonListModel.load();
         jsonListModel.stateChanged.connect(saveAttendenceValidateStatus);
+        toast.show("Saving attendance register...");
     }
 
     function actionExec(action) {
