@@ -40,7 +40,6 @@ Item {
                 color: appSettings.theme.colorPrimary
                 font.pointSize: appSettings.theme.middleFontSize
                 anchors.horizontalCenter: parent.horizontalCenter
-                //wrapMode: Text.WrapAnywhere
                 elide: Text.ElideRight
             }
 
