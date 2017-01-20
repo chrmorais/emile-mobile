@@ -61,10 +61,8 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
-            }
+            if (jsonListModel.state === "ready" && page.visible)
+                json = jsonListModel.model;
         }
     }
 
@@ -85,30 +83,24 @@ Page {
 
         AppComponents.ListItem {
             id: wrapper
-            parent: listView.contentItem
             showSeparator: true
             primaryImageSource: model.profileImage ? Util.getObjectValueByKey(model, "profileImage") : ""
             primaryLabelText: fieldsVisible.length > 0 ? Util.getObjectValueByKey(model, fieldsVisible[0]) : ""
-            badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1)
+            badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1).toUpperCase()
             secondaryLabelText: fieldsVisible.length > 1 ? Util.getObjectValueByKey(model, fieldsVisible[1]) : ""
-
-//            x: ListView.view.currentItem.x
-//            y: ListView.view.currentItem.y
-
-            onPressAndHold: AlunoFunc.addSelectedItem(index, listView.itemAt(wrapper.x, wrapper.y), false)
+            onPressAndHold: AlunoFunc.addSelectedItem(index, selected, false)
             onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": model.id})
+            selected: selectedIndex.indexOf(index) !== -1
         }
     }
 
     ListView {
         id: listView
-        width: page.width
-        height: page.height
-        focus: true
-        model: jsonListModel.model
-        delegate: listViewDelegate
-        cacheBuffer: width
-        onRemoveChanged: update()
+        focus: true; cacheBuffer: width
+        visible: model && model.count > 0
+        width: page.width; height: page.height
+        model: jsonListModel.model; delegate: listViewDelegate
+        onRemoveChanged: update();
         Keys.onUpPressed: scrollBar.decrease()
         Keys.onDownPressed: scrollBar.increase()
         ScrollBar.vertical: ScrollBar { id: scrollBar }
