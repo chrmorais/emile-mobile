@@ -9,7 +9,7 @@ import "../../qml/components/" as AppComponents
 Page {
     id: page
     title: qsTr("List of students")
-    objectName: "Students"
+    objectName: qsTr("Students")
 
     property var json;
 

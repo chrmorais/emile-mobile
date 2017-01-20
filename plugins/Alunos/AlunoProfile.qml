@@ -8,8 +8,8 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "New Aluno"
-    objectName: ""
+    title: qsTr("New Aluno")
+    objectName: qsTr("Students")
 
     property int userId
     property string action: "view"
