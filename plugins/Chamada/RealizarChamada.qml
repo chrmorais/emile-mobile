@@ -108,10 +108,8 @@ Page {
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var modelTemp = jsonListModel.model;
-                gridView.model = modelTemp;
-            }
+            if (jsonListModel.state === "ready" && page.visible)
+                gridView.model = jsonListModel.model;
         }
     }
 
