@@ -178,6 +178,10 @@ ApplicationWindow {
         onStateChanged: if (state === "ready" || state === "error") jsonListModel.source = appSettings.rest_service.baseUrl;
     }
 
+    Toast {
+        id: toast
+    }
+
     MessageDialog {
         id: messageDialog
         standardButtons: StandardButton.Ok|StandardButton.Cancel
