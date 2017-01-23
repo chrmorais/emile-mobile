@@ -1,4 +1,3 @@
-
 import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 2.0
