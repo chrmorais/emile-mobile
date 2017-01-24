@@ -25,7 +25,9 @@
         <file alias="Chamada/TurmasDoProfessor.qml">plugins/Chamada/TurmasDoProfessor.qml</file>
 
         <file alias="WallMessage/config.json">plugins/WallMessage/config.json</file>
-        <file alias="WallMessage/SendMessage.qml">plugins/WallMessage/SendMessage.qml</file>
         <file alias="WallMessage/Wall.qml">plugins/WallMessage/Wall.qml</file>
+        <file alias="WallMessage/DestinationGroupSelect.qml">plugins/WallMessage/DestinationGroupSelect.qml</file>
+        <file alias="WallMessage/DestinationSelect.qml">plugins/WallMessage/DestinationSelect.qml</file>
+        <file alias="WallMessage/SendMessage.qml">plugins/WallMessage/SendMessage.qml</file>
     </qresource>
 </RCC>
