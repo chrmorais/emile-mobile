@@ -1,0 +1,21 @@
+{
+    "name": "Message notification",
+    "description": "A plugin to manage message notifications",
+    "index_fields": [],
+    "pages": [
+        {
+            "main_qml": "Wall.qml",
+            "menu_name": "Message wall",
+            "icon_name": "th_list",
+            "roles": ["student","teacher"],
+            "order_priority": 10
+        },
+        {
+            "main_qml": "SendMessage.qml",
+            "menu_name": "Send message",
+            "icon_name": "send",
+            "roles": ["teacher"],
+            "order_priority": 10
+        }
+    ]
+}
