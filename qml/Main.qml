@@ -78,7 +78,7 @@ ApplicationWindow {
         if (isUserLoggedIn) {
             loadMenuPages();
             if (window.menu) window.menu.enabled = true;
-            pageUrl = "/plugins/Session/Index.qml";
+            pageUrl = "/plugins/WallMessage/Wall.qml";
         }
         if (clearPageStack) {
             while (pageStack.depth > 1)
