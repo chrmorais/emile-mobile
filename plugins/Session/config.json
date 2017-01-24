@@ -3,13 +3,6 @@
     "description": "Login, logout and lost password pages to the app",
     "pages": [
         {
-            "main_qml": "Index.qml",
-            "menu_name": "Home",
-            "icon_name": "home",
-            "roles": ["teacher", "student"],
-            "order_priority": 100
-        },
-        {
             "main_qml": "Login.qml",
             "menu_name": "",
             "icon_name": ""
