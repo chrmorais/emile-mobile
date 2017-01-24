@@ -8,10 +8,10 @@
             "menu_name": "Message wall",
             "icon_name": "th_list",
             "roles": ["student","teacher"],
-            "order_priority": 10
+            "order_priority": 100
         },
         {
-            "main_qml": "SendMessage.qml",
+            "main_qml": "DestinationGroupSelect.qml",
             "menu_name": "Send message",
             "icon_name": "send",
             "roles": ["teacher"],
