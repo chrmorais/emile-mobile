@@ -10,31 +10,28 @@ Page {
     property var json: {}
     property var configJson: {}
 
-//    function request() {
-//        jsonListModel.debug = false;
-//        jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
-//        jsonListModel.load();
-//    }
+    function request() {
+        jsonListModel.debug = false;
+        jsonListModel.source += "destinations_by_user_type/" + 2
+        jsonListModel.load();
+    }
 
-    Component.onCompleted: {
-//        request();
-        json = [{
-           "id": 1,
-           "code": "teste",
-           "name": "Todos os alunos"
-        }, {
-           "id": 2,
-           "code": "teste2",
-           "name": "Alunos de uma turma"
-        }];
-        for(var i = 0; i < json.length; i++)
-            modelTest.append(json[i]);
+    Component.onCompleted: request();
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
+            }
+        }
     }
 
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: jsonListModel.state === "loading"
+        visible: listView.count === 0 && jsonListModel.state !== "ready"
     }
 
     AppComponents.EmptyList {
@@ -52,7 +49,7 @@ Page {
             showSeparator: true
             badgeText: id
             primaryLabelText: name + ""
-            secondaryLabelText: code + ""
+            secondaryLabelText: ""
 
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
@@ -66,7 +63,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: ListModel{id: modelTest}
+        model: json
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
