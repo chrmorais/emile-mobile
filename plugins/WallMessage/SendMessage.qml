@@ -9,8 +9,9 @@ Page {
 
     property int messageCharsLimit: 140
     property int messageCharsCount: messageCharsLimit - textarea.text.length
-    onMessageCharsCountChanged: textMessageCharsLength.text = messageCharsCount + qsTr(" chars left")
     property string toolBarState: "goback"
+
+    onMessageCharsCountChanged: textMessageCharsLength.text = messageCharsCount + qsTr(" chars left")
 
     Component.onCompleted: textarea.forceActiveFocus();
 
