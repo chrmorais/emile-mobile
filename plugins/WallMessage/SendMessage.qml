@@ -10,10 +10,34 @@ Page {
     property int messageCharsLimit: 140
     property int messageCharsCount: messageCharsLimit - textarea.text.length
     property string toolBarState: "goback"
+    property var post_message: {"post_message": {}};
 
     onMessageCharsCountChanged: textMessageCharsLength.text = messageCharsCount + qsTr(" chars left")
 
     Component.onCompleted: textarea.forceActiveFocus();
+
+    function requestToSave() {
+        jsonListModel.debug = true
+        jsonListModel.requestMethod = "POST";
+        jsonListModel.contentType = "application/json";
+        jsonListModel.requestParams = JSON.stringify(post_message);
+        jsonListModel.source += "wall_push_notification";
+        jsonListModel.load();
+        jsonListModel.stateChanged.connect(savePost_messageValidateStatus);
+        toast.show("Sending message...");
+        console.log("teste = " + JSON.stringify(post_message))
+    }
+
+    function savePost_messageValidateStatus() {
+        // after get server response, close the current page
+        if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
+            if (jsonListModel.httpStatus === 200) {
+                alert("Success!", "The message was successfully sended", "OK", function() { popPage() }, "CANCEL", function() { });
+            } else if (jsonListModel.httpStatus === 404) {
+                alert("Warning!", "The message was not sent!", "OK", function() { }, "CANCEL", function() { });
+            }
+        }
+    }
 
     Rectangle {
         id: rectangleTextarea
@@ -56,6 +80,13 @@ Page {
         enabled: jsonListModel.state !== "running"
         textColor: appSettings.theme.colorAccent
         backgroundColor: appSettings.theme.colorPrimary
-        onClicked: console.log("send message!");
+        onClicked: {
+            var post_messageTemp = post_message["post_message"];
+            post_messageTemp.user_type_destination_id = 1
+            post_messageTemp.parameter = userProfileData.id
+            post_messageTemp.message = textarea.text
+            post_message["post_message"] = post_messageTemp;
+            requestToSave();
+        }
     }
 }
