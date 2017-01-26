@@ -22,8 +22,9 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
+                json = jsonListModel.model;
+                console.log("json 0: " + JSON.stringify(json.get(0)));
+                console.log("json 1: " + JSON.stringify(json.get(1)));
             }
         }
     }
@@ -54,7 +55,18 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(configJson.root_folder+"/DestinationSelect.qml", {"title": name, "configJson": configJson});
+            onClicked: {
+                var id = json.get(index).id;
+                var destination = json.get(index).param_values_service;
+
+                if (destination.indexOf("<%users%>") > -1) {
+                    pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
+                } else {
+                    destination = destination.split("<")[0] + window.userProfileData.id;
+                    console.log("destination: " + destination);
+                    pushPage(configJson.root_folder+"/DestinationSelect.qml", {"userTypeDestinationId": id, "configJson": configJson, "destination": destination});
+                }
+            }
         }
     }
 
