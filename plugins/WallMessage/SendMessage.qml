@@ -11,6 +11,8 @@ Page {
     property int messageCharsCount: messageCharsLimit - textarea.text.length
     property string toolBarState: "goback"
     property var post_message: {"post_message": {}};
+    property int parameter
+    property int userTypeDestinationId
 
     onMessageCharsCountChanged: textMessageCharsLength.text = messageCharsCount + qsTr(" chars left")
 
@@ -82,8 +84,8 @@ Page {
         backgroundColor: appSettings.theme.colorPrimary
         onClicked: {
             var post_messageTemp = post_message["post_message"];
-            post_messageTemp.user_type_destination_id = 1
-            post_messageTemp.parameter = userProfileData.id
+            post_messageTemp.user_type_destination_id = userTypeDestinationId;
+            post_messageTemp.parameter = parameter;
             post_messageTemp.message = textarea.text
             post_message["post_message"] = post_messageTemp;
             requestToSave();
