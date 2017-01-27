@@ -19,6 +19,11 @@ Page {
     Component.onCompleted: request();
 
     Connections {
+        target: window
+        onPageChanged: if (currentPage.title === page.title) request();
+    }
+
+    Connections {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
