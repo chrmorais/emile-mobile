@@ -5,7 +5,7 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: qsTr("DestinationGroupSelect")
+    title: qsTr("Send to:")
 
     property var json: {}
     property var configJson: {}

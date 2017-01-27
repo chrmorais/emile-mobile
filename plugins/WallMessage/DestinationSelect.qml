@@ -5,7 +5,7 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: qsTr("teste")
+    title: qsTr("Course Sections")
 
     property var json: {}
     property var configJson: {}
