@@ -33,7 +33,6 @@ Page {
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 json = jsonListModel.model;
-                console.log("Json = " + JSON.stringify(json.get(0)))
             }
         }
     }
