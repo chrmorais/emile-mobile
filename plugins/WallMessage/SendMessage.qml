@@ -33,8 +33,10 @@ Page {
         // after get server response, close the current page
         if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
             if (jsonListModel.httpStatus === 200) {
+                jsonListModel.stateChanged.disconnect(savePost_messageValidateStatus);
                 alert("Success!", "The message was successfully sended", "OK", function() { popPage() }, "CANCEL", function() { });
             } else if (jsonListModel.httpStatus === 404) {
+                jsonListModel.stateChanged.disconnect(savePost_messageValidateStatus);
                 alert("Warning!", "The message was not sent!", "OK", function() { }, "CANCEL", function() { });
             }
         }
