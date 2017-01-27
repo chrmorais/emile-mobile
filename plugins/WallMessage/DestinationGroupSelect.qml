@@ -23,8 +23,6 @@ Page {
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 json = jsonListModel.model;
-                console.log("json 0: " + JSON.stringify(json.get(0)));
-                console.log("json 1: " + JSON.stringify(json.get(1)));
             }
         }
     }
@@ -62,8 +60,7 @@ Page {
                 if (destination.indexOf("<%users%>") > -1) {
                     pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
                 } else {
-                    destination = destination.split("<")[0] + window.userProfileData.id;
-                    console.log("destination: " + destination);
+                    destination = destination.replace("$", "") + window.userProfileData.id;
                     pushPage(configJson.root_folder+"/DestinationSelect.qml", {"userTypeDestinationId": id, "configJson": configJson, "destination": destination});
                 }
             }
