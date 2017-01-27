@@ -27,7 +27,6 @@ Page {
         jsonListModel.load();
         jsonListModel.stateChanged.connect(savePost_messageValidateStatus);
         toast.show("Sending message...");
-        console.log("teste = " + JSON.stringify(post_message))
     }
 
     function savePost_messageValidateStatus() {
@@ -87,6 +86,7 @@ Page {
             post_messageTemp.user_type_destination_id = userTypeDestinationId;
             post_messageTemp.parameter = parameter;
             post_messageTemp.message = textarea.text
+            post_messageTemp.sender = window.userProfileData.id
             post_message["post_message"] = post_messageTemp;
             requestToSave();
         }
