@@ -6,6 +6,10 @@ import "../../qml/components/" as AppComponents
 Page {
     id: page
     title: qsTr("Write the message ")
+    background: Rectangle {
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property int messageCharsLimit: 140
     property int messageCharsCount: messageCharsLimit - textarea.text.length
@@ -74,6 +78,7 @@ Page {
     Text {
         id: textMessageCharsLength
         text: messageCharsCount + qsTr(" chars left")
+        color: appSettings.theme.defaultTextColor
         anchors { bottom: rectangleTextarea.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
     }
 

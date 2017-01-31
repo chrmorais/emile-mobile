@@ -13,6 +13,10 @@ Page {
     id: page
     title: "My profile"
     objectName: "My profile"
+    background: Rectangle {
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
@@ -47,6 +51,7 @@ Page {
                 textFormat: Text.RichText
                 font { pointSize: 16; bold: true }
                 topPadding: 15
+                color: appSettings.theme.defaultTextColor
                 anchors { horizontalCenter: parent.horizontalCenter; left: parent.left }
             }
 
@@ -56,6 +61,7 @@ Page {
                 textFormat: Text.RichText
                 font.pointSize: 14
                 wrapMode: Text.WrapAnywhere
+                color: appSettings.theme.defaultTextColor
                 anchors { horizontalCenter: parent.horizontalCenter }
             }
 
@@ -64,6 +70,7 @@ Page {
                 textFormat: Text.RichText
                 font { pointSize: 16; bold: true }
                 topPadding: 15
+                color: appSettings.theme.defaultTextColor
                 anchors { horizontalCenter: parent.horizontalCenter; left: parent.left }
             }
 
@@ -74,6 +81,7 @@ Page {
                 horizontalAlignment: Text.AlignJustify
                 font.pointSize: 14
                 wrapMode: Text.WrapAnywhere
+                color: appSettings.theme.defaultTextColor
                 anchors { horizontalCenter: parent.horizontalCenter }
             }
         }

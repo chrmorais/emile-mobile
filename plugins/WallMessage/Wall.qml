@@ -9,6 +9,10 @@ import "../../qml/components/AwesomeIcon/" as AwesomeIcon
 Page {
     id: page
     title: qsTr("Wall messages")
+    background: Rectangle {
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json: []
 
@@ -60,6 +64,7 @@ Page {
                 "date": "19-04-2017"
             }
         ]
+        request();
     }
 
     BusyIndicator {
@@ -118,7 +123,7 @@ Page {
                         width: parent.width * 0.95
                         wrapMode: Text.Wrap
                         font.wordSpacing: 1
-                        color: "#333"
+                        color: appSettings.theme.defaultTextColor
                         anchors { right: parent.right; left: parent.left; margins: 10 }
                     }
                 }
@@ -133,7 +138,7 @@ Page {
 
                     Label {
                         id: dateLabel
-                        color: "#777"
+                        color: appSettings.theme.defaultTextColor
                         text: date
                     }
                 }

@@ -6,6 +6,10 @@ import "../../qml/components/" as AppComponents
 Page {
     id: page
     title: qsTr("Send to:")
+    background: Rectangle {
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json: {}
     property var configJson: {}
