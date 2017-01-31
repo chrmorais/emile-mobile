@@ -14,6 +14,12 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
+    function request() {
+        jsonListModel.debug = false;
+        jsonListModel.source += "students_course_sections/" + userProfileData.id
+        jsonListModel.load()
+    }
+
     property var json: {}
     property var configJson: {}
 
@@ -25,9 +31,11 @@ Page {
         fieldsVisible = arrayTemp
     }
 
-    Component.onCompleted: {
-        jsonListModel.source += "students_course_sections/" + userProfileData.id
-        jsonListModel.load()
+    Component.onCompleted: request()
+
+    Connections {
+        target: window
+        onPageChanged: if (currentPage.title === page.title) request();
     }
 
     Connections {

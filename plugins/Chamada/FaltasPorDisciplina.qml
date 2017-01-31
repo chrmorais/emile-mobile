@@ -14,13 +14,17 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
-    property var json: {}
-    property int courseId: 0
-
-    Component.onCompleted: {
+    function request() {
+        jsonListModel.debug = false;
         jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
         jsonListModel.load()
     }
+
+    property var json: {}
+    property int courseId: 0
+    property string toolBarState: "goback"
+
+    Component.onCompleted: request()
 
     Connections {
         target: jsonListModel
