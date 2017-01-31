@@ -7,6 +7,10 @@ import "../../qml/components/"
 Page {
     id: page
     title: qsTr("Courses in progress")
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json: {}
     property var configJson: {}
@@ -56,6 +60,7 @@ Page {
                     return "";
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
+                color: appSettings.theme.defaultTextColor
             }
 
             Label {
@@ -66,6 +71,7 @@ Page {
                     return "";
                 }
                 anchors.horizontalCenter: parent.horizontalCenter
+                color: appSettings.theme.defaultTextColor
             }
         }
 

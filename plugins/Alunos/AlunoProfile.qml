@@ -10,6 +10,10 @@ Page {
     id: page
     title: qsTr("New Aluno")
     objectName: qsTr("Students")
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property int userId
     property string action: "view"
@@ -74,6 +78,7 @@ Page {
             Label {
                 id: labelName
                 text: "Name"
+                color: appSettings.theme.defaultTextColor
             }
 
             TextField {
@@ -86,6 +91,7 @@ Page {
             Label {
                 id: labelUsername
                 text: "Username"
+                color: appSettings.theme.defaultTextColor
             }
 
             TextField {
@@ -98,6 +104,7 @@ Page {
             Label {
                 id: labelAddress
                 text: "Address"
+                color: appSettings.theme.defaultTextColor
             }
 
             TextArea {
@@ -111,6 +118,7 @@ Page {
             Label {
                 id: labelGender
                 text: "Gender"
+                color: appSettings.theme.defaultTextColor
             }
 
             Row {
@@ -158,6 +166,7 @@ Page {
             Label {
                 id: labelBirthdate
                 text: "Birthdate"
+                color: appSettings.theme.defaultTextColor
             }
 
             TextField {
@@ -173,6 +182,7 @@ Page {
             Label {
                 id: labelEmail
                 text: "Email"
+                color: appSettings.theme.defaultTextColor
             }
 
             TextField {

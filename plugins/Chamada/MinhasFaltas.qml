@@ -9,6 +9,10 @@ Page {
     id: page
     title: "My attendance"
     objectName: "My attendance"
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json: {}
     property var configJson: {}

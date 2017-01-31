@@ -6,6 +6,10 @@ import "../../qml/components/" as AppComponents
 Page {
     id: page
     title: qsTr("My courses")
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json: {}
     property string root_folder: {}
