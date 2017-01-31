@@ -13,8 +13,8 @@
             "colorPrimary": "green",
             "colorHintText": "#fff",
             "textColorPrimary": "#333",
-            "colorWindowBackground": "#fff",
-            "colorWindowForeground": "#333",
+            "colorWindowBackground": "#fafafa",
+            "colorWindowForeground": "#fff",
             "smallFontSize": 10,
             "middleFontSize": 12,
             "bigFontSize": 16
@@ -25,8 +25,8 @@
             "colorPrimary": "green",
             "colorHintText": "#fff",
             "textColorPrimary": "#333",
-            "colorWindowBackground": "#fff",
-            "colorWindowForeground": "#333",
+            "colorWindowBackground": "#fafafa",
+            "colorWindowForeground": "#fff",
             "smallFontSize": 10,
             "middleFontSize": 12,
             "bigFontSize": 16
