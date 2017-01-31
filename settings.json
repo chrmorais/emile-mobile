@@ -7,14 +7,29 @@
         "baseImagesUrl": "https://emile-server.herokuapp.com/media/"
     },
     "theme": {
-        "colorAccent": "#c5e1a5",
-        "colorPrimary": "green",
-        "colorHintText": "#fff",
-        "textColorPrimary": "#333",
-        "colorWindowBackground": "#fff",
-        "colorWindowForeground": "#333",
-        "smallFontSize": 10,
-        "middleFontSize": 12,
-        "bigFontSize": 16
+        "material": {
+            "defaultTextColor": "#333",
+            "colorAccent": "#c5e1a5",
+            "colorPrimary": "green",
+            "colorHintText": "#fff",
+            "textColorPrimary": "#333",
+            "colorWindowBackground": "#fff",
+            "colorWindowForeground": "#333",
+            "smallFontSize": 10,
+            "middleFontSize": 12,
+            "bigFontSize": 16
+        },
+        "universal": {
+            "defaultTextColor": "#333",
+            "colorAccent": "#c5e1a5",
+            "colorPrimary": "green",
+            "colorHintText": "#fff",
+            "textColorPrimary": "#333",
+            "colorWindowBackground": "#fff",
+            "colorWindowForeground": "#333",
+            "smallFontSize": 10,
+            "middleFontSize": 12,
+            "bigFontSize": 16
+        }
     }
 }
