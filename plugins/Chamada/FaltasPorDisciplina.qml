@@ -58,12 +58,9 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryLabelText: section_time_date
-            badgeText: status
-            badgeBackgroundColor: status === "F" ? "red" : "blue"
-
-            x: ListView.view.currentItem.x
-            y: ListView.view.currentItem.y
+            primaryLabelText: typeof section_time_date !== "undefined" ? section_time_date : ""
+            badgeText: typeof status !== "undefined" ? status : ""
+            badgeBackgroundColor: typeof status !== "undefined" ? status === "F" ? "red" : "blue" : ""
         }
     }
 
