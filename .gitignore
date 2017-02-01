@@ -40,4 +40,6 @@ emile-mobile
 
 # Gradle
 *.properties~
+android/local.properties~
+android/gradle.properties~
 .directory
