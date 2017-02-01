@@ -13,14 +13,17 @@ android: {
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-    DISTFILES += \
+    OTHER_FILES += \
         android/AndroidManifest.xml \
+        android/google-services.json \
         android/gradle/wrapper/gradle-wrapper.jar \
         android/gradlew \
         android/res/values/libs.xml \
         android/build.gradle \
         android/gradle/wrapper/gradle-wrapper.properties \
-        android/gradlew.bat
+        android/gradlew.bat \
+        android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
+        android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
 }
 
 ios: {
