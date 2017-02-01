@@ -155,7 +155,7 @@ ApplicationWindow {
     }
 
     Loader {
-        active: !isIOS
+        active: !isIOS && Qt.platform.os === "android"
         asynchronous: active
         sourceComponent: Connections {
             target: androidGallery

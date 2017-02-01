@@ -9,14 +9,22 @@ Page {
     id: page
     title: "My attendance"
     objectName: "My attendance"
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
-    property var json: {}
-    property int courseId: 0
-
-    Component.onCompleted: {
+    function request() {
+        jsonListModel.debug = false;
         jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
         jsonListModel.load()
     }
+
+    property var json: {}
+    property int courseId: 0
+    property string toolBarState: "goback"
+
+    Component.onCompleted: request()
 
     Connections {
         target: jsonListModel
@@ -50,12 +58,9 @@ Page {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryLabelText: section_time_date
-            badgeText: status
-            badgeBackgroundColor: status === "F" ? "red" : "blue"
-
-            x: ListView.view.currentItem.x
-            y: ListView.view.currentItem.y
+            primaryLabelText: typeof section_time_date !== "undefined" ? section_time_date : ""
+            badgeText: typeof status !== "undefined" ? status : ""
+            badgeBackgroundColor: typeof status !== "undefined" ? status === "F" ? "red" : "blue" : ""
         }
     }
 

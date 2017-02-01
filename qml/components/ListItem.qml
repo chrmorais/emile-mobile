@@ -39,7 +39,7 @@ Item {
 
     property alias primaryLabel: __primaryLabelItem
     property alias primaryLabelText: __primaryLabelItem.text
-    property color primaryLabelColor: "#333"
+    property color primaryLabelColor: appSettings.theme.textColorPrimary
 
     property alias secondaryLabel: __secondaryLabelItem
     property alias secondaryLabelText: __secondaryLabelItem.text
@@ -56,7 +56,7 @@ Item {
     property bool interactive: true
     property bool showSeparator: false
 
-    property color backgroundColor: "transparent"
+    property color backgroundColor: appSettings.theme.colorWindowForeground
     property color selectedTextColor: primaryLabelColor
     property color selectedBackgroundColor: Qt.rgba(0,0,0,0.1)
 

@@ -9,14 +9,21 @@ Item {
     opacity: switchStatus.checked ? 0.75 : 1.0
 
     Rectangle {
-        height: column.height; width: parent.width
-        color: "transparent"
-        border.color: switchStatus.checked ? appSettings.theme.colorPrimary : appSettings.theme.colorAccent
+        radius: 6
+        height: column.height; width: parent.width * 0.95
+        color: appSettings.theme.colorWindowForeground
         anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
+
+        Pane {
+            z: parent.z-10
+            width: parent.width; height: parent.height
+            Material.elevation: 3
+        }
 
         Column {
             id: column
             spacing: 15; width: parent.width - parent.width * 0.05
+            anchors { top: parent.top; topMargin: 5; }
 
             Image {
                 id: imgProfile

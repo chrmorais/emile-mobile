@@ -7,6 +7,10 @@ import "../../qml/components/"
 Page {
     id: page
     title: qsTr("Student attendance")
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property bool checkedAll: true
     property int section_times_id: 0

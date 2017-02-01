@@ -54,9 +54,12 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Material");
     QGuiApplication app(argc, argv);
 
+    QVariantMap settings(loadAppConfig());
+    settings.insert("theme", settings.value("theme").toMap().value("material").toMap());
+
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
-    context->setContextProperty("appSettings", loadAppConfig());
+    context->setContextProperty("appSettings", settings);
     context->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
 
     #ifdef Q_OS_ANDROID

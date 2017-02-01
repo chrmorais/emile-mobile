@@ -10,6 +10,10 @@ Page {
     id: page
     title: qsTr("List of students")
     objectName: qsTr("Students")
+    background: Rectangle{
+        anchors.fill: parent
+        color: appSettings.theme.colorWindowBackground
+    }
 
     property var json
 
