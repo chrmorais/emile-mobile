@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "24191582193",
+    "firebase_url": "https://emile-server.firebaseio.com",
+    "project_id": "emile-server",
+    "storage_bucket": "emile-server.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24191582193:android:261fdf0c7efd2613",
+        "android_client_info": {
+          "package_name": "gsort.pos.engsisubiq.EmileMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24191582193-jp0hpu1s9qvckk18t1u9tsiger49m11f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0EQrY9HL8TN1tXxAXRf7ylOIsWuXmZ74"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
