@@ -25,6 +25,7 @@ ApplicationWindow {
     signal pageChanged()
 
     onUserProfileDataChanged: {
+        console.log(JSON.stringify(userProfileData));
         if (typeof userProfileData == "undefined" || !tokenTemp)
             return;
          if (!userProfileData.push_notification_token || userProfileData.push_notification_token !== tokenTemp)
@@ -43,12 +44,20 @@ ApplicationWindow {
         var params = {
             "post_message": { "push_notification_token": tokenTemp }
         };
+        var updateUserProfile = function() {
+            if (jsonListModel.state == "ready" && jsonListModel.model && jsonListModel.model.get(0).push_notification_token) {
+                tokenTemp = "";
+                userProfileData = jsonListModel.model.get(0);
+                jsonListModel.stateChanged.disconnect(updateUserProfile);
+            }
+        };
         jsonListModel.debug = true;
         jsonListModel.requestMethod = "POST";
         jsonListModel.contentType = "application/json";
         jsonListModel.source += "/token_register/"+userProfileData.id;
         jsonListModel.requestParams = JSON.stringify(params);
         jsonListModel.load();
+        jsonListModel.stateChanged.connect(updateUserProfile);
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
