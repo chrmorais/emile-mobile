@@ -15,6 +15,7 @@ ApplicationWindow {
 
     property QtObject menu
     property QtObject iOSImagesGallery
+    property string tokenTemp
     property var menuPages: []
     property var userProfileData: {}
     property bool isUserLoggedIn: false
@@ -22,6 +23,33 @@ ApplicationWindow {
     property alias currentPage: pageStack.currentItem
 
     signal pageChanged()
+
+    onUserProfileDataChanged: {
+        if (typeof userProfileData == "undefined" || !tokenTemp)
+            return;
+         if (!userProfileData.push_notification_token || userProfileData.push_notification_token !== tokenTemp)
+             submitTokenToServer();
+    }
+
+    function registerPushNotificationToken(token) {
+        console.log("Recebendo token no qml! Token: " + token);
+        tokenTemp = token;
+    }
+
+    function submitTokenToServer() {
+        if (!tokenTemp || !userProfileData.id)
+            return;
+        console.log("enviando o token para o serviço rest....");
+        var params = {
+            "post_message": { "push_notification_token": tokenTemp }
+        };
+        jsonListModel.debug = true;
+        jsonListModel.requestMethod = "POST";
+        jsonListModel.contentType = "application/json";
+        jsonListModel.source += "/token_register/"+userProfileData.id;
+        jsonListModel.requestParams = JSON.stringify(params);
+        jsonListModel.load();
+    }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
         messageDialog.title = title
