@@ -39,7 +39,7 @@ Page {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: listView.count === 0 && jsonListModel.state !== "ready"
+        visible: jsonListModel.state === "loading"
     }
 
     AppComponents.EmptyList {

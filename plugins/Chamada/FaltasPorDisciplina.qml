@@ -37,18 +37,15 @@ Page {
     }
 
     BusyIndicator {
-        id: loading
+        id: busyIndicator
         anchors.centerIn: parent
-        visible: listView.count === 0 && jsonListModel.state !== "ready"
+        visible: jsonListModel.state === "loading"
     }
 
     AppComponents.EmptyList {
         z: listView.z + 1
-        visible: listView.count === 0 && !loading.visible
-        onClicked: {
-            jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
-            jsonListModel.load()
-        }
+        visible: listView.count === 0 && !busyIndicator.visible
+        onClicked: request()
     }
 
     Component {

@@ -17,54 +17,26 @@ Page {
     property var json: []
 
     function request() {
-        for (var i = 0; i < json.length; ++i)
-            model.append(json[i]);
+        jsonListModel.debug = false;
+        jsonListModel.source += "wall_messages/" + userProfileData.id
+        jsonListModel.load()
     }
 
-    Component.onCompleted: {
-        json = [
-            {
-                "message": "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos.",
-                "author": "Marcos Silva",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras.",
-                "author": "João Pedro",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "O trecho padrão original de Lorem Ipsum, usado desde o século XVI, está reproduzido abaixo para os interessados.",
-                "author": "Maria José",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "Pessoal, não teremos aula hoje de ADM201. Marcaremos resposição posteriormente.",
-                "author": "João Pedro",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "Aula de Lab3 será na sala 401 do pavilhão O. Lembrem-se de levar o livro de ADM900.",
-                "author": "Marcos Brasil",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "Prezados alunos de ENG806, a visita técnica a Petrobrás foi adiada para semana que vem. Conversaremos amanhã mais detalhes. Aos interessados favor não faltar a aula.",
-                "author": "Joaquim Ferreia",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação. A vantagem de usar Lorem Ipsum é que ele tem uma distribuição normal de letras.",
-                "author": "Juliana Macedo-",
-                "date": "21-04-2017"
-            },
-            {
-                "message": "Olá turma! Só para lembrar vocês, amanhã teremos prova de ADM301, em dupla e ",
-                "author": "Carla Maria",
-                "date": "19-04-2017"
+    Component.onCompleted: request()
+
+    Connections {
+        target: window
+        onPageChanged: if (currentPage.title === page.title) request();
+    }
+
+    Connections {
+        target: jsonListModel
+        onStateChanged: {
+            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
             }
-        ]
-        request();
+        }
     }
 
     BusyIndicator {
@@ -109,7 +81,7 @@ Page {
 
                     Label {
                         id: authorLabel
-                        text: author; color: "#444"
+                        text: sender.name; color: "#444"
                     }
                 }
 
@@ -149,7 +121,7 @@ Page {
     ListView {
         id: listView
         spacing: 7
-        model: ListModel { id: model }
+        model: json
         focus: true; cacheBuffer: width
         topMargin: 10; bottomMargin: 10
         width: page.width; height: page.height
