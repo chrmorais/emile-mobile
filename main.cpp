@@ -13,7 +13,7 @@
 #ifdef Q_OS_ANDROID
 #include "android/JavaToCppBind.h"
 #include "android/cpp/androidgallery.h"
-#include "android/cpp/pushnotificationtokenlistener.h"
+#include "cpp/pushnotificationtokenlistener.h"
 #endif
 
 QJsonArray loadPlugins()
