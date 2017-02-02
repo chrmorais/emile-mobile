@@ -58,5 +58,10 @@ public class FirebaseInstanceIDListenerService extends FirebaseInstanceIdService
             Log.i("FirebaseInstanceIDListenerService", "The new token is: " + token);
             Log.i("FirebaseInstanceIDListenerService", "token saved as push_notification_token_id key!");
         }
+
+        if (debug)
+            Log.i("FirebaseInstanceIDListenerService", "Sending the token to cpp application!");
+
+        TokenToApplication.notifyTokenUpdate(token);
     }
 } //end
