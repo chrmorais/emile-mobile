@@ -2,8 +2,9 @@ QT += qml quick quickcontrols2 svg
 
 CONFIG += c++11
 
-SOURCES += main.cpp \
-    android/cpp/pushnotificationtokenlistener.cpp
+HEADERS += cpp/pushnotificationtokenlistener.h
+
+SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp
 
 RESOURCES += qml.qrc plugins.qrc
 
@@ -34,6 +35,3 @@ ios: {
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-HEADERS += \
-    android/cpp/pushnotificationtokenlistener.h
