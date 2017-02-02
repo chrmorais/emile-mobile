@@ -4,13 +4,16 @@
 #include <QQmlContext>
 #include <QJsonObject>
 #include <QQuickStyle>
+#include <QQuickWindow>
 #include <QJsonDocument>
 #include <QGuiApplication>
 #include <QRegularExpression>
 #include <QQmlApplicationEngine>
 
 #ifdef Q_OS_ANDROID
+#include "android/JavaToCppBind.h"
 #include "android/cpp/androidgallery.h"
+#include "android/cpp/pushnotificationtokenlistener.h"
 #endif
 
 QJsonArray loadPlugins()
@@ -67,7 +70,12 @@ int main(int argc, char *argv[])
         context->setContextProperty("androidGallery", &androidgallery);
     #endif
 
+    PushNotificationTokenListener pushNotificationTokenListener;
+
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
+
+    QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
+    QObject::connect(&pushNotificationTokenListener, SIGNAL(tokenUpdated(QVariant)), window, SLOT(registerPushNotificationToken(QVariant)));
 
     return app.exec();
 }
