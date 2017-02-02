@@ -3,7 +3,7 @@
 
 #include <jni.h>
 #include <QAndroidJniEnvironment>
-#include "cpp/pushnotificationtokenlistener.h"
+#include "../cpp/pushnotificationtokenlistener.h"
 
 static void tokenUpdateNotify(JNIEnv *env, jobject obj, jstring token)
 {
