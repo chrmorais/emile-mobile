@@ -47,8 +47,10 @@ Column {
                     anchors.verticalCenter: parent.verticalCenter
                     checked: labelStatus.text == "P"
                     onClicked: {
-                        labelStatus.text = (labelStatus.text == "F" ? "P" : "F")
-                        save(id, labelStatus.text);
+                        var string
+                        checked == true ? false : true
+                        string = (checked == true ? "P" : "F")
+                        save(id, string);
                     }
                 }
 

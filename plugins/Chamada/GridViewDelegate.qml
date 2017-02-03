@@ -52,8 +52,10 @@ Item {
                 font.weight: Font.DemiBold
                 checked: switchStatus.text == "P"
                 onClicked: {
-                    switchStatus.text = (switchStatus.text == "F" ? "P" : "F")
-                    save(id, switchStatus.text)
+                    var string
+                    checked == true ? false : true
+                    string = (checked == true ? "P" : "F")
+                    save(id, string)
                 }
             }
         }
