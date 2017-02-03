@@ -63,7 +63,10 @@ Page {
             x: ListView.view.currentItem.x
             y: ListView.view.currentItem.y
 
-            onClicked: pushPage(root_folder+"/RealizarChamada.qml", {"section_times_id": course.id, "course_section_id": id});
+            onClicked: {
+                pushPage(root_folder+"/RealizarChamada.qml", {"section_times_id": course.id, "course_section_id": id});
+                json = {}
+            }
         }
     }
 
