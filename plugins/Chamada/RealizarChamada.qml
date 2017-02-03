@@ -15,6 +15,7 @@ Page {
     property bool checkedAll: true
     property int section_times_id: 0
     property int course_section_id: 0
+    property var json: {}
 
     property var configJson: ({})
     property var checkedStatus: ({})
@@ -90,6 +91,8 @@ Page {
                 attendance["student_attendance"].splice(i,1);
         }
         attendance["student_attendance"].push({"student_id": student_id, "status": status});
+        if(status === "F")
+            checkedAll = false;
         updateStatus(student_id, status);
     }
 
@@ -97,7 +100,7 @@ Page {
         var fixBind = ({});
         if (typeof checkedStatus != "undefined")
             fixBind = checkedStatus;
-        fixBind[student_id.toString()] = status;
+        fixBind[student_id] = status;
         checkedStatus = fixBind;
     }
 
@@ -116,7 +119,8 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && page.visible)
-                gridView.model = jsonListModel.model;
+                var jsonTemp = jsonListModel.model;
+                json = jsonTemp;
         }
     }
 
@@ -139,6 +143,7 @@ Page {
         id: gridView
         visible: false
         anchors.fill: parent
+        model: json
         delegate: GridViewDelegate { }
         cellWidth: parent.width > parent.height ? parent.width * 0.25 : parent.width * 0.50; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
@@ -150,7 +155,7 @@ Page {
         id: listView
         visible: !busyIndicator.visible && !gridView.visible
         anchors.fill: parent
-        model: gridView.model
+        model: json
         delegate: ListViewDelegate { }
         Keys.onUpPressed: listViewScrollBar.decrease()
         Keys.onDownPressed: listViewScrollBar.increase()
