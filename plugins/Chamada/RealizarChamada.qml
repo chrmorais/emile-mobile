@@ -52,7 +52,7 @@ Page {
         if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
             if (jsonListModel.httpStatus === 200) {
                 gridView.visible = listView.visible = false;
-                alert("Success!", "Attendance was successfully registered", "OK", function() { popPage() }, "CANCEL", function() { });
+                alert("Success!", "Attendance was successfully registered", "OK", function() { pageStack.pop() }, "CANCEL", function() { });
             } else if (jsonListModel.httpStatus === 400) {
                 alert("Warning!", "The attendance date is already registered for this course section! Set another date.", "OK", function() { }, "CANCEL", function() { });
             } else if (jsonListModel.httpStatus === 404) {
