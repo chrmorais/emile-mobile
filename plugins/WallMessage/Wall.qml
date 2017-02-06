@@ -81,7 +81,7 @@ Page {
 
                     Label {
                         id: authorLabel
-                        text: sender.name; color: "#444"
+                        text: sender ? sender.name || "" : ""; color: "#444"
                     }
                 }
 
@@ -91,7 +91,7 @@ Page {
 
                     Label {
                         id: labelMessage
-                        text: message
+                        text: message || ""
                         width: parent.width * 0.95
                         wrapMode: Text.Wrap
                         font.wordSpacing: 1
@@ -111,7 +111,7 @@ Page {
                     Label {
                         id: dateLabel
                         color: appSettings.theme.defaultTextColor
-                        text: date
+                        text: date || ""
                     }
                 }
             }
