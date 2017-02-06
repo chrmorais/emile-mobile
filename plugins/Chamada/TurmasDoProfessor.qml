@@ -13,6 +13,7 @@ Page {
 
     property var json: {}
     property string root_folder: {}
+    property string toolBarState: "goback"
 
     function request() {
         jsonListModel.debug = false;
