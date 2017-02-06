@@ -93,6 +93,8 @@ Page {
         attendance["student_attendance"].push({"student_id": student_id, "status": status});
         if(status === "F")
             checkedAll = false;
+        else
+            checkedAll = true;
         updateStatus(student_id, status);
     }
 
