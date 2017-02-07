@@ -66,7 +66,8 @@ Page {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && page.visible)
-                json = jsonListModel.model;
+                var jsonTemp = jsonListModel.model
+                json = jsonTemp;
         }
     }
 
@@ -93,7 +94,7 @@ Page {
             badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1).toUpperCase()
             secondaryLabelText: fieldsVisible.length > 1 ? Util.getObjectValueByKey(model, fieldsVisible[1]) : ""
             onPressAndHold: AlunoFunc.addSelectedItem(index, selected, false)
-            onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": model.id})
+            onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": id})
             selected: selectedIndex.indexOf(index) !== -1
         }
     }
