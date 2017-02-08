@@ -47,6 +47,7 @@ Page {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 var fieldsDataTemp = jsonListModel.model.get(0);
                 fieldsData = fieldsDataTemp;
+                AlunoFunc.saveLocal("push_notification_token",fieldsData.push_notification_token);
             }
         }
     }
@@ -197,7 +198,13 @@ Page {
     AppComponents.FloatingButton {
         id: actionFloatingButton
         iconName: "pencil"
-        onClicked: action = "edit"
+        onClicked: {
+            if(action === "edit")
+                return;
+            action = "edit"
+            toast.z = parent.z + !
+                    toast.show("Edit enabled")
+        }
         visible: !loading.visible && (action === "view" || action === "edit")
     }
 }

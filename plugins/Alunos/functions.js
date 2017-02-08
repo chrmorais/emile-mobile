@@ -70,8 +70,11 @@ function saveLocal(fieldName, fieldValue) {
 }
 
 function saveRemote() {
-    if (action === "view")
+    if (action === "view") {
+        toast.z = parent.z + 1
+        toast.show("Edit is not enabled")
         return;
+    }
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
     toast.show("Saving...");
