@@ -1,4 +1,5 @@
-#import "Firebase.h"
+#include "Firebase/Firebase.h"
+//#import <Firebase/Firebase.h>
 #import <UIKit/UIKit.h>
 #import <QString>
 #include <QtCore>
@@ -12,40 +13,39 @@
 
 @implementation QIOSApplicationDelegate (QtAppDelegate)
 
-LocationManager * shareModel;
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    Q_UNUSED(application)
+    Q_UNUSED(launchOptions)
     [self configFirebase];
     NSLog(@"Firebase connect start!");
     return YES;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    Q_UNUSED(application)
     [[FIRMessaging messaging] disconnect];
     NSLog(@"Firebase disconnect!");
     NSLog(@"enter in applicationDidEnterBackground method");
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    Q_UNUSED(application)
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self connectToFcm];
     NSLog(@"Conectou com o FCM");
-
-    [shareModel startMonitoringLocation];
-
     NSLog(@"enter in applicationDidBecomeActive method");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    Q_UNUSED(application)
     NSLog(@"enter in applicationWillTerminate method");
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application{
-     NSLog(@"enter in applicationWillResignActive method");
+- (void)applicationWillResignActive:(UIApplication *)application {
+    Q_UNUSED(application)
+    NSLog(@"enter in applicationWillResignActive method");
 }
+
 -(void)configFirebase {
     // iOS 8 or later
     // [START register_for_notifications]
@@ -62,18 +62,19 @@ LocationManager * shareModel;
     // Add observer for InstanceID token refresh callback.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:) name:kFIRInstanceIDTokenRefreshNotification object:nil];
 
-    NSLog(@"Configurando Firebase ");
+    NSLog(@"Configurando Firebase...");
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
   fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-
+    Q_UNUSED(completionHandler)
+    Q_UNUSED(userInfo)
     UIApplicationState state = [application applicationState];
     if (state != UIApplicationStateActive) {
-         // NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
-         // só notifica se o app estiver inativo em background
-     }
-     /*
+        // NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
+        // só notifica se o app estiver inativo em background
+    }
+    /*
           NSString *showTitle = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
           //NSString *msg = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
           UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Você recebeu uma nova notificação"
@@ -91,14 +92,14 @@ LocationManager * shareModel;
         NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
       }
 */
-     //NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
-     //NSLog(@"Mensagem: %@", userInfo);
+    //NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
+    //NSLog(@"Mensagem: %@", userInfo);
     //NSLog(@"actionType: %@", userInfo[@"gcm.notification.actionType"]);
     //NSLog(@"actionTypeId: %@", userInfo[@"gcm.notification.actionTypeId"]);
 }
 
 - (void)tokenRefreshNotification:(NSNotification *)notification {
-
+    Q_UNUSED(notification)
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
     NSLog(@"Token updated: %@", refreshedToken);
 

@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>183118693766-dekrpr1ubeq4ugsq4ciogo5qofgg1jpe.apps.googleusercontent.com</string>
+	<string>24191582193-iirqkeq33ds880ufedq1ar0a15p8u00e.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.183118693766-dekrpr1ubeq4ugsq4ciogo5qofgg1jpe</string>
+	<string>com.googleusercontent.apps.24191582193-iirqkeq33ds880ufedq1ar0a15p8u00e</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAacvT80brHwQO7nYLpl1LgVycI-Aw7VH8</string>
+	<string>AIzaSyAIgVUZQRMFB9dt9zO4cI35okVe3eDjrZA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>183118693766</string>
+	<string>24191582193</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>gsort.pos.engsisubiq.ugetMobile</string>
+	<string>gsort.pos.engsisubiq.emile-mobile</string>
 	<key>PROJECT_ID</key>
-	<string>uget-a7991</string>
+	<string>emile-server</string>
 	<key>STORAGE_BUCKET</key>
-	<string>uget-a7991.appspot.com</string>
+	<string>emile-server.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:183118693766:ios:ecb6b18e22678505</string>
+	<string>1:24191582193:ios:d9fbf6a85d2623a4</string>
 	<key>DATABASE_URL</key>
-	<string>https://uget-a7991.firebaseio.com</string>
+	<string>https://emile-server.firebaseio.com</string>
 </dict>
 </plist>
