@@ -8,10 +8,6 @@ SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp
 
 RESOURCES += qml.qrc plugins.qrc
 
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 android: {
     QT += androidextras
     HEADERS += android/cpp/androidgallery.h android/JavaToCppBind.h
@@ -35,42 +31,56 @@ android: {
 
 ios: {
     ios_google_plist.files = $$PWD/ios/GoogleService-Info.plist
+    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
     QMAKE_BUNDLE_DATA += ios_google_plist
-    QMAKE_INFO_PLIST = ios/Info.plist
 
+    QMAKE_INFO_PLIST = $$PWD/ios/Info.plist
+    QMAKE_BUNDLE_DATA += databases ios_google_plist ios_icon app_launch_images
     QMAKE_LFLAGS += $(inherited) -ObjC -l"c++" -l"sqlite3" -l"z" -framework "AdSupport" -framework "AddressBook" -framework "CoreGraphics" -framework "FirebaseAnalytics" -framework "FirebaseInstanceID" -framework "FirebaseMessaging" -framework "GoogleIPhoneUtilities" -framework "GoogleInterchangeUtilities" -framework "GoogleSymbolUtilities" -framework "GoogleUtilities" -framework "SafariServices" -framework "StoreKit" -framework "SystemConfiguration"
+
     Q_ENABLE_BITCODE.value = NO
     Q_ENABLE_BITCODE.name = ENABLE_BITCODE
     QMAKE_MAC_XCODE_SETTINGS += Q_ENABLE_BITCODE
 
-    HEADERS += ios/Firebase/Firebase.h
     OBJECTIVE_SOURCES += ios/QtAppDelegate.mm
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseAnalytics
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
 
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseMessaging
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleIPhoneUtilities
     INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseInstanceID
+
+    INCLUDEPATH += $$PWD/ios/Firebase
+    DEPENDPATH += $$PWD/ios/Firebase
+
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseMessaging
+
     INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleInterchangeUtilities
+
+    INCLUDEPATH += $$PWD/ios/Firebase
+    DEPENDPATH += $$PWD/ios/Firebase
+
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleIPhoneUtilities
+
     INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleSymbolUtilities
+
     INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleUtilities
+
     INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
 }
+
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
