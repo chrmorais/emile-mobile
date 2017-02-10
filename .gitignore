@@ -43,3 +43,7 @@ emile-mobile
 android/local.properties~
 android/gradle.properties~
 .directory
+
+# ios finder
+.DS_Store
+plugins/.DS_Store
