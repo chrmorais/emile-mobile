@@ -76,6 +76,7 @@ function saveRemote() {
         return;
     }
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
+    formData.type = 1
     httpRequest(path, formData, "POST");
     toast.show("Saving...");
     pageFlickable.contentY = 0;

@@ -203,7 +203,7 @@ Page {
                 return;
             action = "edit"
             toast.z = parent.z + !
-                    toast.show("Edit enabled")
+            toast.show("Edit enabled")
         }
         visible: !loading.visible && (action === "view" || action === "edit")
     }
