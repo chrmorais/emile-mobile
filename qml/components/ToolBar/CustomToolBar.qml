@@ -76,6 +76,14 @@ ToolBar {
     }
 
     Connections {
+        target: window.currentPage
+        onToolBarActionsChanged: {
+            if (currentPage.toolBarActions)
+                toolBarActions = currentPage.toolBarActions;
+        }
+    }
+
+    Connections {
         target: window
         onPageChanged: {
             var fixBind = []
