@@ -58,14 +58,6 @@ Page {
         jsonListModel.load()
     }
 
-//    onVisibleChanged: {
-//        if (visible) { // is the active page, start a request!
-//            if (jsonListModel.model)
-//                jsonListModel.model.clear();
-//            request();
-//        }
-//    }
-
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();
