@@ -48,7 +48,8 @@ Page {
                 var fieldsDataTemp = jsonListModel.model.get(0);
                 fieldsData = fieldsDataTemp;
                 AlunoFunc.saveLocal("type", 1);
-                AlunoFunc.saveLocal("program_id", 1);
+                AlunoFunc.saveLocal("program_id", fieldsData.program_id);
+                AlunoFunc.saveLocal("password", fieldsData.password);
             }
         }
     }

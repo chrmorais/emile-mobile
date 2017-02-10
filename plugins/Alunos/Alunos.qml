@@ -52,20 +52,29 @@ Page {
         fieldsVisible = arrayTemp;
     }
 
-    onVisibleChanged: {
-        if (visible) { // is the active page, start a request!
-            if (jsonListModel.model)
-                jsonListModel.model.clear();
-            AlunoFunc.httpRequest("students");
-        }
+    function request() {
+        jsonListModel.debug = false;
+        jsonListModel.source += "students"
+        jsonListModel.load()
     }
 
-    Component.onCompleted: AlunoFunc.httpRequest("students")
+//    onVisibleChanged: {
+//        if (visible) { // is the active page, start a request!
+//            if (jsonListModel.model)
+//                jsonListModel.model.clear();
+//            request();
+//        }
+//    }
+
+    Connections {
+        target: window
+        onPageChanged: if (currentPage.title === page.title) request();
+    }
 
     Connections {
         target: jsonListModel
         onStateChanged: {
-            if (jsonListModel.state === "ready" && page.visible)
+            if (jsonListModel.state === "ready" && currentPage.title === page.title)
                 var jsonTemp = jsonListModel.model
                 json = jsonTemp;
         }
@@ -80,7 +89,7 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !loading.visible
-        onClicked: AlunoFunc.httpRequest("students")
+        onClicked: request()
     }
 
     Component {
@@ -90,9 +99,8 @@ Page {
             id: wrapper
             showSeparator: true
             primaryImageSource: model.profileImage ? Util.getObjectValueByKey(model, "profileImage") : ""
-            primaryLabelText: fieldsVisible.length > 0 ? Util.getObjectValueByKey(model, fieldsVisible[0]) : ""
+            primaryLabelText: username
             badgeText: model.profileImage ? "" : primaryLabelText.substring(0,1).toUpperCase()
-            secondaryLabelText: fieldsVisible.length > 1 ? Util.getObjectValueByKey(model, fieldsVisible[1]) : ""
             onPressAndHold: AlunoFunc.addSelectedItem(index, selected, false)
             onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": id})
             selected: selectedIndex.indexOf(index) !== -1
@@ -102,7 +110,6 @@ Page {
     ListView {
         id: listView
         focus: true; cacheBuffer: width
-        visible: count > 0
         width: page.width; height: page.height
         model: json; delegate: listViewDelegate
         onRemoveChanged: update();
