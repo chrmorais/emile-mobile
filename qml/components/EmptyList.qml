@@ -65,11 +65,15 @@ Rectangle {
 
         Text {
             color: textColor; text: firstText
+            renderType: Text.NativeRendering
+            fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
             anchors.horizontalCenter: parent.horizontalCenter
             font { weight: Font.DemiBold; pointSize: 12 }
         }
 
         Text {
+            renderType: Text.NativeRendering
+            fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
             color: textColor; text: secondText; font.pointSize: 10
             anchors.horizontalCenter: parent.horizontalCenter
         }
