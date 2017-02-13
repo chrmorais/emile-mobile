@@ -69,17 +69,12 @@ function saveLocal(fieldName, fieldValue) {
     var objectTemp = formData
     objectTemp[fieldName] = fieldValue
     formData = objectTemp
-    console.log("json = " + JSON.stringify(formData))
 }
 
 function saveRemote() {
-    if (action === "view") {
-        toast.z = parent.z + 1
-        toast.show("Edit is not enabled")
-        return;
-    }
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
-    toast.show("Saving...");
+    //toast.show("Saving...");
     pageFlickable.contentY = 0;
+    pageStack.pop()
 }

@@ -20,7 +20,7 @@ Page {
     property string toolBarState: "goback"
     property var fieldsData
     property var formData: ({})
-    property var toolBarActions: []
+    property var toolBarActions: action === "newRegister" ? ["save"] : []
     property bool editable: action === "view" || action === "edit"
 
     // called by ToolBar on action click
