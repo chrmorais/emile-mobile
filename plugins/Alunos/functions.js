@@ -56,7 +56,7 @@ function selectAll() {
 }
 
 function httpRequest(path, args, method) {
-    jsonListModel.debug = true
+    jsonListModel.debug = false
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.contentType = "application/json";
     console.log("args: " + args);
@@ -76,7 +76,6 @@ function saveLocal(fieldName, fieldValue) {
 function saveRemote() {
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
-    toast.show("Saving...");
     pageFlickable.contentY = 0;
-    alert("Success!", "The message was successfully sended", "OK", function() { popPage() }, "CANCEL", function() { });
+    alert(qsTr("Success!"), qsTr("Student saved"), "OK", function() { popPage() }, "CANCEL", function() { });
 }

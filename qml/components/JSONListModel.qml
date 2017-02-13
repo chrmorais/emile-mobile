@@ -20,6 +20,11 @@ Item {
     property string contentType: "application/x-www-form-urlencoded"
     property ListModel model: ListModel { id: jsonModel }
 
+    Component {
+        id: listModelComponent
+        ListModel { id: listModel }
+    }
+
     QtObject {
         id: privateProperties
         property string json: ""
@@ -65,8 +70,7 @@ Item {
     }
 
     function updateJSONModel() {
-        if (jsonModel !== null && jsonModel.count > 0)
-            jsonModel.clear();
+        model = listModelComponent.createObject(rootItem, {});
 
         if (privateProperties.json === "") {
             rootItem.errorString = qsTr("The server returned an empty response!");
@@ -75,8 +79,9 @@ Item {
         }
 
         var objectArray = JSON.parse(privateProperties.json);
+        var i = 0;
         for (var key in objectArray)
-            jsonModel.append(objectArray[key]);
+            model.insert(i++, objectArray[key]);
         rootItem.state = "ready";
     }
 }
