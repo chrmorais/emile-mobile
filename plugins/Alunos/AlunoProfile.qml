@@ -20,7 +20,7 @@ Page {
     property string toolBarState: "goback"
     property var fieldsData
     property var formData: ({})
-    property var toolBarActions: ["save"]
+    property var toolBarActions: action === "newRegister" ? ["save"] : []
     property bool editable: action === "view" || action === "edit"
 
     // called by ToolBar on action click
@@ -47,7 +47,9 @@ Page {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
                 var fieldsDataTemp = jsonListModel.model.get(0);
                 fieldsData = fieldsDataTemp;
-                AlunoFunc.saveLocal("push_notification_token",fieldsData.push_notification_token);
+                AlunoFunc.saveLocal("type", 1);
+                AlunoFunc.saveLocal("program_id", fieldsData.program_id);
+                AlunoFunc.saveLocal("password", fieldsData.password);
             }
         }
     }
@@ -199,8 +201,8 @@ Page {
         id: actionFloatingButton
         iconName: "pencil"
         onClicked: {
-            if(action === "edit")
-                return;
+            var toolBarActionsTemp = ["save"];
+            toolBarActions = toolBarActionsTemp;
             action = "edit"
             toast.z = parent.z + !
             toast.show("Edit enabled")
