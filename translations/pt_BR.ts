@@ -6,12 +6,12 @@
     <message>
         <location filename="../plugins/Alunos/AlunoProfile.qml" line="11"/>
         <source>New Aluno</source>
-        <translation></translation>
+        <translation>Novo Aluno</translation>
     </message>
     <message>
         <location filename="../plugins/Alunos/AlunoProfile.qml" line="12"/>
         <source>Students</source>
-        <translation type="unfinished"></translation>
+        <translation>Aluno</translation>
     </message>
 </context>
 <context>
@@ -19,12 +19,12 @@
     <message>
         <location filename="../plugins/Alunos/Alunos.qml" line="11"/>
         <source>List of students</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de alunos</translation>
     </message>
     <message>
         <location filename="../plugins/Alunos/Alunos.qml" line="12"/>
         <source>Students</source>
-        <translation type="unfinished"></translation>
+        <translation>Alunos</translation>
     </message>
 </context>
 <context>
@@ -32,7 +32,7 @@
     <message>
         <location filename="../plugins/WallMessage/DestinationGroupSelect.qml" line="8"/>
         <source>Send to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar para:</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     <message>
         <location filename="../plugins/WallMessage/DestinationSelect.qml" line="8"/>
         <source>Course Sections</source>
-        <translation type="unfinished"></translation>
+        <translation>Disciplinas</translation>
     </message>
 </context>
 <context>
@@ -48,12 +48,12 @@
     <message>
         <location filename="../qml/components/EmptyList.qml" line="32"/>
         <source>Warning! No itens found</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso! Nenhum item encontrado</translation>
     </message>
     <message>
         <location filename="../qml/components/EmptyList.qml" line="33"/>
         <source>Touch to try again!</source>
-        <translation type="unfinished"></translation>
+        <translation>Toque para tentar novamente!</translation>
     </message>
 </context>
 <context>
@@ -61,32 +61,32 @@
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="9"/>
         <source>Courses in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Disciplina em andamento</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="85"/>
         <source>Checkin for courses in progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamada de disciplina em andamento</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="87"/>
         <source>Do you want register attendance?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseja registrar chamada?</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="89"/>
         <source>None courses in progress!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenhuma disciplina em andamento!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="97"/>
         <source>Student attendance</source>
-        <translation type="unfinished">Realizar chamada</translation>
+        <translation>Realizar chamada</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="112"/>
         <source>My courses</source>
-        <translation type="unfinished"></translation>
+        <translation>Minhas turmas</translation>
     </message>
 </context>
 <context>
@@ -94,7 +94,7 @@
     <message>
         <location filename="../qml/components/JSONListModel.qml" line="42"/>
         <source>Cannot connect to server!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Não foi possível conectar com o servidor!</translation>
     </message>
     <message>
         <location filename="../qml/components/JSONListModel.qml" line="53"/>
