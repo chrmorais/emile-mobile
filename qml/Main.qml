@@ -25,7 +25,6 @@ ApplicationWindow {
     signal pageChanged()
 
     onUserProfileDataChanged: {
-        console.log(JSON.stringify(userProfileData));
         if (typeof userProfileData == "undefined" || !tokenTemp)
             return;
          if (!userProfileData.push_notification_token || userProfileData.push_notification_token !== tokenTemp)
@@ -33,14 +32,12 @@ ApplicationWindow {
     }
 
     function registerPushNotificationToken(token) {
-        console.log("Recebendo token no qml! Token: " + token);
         tokenTemp = token;
     }
 
     function submitTokenToServer() {
         if (!tokenTemp || !userProfileData.id)
             return;
-        console.log("enviando o token para o serviço rest....");
         var params = {
             "post_message": { "push_notification_token": tokenTemp }
         };
@@ -179,13 +176,13 @@ ApplicationWindow {
 
     Loader {
         active: isIOS
-        asynchronous: active
+        asynchronous: false
         onLoaded: iOSImagesGallery = item
         sourceComponent: QuickDialogs.FileDialog {
             folder: shortcuts.pictures
             sidebarVisible: false
             onAccepted: {
-                menu.userImageProfile = "file://"+iOSImagesGallery.fileUrl;
+                menu.userImageProfile = "file://"+fileUrl;
                 // implementar upload para o serviço rest
             }
         }
