@@ -94,17 +94,17 @@
     <message>
         <location filename="../qml/components/JSONListModel.qml" line="42"/>
         <source>Cannot connect to server!</source>
-        <translation type="unfinished">Não foi possível conectar com o servidor!</translation>
+        <translation>Não foi possível conectar com o servidor!</translation>
     </message>
     <message>
         <location filename="../qml/components/JSONListModel.qml" line="53"/>
         <source>The server returned error </source>
-        <translation type="unfinished"></translation>
+        <translation>O servidor retornou um erro</translation>
     </message>
     <message>
         <location filename="../qml/components/JSONListModel.qml" line="72"/>
         <source>The server returned an empty response!</source>
-        <translation type="unfinished"></translation>
+        <translation>O servidor retornou uma resposta vazia</translation>
     </message>
 </context>
 <context>
@@ -186,7 +186,7 @@
     <message>
         <location filename="../plugins/Chamada/TurmasDoProfessor.qml" line="8"/>
         <source>My courses</source>
-        <translation type="unfinished"></translation>
+        <translation>Minhas disciplinas</translation>
     </message>
 </context>
 <context>
