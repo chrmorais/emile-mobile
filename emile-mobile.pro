@@ -8,10 +8,7 @@ SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp
 
 RESOURCES += qml.qrc plugins.qrc translations.qrc
 
-# Supported languages
-LANGUAGES = br en
-
-TRANSLATIONS = translations/pt_BR.ts translations/pt_BR.qm
+TRANSLATIONS = translations/en_US.ts translations/pt_BR.ts translations/pt_BR.qm
 
 android: {
     QT += androidextras
