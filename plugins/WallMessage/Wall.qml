@@ -26,7 +26,12 @@ Page {
 
     Connections {
         target: window
-        onPageChanged: if (currentPage.title === page.title) request();
+        onPageChanged: {
+            if (currentPage.title === page.title)
+                request();
+            else
+                json = "";
+        }
     }
 
     Connections {
