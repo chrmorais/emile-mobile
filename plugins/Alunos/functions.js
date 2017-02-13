@@ -59,6 +59,8 @@ function httpRequest(path, args, method) {
     jsonListModel.debug = true
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.contentType = "application/json";
+    console.log("args: " + args);
+    console.log("args stringify: " + JSON.stringify(args));
     jsonListModel.requestParams = args ? JSON.stringify(args) : ""
     jsonListModel.source += path
     jsonListModel.load()
@@ -74,7 +76,7 @@ function saveLocal(fieldName, fieldValue) {
 function saveRemote() {
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
-    //toast.show("Saving...");
+    toast.show("Saving...");
     pageFlickable.contentY = 0;
-    pageStack.pop()
+    alert("Success!", "The message was successfully sended", "OK", function() { popPage() }, "CANCEL", function() { });
 }

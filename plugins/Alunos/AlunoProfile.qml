@@ -42,6 +42,11 @@ Page {
     }
 
     Connections {
+        target: window
+        onPageChanged: fieldsData = "";
+    }
+
+    Connections {
         target: jsonListModel
         onStateChanged: {
             if (jsonListModel.state === "ready" && currentPage.title === page.title) {
