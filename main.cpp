@@ -3,6 +3,7 @@
 #include <QJsonArray>
 #include <QQmlContext>
 #include <QJsonObject>
+#include <QTranslator>
 #include <QQuickStyle>
 #include <QQuickWindow>
 #include <QJsonDocument>
@@ -14,6 +15,7 @@
 #include "android/JavaToCppBind.h"
 #include "android/cpp/androidgallery.h"
 #endif
+
 #include "cpp/pushnotificationtokenlistener.h"
 
 QJsonArray loadPlugins()
@@ -56,6 +58,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QQuickStyle::setStyle("Material");
     QGuiApplication app(argc, argv);
+    Q_INIT_RESOURCE(translations);
 
     QVariantMap settings(loadAppConfig());
     settings.insert("theme", settings.value("theme").toMap().value("material").toMap());
@@ -64,6 +67,19 @@ int main(int argc, char *argv[])
     QQmlContext *context = engine.rootContext();
     context->setContextProperty("appSettings", settings);
     context->setContextProperty("crudModel", QVariant::fromValue(loadPlugins()));
+
+    // read for system locale to set in translator object
+    QString locale(QLocale::system().name());
+
+    // if locale is not defined - set to default brazilian pt_br
+    if (locale.isEmpty())
+        locale = QLocale(QLocale::Portuguese, QLocale::Brazil).system().name();
+
+    QTranslator translator;
+    if (translator.load(locale, QLatin1String(":/translations")))
+        app.installTranslator(&translator);
+    else
+        qWarning("Ops! translator cannot load the file!");
 
     #ifdef Q_OS_ANDROID
         AndroidGallery androidgallery;
