@@ -72,6 +72,11 @@ function saveLocal(fieldName, fieldValue) {
 }
 
 function saveRemote() {
+    if(action !== "edit") {
+        saveLocal("type", 1);
+        saveLocal("program_id", 1);
+        saveLocal("password", 123);
+    }
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
     pageFlickable.contentY = 0;
