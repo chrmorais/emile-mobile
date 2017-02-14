@@ -21,8 +21,6 @@ Page {
         jsonListModel.load();
     }
 
-    Component.onCompleted: request();
-
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();

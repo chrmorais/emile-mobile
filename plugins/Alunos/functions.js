@@ -59,8 +59,6 @@ function httpRequest(path, args, method) {
     jsonListModel.debug = false
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.contentType = "application/json";
-    console.log("args: " + args);
-    console.log("args stringify: " + JSON.stringify(args));
     jsonListModel.requestParams = args ? JSON.stringify(args) : ""
     jsonListModel.source += path
     jsonListModel.load()
@@ -74,6 +72,11 @@ function saveLocal(fieldName, fieldValue) {
 }
 
 function saveRemote() {
+    if(action !== "edit") {
+        saveLocal("type", 1);
+        saveLocal("program_id", 1);
+        saveLocal("password", 123);
+    }
     var path = "%1".arg(action === "edit" ? "update_user/"+userId : "add_user");
     httpRequest(path, formData, "POST");
     pageFlickable.contentY = 0;
