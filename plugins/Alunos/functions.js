@@ -59,8 +59,6 @@ function httpRequest(path, args, method) {
     jsonListModel.debug = false
     jsonListModel.requestMethod = method || "GET"
     jsonListModel.contentType = "application/json";
-    console.log("args: " + args);
-    console.log("args stringify: " + JSON.stringify(args));
     jsonListModel.requestParams = args ? JSON.stringify(args) : ""
     jsonListModel.source += path
     jsonListModel.load()
