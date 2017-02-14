@@ -77,6 +77,7 @@ ToolBar {
 
     Connections {
         target: window.currentPage
+        ignoreUnknownSignals: true
         onToolBarActionsChanged: {
             if (currentPage.toolBarActions)
                 toolBarActions = currentPage.toolBarActions;
