@@ -14,13 +14,13 @@ public:
     static void tokenUpdateNotify(const QString &token);
 
     Q_INVOKABLE
-    QString pushNotificationToken();
+    QVariant pushNotificationToken();
 
 private:
-    void sendSignal(const QString &token);
+    void sendSignal();
 
 signals:
-    void tokenUpdated(const QVariant &token);
+    void tokenUpdated();
 
 private:
     QVariantMap m_applicationSettings;
