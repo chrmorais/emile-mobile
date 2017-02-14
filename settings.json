@@ -1,5 +1,6 @@
 {
     "name": "Emile",
+    "description": "A educational application",
     "rest_service": {
         "userServiceName": "",
         "userServicePassword": "",
