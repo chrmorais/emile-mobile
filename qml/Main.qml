@@ -25,39 +25,51 @@ ApplicationWindow {
     signal pageChanged()
 
     onUserProfileDataChanged: {
-        console.log(JSON.stringify(userProfileData));
         if (typeof userProfileData == "undefined" || !tokenTemp)
             return;
-         if (!userProfileData.push_notification_token || userProfileData.push_notification_token !== tokenTemp)
-             submitTokenToServer();
+        submitTokenToServer();
     }
 
-    function registerPushNotificationToken(token) {
-        console.log("Recebendo token no qml! Token: " + token);
-        tokenTemp = token;
+    function tokenUpdate() {
+        console.log("Opa! Novo token foi gerado!");
+        submitTokenToServer();
+    }
+
+    function updateUserProfile() {
+        if (jsonListModel.state == "ready" && jsonListModel.model && jsonListModel.model.get(0).push_notification_token) {
+            tokenTemp = "";
+            userProfileData = jsonListModel.model.get(0);
+            jsonListModel.stateChanged.disconnect(updateUserProfile);
+        }
     }
 
     function submitTokenToServer() {
-        if (!tokenTemp || !userProfileData.id)
+        var saveTokenFromQSettings = pushNotificationTokenListener.pushNotificationToken();
+        if (saveTokenFromQSettings || saveTokenFromQSettings !== tokenTemp)
+            tokenTemp = saveTokenFromQSettings;
+        console.log("submitTokenToServer()");
+        if (!tokenTemp || !userProfileData || !userProfileData.id || tokenTemp === userProfileData.push_notification_token) {
+            console.log("!tokenTemp || !userProfileData.id");
             return;
-        console.log("enviando o token para o serviço rest....");
+        }
+
         var params = {
             "post_message": { "push_notification_token": tokenTemp }
         };
-        var updateUserProfile = function() {
-            if (jsonListModel.state == "ready" && jsonListModel.model && jsonListModel.model.get(0).push_notification_token) {
-                tokenTemp = "";
-                userProfileData = jsonListModel.model.get(0);
-                jsonListModel.stateChanged.disconnect(updateUserProfile);
-            }
-        };
+
+        console.log("enviando o token para o serviço rest....");
+        console.log("args sended is: " + JSON.stringify(params));
+        console.log("userProfileData.id: " + userProfileData.id);
+
         jsonListModel.debug = true;
         jsonListModel.requestMethod = "POST";
         jsonListModel.contentType = "application/json";
         jsonListModel.source += "/token_register/"+userProfileData.id;
         jsonListModel.requestParams = JSON.stringify(params);
-        jsonListModel.load();
-        jsonListModel.stateChanged.connect(updateUserProfile);
+        jsonListModel.load(function(result, status) {
+            console.log("response finish!");
+            console.log("result str is: " + result);
+        });
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
@@ -137,6 +149,7 @@ ApplicationWindow {
             setX(Screen.width / 2 - width / 2);
             setY(Screen.height / 2 - height / 2);
         }
+        // validateToken();
     }
 
     Connections {
