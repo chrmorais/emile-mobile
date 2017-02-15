@@ -86,6 +86,7 @@ Page {
                 text: "Email"
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
+                selectByMouse: true
                 inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
                 anchors.horizontalCenter: parent.horizontalCenter
                 background: Rectangle {
@@ -109,6 +110,7 @@ Page {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Normal; font.letterSpacing: 1
                 anchors.horizontalCenter: parent.horizontalCenter
+                selectByMouse: true
                 inputMethodHints: Qt.ImhNoPredictiveText
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
