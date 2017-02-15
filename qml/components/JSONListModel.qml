@@ -39,7 +39,7 @@ Item {
         }
     }
 
-    function load() {
+    function load(callback) {
         var xhr = new XMLHttpRequest;
         xhr.open(requestMethod, (requestMethod === "GET") ? source + "?" + requestParams : source);
         xhr.setRequestHeader("Content-type", contentType);
@@ -54,6 +54,8 @@ Item {
                     // fix not state changed when result is a same of previous request!
                     privateProperties.json = "";
                     privateProperties.json = xhr.responseText;
+                    if (callback)
+                        callback(xhr.responseText, xhr.status);
                 } else {
                     rootItem.errorString = qsTr("The server returned error ") + xhr.status;
                     rootItem.state = "error";
@@ -79,9 +81,8 @@ Item {
         }
 
         var objectArray = JSON.parse(privateProperties.json);
-        var i = 0;
         for (var key in objectArray)
-            model.insert(i++, objectArray[key]);
+            model.append(objectArray[key]);
         rootItem.state = "ready";
     }
 }
