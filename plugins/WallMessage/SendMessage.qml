@@ -46,6 +46,12 @@ Page {
         }
     }
 
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: jsonListModel.state === "loading"
+    }
+
     Rectangle {
         id: rectangleTextarea
         color: "transparent"
