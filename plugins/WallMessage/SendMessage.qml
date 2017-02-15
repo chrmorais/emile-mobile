@@ -58,9 +58,11 @@ Page {
 
             TextArea.flickable: TextArea {
                 id: textarea
+                z: parent.z + 1
                 text: ""
-                mouseSelectionMode: TextEdit.SelectWords
+                selectByMouse: true
                 persistentSelection: true
+                overwriteMode: true
                 wrapMode: TextArea.Wrap
                 focus: true; width: parent.width
                 onTextChanged: {
