@@ -14,6 +14,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     Q_UNUSED(application)
     Q_UNUSED(launchOptions)
+
     [self configFirebase];
     NSLog(@"Firebase connect start!");
     return YES;
@@ -69,16 +70,16 @@
     UIApplicationState state = [application applicationState];
     NSLog(@"Nova mensagem do firebase");
 
-    NSString *showTitle = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
-    NSString *msg = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
+    NSString *title = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
+    NSString *message = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
 
     if (state != UIApplicationStateActive) {
         // NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
         // só notifica se o app estiver inativo em background
     }
 
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Você recebeu uma nova notificação"
-            message:showTitle
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+            message:message
             preferredStyle:UIAlertControllerStyleAlert];
     //We add buttons to the alert controller by creating UIAlertActions:
     UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
@@ -99,9 +100,7 @@
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
 }
-// [END refresh_token]
 
-// [START connect_to_fcm]
 - (void)connectToFcm {
     [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
         if (error != nil)
@@ -110,4 +109,28 @@
             NSLog(@"Conectou com o FCM.");
     }];
 }
+
++ (BOOL)notificationServicesEnabled {
+    BOOL isEnabled = NO;
+
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]){
+        UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+
+        if (!notificationSettings || (notificationSettings.types == UIUserNotificationTypeNone)) {
+            isEnabled = NO;
+        } else {
+            isEnabled = YES;
+        }
+    } else {
+        UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (types & UIRemoteNotificationTypeAlert) {
+            isEnabled = YES;
+        } else{
+            isEnabled = NO;
+        }
+    }
+
+    return isEnabled;
+}
+
 @end
