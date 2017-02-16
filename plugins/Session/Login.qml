@@ -34,7 +34,7 @@ Page {
     BusyIndicator {
         id: busyIndicator
         antialiasing: true
-        visible: jsonListModel.state === "running"
+        visible: jsonListModel.state === "loading"
         anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
     }
 
