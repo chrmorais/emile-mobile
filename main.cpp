@@ -55,12 +55,16 @@ QVariantMap loadAppConfig()
 
 int main(int argc, char *argv[])
 {
+    QVariantMap settings(loadAppConfig());
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setApplicationName(settings.value("name").toString());
+    QCoreApplication::setOrganizationName(settings.value("name").toString());
+    QCoreApplication::setOrganizationDomain(settings.value("description").toString());
     QQuickStyle::setStyle("Material");
     QGuiApplication app(argc, argv);
     Q_INIT_RESOURCE(translations);
 
-    QVariantMap settings(loadAppConfig());
     settings.insert("theme", settings.value("theme").toMap().value("material").toMap());
 
     QQmlApplicationEngine engine;
@@ -87,11 +91,14 @@ int main(int argc, char *argv[])
     #endif
 
     PushNotificationTokenListener pushNotificationTokenListener;
+    pushNotificationTokenListener.setApplicationSettings(settings);
+    pushNotificationTokenListener.setParent(&app);
+    context->setContextProperty("pushNotificationTokenListener", &pushNotificationTokenListener);
 
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
-    QObject::connect(&pushNotificationTokenListener, SIGNAL(tokenUpdated(QVariant)), window, SLOT(registerPushNotificationToken(QVariant)));
+    QObject::connect(&pushNotificationTokenListener, SIGNAL(tokenUpdated()), window, SLOT(tokenUpdate()));
 
     return app.exec();
 }

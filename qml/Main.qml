@@ -27,34 +27,44 @@ ApplicationWindow {
     onUserProfileDataChanged: {
         if (typeof userProfileData == "undefined" || !tokenTemp)
             return;
-         if (!userProfileData.push_notification_token || userProfileData.push_notification_token !== tokenTemp)
-             submitTokenToServer();
+        submitTokenToServer();
     }
 
-    function registerPushNotificationToken(token) {
-        tokenTemp = token;
+    function tokenUpdate() {
+        console.log("Opa! Novo token foi gerado!");
+        submitTokenToServer();
     }
 
     function submitTokenToServer() {
-        if (!tokenTemp || !userProfileData.id)
+        var saveTokenFromQSettings = pushNotificationTokenListener.pushNotificationToken();
+        if (saveTokenFromQSettings || saveTokenFromQSettings !== tokenTemp)
+            tokenTemp = saveTokenFromQSettings;
+
+        console.log("submitTokenToServer()");
+
+        if (!tokenTemp || !userProfileData || !userProfileData.id || tokenTemp === userProfileData.push_notification_token) {
+            console.log("!tokenTemp || !userProfileData.id");
             return;
+        }
         var params = {
             "post_message": { "push_notification_token": tokenTemp }
         };
-        var updateUserProfile = function() {
-            if (jsonListModel.state == "ready" && jsonListModel.model && jsonListModel.model.get(0).push_notification_token) {
-                tokenTemp = "";
-                userProfileData = jsonListModel.model.get(0);
-                jsonListModel.stateChanged.disconnect(updateUserProfile);
-            }
-        };
+
+        console.log("enviando o token para o serviço rest....");
+        console.log("args sended is: " + JSON.stringify(params));
+        console.log("userProfileData.id: " + userProfileData.id);
+
         jsonListModel.debug = true;
         jsonListModel.requestMethod = "POST";
         jsonListModel.contentType = "application/json";
         jsonListModel.source += "/token_register/"+userProfileData.id;
         jsonListModel.requestParams = JSON.stringify(params);
-        jsonListModel.load();
-        jsonListModel.stateChanged.connect(updateUserProfile);
+        jsonListModel.load(function(resultText, status) {
+            console.log("response finish!");
+            console.log("resultText is: " + resultText);
+            tokenTemp = "";
+            userProfileData = resultText.user;
+        });
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {

@@ -12,13 +12,13 @@ function isValidLoginForm() {
     return true;
 }
 
-function loginCallback() {
-    switch (jsonListModel.httpStatus) {
+function loginCallback(responseText, status) {
+    switch (status) {
     case 404:
         alert("Error!", "Email or password is invalid. Try again!");
         break;
     case 200:
-        var objectTemp = jsonListModel.model.get(0);
+        var objectTemp = resultText.user;
         window.userProfileData = objectTemp;
         console.log("window.userProfileData: " + JSON.stringify(window.userProfileData));
         window.isUserLoggedIn = true;
@@ -43,5 +43,5 @@ function requestLogin() {
     jsonListModel.contentType = "application/json";
     jsonListModel.requestParams = JSON.stringify(params);
     jsonListModel.source += "login";
-    jsonListModel.load();
+    jsonListModel.load(loginCallback);
 }

@@ -9,13 +9,32 @@ PushNotificationTokenListener::PushNotificationTokenListener(QObject *parent) : 
     m_instance = this;
 }
 
-void PushNotificationTokenListener::tokenUpdateNotify(const QString &token)
+void PushNotificationTokenListener::setApplicationSettings(const QVariantMap &applicationSettings)
 {
-    qDebug() << "Uoul!! Funcionou!! O token é: " << token;
-    m_instance->sendSignal(token);
+    m_applicationSettings = applicationSettings;
+    m_qsettings = new QSettings(m_applicationSettings.value("name").toString(), m_applicationSettings.value("description").toString());
+    QString tokenSaved = m_qsettings->value(QString("push_notification_token")).toString();
+    if (!tokenSaved.isEmpty())
+        qDebug() << "has token saved: " << tokenSaved;
 }
 
-void PushNotificationTokenListener::sendSignal(const QString &token)
+void PushNotificationTokenListener::tokenUpdateNotify(const QString &token)
 {
-    emit tokenUpdated(token);
+    if (token.isEmpty())
+        return;
+    qDebug() << "Recebeu o token do firebase!: " << token;
+    m_instance->m_qsettings->setValue(QStringLiteral("push_notification_token"), QVariant(token));
+    m_instance->sendSignal();
+}
+
+QVariant PushNotificationTokenListener::pushNotificationToken()
+{
+    qDebug() << "reading for new token";
+    return m_qsettings->value(QString("push_notification_token"));
+}
+
+void PushNotificationTokenListener::sendSignal()
+{
+    qDebug() << "Notificando o qml que um token foi gerado...";
+    emit tokenUpdated();
 }

@@ -1,5 +1,4 @@
 #include "Firebase/Firebase.h"
-//#import <Firebase/Firebase.h>
 #import <UIKit/UIKit.h>
 #import <QString>
 #include <QtCore>
@@ -7,7 +6,6 @@
 
 @interface QIOSApplicationDelegate
 @end
-
 @interface QIOSApplicationDelegate(QtAppDelegate)
 @end
 
@@ -16,6 +14,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     Q_UNUSED(application)
     Q_UNUSED(launchOptions)
+
     [self configFirebase];
     NSLog(@"Firebase connect start!");
     return YES;
@@ -67,50 +66,41 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
   fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    Q_UNUSED(completionHandler)
-    Q_UNUSED(userInfo)
+
     UIApplicationState state = [application applicationState];
+    NSLog(@"Nova mensagem do firebase");
+
+    NSString *title = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
+    NSString *message = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
+
     if (state != UIApplicationStateActive) {
         // NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
         // só notifica se o app estiver inativo em background
     }
-    /*
-          NSString *showTitle = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
-          //NSString *msg = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
-          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Você recebeu uma nova notificação"
-                                                                                   message:showTitle
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-          //We add buttons to the alert controller by creating UIAlertActions:
-          UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:nil]; //You can use a block here to handle a press on this button
-          [alertController addAction:actionOk];
-          UIViewController* rootViewController = [[UIApplication sharedApplication].keyWindow rootViewController];
-          [rootViewController presentViewController:alertController animated:YES completion:nil];
-      } else {
-        //Do stuff that you would do if the application was not active
-        NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
-      }
-*/
-    //NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
-    //NSLog(@"Mensagem: %@", userInfo);
-    //NSLog(@"actionType: %@", userInfo[@"gcm.notification.actionType"]);
-    //NSLog(@"actionTypeId: %@", userInfo[@"gcm.notification.actionTypeId"]);
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+            message:message
+            preferredStyle:UIAlertControllerStyleAlert];
+    //We add buttons to the alert controller by creating UIAlertActions:
+    UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Ok"
+            style:UIAlertActionStyleDefault
+            handler:nil]; //You can use a block here to handle a press on this button
+    [alertController addAction:actionOk];
+    UIViewController* rootViewController = [[UIApplication sharedApplication].keyWindow rootViewController];
+    [rootViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)tokenRefreshNotification:(NSNotification *)notification {
     Q_UNUSED(notification)
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
-    NSLog(@"Token updated: %@", refreshedToken);
+    NSLog(@"Ops! The token was updated: %@", refreshedToken);
 
     PushNotificationTokenListener::tokenUpdateNotify(QString::fromNSString(refreshedToken));
 
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
 }
-// [END refresh_token]
 
-// [START connect_to_fcm]
 - (void)connectToFcm {
     [[FIRMessaging messaging] connectWithCompletion:^(NSError * _Nullable error) {
         if (error != nil)
@@ -119,4 +109,28 @@
             NSLog(@"Conectou com o FCM.");
     }];
 }
+
++ (BOOL)notificationServicesEnabled {
+    BOOL isEnabled = NO;
+
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]){
+        UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+
+        if (!notificationSettings || (notificationSettings.types == UIUserNotificationTypeNone)) {
+            isEnabled = NO;
+        } else {
+            isEnabled = YES;
+        }
+    } else {
+        UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (types & UIRemoteNotificationTypeAlert) {
+            isEnabled = YES;
+        } else{
+            isEnabled = NO;
+        }
+    }
+
+    return isEnabled;
+}
+
 @end

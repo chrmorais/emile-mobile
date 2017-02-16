@@ -31,8 +31,6 @@ Page {
         fieldsVisible = arrayTemp
     }
 
-    Component.onCompleted: request()
-
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();

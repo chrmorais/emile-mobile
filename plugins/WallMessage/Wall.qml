@@ -131,6 +131,7 @@ Page {
         topMargin: 10; bottomMargin: 10
         width: page.width; height: page.height
         delegate: listViewDelegate
+        verticalLayoutDirection: ListView.BottomToTop
         Keys.onUpPressed: scrollBar.decrease()
         Keys.onDownPressed: scrollBar.increase()
         ScrollBar.vertical: ScrollBar { id: scrollBar }

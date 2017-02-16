@@ -1,4 +1,4 @@
-QT += qml quick quickcontrols2 svg
+QT += qml quick quickcontrols2 svg core
 
 CONFIG += c++11
 

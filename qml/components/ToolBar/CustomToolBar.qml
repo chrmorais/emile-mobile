@@ -61,7 +61,7 @@ ToolBar {
 
     Loader {
         onLoaded: toolBar.background = item
-        asynchronous: true; active: toolBarColor.length > 0
+        asynchronous: false; active: toolBarColor.length > 0
         sourceComponent: Rectangle {
             color: toolBarColor
             width: toolBar.width; height: toolBar.height - 2
@@ -77,6 +77,7 @@ ToolBar {
 
     Connections {
         target: window.currentPage && window.currentPage.toolBarActions ? window.currentPage : null
+        ignoreUnknownSignals: true
         onToolBarActionsChanged: {
             if (currentPage.toolBarActions)
                 toolBarActions = currentPage.toolBarActions;
