@@ -1,6 +1,10 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
+import QtQuick.Controls.Material 2.1
+import QtQuick.Controls.Material.impl 2.1
+
+import "AwesomeIcon/"
 
 Drawer {
     id: menu
@@ -17,8 +21,12 @@ Drawer {
 
     signal profileImageChange()
 
+    Connections {
+        target: menu
+        onUserImageProfileChanged: if (userImageProfile) awesomeIcon.visible = false;
+    }
+
     Flickable {
-        width: parent.width
         anchors.fill: parent
         contentHeight: Math.max(content.implicitHeight, height)
         boundsBehavior: Flickable.StopAtBounds
@@ -38,18 +46,62 @@ Drawer {
                 width: parent.width; anchors.fill: parent
 
                 ColumnLayout {
-                    spacing: 15
+                    spacing: 25
                     width: parent.width; height: drawerUserImageProfile.height * 1.75
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Rectangle { id: userInfoRec; anchors.fill: parent; color: "transparent" }
 
+                    AwesomeIcon {
+                        id: awesomeIcon
+                        name: "camera"
+                        size: 64; color: userInfoTextColor
+                        visible: !userProfileData.image_path
+                        anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
+
+                        MouseArea {
+                            id: awesomeIconControl
+                            hoverEnabled: true
+                            anchors.fill: parent; onClicked: profileImageConfigure()
+                        }
+
+                        Ripple {
+                            x: (parent.width - width) / 2
+                            y: (parent.height - height) / 2
+                            width: 75; height: width
+
+                            z: -1
+                            anchor: awesomeIconControl
+                            pressed: awesomeIconControl.pressed
+                            active: awesomeIconControl.pressed
+                            color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                        }
+                    }
+
                     RoundedImage {
                         id: drawerUserImageProfile
                         width: 75; height: width
-                        imgSource: userProfileData.profileImg ? userProfileData.profileImg : defaultUserImg
+                        visible: !awesomeIcon.visible
+                        imgSource: userProfileData.image_path ? userProfileData.image_path : defaultUserImg
                         anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
-                        MouseArea { anchors.fill: parent; onClicked: profileImageConfigure() }
+
+                        MouseArea {
+                            id: drawerUserImageProfileControl
+                            hoverEnabled: true
+                            anchors.fill: parent; onClicked: profileImageConfigure()
+                        }
+
+                        Ripple {
+                            x: (parent.width - width) / 2
+                            y: (parent.height - height) / 2
+                            width: 75; height: width
+
+                            z: -1
+                            anchor: drawerUserImageProfileControl
+                            pressed: drawerUserImageProfileControl.pressed
+                            active: drawerUserImageProfileControl.pressed
+                            color: drawerUserImageProfileControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                        }
                     }
 
                     Label {
@@ -58,8 +110,7 @@ Drawer {
                         font.pointSize: 12
                         horizontalAlignment: Text.AlignHCenter
                         anchors {
-                            top: drawerUserImageProfile.bottom
-                            topMargin: 5
+                            top: drawerUserImageProfile.bottom; topMargin: 5
                             horizontalCenter: parent.horizontalCenter
                         }
                     }
@@ -69,7 +120,7 @@ Drawer {
                     model: menuPages
 
                     ListItem {
-                        visible: modelData.roles.indexOf(userProfileData.role) !== -1
+                        visible: !(modelData.roles.indexOf(window.userProfileData.type.name) === -1)
                         width: menu.width
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
