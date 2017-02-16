@@ -9,6 +9,7 @@ class PushNotificationTokenListener : public QObject
     Q_OBJECT
 public:
     explicit PushNotificationTokenListener(QObject *parent = 0);
+    ~PushNotificationTokenListener();
 
     void setApplicationSettings(const QVariantMap &applicationSettings);
     static void tokenUpdateNotify(const QString &token);
@@ -23,8 +24,8 @@ signals:
     void tokenUpdated();
 
 private:
+    QSettings m_qsettings;
     QVariantMap m_applicationSettings;
-    QSettings *m_qsettings;
     static PushNotificationTokenListener *m_instance;
 };
 
