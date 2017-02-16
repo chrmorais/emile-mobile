@@ -134,6 +134,7 @@ Page {
         verticalLayoutDirection: ListView.BottomToTop
         Keys.onUpPressed: scrollBar.decrease()
         Keys.onDownPressed: scrollBar.increase()
+        onCountChanged: positionViewAtEnd()
         ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 }
