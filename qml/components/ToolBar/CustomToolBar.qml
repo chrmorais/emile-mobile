@@ -61,7 +61,7 @@ ToolBar {
 
     Loader {
         onLoaded: toolBar.background = item
-        asynchronous: true; active: toolBarColor.length > 0
+        asynchronous: false; active: toolBarColor.length > 0
         sourceComponent: Rectangle {
             color: toolBarColor
             width: toolBar.width; height: toolBar.height - 2

@@ -192,7 +192,7 @@ ApplicationWindow {
 
     Loader {
         active: isIOS
-        asynchronous: active
+        asynchronous: false
         onLoaded: iOSImagesGallery = item
         sourceComponent: QuickDialogs.FileDialog {
             folder: shortcuts.pictures
