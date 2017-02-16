@@ -31,24 +31,6 @@ Page {
         onTriggered: setIndexPage(true); // setIndexPage() is a function from Main.qml
     }
 
-    Connections {
-        target: jsonListModel
-        onHttpStatusChanged: {
-            switch (jsonListModel.httpStatus) {
-            case 405:
-                alert("Error!", "Email or password is invalid. Try again!");
-                break;
-            case 200:
-                window.userProfileData = jsonListModel.model.get(0);
-                window.isUserLoggedIn = true;
-                loginPopShutdown.start();
-                break;
-            default:
-                alert("Error!", "Failed to connect to the server!")
-            }
-        }
-    }
-
     BusyIndicator {
         id: busyIndicator
         antialiasing: true
