@@ -1,38 +1,3 @@
-function isDeveloperLogin() {
-    var fixBindArray = {};
-    if (email.text === "aluno@teste.com" && password.text === "lkjlkj") {
-        fixBindArray.id = 2;
-        fixBindArray.role = "student";
-        fixBindArray.name = "enoquejoseneas";
-        fixBindArray.email = "enoquejoseneas@ifba.edu.br";
-        window.userProfileData = fixBindArray;
-        window.isUserLoggedIn = true;
-        loginPopShutdown.start();
-        return true;
-    } else if (email.text === "professor@teste.com" && password.text === "lkjlkj") {
-        fixBindArray.id = 5;
-        fixBindArray.role = "teacher";
-        fixBindArray.name = "enoquejoseneas";
-        fixBindArray.email = "enoquejoseneas@ifba.edu.br";
-        window.userProfileData = fixBindArray;
-        window.isUserLoggedIn = true;
-        loginPopShutdown.start();
-        return true;
-    }
-    return false;
-}
-
-function requestLogin() {
-    if (!isValidLoginForm())
-        return;
-    if (isDeveloperLogin())
-        return;
-    jsonListModel.requestMethod = "POST"
-    jsonListModel.requestParams = JSON.stringify({"email":email.text,"password":password.text})
-    jsonListModel.source += "login/"
-    jsonListModel.load()
-}
-
 function isValidLoginForm() {
     if (email.text === "Email" || email.text.length === 0) {
         alert("Error!", "Enter your Email!");
@@ -45,4 +10,38 @@ function isValidLoginForm() {
         return false;
     }
     return true;
+}
+
+function loginCallback() {
+    switch (jsonListModel.httpStatus) {
+    case 404:
+        alert("Error!", "Email or password is invalid. Try again!");
+        break;
+    case 200:
+        var objectTemp = jsonListModel.model.get(0);
+        window.userProfileData = objectTemp;
+        console.log("window.userProfileData: " + JSON.stringify(window.userProfileData));
+        window.isUserLoggedIn = true;
+        loginPopShutdown.start();
+        break;
+    default:
+        alert(qsTr("Error!"), qsTr("Failed to connect to the server!"))
+    }
+}
+
+function requestLogin() {
+    if (!isValidLoginForm())
+        return;
+    var params = {
+        "login": {
+            "email": email.text,
+            "password": password.text
+        }
+    };
+    jsonListModel.debug = true;
+    jsonListModel.requestMethod = "POST";
+    jsonListModel.contentType = "application/json";
+    jsonListModel.requestParams = JSON.stringify(params);
+    jsonListModel.source += "login";
+    jsonListModel.load();
 }
