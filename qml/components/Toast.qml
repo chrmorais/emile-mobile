@@ -1,61 +1,91 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.0
 
-Rectangle {
-    id: toast
-    radius: 70
-    width: parent.width / (textToast.text.length >= 20 ? 1.6 : 2.5)
-    height: textToast.height * 2
-    color: "#555"
-    opacity: 0
+Column {
+    id: root
+    z: Infinity
+    spacing: 5
     anchors {
-        horizontalCenter: parent.horizontalCenter
-        bottom: parent.bottom
-        bottomMargin: 50
+        bottom: atCenter ? undefined : parent.bottom
+        bottomMargin: atCenter ? undefined : 10
+        centerIn: atCenter ? parent : undefined
+        horizontalCenter: atCenter ? undefined : parent.horizontalCenter
     }
 
-    property string text: textToast.text
-    property alias animation: animateShowOpacity
+    property bool atCenter: false
 
-    function show(s) {
-        toast.text = s
-        toast.animation.start()
+    function show(text, duration, putInCenter) {
+        if (putInCenter)
+            atCenter = putInCenter;
+        var toast = toastComponent.createObject(root);
+        toast.selfDestroying = true;
+        toast.show(text, duration);
     }
 
-    Timer {
-        id: timer
-        interval: 2000
-        running: toast.opacity === 1
-        onTriggered: animateHideOpacity.start()
-    }
+    Component {
+        id: toastComponent
 
-    Text {
-        id: textToast
-        anchors.centerIn: parent
-        width: parent.width - 5
-        wrapMode: Text.WrapAnywhere
-        text: toast.text.length >= 35 ? toast.text.substring(0,35) + " ..." : toast.text
-        horizontalAlignment: Text.AlignHCenter
-        enabled: text !== ""
-        color: "#ddd"
-    }
+        Rectangle {
+            id: root
+            opacity: 0
+            radius: margin*2; color: "#323232"
+            border { color: "transparent"; width: 0 }
+            width: childrenRect.width + (2 * margin)
+            height: childrenRect.height + (2 * margin)
+            anchors.horizontalCenter: parent.horizontalCenter
 
-    NumberAnimation {
-        id: animateShowOpacity
-        target: toast
-        properties: "opacity"
-        from: 0
-        to: 1
-        duration: 450
-    }
+            property real margin: 10
+            property bool selfDestroying: false // Whether this Toast will selfdestroy when it is finished
+            property real time: defaultTime
+            readonly property real defaultTime: 3000
+            readonly property real fadeTime: 350
 
-    NumberAnimation {
-        id: animateHideOpacity
-        target: toast
-        properties: "opacity"
-        from: 1
-        to: 0
-        duration: 450
+            /**
+             * @brief Shows this Toast
+             *
+             * @param {string} text Text to show
+             * @param {real} duration Duration to show in milliseconds, defaults to 3000
+             */
+            function show(text, duration) {
+                theText.text = text;
+                if (typeof duration !== "undefined") {
+                    if (duration >= (2*fadeTime))
+                        time = duration;
+                    else
+                        time = 2*fadeTime;
+                } else {
+                    time = defaultTime;
+                }
+                anim.start();
+            }
+
+            Text {
+                id: theText
+                text: ""; color: "#fff"
+                x: margin; y: margin
+                horizontalAlignment: Text.AlignHCenter
+            }
+
+            SequentialAnimation on opacity {
+                id: anim
+                running: false
+
+                NumberAnimation {
+                    to: 0.9
+                    duration: fadeTime
+                }
+                PauseAnimation {
+                    duration: time - 2*fadeTime
+                }
+                NumberAnimation {
+                    to: 0
+                    duration: 2*fadeTime
+                }
+
+                onRunningChanged: {
+                    if (!running && selfDestroying)
+                        root.destroy();
+                }
+            }
+        }
     }
 }
