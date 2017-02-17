@@ -11,21 +11,19 @@ public:
     explicit PushNotificationTokenListener(QObject *parent = 0);
     ~PushNotificationTokenListener();
 
-    void setApplicationSettings(const QVariantMap &applicationSettings);
+    // called by Java (from jni connection) or ObjectiveC object to register the push notification
+    // token when is updated by Firebase.
     static void tokenUpdateNotify(const QString &token);
 
-    Q_INVOKABLE
     QVariant pushNotificationToken();
 
 private:
-    void sendSignal();
+    void sendSignal(const QString &token);
 
 signals:
-    void tokenUpdated();
+    void tokenUpdated(const QVariant &token);
 
 private:
-    QSettings m_qsettings;
-    QVariantMap m_applicationSettings;
     static PushNotificationTokenListener *m_instance;
 };
 
