@@ -2,11 +2,11 @@ QT += qml quick quickcontrols2 svg core
 
 CONFIG += c++11
 
-HEADERS += cpp/pushnotificationtokenlistener.h
+HEADERS += cpp/pushnotificationtokenlistener.h cpp/emile.h
 
-SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp
+SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp cpp/emile.cpp
 
-RESOURCES += qml.qrc plugins.qrc translations.qrc
+RESOURCES += qml.qrc cpp/plugins.qrc translations.qrc
 
 TRANSLATIONS = translations/en_US.ts translations/pt_BR.ts translations/pt_BR.qm
 
