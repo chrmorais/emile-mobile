@@ -18,7 +18,6 @@ Page {
     Component.onCompleted: if (window.menu) window.menu.enabled = false;
 
     property int hideToolbar: 1
-    property var requestResult: {}
 
     Timer {
         id: lockerButtons
@@ -27,14 +26,17 @@ Page {
 
     Timer {
         id: loginPopShutdown
-        repeat: false; running: false; interval: 1000
-        onTriggered: setIndexPage(true); // setIndexPage() is a function from Main.qml
+        repeat: false; running: false; interval: 2000
+        onTriggered: {
+            window.isUserLoggedIn = true;
+            setIndexPage(true); // setIndexPage() is a function from Main.qml
+        }
     }
 
     BusyIndicator {
         id: busyIndicator
         antialiasing: true
-        visible: jsonListModel.state === "loading"
+        visible: jsonListModel.state === "loading" || loginPopShutdown.running
         anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
     }
 
@@ -118,7 +120,7 @@ Page {
 
             CustomButton {
                 id: loginButton
-                enabled: !lockerButtons.running && jsonListModel.state !== "running"
+                enabled: !lockerButtons.running && jsonListModel.state !== "loading"
                 text: qsTr("LOG IN");
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
@@ -128,18 +130,18 @@ Page {
                 }
             }
 
-            CustomButton {
-                id: lostPasswordButton
-                enabled: !lockerButtons.running || !loginPopShutdown.running
-                text: qsTr("LOST PASSWORD")
-                textColor: appSettings.theme.colorPrimary
-                backgroundColor: appSettings.theme.colorAccent
-                onClicked: {
-                    lockerButtons.start();
-                    // pushPage() is a function from Main.qml
-                    pushPage("qrc:/plugins/Session/LostPassword.qml");
-                }
-            }
+//            CustomButton {
+//                id: lostPasswordButton
+//                enabled: !lockerButtons.running || !loginPopShutdown.running
+//                text: qsTr("LOST PASSWORD")
+//                textColor: appSettings.theme.colorPrimary
+//                backgroundColor: appSettings.theme.colorAccent
+//                onClicked: {
+//                    lockerButtons.start();
+//                    // pushPage() is a function from Main.qml
+//                    pushPage("qrc:/plugins/Session/LostPassword.qml");
+//                }
+//            }
         }
     }
 }
