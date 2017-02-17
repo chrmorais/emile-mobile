@@ -3,7 +3,6 @@ import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.2 as QuickDialogs
 
 import "components/"
@@ -15,44 +14,42 @@ ApplicationWindow {
 
     property QtObject menu
     property QtObject iOSImagesGallery
-    property string tokenTemp
     property var menuPages: []
-    property var userProfileData: {}
-    property bool isUserLoggedIn: false
+    property var userProfileData: Emile.readObject("user_profile_data")
+    property bool isUserLoggedIn: Emile.readBool("is_user_logged_in")
     property bool isIOS: Qt.platform.os === "ios"
     property alias currentPage: pageStack.currentItem
 
     signal pageChanged()
 
     onUserProfileDataChanged: {
-        if (typeof userProfileData == "undefined" || !tokenTemp)
-            return;
-        submitTokenToServer();
-    }
-
-    function tokenUpdate() {
-        console.log("Opa! Novo token foi gerado!");
-        submitTokenToServer();
-    }
-
-    function submitTokenToServer() {
-        var saveTokenFromQSettings = pushNotificationTokenListener.pushNotificationToken();
-        if (saveTokenFromQSettings || saveTokenFromQSettings !== tokenTemp)
-            tokenTemp = saveTokenFromQSettings;
-
-        console.log("submitTokenToServer()");
-
-        if (!tokenTemp || !userProfileData || !userProfileData.id || tokenTemp === userProfileData.push_notification_token) {
-            console.log("!tokenTemp || !userProfileData.id");
-            return;
+        var userProfileDataTemp = Emile.readObject("user_profile_data");
+        for (var prop in userProfileData) {
+            if (userProfileData[prop] !== userProfileDataTemp[prop])
+                Emile.saveObject("user_profile_data", userProfileData);
         }
-        var params = {
-            "post_message": { "push_notification_token": tokenTemp }
-        };
+        submitTokenToServer();
+    }
 
-        console.log("enviando o token para o serviço rest....");
-        console.log("args sended is: " + JSON.stringify(params));
-        console.log("userProfileData.id: " + userProfileData.id);
+    onIsUserLoggedInChanged: Emile.saveData("is_user_logged_in", isUserLoggedIn);
+
+    // slot connected with pushNotificationTokenListener in main.cpp
+    function sendToken(token) {
+        submitTokenToServer(token);
+    }
+
+    function submitTokenToServer(token) {
+        var savedToken = Emile.readData("push_notification_token");
+
+        if (savedToken && !token || savedToken !== token)
+            token = savedToken;
+
+        if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
+            return;
+
+        var params = {
+            "post_message": { "push_notification_token": token }
+        };
 
         jsonListModel.debug = true;
         jsonListModel.requestMethod = "POST";
@@ -60,9 +57,6 @@ ApplicationWindow {
         jsonListModel.source += "/token_register/"+userProfileData.id;
         jsonListModel.requestParams = JSON.stringify(params);
         jsonListModel.load(function(resultText, status) {
-            console.log("response finish!");
-            console.log("resultText is: " + resultText);
-            tokenTemp = "";
             userProfileData = resultText.user;
         });
     }
@@ -162,7 +156,7 @@ ApplicationWindow {
 
     Loader {
         id: menuLoader
-        asynchronous: true
+        asynchronous: false
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
             window.menu = item
@@ -210,16 +204,14 @@ ApplicationWindow {
         }
     }
 
-    Settings {
-        id: settings
-        property alias isUserLoggedIn: window.isUserLoggedIn
-        property alias userProfileData: window.userProfileData
-    }
-
     JSONListModel {
         id: jsonListModel
         source: appSettings.rest_service.baseUrl
         onStateChanged: if (state === "ready" || state === "error") jsonListModel.source = appSettings.rest_service.baseUrl;
+    }
+
+    Snackbar {
+        id: snackbar
     }
 
     Toast {
