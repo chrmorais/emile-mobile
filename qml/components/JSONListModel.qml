@@ -50,15 +50,15 @@ Item {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 rootItem.httpStatus = xhr.status;
+                if (callback) {
+                    rootItem.state = "ready";
+                    callback(JSON.parse(xhr.responseText), parseInt(xhr.status));
+                    return;
+                }
                 if (rootItem.httpStatus >= 200 && rootItem.httpStatus <= 299) {
                     // fix not state changed when result is a same of previous request!
                     privateProperties.json = "";
                     privateProperties.json = xhr.responseText;
-                    if (callback) {
-                        rootItem.state = "ready";
-                        callback(JSON.parse(xhr.responseText), xhr.status);
-                        return;
-                    }
                 } else {
                     rootItem.errorString = qsTr("The server returned error ") + xhr.status;
                     rootItem.state = "error";
