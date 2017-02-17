@@ -120,7 +120,6 @@ Drawer {
                     model: menuPages
 
                     ListItem {
-                        visible: !(modelData.roles.indexOf(window.userProfileData.type.name) === -1)
                         width: menu.width
                         primaryLabelColor: menuItemTextColor
                         primaryLabelText: modelData.menu_name
@@ -128,6 +127,11 @@ Drawer {
                         primaryIconName: modelData.icon_name
                         selected: modelData.menu_name === window.currentPage.objectName
                         showSeparator: true
+                        visible: {
+                            if (!window.userProfileData || !window.userProfileData.type)
+                                return false;
+                            return modelData.roles.indexOf(window.userProfileData.type.name) > -1;
+                        }
                         onClicked: {
                             menu.close();
                             if (!selected) {
