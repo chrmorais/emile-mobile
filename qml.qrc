@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>settings.json</file>
-        <file>assets/menu-temp.png</file>
+        <file>cpp/settings.json</file>
         <file>assets/user-default-icon.png</file>
         <file>assets/left.svg</file>
         <file>assets/right.svg</file>
@@ -29,6 +28,6 @@
         <file>qml/components/AwesomeIcon/FontAwesome.otf</file>
         <file>qml/components/AwesomeIcon/AwesomeIcon.qml</file>
 
-        <file>plugins.qrc</file>
+        <file>cpp/plugins.qrc</file>
     </qresource>
 </RCC>
