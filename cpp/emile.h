@@ -21,7 +21,7 @@ public:
     // return the application json config to qml as js object
     QVariantMap configMap();
 
-    // return all plugins into a array of objects. Each object is the plugin config.json
+    // return all plugins as objects array. Each object is the plugin config.json
     QJsonArray pluginsArray();
 
     Q_INVOKABLE
