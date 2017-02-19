@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>settings.json</file>
-        <file>assets/user-default-icon.png</file>
         <file>assets/left.svg</file>
         <file>assets/right.svg</file>
 
