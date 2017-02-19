@@ -26,6 +26,7 @@ android: {
         android/build.gradle \
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew.bat \
+        android/src/gsort/pos/engsisubiq/EmileMobile/CustomActivity.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/TokenToApplication.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
