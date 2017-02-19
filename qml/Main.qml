@@ -140,6 +140,15 @@ ApplicationWindow {
         }
     }
 
+    onClosing: {
+        close.accepted = false;
+        if (!isIOS && pageStack.depth <= 1) {
+            Emile.minimizeApp();
+        } else {
+            popPage();
+        }
+    }
+
     Connections {
         target: header
         onActionExec: {
@@ -229,24 +238,37 @@ ApplicationWindow {
         id: pageStack
         focus: true; anchors.fill: parent
 
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back) {
+                if (pageStack.depth > 1) {
+                    event.accepted = false;
+                    popPage();
+                } else {
+                    event.accepted = true;
+                }
+            }
+        }
+
         Keys.onBackPressed: {
-            if (pageStack.depth > 1)
+            if (pageStack.depth > 1) {
                 popPage();
-            else
                 event.accepted = false;
+            } else {
+                event.accepted = true;
+            }
         }
 
         pushEnter: Transition {
             PropertyAnimation {
                 property: "opacity"
-                from: 0; to: 1; duration: 350
+                from: 0; to: 1; duration: 450
             }
         }
 
         popExit: Transition {
             PropertyAnimation {
                 property: "opacity"
-                from: 1; to: 0; duration: 350
+                from: 1; to: 0; duration: 450
             }
         }
     }
