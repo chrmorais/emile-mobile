@@ -12,7 +12,7 @@
 Emile::Emile(QObject *parent) : QObject(parent)
 {
     init();
-    m_qsettings = new QSettings(m_configMap.value("name").toString(), m_configMap.value("description").toString());
+    m_qsettings = new QSettings;
 }
 
 Emile::~Emile()
@@ -26,9 +26,9 @@ void Emile::init()
     loadPlugins();
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setApplicationName(m_configMap.value("name").toString());
-    QCoreApplication::setOrganizationName(m_configMap.value("name").toString());
-    QCoreApplication::setOrganizationDomain(m_configMap.value("description").toString());
+    QCoreApplication::setApplicationName(m_configMap.value("applicationName").toString());
+    QCoreApplication::setOrganizationName(m_configMap.value("organizationName").toString());
+    QCoreApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
     QQuickStyle::setStyle(QLatin1String("Material"));
 }
 
