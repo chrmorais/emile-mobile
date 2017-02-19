@@ -17,7 +17,6 @@ Drawer {
     property alias menuBackgroundColor: menuRectangle.color
     property alias userImageProfile: drawerUserImageProfile.imgSource
     property string pageSource: ""
-    property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
     signal profileImageChange()
 
@@ -82,7 +81,7 @@ Drawer {
                         id: drawerUserImageProfile
                         width: 75; height: width
                         visible: !awesomeIcon.visible
-                        imgSource: userProfileData.image_path ? userProfileData.image_path : defaultUserImg
+                        imgSource: userProfileData.image_path ? userProfileData.image_path : ""
                         anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
                         MouseArea {
