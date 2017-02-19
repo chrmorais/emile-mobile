@@ -6,7 +6,7 @@ HEADERS += cpp/pushnotificationtokenlistener.h cpp/emile.h
 
 SOURCES += main.cpp cpp/pushnotificationtokenlistener.cpp cpp/emile.cpp
 
-RESOURCES += qml.qrc cpp/plugins.qrc translations.qrc
+RESOURCES += qml.qrc plugins.qrc translations.qrc
 
 TRANSLATIONS = translations/en_US.ts translations/pt_BR.ts translations/pt_BR.qm
 

@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
+        <file>plugins.qrc</file>
         <file>settings.json</file>
+
         <file>assets/left.svg</file>
         <file>assets/right.svg</file>
 
@@ -26,7 +28,5 @@
         <file>qml/components/AwesomeIcon/Awesome.js</file>
         <file>qml/components/AwesomeIcon/FontAwesome.otf</file>
         <file>qml/components/AwesomeIcon/AwesomeIcon.qml</file>
-
-        <file>cpp/plugins.qrc</file>
     </qresource>
 </RCC>

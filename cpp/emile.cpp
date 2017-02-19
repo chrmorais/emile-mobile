@@ -47,7 +47,7 @@ void Emile::loadConfigMap()
 void Emile::loadPlugins()
 {
     QJsonParseError error;
-    QFile pluginsQrc(":/cpp/plugins.qrc");
+    QFile pluginsQrc(":/plugins.qrc");
     QRegularExpression regexp("alias=\"(.*\\.json)?\"");
     if (pluginsQrc.open(QIODevice::ReadOnly)) {
         QTextStream in(&pluginsQrc);
