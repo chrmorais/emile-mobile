@@ -1,7 +1,8 @@
 {
-    "name": "Emile",
-    "description": "A educational application",
+    "applicationName": "Emile",
+    "organizationName": "Emile",
     "organizationDomain": "emile.com",
+    "applicationDescription": "A educational application",
     "rest_service": {
         "userServiceName": "",
         "userServicePassword": "",
