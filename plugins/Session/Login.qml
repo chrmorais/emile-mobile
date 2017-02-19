@@ -60,7 +60,7 @@ Page {
                 Label {
                     id: brand
                     anchors.centerIn: parent
-                    text: appSettings.name; color: appSettings.theme.defaultTextColor
+                    text: appSettings.applicationName; color: appSettings.theme.defaultTextColor
                     font { pointSize: appSettings.theme.bigFontSize; weight: Font.Bold }
                 }
             }
