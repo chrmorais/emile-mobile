@@ -35,7 +35,7 @@ void Emile::init()
 void Emile::loadConfigMap()
 {
     QFile file;
-    file.setFileName(":/cpp/settings.json");
+    file.setFileName(":/settings.json");
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     QString settings(file.readAll());
     file.close();

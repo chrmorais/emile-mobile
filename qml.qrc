@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>cpp/settings.json</file>
+        <file>settings.json</file>
         <file>assets/user-default-icon.png</file>
         <file>assets/left.svg</file>
         <file>assets/right.svg</file>
