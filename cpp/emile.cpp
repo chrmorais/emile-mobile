@@ -2,6 +2,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QtDebug>
 #include <QTextStream>
 #include <QQuickStyle>
 #include <QJsonObject>
@@ -12,7 +13,6 @@
 Emile::Emile(QObject *parent) : QObject(parent)
 {
     init();
-    m_qsettings = new QSettings;
 }
 
 Emile::~Emile()
@@ -23,13 +23,16 @@ Emile::~Emile()
 void Emile::init()
 {
     loadConfigMap();
-    loadPlugins();
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setApplicationName(m_configMap.value("applicationName").toString());
     QCoreApplication::setOrganizationName(m_configMap.value("organizationName").toString());
     QCoreApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
     QQuickStyle::setStyle(QLatin1String("Material"));
+
+    m_qsettings = new QSettings;
+
+    loadPlugins();
 }
 
 void Emile::loadConfigMap()
@@ -46,6 +49,13 @@ void Emile::loadConfigMap()
 
 void Emile::loadPlugins()
 {
+    if (readData(QStringLiteral("totalPlugins")).toInt() > 0) {
+        m_pluginsArray = readData(QStringLiteral("pluginsArray")).toJsonArray();
+        QJsonDocument doc = QJsonDocument::fromJson(readData(QStringLiteral("pluginsArray")).toByteArray());
+        m_pluginsArray = QJsonArray::fromVariantList(doc.toVariant().toList());
+        return;
+    }
+
     QJsonParseError error;
     QFile pluginsQrc(":/plugins.qrc");
     QRegularExpression regexp("alias=\"(.*\\.json)?\"");
@@ -63,6 +73,11 @@ void Emile::loadPlugins()
             }
         }
     }
+
+    saveData(QStringLiteral("totalPlugins"), m_pluginsArray.size());
+    QJsonDocument doc(m_pluginsArray);
+    saveData(QStringLiteral("pluginsArray"), QVariant(doc.toJson(QJsonDocument::Compact)));
+
     pluginsQrc.close();
 }
 
