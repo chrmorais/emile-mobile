@@ -10,6 +10,12 @@
 #include <QCoreApplication>
 #include <QRegularExpression>
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroidExtras>
+#include <QAndroidJniEnvironment>
+#include <QtAndroidExtras/QAndroidJniObject>
+#endif
+
 Emile::Emile(QObject *parent) : QObject(parent)
 {
     init();
@@ -118,7 +124,13 @@ void Emile::saveObject(const QString &key, const QVariantMap &value)
     saveData(key, QVariant(doc.toJson(QJsonDocument::Compact)));
 }
 
+void Emile::minimizeApp()
+{
+    QtAndroid::androidActivity().callMethod<void>("minimize", "()V");
+}
+
 void Emile::registerToken(const QVariant &token)
 {
     saveData(QStringLiteral("push_notification_token"), token);
 }
+

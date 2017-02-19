@@ -39,6 +39,9 @@ public:
     Q_INVOKABLE
     void saveObject(const QString &key, const QVariantMap &value);
 
+    Q_INVOKABLE
+    void minimizeApp();
+
 public slots:
     void registerToken(const QVariant &token);
 
