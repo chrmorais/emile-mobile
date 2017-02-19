@@ -1,5 +1,4 @@
 # C++ objects and libs
-
 *.slo
 *.lo
 *.o
@@ -11,7 +10,6 @@
 *.dylib
 
 # Qt-es
-
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -26,7 +24,6 @@ Makefile*
 *build-*
 
 # QtCreator
-
 *.autosave
 
 # QtCtreator Qml
@@ -39,9 +36,14 @@ CMakeLists.txt.user
 emile-mobile
 
 # Gradle
+*.properties
 *.properties~
+android/local.properties
 android/local.properties~
+android/gradle.properties
 android/gradle.properties~
+
+# Dolphin KDE
 .directory
 
 # ios finder
