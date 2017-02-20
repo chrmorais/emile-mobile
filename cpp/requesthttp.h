@@ -1,0 +1,51 @@
+#ifndef REQUESTHTTP_H
+#define REQUESTHTTP_H
+
+#include <QObject>
+#include <QString>
+#include <QVariant>
+#include <QNetworkReply>
+
+class QUrl;
+class QFile;
+class QFileInfo;
+class QHttpPart;
+class QMimeDatabase;
+class QHttpMultiPart;
+class QNetworkRequest;
+class QNetworkAccessManager;
+
+class RequestHttp : public QObject
+{
+    Q_OBJECT
+public:
+    explicit RequestHttp(QObject *parent = 0);
+    RequestHttp(const RequestHttp &other);
+    ~RequestHttp();
+
+    Q_INVOKABLE
+    void setBasicAuthentication(const QString &user, const QString &password);
+
+    Q_INVOKABLE
+    void postFile(const QString &url, const QVariant &filePathsList, const QVariantMap &requestHeaders = QVariantMap());
+
+private:
+    void setConnections();
+    void setRequestHeaders(const QVariantMap &requestHeaders, QNetworkRequest *request);
+    bool setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVariant &filePath);
+
+signals:
+    void error(int statusCode, const QVariant &errorMessage);
+    void finished(int statusCode, const QVariant &result);
+    void statusChanged(int statusCode, const QVariant &result);
+
+private slots:
+    void requestFinished(QNetworkReply *reply);
+    void requestError(QNetworkReply::NetworkError code);
+
+private:
+    QByteArray m_requestHeaderAuthorization;
+    QNetworkAccessManager* m_networkAccessManager;
+};
+
+#endif // REQUESTHTTP_H
