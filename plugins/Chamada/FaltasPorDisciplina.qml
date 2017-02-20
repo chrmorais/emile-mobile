@@ -14,27 +14,25 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
-    function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
-        jsonListModel.load()
-    }
-
-    property var json: {}
     property int courseId: 0
     property string toolBarState: "goback"
 
-    Component.onCompleted: request()
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
+    function request() {
+        jsonListModel.debug = false;
+        jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in response) {
+                while (i < response[prop].length) {
+                    listModel.append(response[prop][i++]);
+                }
             }
-        }
+        });
     }
+
+    Component.onCompleted: request();
 
     BusyIndicator {
         id: busyIndicator
@@ -66,7 +64,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel { id: listModel }
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()

@@ -17,7 +17,11 @@ Page {
 
     function request() {
         jsonListModel.source += "section_time_in_progress/" + userProfileData.id
-        jsonListModel.load()
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            json = response;
+        });
     }
 
     Component.onCompleted: request();
@@ -25,16 +29,6 @@ Page {
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model.get(0);
-                json = jsonTemp;
-            }
-        }
     }
 
     BusyIndicator {

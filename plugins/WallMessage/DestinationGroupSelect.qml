@@ -17,20 +17,23 @@ Page {
     function request() {
         jsonListModel.debug = false;
         jsonListModel.source += "destinations_by_user_type/" + 2
-        jsonListModel.load();
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in response) {
+                while (i < response[prop].length) {
+                    listModel.append(response[prop][i++]);
+                }
+            }
+        });
     }
+
+    Component.onCompleted: request();
 
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title)
-                json = jsonListModel.model;
-        }
     }
 
     BusyIndicator {
@@ -60,8 +63,8 @@ Page {
             y: ListView.view.currentItem.y
 
             onClicked: {
-                var id = json.get(index).id;
-                var destination = json.get(index).param_values_service;
+                var id = listModel.get(index).id;
+                var destination = listModel.get(index).param_values_service;
 
                 if (destination.indexOf("<%users%>") > -1) {
                     pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
@@ -78,7 +81,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel{id: listModel}
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()

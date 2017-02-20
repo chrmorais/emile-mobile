@@ -14,6 +14,8 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
+    property var configJson: {}
+
     function request() {
         jsonListModel.source += "students_course_sections/" + userProfileData.id;
         jsonListModel.load(function(result, status) {
@@ -27,7 +29,7 @@ Page {
         });
     }
 
-    property var configJson: {}
+    Component.onCompleted: request();
 
     onConfigJsonChanged: {
         if (!configJson.index_fields.length) return;

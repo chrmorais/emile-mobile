@@ -18,22 +18,25 @@ Page {
     property int userTypeDestinationId
 
     function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += destination;
-        jsonListModel.load();
+        jsonListModel.debug = true;
+        jsonListModel.source += destination
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in response) {
+                while (i < response[prop].length) {
+                    listModel.append(response[prop][i++]);
+                }
+            }
+        });
     }
+
+    Component.onCompleted: request();
 
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title)
-                json = jsonListModel.model;
-        }
     }
 
     BusyIndicator {
@@ -71,7 +74,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel{id: listModel}
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
