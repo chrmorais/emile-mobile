@@ -7,44 +7,37 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "My attendance"
-    objectName: "My attendance"
+    title: qsTr("My attendance")
+    objectName: qsTr("My attendance")
     background: Rectangle{
         anchors.fill: parent
         color: appSettings.theme.colorWindowBackground
     }
 
     function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += "students_course_sections/" + userProfileData.id
-        jsonListModel.load()
+        jsonListModel.source += "students_course_sections/" + userProfileData.id;
+        jsonListModel.load(function(result, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in result) {
+                while (i < result[prop].length)
+                    listModel.append(result[prop][i++]);
+            }
+        });
     }
 
-    property var json: {}
     property var configJson: {}
 
     onConfigJsonChanged: {
-        if (!configJson.index_fields.length) return
-        var arrayTemp = []
+        if (!configJson.index_fields.length) return;
+        var arrayTemp = [];
         for (var i = 0; i < configJson.index_fields.length; i++)
-            arrayTemp.push(configJson.index_fields[i])
-        fieldsVisible = arrayTemp
+            arrayTemp.push(configJson.index_fields[i]);
+        fieldsVisible = arrayTemp;
     }
 
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
-            }
-        }
-    }
+    Component.onCompleted: request();
 
     BusyIndicator {
         id: busyIndicator
@@ -55,7 +48,7 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !busyIndicator.visible
-        onClicked: request()
+        onClicked: request();
     }
 
     Component {
@@ -81,7 +74,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel { id: listModel }
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
