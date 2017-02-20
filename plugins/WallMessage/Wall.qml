@@ -8,39 +8,36 @@ import "../../qml/components/AwesomeIcon/" as AwesomeIcon
 
 Page {
     id: page
-    title: qsTr("Wall messages")
+    title: qsTr("Message wall")
+    objectName: title
     background: Rectangle {
         anchors.fill: parent
         color: appSettings.theme.colorWindowBackground
     }
 
-    property var json: []
-
     function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += "wall_messages/" + userProfileData.id
-        jsonListModel.load()
+        jsonListModel.debug = true;
+        jsonListModel.source += "wall_messages/" + userProfileData.id;
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in response) {
+                while (i < response[prop].length) {
+                    listModel.append(response[prop][i++]);
+                    listModel.move(listView.count - 1, 0, 1);
+                }
+            }
+        });
     }
 
-    Component.onCompleted: request()
+    Component.onCompleted: request();
 
     Connections {
         target: window
         onPageChanged: {
             if (currentPage.title === page.title)
                 request();
-            else
-                json = "";
-        }
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
-            }
         }
     }
 
@@ -126,15 +123,13 @@ Page {
     ListView {
         id: listView
         spacing: 7
-        model: json
+        model: ListModel { id: listModel }
         focus: true; cacheBuffer: width
         topMargin: 10; bottomMargin: 10
         width: page.width; height: page.height
         delegate: listViewDelegate
-        verticalLayoutDirection: ListView.BottomToTop
         Keys.onUpPressed: scrollBar.decrease()
         Keys.onDownPressed: scrollBar.increase()
-        onCountChanged: positionViewAtEnd()
         ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 }
