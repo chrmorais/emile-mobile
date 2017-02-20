@@ -14,14 +14,24 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
+    property var configJson: {}
+
     function request() {
         jsonListModel.debug = false;
         jsonListModel.source += "students_course_sections/" + userProfileData.id
-        jsonListModel.load()
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            for (var prop in response) {
+                while (i < response[prop].length) {
+                    listModel.append(response[prop][i++]);
+                }
+            }
+        });
     }
 
-    property var json: {}
-    property var configJson: {}
+    Component.onCompleted: request();
 
     onConfigJsonChanged: {
         if (!configJson.index_fields.length) return
@@ -34,16 +44,6 @@ Page {
     Connections {
         target: window
         onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
-            }
-        }
     }
 
     BusyIndicator {
@@ -81,7 +81,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel { id: listModel }
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
