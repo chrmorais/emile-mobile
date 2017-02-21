@@ -109,21 +109,21 @@ Page {
     Component.onCompleted: {
         jsonListModel.debug = false
         jsonListModel.source += "course_sections_students/" + course_section_id
-        jsonListModel.load()
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            listModel.clear()
+            for (var prop in response) {
+                while (i < response[prop].length)
+                   listModel.append(response[prop][i++]);
+            }
+        });
     }
 
     Connections {
         target: window
         onPageChanged: jsonListModel.stateChanged.disconnect(saveAttendenceValidateStatus);
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && page.visible)
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
-        }
     }
 
     DatePicker {
@@ -136,16 +136,15 @@ Page {
 
     BusyIndicator {
         id: busyIndicator
-        antialiasing: true
-        visible: jsonListModel.state === "running"
-        anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
+        anchors.centerIn: parent
+        visible: jsonListModel.state === "loading"
     }
 
     GridView {
         id: gridView
         visible: false
         anchors.fill: parent
-        model: json
+        model: listModel
         delegate: GridViewDelegate { }
         cellWidth: parent.width > parent.height ? parent.width * 0.25 : parent.width * 0.50; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
@@ -157,7 +156,7 @@ Page {
         id: listView
         visible: !busyIndicator.visible && !gridView.visible
         anchors.fill: parent
-        model: json
+        model: ListModel { id: listModel }
         delegate: ListViewDelegate { }
         Keys.onUpPressed: listViewScrollBar.decrease()
         Keys.onDownPressed: listViewScrollBar.increase()
