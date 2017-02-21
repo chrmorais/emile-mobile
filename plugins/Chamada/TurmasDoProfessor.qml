@@ -32,16 +32,6 @@ Page {
 
     Component.onCompleted: request();
 
-//    Connections {
-//        target: jsonListModel
-//        onStateChanged: {
-//            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-//                var jsonTemp = jsonListModel.model;
-//                json = jsonTemp;
-//            }
-//        }
-//    }
-
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
