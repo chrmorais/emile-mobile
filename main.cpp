@@ -11,6 +11,7 @@
 #endif
 
 #include "cpp/emile.h"
+#include "cpp/requesthttp.h"
 #include "cpp/pushnotificationtokenlistener.h"
 
 int main(int argc, char *argv[])
@@ -19,10 +20,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     emile.setParent(&app);
     Q_INIT_RESOURCE(translations);
+    RequestHttp requestHttp;
+    requestHttp.setParent(&app);
 
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
     context->setContextProperty(QLatin1String("Emile"), &emile);
+    context->setContextProperty(QLatin1String("PostFile"), &requestHttp);
     context->setContextProperty(QLatin1String("appSettings"), emile.configMap());
     context->setContextProperty(QLatin1String("crudModel"), QVariant::fromValue(emile.pluginsArray()));
 
