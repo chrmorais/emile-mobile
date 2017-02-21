@@ -20,16 +20,13 @@ Page {
         jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
+            listModel.clear()
             json = response;
+            console.log("Json = " + JSON.stringify(json))
         });
     }
 
     Component.onCompleted: request();
-
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
 
     BusyIndicator {
         id: busyIndicator

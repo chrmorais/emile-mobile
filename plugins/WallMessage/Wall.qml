@@ -15,10 +15,6 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
-    property bool isActive: currentPage.title === page.title
-
-    onIsActiveChanged: if (isActive) request();
-
     function m_apendObject(o) {
         listModel.append(o);
         listModel.move(listView.count - 1, 0, 1);
@@ -36,6 +32,8 @@ Page {
             }
         });
     }
+
+    Component.onCompleted: request();
 
     BusyIndicator {
         id: busyIndicator

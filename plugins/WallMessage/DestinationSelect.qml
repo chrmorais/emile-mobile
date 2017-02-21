@@ -24,6 +24,7 @@ Page {
             if (status !== 200)
                 return;
             var i = 0;
+            listModel.clear()
             for (var prop in response) {
                 while (i < response[prop].length) {
                     listModel.append(response[prop][i++]);
@@ -33,11 +34,6 @@ Page {
     }
 
     Component.onCompleted: request();
-
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
 
     BusyIndicator {
         id: busyIndicator

@@ -39,8 +39,6 @@ Page {
         fieldsVisible = arrayTemp;
     }
 
-    Component.onCompleted: request();
-
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
