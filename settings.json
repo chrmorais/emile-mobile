@@ -7,7 +7,7 @@
         "userServiceName": "",
         "userServicePassword": "",
         "baseUrl": "https://emile-server.herokuapp.com/",
-        "baseImagesUrl": "https://emile-server.herokuapp.com/media/"
+        "baseImagesUrl": "http://eliakimdjango.pythonanywhere.com/files/"
     },
     "theme": {
         "material": {
