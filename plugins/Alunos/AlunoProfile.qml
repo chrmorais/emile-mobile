@@ -2,18 +2,14 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
+import "../../qml/components/"
 import "functions.js" as AlunoFunc
 import "../../qml/js/Utils.js" as Util
-import "../../qml/components/" as AppComponents
 
-Page {
+BasePage {
     id: page
     title: qsTr("New Aluno")
     objectName: qsTr("Students")
-    background: Rectangle{
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
 
     property int userId
     property string action: "view"
@@ -26,19 +22,18 @@ Page {
     // called by ToolBar on action click
     function actionExec(actionName) {
         AlunoFunc.exec(actionName)
-        if(action !== "view" && action !== "edit") {
-            textFieldBirthdate.text = ""
-        }
+        if (action !== "view" && action !== "edit")
+            textFieldBirthdate.text = "";
     }
 
     onFieldsDataChanged: {
         if (fieldsData && fieldsData.email)
-            pageFlickable.visible = true
+            pageFlickable.visible = true;
     }
 
     Component.onCompleted: {
         if (action !== "newRegister")
-            AlunoFunc.httpRequest("user_details/"+userId, null, "GET")
+            AlunoFunc.httpRequest("user_details/"+userId, null, "GET");
     }
 
     Connections {
@@ -59,15 +54,9 @@ Page {
         }
     }
 
-    AppComponents.DatePicker {
+    DatePicker {
         id: datePickerBirthdate
         onDateSelected: textFieldBirthdate.text = (date.month + "-" + date.day + "-" + date.year)
-    }
-
-    BusyIndicator {
-        id: loading
-        anchors.centerIn: parent
-        visible: !pageFlickable.visible || jsonListModel.state === "loading"
     }
 
     Flickable {
@@ -202,9 +191,10 @@ Page {
         }
     }
 
-    AppComponents.FloatingButton {
+    FloatingButton {
         id: actionFloatingButton
         iconName: "pencil"
+        visible: !busyIndicator.visible && (action === "view" || action === "edit")
         onClicked: {
             var toolBarActionsTemp = ["save"];
             toolBarActions = toolBarActionsTemp;
@@ -212,6 +202,5 @@ Page {
             toast.z = parent.z + !
             toast.show("Edit enabled")
         }
-        visible: !loading.visible && (action === "view" || action === "edit")
     }
 }

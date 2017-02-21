@@ -2,25 +2,19 @@ import QtQuick 2.7
 import QtQml.Models 2.2
 import QtQuick.Controls 2.0
 
+import "../../qml/components/"
 import "functions.js" as AlunoFunc
 import "../../qml/js/Utils.js" as Util
-import "../../qml/components/" as AppComponents
 
-Page {
+BasePage {
     id: page
     title: qsTr("List of students")
     objectName: qsTr("Students")
-    background: Rectangle{
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
-
-    property var json
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
             text: "Select all"
-            onTriggered: AlunoFunc.selectAll()
+            onTriggered: AlunoFunc.selectAll();
         }
     ]
 
@@ -40,7 +34,7 @@ Page {
     }
 
     onSearchTextChanged: {
-        console.log("search term changed: " + searchText)
+        console.log("search term changed: " + searchText);
     }
 
     onConfigJsonChanged: {
@@ -73,22 +67,10 @@ Page {
         }
     }
 
-    BusyIndicator {
-        id: loading
-        anchors.centerIn: parent
-        visible: listView.count === 0 && jsonListModel.state !== "ready"
-    }
-
-    AppComponents.EmptyList {
-        z: listView.z + 1
-        visible: listView.count === 0 && !loading.visible
-        onClicked: request()
-    }
-
     Component {
         id: listViewDelegate
 
-        AppComponents.ListItem {
+        ListItem {
             id: wrapper
             showSeparator: true
             primaryImageSource: model.profileImage ? Util.getObjectValueByKey(model, "profileImage") : ""
@@ -111,7 +93,7 @@ Page {
         ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 
-    AppComponents.FloatingButton {
+    FloatingButton {
         onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"action": "newRegister"})
     }
 }
