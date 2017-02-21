@@ -1,19 +1,16 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
 import "../../qml/components/"
-import "../../qml/js/Utils.js" as Util
 import "Functions.js" as LoginFunctions
 
-Page {
-    id: loginPage
-    objectName: "Login"
-    background: Rectangle {
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
+BasePage {
+    id: page
+    objectName: qsTr("Login")
+    hasListView: false
+    hasRemoteRequest: true
+    centralizeBusyIndicator: false
 
     Component.onCompleted: if (window.menu) window.menu.enabled = false;
 
@@ -27,17 +24,7 @@ Page {
     Timer {
         id: loginPopShutdown
         repeat: false; running: false; interval: 2000
-        onTriggered: {
-            window.isUserLoggedIn = true;
-            setIndexPage(true); // setIndexPage() is a function from Main.qml
-        }
-    }
-
-    BusyIndicator {
-        id: busyIndicator
-        antialiasing: true
-        visible: jsonListModel.state === "loading" || loginPopShutdown.running
-        anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
+        onTriggered: setIndexPage(true, true); // setIndexPage() is a function from Main.qml
     }
 
     Flickable {

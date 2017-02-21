@@ -2,15 +2,12 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Material 2.0
 
+import "../../qml/js/Utils.js" as Util
 import "../../qml/components/"
 import "../../qml/components/AwesomeIcon/"
 
-Page {
+BasePage {
     id: page
-    background: Rectangle {
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
 
     function isValidLostPasswordForm() {
         if (!email.text && !cpf.text) {

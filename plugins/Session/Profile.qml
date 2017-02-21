@@ -4,19 +4,14 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Material 2.0
 
-
 import "../../qml/components/"
 import "../../qml/components/AwesomeIcon/"
 import "../../qml/js/"
 
-Page {
+BasePage {
     id: page
-    title: "My profile"
-    objectName: "My profile"
-    background: Rectangle {
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
+    title: qsTr("My profile")
+    objectName: title
 
     property string defaultUserImg: "qrc:/assets/user-default-icon.png"
 
@@ -47,7 +42,7 @@ Page {
             }
 
             Label {
-                text: qsTr("Name :")
+                text: qsTr("Name")
                 textFormat: Text.RichText
                 font { pointSize: 16; bold: true }
                 topPadding: 15
@@ -66,7 +61,7 @@ Page {
             }
 
             Label {
-                text: qsTr("Email :")
+                text: qsTr("Email")
                 textFormat: Text.RichText
                 font { pointSize: 16; bold: true }
                 topPadding: 15

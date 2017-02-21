@@ -1,38 +1,25 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+import QtQuick.Controls 2.1
 
 import "../../qml/components/"
 
-Page {
+BasePage {
     id: page
     title: qsTr("Courses in progress")
-    background: Rectangle{
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
-
-    property var json: {}
-    property var configJson: {}
+    hasListView: false
+    hasRemoteRequest: true
 
     function request() {
         jsonListModel.source += "section_time_in_progress/" + userProfileData.id
         jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
-            listModel.clear()
+            listViewModel.clear();
             json = response;
-            console.log("Json = " + JSON.stringify(json))
         });
     }
 
     Component.onCompleted: request();
-
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: jsonListModel.state === "loading"
-    }
 
     Column {
         visible: !busyIndicator.visible
