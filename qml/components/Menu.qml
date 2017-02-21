@@ -15,15 +15,10 @@ Drawer {
     property color userInfoTextColor: "#444"
     property color menuItemTextColor: "#444"
     property alias menuBackgroundColor: menuRectangle.color
-    property alias userImageProfile: drawerUserImageProfile.imgSource
+    property string userImageProfile: userProfileData.image_path ? appSettings.rest_service.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 
     signal profileImageChange()
-
-    Connections {
-        target: menu
-        onUserImageProfileChanged: if (userImageProfile) awesomeIcon.visible = false;
-    }
 
     ColumnLayout {
         id: userInfoColumn
@@ -34,8 +29,8 @@ Drawer {
             id: awesomeIcon
             name: "camera"
             size: 64; color: userInfoTextColor
-            visible: !userProfileData.image_path
-            anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
+            visible: !userImageProfile
+            anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
 
             MouseArea {
                 id: awesomeIconControl
@@ -44,10 +39,10 @@ Drawer {
             }
 
             Ripple {
+                z: -1
                 x: (parent.width - width) / 2
                 y: (parent.height - height) / 2
-                width: 75; height: width
-                z: -1
+                width: drawerUserImageProfile.width; height: width
                 anchor: awesomeIconControl
                 pressed: awesomeIconControl.pressed
                 active: awesomeIconControl.pressed
@@ -58,8 +53,9 @@ Drawer {
         RoundedImage {
             id: drawerUserImageProfile
             visible: !awesomeIcon.visible
-            imgSource: userProfileData.image_path ? userProfileData.image_path : ""
-            anchors { top: parent.top; topMargin: 20; horizontalCenter: parent.horizontalCenter }
+            width: 90; height: width
+            imgSource: userImageProfile
+            anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
 
             MouseArea {
                 id: drawerUserImageProfileControl
@@ -68,10 +64,10 @@ Drawer {
             }
 
             Ripple {
+                z: -1
                 x: (parent.width - width) / 2
                 y: (parent.height - height) / 2
-                width: 75; height: width
-                z: -1
+                width: drawerUserImageProfile.width; height: width
                 anchor: drawerUserImageProfileControl
                 pressed: drawerUserImageProfileControl.pressed
                 active: drawerUserImageProfileControl.pressed
@@ -82,7 +78,7 @@ Drawer {
         Label {
             color: userInfoTextColor; textFormat: Text.RichText
             text: userProfileData.name + "<br><b>" + userProfileData.email + "</b>"
-            font.pointSize: 12; Layout.fillWidth: true
+            font.pointSize: appSettings.theme.middleFontSize; Layout.fillWidth: true
             horizontalAlignment: Text.AlignHCenter
             anchors {
                 topMargin: 15
