@@ -20,7 +20,9 @@ Page {
         jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
+            listModel.clear()
             json = response;
+            console.log("Json = " + JSON.stringify(json))
         });
     }
 
