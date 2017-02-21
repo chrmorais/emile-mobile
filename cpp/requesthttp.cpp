@@ -76,7 +76,7 @@ bool RequestHttp::setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVari
         return false;
     }
 
-    QString contentDisposition = QString("form-data; name=file[]; filename=%1").arg(QFileInfo(fpath).fileName());
+    QString contentDisposition = QString("multipart/form-data; name=image_file; filename=%1").arg(QFileInfo(fpath).fileName());
 
     QHttpPart filePart;
     filePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(QMimeDatabase().mimeTypeForFile(fpath).name()));
