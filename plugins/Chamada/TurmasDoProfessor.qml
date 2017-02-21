@@ -11,30 +11,36 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
-    property var json: {}
+    //property var json: {}
     property string root_folder: {}
     property string toolBarState: "goback"
 
     function request() {
         jsonListModel.debug = false;
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
-        jsonListModel.load();
-    }
-
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
-
-    Connections {
-        target: jsonListModel
-        onStateChanged: {
-            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
-                var jsonTemp = jsonListModel.model;
-                json = jsonTemp;
+        jsonListModel.load(function(response, status) {
+            if (status !== 200)
+                return;
+            var i = 0;
+            listModel.clear()
+            for (var prop in response) {
+                while (i < response[prop].length)
+                   listModel.append(response[prop][i++]);
             }
-        }
+        });
     }
+
+    Component.onCompleted: request();
+
+//    Connections {
+//        target: jsonListModel
+//        onStateChanged: {
+//            if (jsonListModel.state === "ready" && currentPage.title === page.title) {
+//                var jsonTemp = jsonListModel.model;
+//                json = jsonTemp;
+//            }
+//        }
+//    }
 
     BusyIndicator {
         id: busyIndicator
@@ -64,7 +70,6 @@ Page {
 
             onClicked: {
                 pushPage(root_folder+"/RealizarChamada.qml", {"section_times_id": course.id, "course_section_id": id});
-                json = {}
             }
         }
     }
@@ -74,7 +79,7 @@ Page {
         width: page.width
         height: page.height
         focus: true
-        model: json
+        model: ListModel { id: listModel }
         delegate: listViewDelegate
         cacheBuffer: width
         onRemoveChanged: update()
