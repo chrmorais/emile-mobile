@@ -1,3 +1,5 @@
+.import "../../qml/js/Utils.js" as Util
+
 function isValidLoginForm() {
     var message = "";
 
