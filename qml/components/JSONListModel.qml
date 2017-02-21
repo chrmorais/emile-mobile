@@ -56,7 +56,14 @@ Item {
                 }
                 if (callback) {
                     rootItem.state = "ready";
-                    callback(JSON.parse(xhr.responseText), parseInt(xhr.status));
+                    var status = parseInt(xhr.status);
+                    try {
+                        callback(JSON.parse(xhr.responseText), status);
+                    } catch(e) {
+                        console.log("e:");
+                        console.error(e);
+                        callback({}, status);
+                    }
                     return;
                 }
                 if (rootItem.httpStatus >= 200 && rootItem.httpStatus <= 299) {
