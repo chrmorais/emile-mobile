@@ -50,6 +50,10 @@ Item {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 rootItem.httpStatus = xhr.status;
+                if (debug) {
+                    console.log("xhr.status: " + xhr.status)
+                    console.log("xhr.responseText: " + xhr.responseText)
+                }
                 if (callback) {
                     rootItem.state = "ready";
                     callback(JSON.parse(xhr.responseText), parseInt(xhr.status));
@@ -62,10 +66,6 @@ Item {
                 } else {
                     rootItem.errorString = qsTr("The server returned error ") + xhr.status;
                     rootItem.state = "error";
-                }
-                if (debug) {
-                    console.log("xhr.status: " + xhr.status)
-                    console.log("xhr.responseText: " + xhr.responseText)
                 }
             }
         }
