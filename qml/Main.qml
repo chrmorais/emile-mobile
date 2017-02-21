@@ -25,7 +25,7 @@ ApplicationWindow {
     onUserProfileDataChanged: {
         var userProfileDataTemp = Emile.readObject("user_profile_data");
         for (var prop in userProfileData) {
-            if (userProfileData[prop] !== userProfileDataTemp[prop])
+            if (!userProfileData[prop] || userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
         submitTokenToServer();
@@ -163,6 +163,15 @@ ApplicationWindow {
         }
     }
 
+
+    Connections {
+       target: PostFile
+       onFinished: {
+           if (statusCode == 200 & result)
+               Emile.saveObject("user_profile_data", JSON.parse(result).user);
+       }
+    }
+
     Loader {
         id: menuLoader
         asynchronous: false
@@ -196,7 +205,8 @@ ApplicationWindow {
             sidebarVisible: false
             onAccepted: {
                 menu.userImageProfile = "file://"+fileUrl;
-                // implementar upload para o serviço rest
+                var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
+                PostFile.postFile(url, [fileUrl]);
             }
         }
     }
@@ -208,7 +218,8 @@ ApplicationWindow {
             target: androidGallery
             onImagePathSelected: {
                 menu.userImageProfile = "file://"+imagePath;
-                // implementar upload para o serviço rest
+                 var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
+                 PostFile.postFile(url, [imagePath]);
             }
         }
     }
