@@ -7,8 +7,8 @@ import "../../qml/components/" as AppComponents
 
 Page {
     id: page
-    title: "My attendance"
-    objectName: "My attendance"
+    title: qsTr("My attendance")
+    objectName: qsTr("My attendance")
     background: Rectangle{
         anchors.fill: parent
         color: appSettings.theme.colorWindowBackground
@@ -17,16 +17,14 @@ Page {
     property var configJson: {}
 
     function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += "students_course_sections/" + userProfileData.id
-        jsonListModel.load(function(response, status) {
+        jsonListModel.source += "students_course_sections/" + userProfileData.id;
+        jsonListModel.load(function(result, status) {
             if (status !== 200)
                 return;
             var i = 0;
-            for (var prop in response) {
-                while (i < response[prop].length) {
-                    listModel.append(response[prop][i++]);
-                }
+            for (var prop in result) {
+                while (i < result[prop].length)
+                    listModel.append(result[prop][i++]);
             }
         });
     }
@@ -34,17 +32,14 @@ Page {
     Component.onCompleted: request();
 
     onConfigJsonChanged: {
-        if (!configJson.index_fields.length) return
-        var arrayTemp = []
+        if (!configJson.index_fields.length) return;
+        var arrayTemp = [];
         for (var i = 0; i < configJson.index_fields.length; i++)
-            arrayTemp.push(configJson.index_fields[i])
-        fieldsVisible = arrayTemp
+            arrayTemp.push(configJson.index_fields[i]);
+        fieldsVisible = arrayTemp;
     }
 
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
+    Component.onCompleted: request();
 
     BusyIndicator {
         id: busyIndicator
@@ -55,7 +50,7 @@ Page {
     AppComponents.EmptyList {
         z: listView.z + 1
         visible: listView.count === 0 && !busyIndicator.visible
-        onClicked: request()
+        onClicked: request();
     }
 
     Component {

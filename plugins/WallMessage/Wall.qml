@@ -15,8 +15,16 @@ Page {
         color: appSettings.theme.colorWindowBackground
     }
 
+    property bool isActive: currentPage.title === page.title
+
+    onIsActiveChanged: if (isActive) request();
+
+    function m_apendObject(o) {
+        listModel.append(o);
+        listModel.move(listView.count - 1, 0, 1);
+    }
+
     function request() {
-        jsonListModel.debug = true;
         jsonListModel.source += "wall_messages/" + userProfileData.id;
         jsonListModel.load(function(response, status) {
             if (status !== 200)
@@ -24,22 +32,10 @@ Page {
             var i = 0;
             listModel.clear()
             for (var prop in response) {
-                while (i < response[prop].length) {
-                    listModel.append(response[prop][i++]);
-                    listModel.move(listView.count - 1, 0, 1);
-                }
+                while (i < response[prop].length)
+                    m_apendObject(response[prop][i++]);
             }
         });
-    }
-
-    Component.onCompleted: request();
-
-    Connections {
-        target: window
-        onPageChanged: {
-            if (currentPage.title === page.title)
-                request();
-        }
     }
 
     BusyIndicator {
