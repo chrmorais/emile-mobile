@@ -35,11 +35,6 @@ Page {
 
     Component.onCompleted: request();
 
-    Connections {
-        target: window
-        onPageChanged: if (currentPage.title === page.title) request();
-    }
-
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
