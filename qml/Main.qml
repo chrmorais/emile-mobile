@@ -51,7 +51,6 @@ ApplicationWindow {
             "post_message": { "push_notification_token": token }
         };
 
-        jsonListModel.debug = true;
         jsonListModel.requestMethod = "POST";
         jsonListModel.contentType = "application/json";
         jsonListModel.source += "/token_register/"+userProfileData.id;
@@ -111,10 +110,11 @@ ApplicationWindow {
         menuPages = menuPagesTemp;
     }
 
-    function setIndexPage(clearPageStack) {
+    function setIndexPage(clearPageStack, isLogged) {
         var pageUrl = "/plugins/Session/Login.qml";
-        if (isUserLoggedIn) {
+        if (isUserLoggedIn || isLogged) {
             loadMenuPages();
+            isUserLoggedIn = true;
             if (window.menu) window.menu.enabled = true;
             pageUrl = "/plugins/WallMessage/Wall.qml";
         }
