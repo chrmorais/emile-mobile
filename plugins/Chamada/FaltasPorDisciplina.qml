@@ -14,6 +14,8 @@ BasePage {
     property int courseId: 0
     property string toolBarState: "goback"
 
+    onUpdatePage: request();
+
     function request() {
         jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
         jsonListModel.load(function(response, status) {
