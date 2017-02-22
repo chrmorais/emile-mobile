@@ -168,11 +168,15 @@ ApplicationWindow {
     }
 
     Connections {
-       target: PostFile
-       onFinished: {
-           if (statusCode == 200 & result)
-               Emile.saveObject("user_profile_data", JSON.parse(result).user);
-       }
+        target: PostFile
+        onFinished: {
+            if (parseInt(statusCode) === 200 && result) {
+                var response = JSON.parse(result);
+                userProfileData.image_path = response.image_path;
+                Emile.saveObject("user_profile_data", response.user);
+                userProfileData = response.user;
+            }
+        }
     }
 
     Loader {
@@ -221,8 +225,8 @@ ApplicationWindow {
             target: androidGallery
             onImagePathSelected: {
                 menu.userImageProfile = "file://"+imagePath;
-                 var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
-                 PostFile.postFile(url, [imagePath]);
+                var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
+                PostFile.postFile(url, [imagePath]);
             }
         }
     }
