@@ -21,17 +21,34 @@ ApplicationWindow {
     property alias currentPage: pageStack.currentItem
 
     signal pageChanged()
+    signal endSession()
+    signal starSession(var userData)
 
     onUserProfileDataChanged: {
         var userProfileDataTemp = Emile.readObject("user_profile_data");
         for (var prop in userProfileData) {
-            if (!userProfileData[prop] || userProfileData[prop] !== userProfileDataTemp[prop])
+            if (userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
         submitTokenToServer();
     }
 
-    onIsUserLoggedInChanged: Emile.saveData("is_user_logged_in", isUserLoggedIn);
+    onIsUserLoggedInChanged: {
+        Emile.saveData("is_user_logged_in", isUserLoggedIn);
+    }
+
+    onEndSession: {
+        isUserLoggedIn = false;
+        var objectTemp = {};
+        userProfileData = objectTemp;
+        setIndexPage();
+    }
+
+    onStarSession: {
+        isUserLoggedIn = true;
+        userProfileData = userData;
+        setIndexPage();
+    }
 
     // slot connected with pushNotificationTokenListener in main.cpp
     function sendToken(token) {
@@ -55,8 +72,8 @@ ApplicationWindow {
         jsonListModel.contentType = "application/json";
         jsonListModel.source += "/token_register/"+userProfileData.id;
         jsonListModel.requestParams = JSON.stringify(params);
-        jsonListModel.load(function(resultText, status) {
-            userProfileData = resultText.user;
+        jsonListModel.load(function(result, status) {
+            Emile.saveObject("user_profile_data", result.user);
         });
     }
 
@@ -110,19 +127,19 @@ ApplicationWindow {
         menuPages = menuPagesTemp;
     }
 
-    function setIndexPage(clearPageStack, isLogged) {
+    function setIndexPage() {
         var pageUrl = "/plugins/Session/Login.qml";
-        if (isUserLoggedIn || isLogged) {
+        if (isUserLoggedIn) {
             loadMenuPages();
-            isUserLoggedIn = true;
             if (window.menu) window.menu.enabled = true;
             pageUrl = "/plugins/WallMessage/Wall.qml";
         }
-        if (clearPageStack) {
-            while (pageStack.depth > 1)
-                pageStack.pop();
-        }
-        pageStack.replace(Qt.resolvedUrl(pageUrl), {});
+        while (pageStack.depth > 1)
+            pageStack.pop();
+        if (pageStack.depth >= 1)
+            pageStack.replace(Qt.resolvedUrl(pageUrl), {});
+        else
+            pageStack.push(Qt.resolvedUrl(pageUrl), {});
     }
 
     function profileImageConfigure() {
@@ -132,22 +149,7 @@ ApplicationWindow {
             androidGallery.open();
     }
 
-    Component.onCompleted: {
-        setIndexPage();
-        if (!isIOS && Qt.platform.os !== "android") {
-            setX(Screen.width / 2 - width / 2);
-            setY(Screen.height / 2 - height / 2);
-        }
-    }
-
-    onClosing: {
-        close.accepted = false;
-        if (!isIOS && pageStack.depth <= 1) {
-            Emile.minimizeApp();
-        } else {
-            popPage();
-        }
-    }
+    Component.onCompleted: setIndexPage();
 
     Connections {
         target: header
@@ -162,7 +164,6 @@ ApplicationWindow {
             }
         }
     }
-
 
     Connections {
        target: PostFile
@@ -252,20 +253,13 @@ ApplicationWindow {
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if (pageStack.depth > 1) {
-                    event.accepted = false;
                     popPage();
+                    event.accepted = false;
                 } else {
+                    if (!isIOS)
+                        Emile.minimizeApp();
                     event.accepted = true;
                 }
-            }
-        }
-
-        Keys.onBackPressed: {
-            if (pageStack.depth > 1) {
-                popPage();
-                event.accepted = false;
-            } else {
-                event.accepted = true;
             }
         }
 
