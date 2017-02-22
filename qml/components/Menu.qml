@@ -116,7 +116,7 @@ Drawer {
                         return modelData.roles.indexOf(window.userProfileData.type.name) > -1;
                     }
 
-                    property bool isSelected: modelData.menu_name === window.currentPage.objectName
+                    property bool isSelected: window.currentPage ? modelData.menu_name === window.currentPage.objectName : false
 
                     Row {
                         id: row
