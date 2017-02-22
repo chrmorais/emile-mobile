@@ -16,8 +16,10 @@ BasePage {
         jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
-            json = response;
-            console.log("json: " + JSON.stringify(json));
+            if (response.section_times)
+                json = response.section_times[0];
+            else
+                json = {};
         });
     }
 
@@ -35,7 +37,7 @@ BasePage {
             Label {
                 font { pointSize: 16; weight: Font.Bold }
                 text: {
-                    if (json && json.course_section && typeof json != "undefined" && json.course_section != "undefined")
+                    if (json && typeof json != "undefined")
                         return json.course_section.course.code + " - " + json.course_section.course.name;
                     return "";
                 }
