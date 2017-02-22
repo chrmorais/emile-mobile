@@ -7,9 +7,12 @@ BasePage {
     id: page
     title: qsTr("My courses")
     objectName: title
+    listViewDelegate: pageDelegate
 
     property string root_folder: {}
     property string toolBarState: "goback"
+
+    onUpdatePage: request();
 
     function request() {
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
@@ -28,7 +31,7 @@ BasePage {
     Component.onCompleted: request();
 
     Component {
-        id: listViewDelegate
+        id: pageDelegate
 
         ListItem {
             id: wrapper
