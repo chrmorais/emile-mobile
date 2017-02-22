@@ -13,7 +13,7 @@ Column {
 
     property bool atCenter: false
 
-    function show(text, duration, putInCenter) {
+    function show(text, putInCenter, duration) {
         if (putInCenter)
             atCenter = putInCenter;
         var toast = toastComponent.createObject(root);

@@ -35,7 +35,6 @@ Page {
 
     EmptyList {
         id: _emptyList
-        z: listView.z + 1
         visible: hasListView && listView.count === 0 && !_busyIndicator.visible
         onClicked: if (hasRemoteRequest) request();
     }
@@ -48,6 +47,7 @@ Page {
             model: listViewModel
             delegate: basePage.listViewDelegate
             cacheBuffer: width
+            topMargin: 10; bottomMargin: 10
             onRemoveChanged: update()
             Keys.onUpPressed: scrollBar.decrease()
             Keys.onDownPressed: scrollBar.increase()
