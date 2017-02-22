@@ -128,18 +128,20 @@ ApplicationWindow {
     }
 
     function setIndexPage() {
+        var pageArgs = {};
         var pageUrl = "/plugins/Session/Login.qml";
         if (isUserLoggedIn) {
             loadMenuPages();
             if (window.menu) window.menu.enabled = true;
+            pageArgs = menuPages.length > 0 ? menuPages[0] : {};
             pageUrl = "/plugins/WallMessage/Wall.qml";
         }
         while (pageStack.depth > 1)
             pageStack.pop();
         if (pageStack.depth >= 1)
-            pageStack.replace(Qt.resolvedUrl(pageUrl), {});
+            pageStack.replace(Qt.resolvedUrl(pageUrl), pageArgs);
         else
-            pageStack.push(Qt.resolvedUrl(pageUrl), {});
+            pageStack.push(Qt.resolvedUrl(pageUrl), pageArgs);
     }
 
     function profileImageConfigure() {
