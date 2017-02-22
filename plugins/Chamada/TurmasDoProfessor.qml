@@ -7,9 +7,11 @@ BasePage {
     id: page
     title: qsTr("My courses")
     objectName: title
+    toolBarState: "goback"
+    onUpdatePage: request();
+    listViewDelegate: pageDelegate
 
     property string root_folder: {}
-    property string toolBarState: "goback"
 
     function request() {
         jsonListModel.source += "teachers_course_sections/" + userProfileData.id;
@@ -17,7 +19,8 @@ BasePage {
             if (status !== 200)
                 return;
             var i = 0;
-            listViewModel.clear();
+            if (listViewModel && listViewModel.count > 0)
+                listViewModel.clear();
             for (var prop in response) {
                 while (i < response[prop].length)
                    listViewModel.append(response[prop][i++]);
@@ -28,11 +31,10 @@ BasePage {
     Component.onCompleted: request();
 
     Component {
-        id: listViewDelegate
+        id: pageDelegate
 
         ListItem {
             id: wrapper
-            parent: listView.contentItem
             showSeparator: true
             badgeText: course !== undefined ? course.id : ""
             primaryLabelText: name + ""
