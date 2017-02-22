@@ -8,7 +8,6 @@ BasePage {
     title: qsTr("My courses")
     objectName: title
     toolBarState: "goback"
-    onUpdatePage: request();
     listViewDelegate: pageDelegate
     onUpdatePage: request();
 
