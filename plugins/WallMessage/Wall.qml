@@ -1,23 +1,25 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+import QtQuick.Controls.Material 2.1
 
-import "../../qml/components/" as AppComponents
+import "../../qml/components/"
 import "../../qml/components/AwesomeIcon/" as AwesomeIcon
 
-Page {
+BasePage {
     id: page
     title: qsTr("Message wall")
-    objectName: title
-    background: Rectangle {
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
+    objectName: qsTr("Message wall")
+    listViewSpacing: 10
+    listViewTopMargin: 10
+    listViewBottomMargin: 10
+    listViewDelegate: pageDelegate
 
-    function m_apendObject(o) {
-        listModel.append(o);
-        listModel.move(listView.count - 1, 0, 1);
+    onUpdatePage: request();
+
+    function apendObject(o) {
+        listViewModel.append(o);
+        listViewModel.move(listViewModel.count - 1, 0, 1);
     }
 
     function request() {
@@ -26,29 +28,19 @@ Page {
             if (status !== 200)
                 return;
             var i = 0;
+            if (listViewModel.count > 0)
+                listViewModel.clear();
             for (var prop in response) {
                 while (i < response[prop].length)
-                    m_apendObject(response[prop][i++]);
+                    apendObject(response[prop][i++]);
             }
         });
     }
 
     Component.onCompleted: request();
 
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: jsonListModel.state === "loading"
-    }
-
-    AppComponents.EmptyList {
-        z: listView.z + 1
-        visible: listView.count === 0 && !busyIndicator.visible
-        onClicked: request();
-    }
-
     Component {
-        id: listViewDelegate
+        id: pageDelegate
 
         Rectangle {
             id: delegate
@@ -112,18 +104,5 @@ Page {
                 }
             }
         }
-    }
-
-    ListView {
-        id: listView
-        spacing: 7
-        model: ListModel { id: listModel }
-        focus: true; cacheBuffer: width
-        topMargin: 10; bottomMargin: 10
-        width: page.width; height: page.height
-        delegate: listViewDelegate
-        Keys.onUpPressed: scrollBar.decrease()
-        Keys.onDownPressed: scrollBar.increase()
-        ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 }

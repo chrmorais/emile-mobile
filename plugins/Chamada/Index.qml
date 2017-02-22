@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
 
 import "../../qml/components/"
 
@@ -8,14 +9,15 @@ BasePage {
     title: qsTr("Courses in progress")
     hasListView: false
     hasRemoteRequest: true
+    onUpdatePage: request();
 
     function request() {
         jsonListModel.source += "section_time_in_progress/" + userProfileData.id
         jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
-            listViewModel.clear();
             json = response;
+            console.log("json: " + JSON.stringify(json));
         });
     }
 
@@ -43,13 +45,13 @@ BasePage {
 
             Label {
                 font { pointSize: 14; weight: Font.Bold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (json && typeof json != "undefined")
                         return json.section_time_start_time + " - " + json.section_time_finish_time;
                     return "";
                 }
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: appSettings.theme.defaultTextColor
             }
         }
 
@@ -58,16 +60,16 @@ BasePage {
 
             Label {
                 color: Material.color(Material.Red)
+                font { pointSize: 16; weight: Font.Bold }
+                anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (jsonListModel.state === "running")
-                        qsTr("Checkin for courses in progress...")
+                        qsTr("Check for courses in progress...")
                     else if (json)
                         qsTr("Do you want register attendance?")
                     else
                         qsTr("None courses in progress!")
                 }
-                anchors.horizontalCenter: parent.horizontalCenter
-                font { pointSize: 16; weight: Font.Bold }
             }
 
             CustomButton {

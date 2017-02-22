@@ -10,13 +10,15 @@ BasePage {
     id: page
     title: qsTr("New Aluno")
     objectName: qsTr("Students")
+    hasListView: false
+    hasRemoteRequest: false
+    toolBarState: "goback"
+    toolBarActions: action === "newRegister" ? ["save"] : []
 
     property int userId
     property string action: "view"
-    property string toolBarState: "goback"
     property var fieldsData
     property var formData: ({})
-    property var toolBarActions: action === "newRegister" ? ["save"] : []
     property bool editable: action === "view" || action === "edit"
 
     // called by ToolBar on action click

@@ -14,6 +14,7 @@ BasePage {
 
     Component.onCompleted: if (window.menu) window.menu.enabled = false;
 
+    property var requestResult
     property int hideToolbar: 1
 
     Timer {
@@ -24,7 +25,7 @@ BasePage {
     Timer {
         id: loginPopShutdown
         repeat: false; running: false; interval: 2000
-        onTriggered: setIndexPage(true, true); // setIndexPage() is a function from Main.qml
+        onTriggered: starSession(requestResult);
     }
 
     Flickable {

@@ -18,15 +18,14 @@ function isValidLoginForm() {
     return true;
 }
 
-function loginCallback(responseText, status) {
+function loginCallback(result, status) {
     switch (status) {
     case 404:
         alert(qsTr("Error!"), qsTr("Email or password is invalid. Try again!"));
         break;
     case 200:
         toast.show(qsTr("Login done successfully!"));
-        var objectTemp = responseText.user;
-        window.userProfileData = objectTemp;
+        requestResult = result.user;
         loginPopShutdown.start();
         break;
     default:

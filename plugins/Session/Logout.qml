@@ -4,16 +4,12 @@ import "../../qml/components/"
 
 BasePage {
     objectName: qsTr("Logout")
+    hasListView: false
+    hasRemoteRequest: false
     busyIndicator.visible: true
-
-    Component.onCompleted: {
-        window.menu.enabled = false;
-        window.isUserLoggedIn = false;
-        window.userProfileData = {};
-    }
 
     Timer {
         running: true; interval: 1000
-        onTriggered: setIndexPage(true, false);
+        onTriggered: window.endSession();
     }
 }

@@ -1,55 +1,44 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import "../../qml/components/" as AppComponents
+import "../../qml/components/"
 
-Page {
+BasePage {
     id: page
     title: qsTr("Write the message ")
-    background: Rectangle {
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
+    objectName: qsTr("Send message")
+    hasListView: false
+    hasRemoteRequest: true
+    toolBarState: "goback"
+    centralizeBusyIndicator: false
 
-    property int messageCharsLimit: 140
-    property int messageCharsCount: messageCharsLimit - textarea.text.length
-    property string toolBarState: "goback"
-    property var post_message: {"post_message": {}};
     property int parameter
     property int userTypeDestinationId
+    property int messageCharsLimit: 140
+    property int messageCharsCount: messageCharsLimit - textarea.text.length
+
+    property var post_message: {"post_message": {}};
 
     onMessageCharsCountChanged: textMessageCharsLength.text = messageCharsCount + qsTr(" chars left")
 
     Component.onCompleted: textarea.forceActiveFocus();
 
-    function requestToSave() {
-        jsonListModel.debug = true
-        jsonListModel.requestMethod = "POST";
-        jsonListModel.contentType = "application/json";
-        jsonListModel.requestParams = JSON.stringify(post_message);
-        jsonListModel.source += "wall_push_notification";
-        jsonListModel.load();
-        jsonListModel.stateChanged.connect(savePost_messageValidateStatus);
-        toast.show("Sending message...");
-    }
-
-    function savePost_messageValidateStatus() {
-        // after get server response, close the current page
-        if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
-            if (jsonListModel.httpStatus === 200) {
-                jsonListModel.stateChanged.disconnect(savePost_messageValidateStatus);
-                alert("Success!", "The message was successfully sended", "OK", function() { popPage() }, "CANCEL", function() { });
-            } else if (jsonListModel.httpStatus === 404) {
-                jsonListModel.stateChanged.disconnect(savePost_messageValidateStatus);
-                alert("Warning!", "The message was not sent!", "OK", function() { }, "CANCEL", function() { });
-            }
+    function requestCallback(result, status) {
+        if (status === 200) {
+            textarea.enabled = false;
+            alert(qsTr("Success!"), qsTr("The message was successfully sended"), "OK", function() { popPage(); }, qsTr("CANCEL"), function() { });
+        } else if (status === 404) {
+            alert(qsTr("Warning!"), qsTr("The message was not sent!"), "OK", function() { }, qsTr("CANCEL"), function() { });
         }
     }
 
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: jsonListModel.state === "loading"
+    function requestToSave() {
+        jsonListModel.requestMethod = "POST";
+        jsonListModel.contentType = "application/json";
+        jsonListModel.source += "wall_push_notification";
+        jsonListModel.requestParams = JSON.stringify(post_message);
+        jsonListModel.load(requestCallback);
+        toast.show(qsTr("Sending message..."), true);
     }
 
     Rectangle {
@@ -64,13 +53,12 @@ Page {
 
             TextArea.flickable: TextArea {
                 id: textarea
-                z: parent.z + 1
-                text: ""
-                selectByMouse: true
-                persistentSelection: true
-                overwriteMode: true
-                wrapMode: TextArea.Wrap
-                focus: true; width: parent.width
+                z: parent.z + 1; text: ""
+                enabled: !busyIndicator.visible
+                focus: enabled; width: parent.width
+                opacity: busyIndicator.visible ? 0.8 : 1.0
+                overwriteMode: true; wrapMode: TextArea.Wrap
+                selectByMouse: true; persistentSelection: true
                 onTextChanged: {
                     if (textarea.text.length > 139) {
                         textarea.remove(140, textarea.text.length);
@@ -85,15 +73,15 @@ Page {
 
     Text {
         id: textMessageCharsLength
-        text: messageCharsCount + " " + qsTr("chars left")
+        text: messageCharsCount + "  " + qsTr("chars left")
         color: appSettings.theme.defaultTextColor
         anchors { bottom: rectangleTextarea.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
     }
 
-    AppComponents.CustomButton {
+    CustomButton {
         text: qsTr("Send message")
         anchors { bottom: parent.bottom; bottomMargin: 15 }
-        enabled: jsonListModel.state !== "running"
+        enabled: !busyIndicator.visible
         textColor: appSettings.theme.colorAccent
         backgroundColor: appSettings.theme.colorPrimary
         onClicked: {
@@ -104,6 +92,7 @@ Page {
             post_messageTemp.sender = window.userProfileData.id
             post_message["post_message"] = post_messageTemp;
             requestToSave();
+            page.forceActiveFocus();
         }
     }
 }

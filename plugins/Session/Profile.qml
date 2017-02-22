@@ -1,19 +1,17 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls.Material 2.0
+import QtQuick.Controls 2.0
 
 import "../../qml/components/"
-import "../../qml/components/AwesomeIcon/"
-import "../../qml/js/"
 
 BasePage {
     id: page
     title: qsTr("My profile")
     objectName: title
+    hasListView: false
+    hasRemoteRequest: false
 
-    property string defaultUserImg: "qrc:/assets/user-default-icon.png"
+    property string defaultUserImg: menu.userImageProfile ? menu.userImageProfile : "qrc:/assets/user-default-icon.png"
 
     Flickable {
         id: flickable
@@ -21,63 +19,35 @@ BasePage {
         anchors.fill: parent
         contentHeight: Math.max(profileColumn.implicitHeight, height)
 
-        Column {
+        ColumnLayout {
             id: profileColumn
-            width: page.width / 1.3 ; height: page.height
-            anchors { horizontalCenter: parent.horizontalCenter }
-            topPadding: 10
             spacing: 5
+            width: page.width; height: page.height
+            anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
 
-            Rectangle {
-                height: drawerUserImageProfile.height + 10; width: drawerUserImageProfile.width + 10
-                border.color: "green"
-                anchors { horizontalCenter: parent.horizontalCenter }
-
-                RoundedImage {
-                    id: drawerUserImageProfile
-                    width: 95; height: width
-                    imgSource: menu.userImageProfile
-                    anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: parent.verticalCenter }
-                }
+            RoundedImage {
+                id: drawerUserImageProfile
+                width: 89; height: width
+                imgSource: defaultUserImg
+                anchors { top: parent.top; topMargin: 5; horizontalCenter: parent.horizontalCenter }
             }
 
             Label {
-                text: qsTr("Name")
-                textFormat: Text.RichText
-                font { pointSize: 16; bold: true }
                 topPadding: 15
+                textFormat: Text.RichText
+                text: qsTr("Name: ") + userProfileData.name
+                font { pointSize: 13; weight: Font.DemiBold }
                 color: appSettings.theme.defaultTextColor
-                anchors { horizontalCenter: parent.horizontalCenter; left: parent.left }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             Label {
-                id: userName
-                text: userProfileData.name
-                textFormat: Text.RichText
-                font.pointSize: 14
-                wrapMode: Text.WrapAnywhere
-                color: appSettings.theme.defaultTextColor
-                anchors { horizontalCenter: parent.horizontalCenter }
-            }
-
-            Label {
-                text: qsTr("Email")
-                textFormat: Text.RichText
-                font { pointSize: 16; bold: true }
                 topPadding: 15
-                color: appSettings.theme.defaultTextColor
-                anchors { horizontalCenter: parent.horizontalCenter; left: parent.left }
-            }
-
-            Label {
-                id: userEmail
-                text: userProfileData.email
                 textFormat: Text.RichText
-                horizontalAlignment: Text.AlignJustify
-                font.pointSize: 14
-                wrapMode: Text.WrapAnywhere
+                text: qsTr("Email: ") + userProfileData.email
+                font { pointSize: 13; weight: Font.DemiBold }
                 color: appSettings.theme.defaultTextColor
-                anchors { horizontalCenter: parent.horizontalCenter }
+                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }

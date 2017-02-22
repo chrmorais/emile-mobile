@@ -10,6 +10,7 @@ BasePage {
     id: page
     title: qsTr("List of students")
     objectName: qsTr("Students")
+    listViewDelegate: pageDelegate
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
@@ -47,8 +48,11 @@ BasePage {
     }
 
     function request() {
-        jsonListModel.debug = false;
-        jsonListModel.source += "students"
+        jsonListModel.source += "students";
+
+        if (listViewModel && listViewModel.count > 0)
+            listViewModel.clear();
+
         jsonListModel.load()
     }
 
@@ -68,7 +72,7 @@ BasePage {
     }
 
     Component {
-        id: listViewDelegate
+        id: pageDelegate
 
         ListItem {
             id: wrapper
@@ -80,17 +84,6 @@ BasePage {
             onClicked: pushPage(configJson.root_folder+"/AlunoProfile.qml", {"title": primaryLabelText, "userId": id})
             selected: selectedIndex.indexOf(index) !== -1
         }
-    }
-
-    ListView {
-        id: listView
-        focus: true; cacheBuffer: width
-        width: page.width; height: page.height
-        model: json; delegate: listViewDelegate
-        onRemoveChanged: update();
-        Keys.onUpPressed: scrollBar.decrease();
-        Keys.onDownPressed: scrollBar.increase();
-        ScrollBar.vertical: ScrollBar { id: scrollBar }
     }
 
     FloatingButton {
