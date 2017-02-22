@@ -18,8 +18,6 @@ Drawer {
     property string userImageProfile: userProfileData.image_path ? appSettings.rest_service.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 
-    signal profileImageChange()
-
     ColumnLayout {
         id: userInfoColumn
         width: parent.width; height: 100
