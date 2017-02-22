@@ -23,6 +23,17 @@ BasePage {
 
     Component.onCompleted: textarea.forceActiveFocus();
 
+    function send() {
+        var post_messageTemp = post_message["post_message"];
+        post_messageTemp.user_type_destination_id = userTypeDestinationId;
+        post_messageTemp.parameter = parameter;
+        post_messageTemp.message = textarea.text
+        post_messageTemp.sender = window.userProfileData.id
+        post_message["post_message"] = post_messageTemp;
+        requestToSave();
+        page.forceActiveFocus();
+    }
+
     function requestCallback(result, status) {
         if (status === 200) {
             textarea.enabled = false;
@@ -84,15 +95,6 @@ BasePage {
         enabled: !busyIndicator.visible
         textColor: appSettings.theme.colorAccent
         backgroundColor: appSettings.theme.colorPrimary
-        onClicked: {
-            var post_messageTemp = post_message["post_message"];
-            post_messageTemp.user_type_destination_id = userTypeDestinationId;
-            post_messageTemp.parameter = parameter;
-            post_messageTemp.message = textarea.text
-            post_messageTemp.sender = window.userProfileData.id
-            post_message["post_message"] = post_messageTemp;
-            requestToSave();
-            page.forceActiveFocus();
-        }
+        onClicked: send();
     }
 }
