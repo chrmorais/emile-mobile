@@ -68,13 +68,13 @@ Rectangle {
             renderType: Text.NativeRendering
             fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
             anchors.horizontalCenter: parent.horizontalCenter
-            font { weight: Font.DemiBold; pointSize: 12 }
+            font { weight: Font.DemiBold; pointSize: 13 }
         }
 
         Text {
             renderType: Text.NativeRendering
             fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
-            color: textColor; text: secondText; font.pointSize: 10
+            color: textColor; text: secondText; font.pointSize: 11
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }
