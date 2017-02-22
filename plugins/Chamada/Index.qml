@@ -35,7 +35,7 @@ BasePage {
             Label {
                 font { pointSize: 16; weight: Font.Bold }
                 text: {
-                    if (json && typeof json != "undefined")
+                    if (json && json.course_section && typeof json != "undefined" && json.course_section != "undefined")
                         return json.course_section.course.code + " - " + json.course_section.course.name;
                     return "";
                 }

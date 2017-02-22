@@ -12,8 +12,8 @@ BasePage {
     onUpdatePage: request();
 
     function request() {
-        jsonListModel.source += "destinations_by_user_type/" + 2
-        jsonListModel.load(function(response, status) {
+        jsonlistViewModel.source += "destinations_by_user_type/" + 2
+        jsonlistViewModel.load(function(response, status) {
             if (status !== 200)
                 return;
             var i = 0;
@@ -39,8 +39,8 @@ BasePage {
             primaryLabelText: name + ""
             secondaryLabelText: ""
             onClicked: {
-                var id = listModel.get(index).id;
-                var destination = listModel.get(index).param_values_service;
+                var id = listViewModel.get(index).id;
+                var destination = listViewModel.get(index).param_values_service;
                 if (destination.indexOf("<%users%>") > -1) {
                     pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
                 } else {
