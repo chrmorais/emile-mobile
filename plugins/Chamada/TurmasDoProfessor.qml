@@ -10,6 +10,7 @@ BasePage {
     toolBarState: "goback"
     onUpdatePage: request();
     listViewDelegate: pageDelegate
+    onUpdatePage: request();
 
     property string root_folder: {}
 
