@@ -11,6 +11,9 @@ BasePage {
     title: qsTr("List of students")
     objectName: qsTr("Students")
     listViewDelegate: pageDelegate
+    toolBarState: selectedIndex.length > 0 ? "action" : "normal"
+    toolBarActions: ["search", "delete"]
+    onUpdatePage: request();
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
@@ -20,14 +23,8 @@ BasePage {
     ]
 
     property string searchText: ""
-
-    // make a binding with toolbar
-    property string toolBarState: selectedIndex.length > 0 ? "action" : "normal"
-
-    property var configJson: ({})
     property var fieldsVisible: []
     property var selectedIndex: []
-    property var toolBarActions: ["search", "delete"]
 
     // called by ToolBar on action click
     function actionExec(actionName) {
@@ -49,11 +46,9 @@ BasePage {
 
     function request() {
         jsonListModel.source += "students";
-
         if (listViewModel && listViewModel.count > 0)
             listViewModel.clear();
-
-        jsonListModel.load()
+        jsonListModel.load();
     }
 
     Connections {
