@@ -93,6 +93,34 @@ BasePage {
                 color: appSettings.theme.defaultTextColor
                 anchors.horizontalCenter: parent.horizontalCenter
             }
+
+            Label {
+                text: "<b>" + qsTr("Username: ") + "</b>" + userProfileData.username
+                font { pointSize: 13; weight: Font.DemiBold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: "<b>" + qsTr("User type: ") + "</b>" + userProfileData.type.name
+                font { pointSize: 13; weight: Font.DemiBold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: "<b>" + qsTr("Adress: ") + "</b>" + userProfileData.address
+                font { pointSize: 13; weight: Font.DemiBold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Label {
+                text: "<b>" + qsTr("Gender: ") + "</b>" + userProfileData.gender
+                font { pointSize: 13; weight: Font.DemiBold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
         }
     }
 }
