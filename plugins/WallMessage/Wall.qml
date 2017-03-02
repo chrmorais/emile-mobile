@@ -106,7 +106,8 @@ BasePage {
     }
 
     FloatingButton {
+        visible: window.userProfileData.type.name !== "student"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
-        onClicked: pushPage(configJson.root_folder+"/SendMessage.qml", {});
+        onClicked: pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {});
     }
 }
