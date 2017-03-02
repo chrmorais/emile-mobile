@@ -106,8 +106,11 @@ BasePage {
     }
 
     FloatingButton {
-        visible: window.userProfileData.type.name !== "student"
+        visible: window.userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
-        onClicked: pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {});
+        onClicked: {
+            console.log("COnfigJson.root_folder: " + configJson.root_folder);
+            pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {"configJson": configJson});
+        }
     }
 }
