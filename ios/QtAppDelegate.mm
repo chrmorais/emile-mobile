@@ -33,6 +33,10 @@
     [self connectToFcm];
     NSLog(@"Conectou com o FCM");
     NSLog(@"enter in applicationDidBecomeActive method");
+
+    // clear the app icon badge with notification count
+    // http://stackoverflow.com/questions/27311910/how-to-clear-badge-counter-on-click-of-app-icon-in-iphone
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
