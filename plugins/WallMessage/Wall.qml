@@ -14,7 +14,6 @@ BasePage {
     listViewTopMargin: 10
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
-
     onUpdatePage: request();
 
     function apendObject(o) {
@@ -104,5 +103,11 @@ BasePage {
                 }
             }
         }
+    }
+
+    FloatingButton {
+        visible: window.userProfileData.type.name !== "student"
+        iconName: "pencil"; iconColor: appSettings.theme.colorAccent
+        onClicked: pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {});
     }
 }

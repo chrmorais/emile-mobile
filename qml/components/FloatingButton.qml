@@ -30,5 +30,6 @@ Button {
     property bool showShadow: true
     property color shadowColor: appSettings.theme.colorPrimary
     property alias iconName: contentIcon.name
+    property alias iconColor: contentIcon.color
     property alias backgroundColor: buttonBackground.color
 }

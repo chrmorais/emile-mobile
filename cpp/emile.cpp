@@ -126,7 +126,9 @@ void Emile::saveObject(const QString &key, const QVariantMap &value)
 
 void Emile::minimizeApp()
 {
-    QtAndroid::androidActivity().callMethod<void>("minimize", "()V");
+    #ifdef Q_OS_ANDROID
+        QtAndroid::androidActivity().callMethod<void>("minimize", "()V");
+    #endif
 }
 
 void Emile::registerToken(const QVariant &token)

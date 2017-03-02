@@ -128,18 +128,20 @@ ApplicationWindow {
     }
 
     function setIndexPage() {
+        var pageArgs = {};
         var pageUrl = "/plugins/Session/Login.qml";
         if (isUserLoggedIn) {
             loadMenuPages();
             if (window.menu) window.menu.enabled = true;
+            pageArgs = menuPages.length > 0 ? menuPages[0] : {};
             pageUrl = "/plugins/WallMessage/Wall.qml";
         }
         while (pageStack.depth > 1)
             pageStack.pop();
         if (pageStack.depth >= 1)
-            pageStack.replace(Qt.resolvedUrl(pageUrl), {});
+            pageStack.replace(Qt.resolvedUrl(pageUrl), pageArgs);
         else
-            pageStack.push(Qt.resolvedUrl(pageUrl), {});
+            pageStack.push(Qt.resolvedUrl(pageUrl), pageArgs);
     }
 
     function profileImageConfigure() {
@@ -166,11 +168,15 @@ ApplicationWindow {
     }
 
     Connections {
-       target: PostFile
-       onFinished: {
-           if (statusCode == 200 & result)
-               Emile.saveObject("user_profile_data", JSON.parse(result).user);
-       }
+        target: PostFile
+        onFinished: {
+            if (parseInt(statusCode) === 200 && result) {
+                var response = JSON.parse(result);
+                userProfileData.image_path = response.image_path;
+                Emile.saveObject("user_profile_data", response.user);
+                userProfileData = response.user;
+            }
+        }
     }
 
     Loader {
@@ -219,8 +225,8 @@ ApplicationWindow {
             target: androidGallery
             onImagePathSelected: {
                 menu.userImageProfile = "file://"+imagePath;
-                 var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
-                 PostFile.postFile(url, [imagePath]);
+                var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
+                PostFile.postFile(url, [imagePath]);
             }
         }
     }

@@ -7,13 +7,12 @@ BasePage {
     id: page
     title: qsTr("Send to:")
     objectName: title
-    toolBarState: "goback"
     listViewDelegate: pageDelegate
     onUpdatePage: request();
 
     function request() {
-        jsonlistViewModel.source += "destinations_by_user_type/" + 2
-        jsonlistViewModel.load(function(response, status) {
+        jsonListModel.source += "destinations_by_user_type/" + 2
+        jsonListModel.load(function(response, status) {
             if (status !== 200)
                 return;
             var i = 0;
@@ -33,7 +32,6 @@ BasePage {
 
         ListItem {
             id: wrapper
-            parent: listView.contentItem
             showSeparator: true
             badgeText: id
             primaryLabelText: name + ""

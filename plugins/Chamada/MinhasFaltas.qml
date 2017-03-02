@@ -7,6 +7,7 @@ BasePage {
     title: qsTr("My attendance")
     objectName: title
     listViewDelegate: pageDelegate
+    onUpdatePage: request();
 
     function request() {
         jsonListModel.source += "students_course_sections/" + userProfileData.id;
@@ -14,7 +15,7 @@ BasePage {
             if (status !== 200)
                 return;
             var i = 0;
-            if (listViewModel.count > 0)
+            if (listViewModel && listViewModel.count > 0)
                 listViewModel.clear();
             for (var prop in result) {
                 while (i < result[prop].length)
