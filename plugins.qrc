@@ -1,10 +1,5 @@
 <RCC>
     <qresource prefix="/plugins">
-        <file alias="Alunos/config.json">plugins/Alunos/config.json</file>
-        <file alias="Alunos/Alunos.qml">plugins/Alunos/Alunos.qml</file>
-        <file alias="Alunos/functions.js">plugins/Alunos/functions.js</file>
-        <file alias="Alunos/AlunoProfile.qml">plugins/Alunos/AlunoProfile.qml</file>
-
         <file alias="Session/Login.qml">plugins/Session/Login.qml</file>
         <file alias="Session/Functions.js">plugins/Session/Functions.js</file>
         <file alias="Session/Logout.qml">plugins/Session/Logout.qml</file>
