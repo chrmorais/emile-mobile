@@ -18,6 +18,7 @@ RequestHttp::RequestHttp(QObject *parent):
 {
     m_networkAccessManager = new QNetworkAccessManager(this);
     setConnections();
+    m_networkAccessManager->setParent(this);
 }
 
 RequestHttp::RequestHttp(const RequestHttp &other):
@@ -26,11 +27,11 @@ RequestHttp::RequestHttp(const RequestHttp &other):
     ,m_networkAccessManager(new QNetworkAccessManager(other.m_networkAccessManager))
 {
     setConnections();
+    m_networkAccessManager->setParent(this);
 }
 
 RequestHttp::~RequestHttp()
 {
-    delete m_networkAccessManager;
 }
 
 void RequestHttp::setBasicAuthentication(const QString &username, const QString &password)

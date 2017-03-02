@@ -9,11 +9,6 @@ PushNotificationTokenListener::PushNotificationTokenListener(QObject *parent) : 
     m_instance = this;
 }
 
-PushNotificationTokenListener::~PushNotificationTokenListener()
-{
-    delete m_instance;
-}
-
 void PushNotificationTokenListener::tokenUpdateNotify(const QString &token)
 {
     if (token.isEmpty())

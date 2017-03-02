@@ -12,7 +12,6 @@ class Emile : public QObject
     Q_OBJECT
 public:
     explicit Emile(QObject *parent = 0);
-    ~Emile();
 
     void init();
     void loadPlugins();

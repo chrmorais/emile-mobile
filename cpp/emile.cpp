@@ -21,11 +21,6 @@ Emile::Emile(QObject *parent) : QObject(parent)
     init();
 }
 
-Emile::~Emile()
-{
-    delete m_qsettings;
-}
-
 void Emile::init()
 {
     loadConfigMap();
@@ -37,6 +32,7 @@ void Emile::init()
     QQuickStyle::setStyle(QLatin1String("Material"));
 
     m_qsettings = new QSettings;
+    m_qsettings->setParent(this);
 
     loadPlugins();
 }

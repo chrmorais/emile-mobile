@@ -9,7 +9,6 @@ class PushNotificationTokenListener : public QObject
     Q_OBJECT
 public:
     explicit PushNotificationTokenListener(QObject *parent = 0);
-    ~PushNotificationTokenListener();
 
     // called by Java (from jni connection) or ObjectiveC object to register the push notification
     // token when is updated by Firebase.
