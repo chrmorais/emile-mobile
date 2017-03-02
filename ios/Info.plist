@@ -44,10 +44,10 @@
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
-	</array>
-	<key>UILaunchStoryboardName</key>
+        </array>
+        <key>UILaunchStoryboardName</key>
 	<string>Launch</string>
-	<key>UIRequiredDeviceCapabilities</key>
+        <key>UIRequiredDeviceCapabilities</key>
 	<array/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
