@@ -5,14 +5,14 @@
     "pages": [
         {
             "main_qml": "Index.qml",
-            "menu_name": "Student attendance",
+            "menu_name": "Realizar chamada",
             "icon_name": "check_circle",
             "roles": ["teacher"],
             "order_priority": 10
         },
         {
             "main_qml": "MinhasFaltas.qml",
-            "menu_name": "My attendance",
+            "menu_name": "Minhas faltas",
             "icon_name": "check_circle",
             "roles": ["student"],
             "order_priority": 10
