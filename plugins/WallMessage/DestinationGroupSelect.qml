@@ -7,7 +7,6 @@ BasePage {
     id: page
     title: qsTr("Send to:")
     objectName: title
-    toolBarState: "goback"
     listViewDelegate: pageDelegate
     onUpdatePage: request();
 
