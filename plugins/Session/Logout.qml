@@ -8,6 +8,8 @@ BasePage {
     hasRemoteRequest: false
     busyIndicator.visible: true
 
+    Component.onCompleted: window.menu.enabled = false
+
     Timer {
         running: true; interval: 1000
         onTriggered: window.endSession();

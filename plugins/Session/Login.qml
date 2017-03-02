@@ -15,7 +15,6 @@ BasePage {
     Component.onCompleted: if (window.menu) window.menu.enabled = false;
 
     property var requestResult
-    property int hideToolbar: 1
 
     Timer {
         id: lockerButtons

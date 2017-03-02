@@ -5,14 +5,14 @@
     "pages": [
         {
             "main_qml": "Wall.qml",
-            "menu_name": "Message wall",
+            "menu_name": "Notificações",
             "icon_name": "th_list",
             "roles": ["student","teacher"],
             "order_priority": 100
         },
         {
             "main_qml": "DestinationGroupSelect.qml",
-            "menu_name": "Send message",
+            "menu_name": "Enviar mensagem",
             "icon_name": "send",
             "roles": ["teacher"],
             "order_priority": 10
