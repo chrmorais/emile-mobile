@@ -6,7 +6,7 @@
         {
             "main_qml": "Wall.qml",
             "menu_name": "Notificações",
-            "icon_name": "th_list",
+            "icon_name": "commenting",
             "roles": ["student","teacher"],
             "order_priority": 100
         },
