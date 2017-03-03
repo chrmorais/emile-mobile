@@ -15,9 +15,25 @@ BasePage {
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
     onUpdatePage: request();
+    property var yContent: listView.contentY
+    property bool requestYRepeat: true
 
     function apendObject(o) {
         listViewModel.append(o);
+    }
+
+    onYContentChanged: {
+        if(yContent < -10 && requestYRepeat === true) {
+            request();
+            requestYRepeat = false;
+            timer.start();
+        }
+    }
+
+    Timer {
+        id: timer
+        interval: 2000
+        onTriggered: requestYRepeat = true
     }
 
     function request() {
