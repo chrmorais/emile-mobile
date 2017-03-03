@@ -4,26 +4,20 @@ import QtQuick.Controls 2.0
 
 import "../../qml/components/"
 
-Page {
+BasePage {
     id: page
     title: qsTr("Student attendance")
-    background: Rectangle{
-        anchors.fill: parent
-        color: appSettings.theme.colorWindowBackground
-    }
+    toolBarState: "goback"
+    toolBarActions: ["save"]
+    hasListView: false
 
     property bool checkedAll: true
     property int section_times_id: 0
     property int course_section_id: 0
-    property var json: {}
-
-    property var configJson: ({})
     property var checkedStatus: ({})
-    property var toolBarActions: ["save"]
     property var attendance: {"student_attendance": []};
 
     property string attendanceDate: ""
-    property string toolBarState: "goback"
     property string defaultUserImage: "user-default.png"
 
     property list<MenuItem> toolBarMenuList: [
@@ -47,27 +41,25 @@ Page {
         }
     ]
 
-    function saveAttendenceValidateStatus() {
+    function saveAttendenceCallback(result, status) {
         // after get server response, close the current page
-        if (["ready", "error"].indexOf(jsonListModel.state) !== -1) {
-            if (jsonListModel.httpStatus === 200) {
-                gridView.visible = listView.visible = false;
-                alert("Success!", "Attendance was successfully registered", "OK", function() { pageStack.pop() }, "CANCEL", function() { });
-            } else if (jsonListModel.httpStatus === 400) {
-                alert("Warning!", "The attendance date is already registered for this course section! Set another date.", "OK", function() { }, "CANCEL", function() { });
-            } else if (jsonListModel.httpStatus === 404) {
-                alert("Warning!", "The attendance date is invalid for this course section!", "OK", function() { }, "CANCEL", function() { });
-            }
+        if (status === 200) {
+            gridView.visible = listView.visible = false;
+            alert(qsTr("Success!"), qsTr("Attendance was successfully registered"), "OK", function() { popPage() }, "CANCEL", function() { });
+        } else if (status === 400) {
+            alert(qsTr("Warning!"), qsTr("The attendance date is already registered for this course section! Set another date."), "OK", function() { }, "CANCEL", function() { });
+        } else if (status === 404) {
+            alert(qsTr("Warning!"), qsTr("The attendance date is invalid for this course section!"), "OK", function() { }, "CANCEL", function() { });
         }
     }
 
     function requestToSave() {
         if (gridView.model.count === 0) {
-            alert("Warning!", "The students list is empty!");
+            alert(qsTr("Warning!"), qsTr("The students list is empty!"));
             return;
         }
         if (!attendanceDate) {
-            alert("Warning!", "You need to inform the attendance date for this course section!", "OK", function() { datePicker.open(); }, "CANCEL", function() { });
+            alert(qsTr("Warning!"), qsTr("You need to inform the attendance date for this course section!"), "OK", function() { datePicker.open(); }, "CANCEL", function() { });
             return;
         }
         attendance["section_time_date"] = attendanceDate;
@@ -75,9 +67,8 @@ Page {
         jsonListModel.contentType = "application/json";
         jsonListModel.requestParams = JSON.stringify(attendance);
         jsonListModel.source += "student_attendance_register/"+section_times_id;
-        jsonListModel.load();
-        jsonListModel.stateChanged.connect(saveAttendenceValidateStatus);
-        toast.show("Saving attendance register...");
+        jsonListModel.load(saveAttendenceCallback);
+        toast.show(qsTr("Saving attendance register..."));
     }
 
     function actionExec(action) {
@@ -107,7 +98,6 @@ Page {
     }
 
     Component.onCompleted: {
-        jsonListModel.debug = false
         jsonListModel.source += "course_sections_students/" + course_section_id
         jsonListModel.load(function(response, status) {
             if (status !== 200)
