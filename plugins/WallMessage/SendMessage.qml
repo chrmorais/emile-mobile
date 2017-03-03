@@ -84,7 +84,7 @@ BasePage {
 
     Text {
         id: textMessageCharsLength
-        text: messageCharsCount + "  " + qsTr("chars left")
+        text: messageCharsCount + qsTr(" chars left")
         color: appSettings.theme.defaultTextColor
         anchors { bottom: rectangleTextarea.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
     }
