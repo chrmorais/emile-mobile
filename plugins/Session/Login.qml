@@ -31,13 +31,13 @@ BasePage {
         id: pageFlickable
         anchors.fill: parent
         contentHeight: Math.max(content.implicitHeight, height)
-        boundsBehavior: Flickable.OvershootBounds
-        z: parent.z + 1
+        boundsBehavior: Flickable.DragOverBounds
 
         Column {
             id: content
-            spacing: 20
-            width: parent.width * 0.90; height: parent.height
+            spacing: 25
+            topPadding: 15
+            width: parent.width * 0.90
             anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
