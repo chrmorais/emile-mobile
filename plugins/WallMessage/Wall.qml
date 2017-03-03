@@ -18,7 +18,6 @@ BasePage {
 
     function apendObject(o) {
         listViewModel.append(o);
-        listViewModel.move(listViewModel.count - 1, 0, 1);
     }
 
     function request() {
@@ -37,6 +36,7 @@ BasePage {
     }
 
     Component.onCompleted: request();
+
 
     Component {
         id: pageDelegate
