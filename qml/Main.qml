@@ -3,7 +3,6 @@ import QtQuick.Window 2.0
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.2 as QuickDialogs
 
 import "components/"
 import "js/Utils.js" as Util
@@ -13,7 +12,6 @@ ApplicationWindow {
     width: 340; height: 520; visible: true
 
     property QtObject menu
-    property QtObject iOSImagesGallery
     property var menuPages: []
     property var userProfileData: Emile.readObject("user_profile_data")
     property bool isUserLoggedIn: Emile.readBool("is_user_logged_in")
@@ -78,8 +76,8 @@ ApplicationWindow {
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
-        messageDialog.title = title
-        messageDialog.informativeText = message
+        messageDialog.title = title;
+        messageDialog.informativeText = message;
 
         if (acceptedCallback) {
             messageDialog.accepted.connect(function() {
@@ -146,7 +144,7 @@ ApplicationWindow {
 
     function profileImageConfigure() {
         if (isIOS)
-            iOSImagesGallery.open();
+            iOSImagesGalleryComponent.createObject(window, {}).open();
         else
             androidGallery.open();
     }
@@ -177,6 +175,10 @@ ApplicationWindow {
                 userProfileData = response.user;
             }
         }
+        onStatusChanged: {
+            console.log("result:");
+            console.log(result);
+        }
     }
 
     Loader {
@@ -184,11 +186,11 @@ ApplicationWindow {
         asynchronous: false
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
-            window.menu = item
-            window.menu.userInfoTextColor = appSettings.theme.colorPrimary
-            window.menu.menuItemTextColor = appSettings.theme.colorPrimary
-            window.menu.menuBackgroundColor = appSettings.theme.colorWindowBackground
-            toolBarLoader.active = true
+            window.menu = item;
+            window.menu.userInfoTextColor = appSettings.theme.colorPrimary;
+            window.menu.menuItemTextColor = appSettings.theme.colorPrimary;
+            window.menu.menuBackgroundColor = appSettings.theme.colorWindowBackground;
+            toolBarLoader.active = true;
         }
     }
 
@@ -197,23 +199,22 @@ ApplicationWindow {
         asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
         onLoaded: {
-            window.header = toolBarLoader.item
-            window.header.toolBarColor = appSettings.theme.colorPrimary
-            window.header.defaultTextColor = appSettings.theme.colorHintText
+            window.header = toolBarLoader.item;
+            window.header.toolBarColor = appSettings.theme.colorPrimary;
+            window.header.defaultTextColor = appSettings.theme.colorHintText;
         }
     }
 
-    Loader {
-        active: isIOS
-        asynchronous: false
-        onLoaded: iOSImagesGallery = item
-        sourceComponent: QuickDialogs.FileDialog {
+    Component {
+        id: iOSImagesGalleryComponent
+
+        FileDialog {
+            id: fileDialog
             folder: shortcuts.pictures
-            sidebarVisible: false
             onAccepted: {
-                menu.userImageProfile = "file://"+fileUrl;
-                var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
-                PostFile.postFile(url, [fileUrl]);
+                menu.userImageProfile = fileUrl;
+                PostFile.postFile(appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id, [fileUrl]);
+                fileDialog.destroy();
             }
         }
     }
