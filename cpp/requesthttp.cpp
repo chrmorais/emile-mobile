@@ -3,7 +3,6 @@
 #include <QUrl>
 #include <QList>
 #include <QFile>
-#include <QDebug>
 #include <QFileInfo>
 #include <QHttpPart>
 #include <QMapIterator>
@@ -61,6 +60,12 @@ void RequestHttp::setRequestHeaders(const QVariantMap &requestHeaders, QNetworkR
 bool RequestHttp::setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVariant &filePath)
 {
     QString fpath(filePath.toString());
+
+#ifdef Q_OS_IOS
+    QUrl url(fpath);
+    fpath = url.toLocalFile();
+#endif
+
     QFile *file = new QFile(fpath);
 
     if (!file->exists()) {
@@ -69,7 +74,8 @@ bool RequestHttp::setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVari
         return false;
     }
 
-    bool isOpened = file->open(QIODevice::ReadWrite);
+    bool isOpened = file->open(QIODevice::ReadOnly);
+    file->open(QIODevice::ReadOnly);
 
     if (!isOpened) {
         delete file;
@@ -84,7 +90,7 @@ bool RequestHttp::setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVari
     filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(contentDisposition));
 
     filePart.setBodyDevice(file);
-    file->setParent(httpMultiPart); // we cannot delete the file now, so delete it with the multiPart
+    file->setParent(httpMultiPart);
     httpMultiPart->append(filePart);
 
     return true;
@@ -97,7 +103,7 @@ void RequestHttp::postFile(const QString &url, const QVariant &filePathsList, co
     QList<QVariant> filesList(filePathsList.toList());
     int totalFiles = filesList.size();
 
-    for(int i = 0; i < totalFiles; ++i) {
+    for (int i = 0; i < totalFiles; ++i) {
         if (!setMultiPartRequest(multiPart, filesList.at(i))) {
             delete multiPart;
             return;
