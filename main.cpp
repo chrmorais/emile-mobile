@@ -2,7 +2,7 @@
 #include <QTranslator>
 #include <QQmlContext>
 #include <QQuickWindow>
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 
 #ifdef Q_OS_ANDROID
@@ -17,11 +17,10 @@
 int main(int argc, char *argv[])
 {
     Emile emile;
-    QGuiApplication app(argc, argv);
-    emile.setParent(&app);
+    QApplication app(argc, argv);
+
     Q_INIT_RESOURCE(translations);
     RequestHttp requestHttp;
-    requestHttp.setParent(&app);
 
     QQmlApplicationEngine engine;
     QQmlContext *context = engine.rootContext();
@@ -49,7 +48,6 @@ int main(int argc, char *argv[])
     #endif
 
     PushNotificationTokenListener pushNotificationTokenListener;
-    pushNotificationTokenListener.setParent(&app);
 
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 

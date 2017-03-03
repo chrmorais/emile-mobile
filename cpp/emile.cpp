@@ -7,7 +7,7 @@
 #include <QQuickStyle>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QCoreApplication>
+#include <QApplication>
 #include <QRegularExpression>
 
 #ifdef Q_OS_ANDROID
@@ -16,23 +16,28 @@
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
-Emile::Emile(QObject *parent) : QObject(parent)
+Emile::Emile(QObject *parent) : QObject(parent),
+  m_qsettings(*new QSettings)
 {
     init();
+}
+
+Emile::~Emile()
+{
+    delete &m_qsettings;
 }
 
 void Emile::init()
 {
     loadConfigMap();
 
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setApplicationName(m_configMap.value("applicationName").toString());
-    QCoreApplication::setOrganizationName(m_configMap.value("organizationName").toString());
-    QCoreApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setApplicationName(m_configMap.value("applicationName").toString());
+    QApplication::setOrganizationName(m_configMap.value("organizationName").toString());
+    QApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
     QQuickStyle::setStyle(QLatin1String("Material"));
 
-    m_qsettings = new QSettings;
-    m_qsettings->setParent(this);
+    m_qsettings.setParent(this);
 
     loadPlugins();
 }
@@ -95,12 +100,12 @@ QJsonArray Emile::pluginsArray()
 
 QVariant Emile::readData(const QString &key)
 {
-    return m_qsettings->value(key, QLatin1String(""));
+    return m_qsettings.value(key, QLatin1String(""));
 }
 
 bool Emile::readBool(const QString &key)
 {
-    return m_qsettings->value(key, QLatin1String("")).toBool();
+    return m_qsettings.value(key, QLatin1String("")).toBool();
 }
 
 QVariantMap Emile::readObject(const QString &key)
@@ -111,7 +116,7 @@ QVariantMap Emile::readObject(const QString &key)
 
 void Emile::saveData(const QString &key, const QVariant &value)
 {
-    m_qsettings->setValue(key, value);
+    m_qsettings.setValue(key, value);
 }
 
 void Emile::saveObject(const QString &key, const QVariantMap &value)

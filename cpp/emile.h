@@ -12,6 +12,7 @@ class Emile : public QObject
     Q_OBJECT
 public:
     explicit Emile(QObject *parent = 0);
+    ~Emile();
 
     void init();
     void loadPlugins();
@@ -45,7 +46,7 @@ public slots:
     void registerToken(const QVariant &token);
 
 private:
-    QSettings *m_qsettings = nullptr;
+    QSettings &m_qsettings;
     QVariantMap m_configMap;
     QJsonArray m_pluginsArray;
 };
