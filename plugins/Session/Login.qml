@@ -31,12 +31,13 @@ BasePage {
         id: pageFlickable
         anchors.fill: parent
         contentHeight: Math.max(content.implicitHeight, height)
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
 
         Column {
             id: content
             spacing: 25
-            width: parent.width * 0.90; height: parent.height
+            topPadding: 15
+            width: parent.width * 0.90
             anchors.horizontalCenter: parent.horizontalCenter
 
             Rectangle {
@@ -58,8 +59,9 @@ BasePage {
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
                 selectByMouse: true
-                inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
+                inputMethodHints: Qt.ImhLowercaseOnly
                 anchors.horizontalCenter: parent.horizontalCenter
+                onAccepted: password.focus = true
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (email.height-height) - (email.bottomPadding / 2)
@@ -82,6 +84,7 @@ BasePage {
                 echoMode: TextInput.Normal; font.letterSpacing: 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 selectByMouse: true
+                onAccepted: loginButton.clicked()
                 inputMethodHints: Qt.ImhNoPredictiveText
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary

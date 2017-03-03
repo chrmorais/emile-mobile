@@ -46,6 +46,7 @@ Page {
             topMargin: centralizeBusyIndicator ? undefined : 20
             horizontalCenter: centralizeBusyIndicator ? undefined : parent.horizontalCenter
         }
+        z: parent.z + 1
     }
 
     EmptyList {
