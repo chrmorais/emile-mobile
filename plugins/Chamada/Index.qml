@@ -90,7 +90,7 @@ BasePage {
     }
 
     CustomButton {
-        enabled: jsonListModel.state !== "running"
+        visible: jsonListModel.state !== "loading"
         text: qsTr("My courses")
         textColor: appSettings.theme.colorPrimary
         backgroundColor: appSettings.theme.colorAccent
