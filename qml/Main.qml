@@ -238,8 +238,6 @@ ApplicationWindow {
     MessageDialog {
         id: messageDialog
         standardButtons: StandardButton.Ok|StandardButton.Cancel
-        property color green: "green"
-        property color darkGreen: "#c5e1a5"
     }
 
     StackView {
