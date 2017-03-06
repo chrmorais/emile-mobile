@@ -175,10 +175,6 @@ ApplicationWindow {
                 userProfileData = response.user;
             }
         }
-        onStatusChanged: {
-            console.log("result:");
-            console.log(result);
-        }
     }
 
     Loader {
