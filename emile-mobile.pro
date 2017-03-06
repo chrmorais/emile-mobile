@@ -15,6 +15,8 @@ RESOURCES += qml.qrc plugins.qrc translations.qrc
 
 TRANSLATIONS = translations/en_US.ts translations/pt_BR.ts translations/pt_BR.qm
 
+OTHER_FILES += settings.json
+
 android: {
     QT += androidextras
     HEADERS += android/cpp/androidgallery.h android/JavaToCppBind.h
