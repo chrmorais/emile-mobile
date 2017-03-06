@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.8
 
 Item {
     id: rootItem
@@ -13,11 +13,12 @@ Item {
     property int count
     property int httpStatus
     property bool debug: false
+    property var xhr: new XMLHttpRequest
     property string source: ""
     property string errorString: ""
     property string requestParams: ""
     property string requestMethod: "GET"
-    property string contentType: "application/x-www-form-urlencoded"
+    property string contentType: "application/json"
     property ListModel model: ListModel { id: jsonModel }
 
     Component {
@@ -40,7 +41,8 @@ Item {
     }
 
     function load(callback) {
-        var xhr = new XMLHttpRequest;
+        if (!xhr)
+            xhr = new XMLHttpRequest;
         xhr.open(requestMethod, (requestMethod === "GET") ? source + "?" + requestParams : source);
         xhr.setRequestHeader("Content-type", contentType);
         xhr.onerror = function() {

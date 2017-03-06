@@ -2,19 +2,16 @@
 
 function isValidLoginForm() {
     var message = "";
-
-    if (email.text === "Email" || email.text.length === 0)
+    if (email.text.length === 0)
         message = qsTr("Enter your Email!");
     else if (!Util.isValidEmail(email.text))
-        message = qsTr("Enter your Email!");
-    else if (password.text === "Password" || password.text.length === 0)
+        message = qsTr("Enter a valid Email!");
+    else if (password.text.length === 0)
         message = qsTr("Enter your password!");
-
     if (message.length > 0) {
-        alert("Error!", "Enter your password!");
+        alert(qsTr("Error!"), message);
         return false;
     }
-
     return true;
 }
 

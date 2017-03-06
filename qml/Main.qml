@@ -175,10 +175,6 @@ ApplicationWindow {
                 userProfileData = response.user;
             }
         }
-        onStatusChanged: {
-            console.log("result:");
-            console.log(result);
-        }
     }
 
     Loader {
@@ -187,9 +183,6 @@ ApplicationWindow {
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
             window.menu = item;
-            window.menu.userInfoTextColor = appSettings.theme.colorPrimary;
-            window.menu.menuItemTextColor = appSettings.theme.colorPrimary;
-            window.menu.menuBackgroundColor = appSettings.theme.colorWindowBackground;
             toolBarLoader.active = true;
         }
     }
@@ -198,11 +191,7 @@ ApplicationWindow {
         id: toolBarLoader
         asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
-        onLoaded: {
-            window.header = toolBarLoader.item;
-            window.header.toolBarColor = appSettings.theme.colorPrimary;
-            window.header.defaultTextColor = appSettings.theme.colorHintText;
-        }
+        onLoaded: window.header = toolBarLoader.item;
     }
 
     Component {
@@ -249,8 +238,6 @@ ApplicationWindow {
     MessageDialog {
         id: messageDialog
         standardButtons: StandardButton.Ok|StandardButton.Cancel
-        property color green: "green"
-        property color darkGreen: "#c5e1a5"
     }
 
     StackView {
@@ -260,12 +247,11 @@ ApplicationWindow {
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if (pageStack.depth > 1) {
-                    popPage();
-                    event.accepted = false;
-                } else {
-                    if (!isIOS)
-                        Emile.minimizeApp();
+                    pageStack.pop();
                     event.accepted = true;
+                } else if (!isIOS) {
+                    Emile.minimizeApp();
+                    event.accepted = false;
                 }
             }
         }

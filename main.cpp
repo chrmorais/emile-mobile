@@ -1,8 +1,7 @@
-#include <QDebug>
 #include <QTranslator>
 #include <QQmlContext>
 #include <QQuickWindow>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
 #ifdef Q_OS_ANDROID
@@ -17,7 +16,7 @@
 int main(int argc, char *argv[])
 {
     Emile emile;
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
 
     Q_INIT_RESOURCE(translations);
     RequestHttp requestHttp;

@@ -1,17 +1,16 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 
 Item {
     width: visible ? parent.width * 0.55 : 0
     height: parent.height
 
+    property alias defaultTextColor: __searchInput.color
     property alias searchText: __searchInput.text
 
     TextField {
         id: __searchInput
         focus: visible
-        color: "#fff"
         width: parent.width
         placeholderText: qsTr("Search")
         inputMethodHints: Qt.ImhNoPredictiveText
@@ -20,7 +19,7 @@ Item {
             var strTemp = ""
             __searchInput.text = strTemp
             if (__searchInput.visible)
-                __searchInput.forceActiveFocus()
+                __searchInput.forceActiveFocus();
         }
     }
 }

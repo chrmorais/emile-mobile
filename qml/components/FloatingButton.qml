@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 import QtGraphicalEffects 1.0
 
 import "AwesomeIcon/" as Awesome
@@ -10,7 +10,7 @@ Button {
     contentItem: Item {
         implicitWidth: contentIcon.size; implicitHeight: contentIcon.size
         Awesome.AwesomeIcon {
-            id: contentIcon
+            id: contentIcon; clickEnabled: false
             name: "plus"; anchors.centerIn: parent
         }
     }

@@ -9,24 +9,17 @@
 #include <QMimeDatabase>
 #include <QHttpMultiPart>
 #include <QNetworkRequest>
-#include <QNetworkAccessManager>
 
-RequestHttp::RequestHttp(QObject *parent):
-    QObject(parent)
+RequestHttp::RequestHttp(QObject *parent) : QObject(parent)
     ,m_requestHeaderAuthorization(QByteArray(""))
 {
-    m_networkAccessManager = new QNetworkAccessManager(this);
     setConnections();
-    m_networkAccessManager->setParent(this);
 }
 
-RequestHttp::RequestHttp(const RequestHttp &other):
-    QObject()
+RequestHttp::RequestHttp(const RequestHttp &other) : QObject()
     ,m_requestHeaderAuthorization(other.m_requestHeaderAuthorization)
-    ,m_networkAccessManager(new QNetworkAccessManager(other.m_networkAccessManager))
 {
     setConnections();
-    m_networkAccessManager->setParent(this);
 }
 
 RequestHttp::~RequestHttp()
@@ -45,7 +38,7 @@ void RequestHttp::setBasicAuthentication(const QString &username, const QString 
 
 void RequestHttp::setConnections()
 {
-    connect(m_networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
+    connect(&m_networkAccessManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(requestFinished(QNetworkReply*)));
 }
 
 void RequestHttp::setRequestHeaders(const QVariantMap &requestHeaders, QNetworkRequest *request)
@@ -119,7 +112,7 @@ void RequestHttp::postFile(const QString &url, const QVariant &filePathsList, co
     if (requestHeaders.size())
         setRequestHeaders(requestHeaders, &request);
 
-    QNetworkReply *reply = m_networkAccessManager->post(request, multiPart);
+    QNetworkReply *reply = m_networkAccessManager.post(request, multiPart);
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(requestError(QNetworkReply::NetworkError)));
     multiPart->setParent(reply); // multiPart will be deleted with the reply
 }

@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
 import "../../qml/components/"
@@ -10,49 +10,68 @@ BasePage {
     id: page
     title: qsTr("Message wall")
     objectName: qsTr("Message wall")
-    listViewSpacing: 10
+    listViewSpacing: 13
     listViewTopMargin: 10
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
     onUpdatePage: request();
-    property var yContent: listView.contentY
-    property bool requestYRepeat: true
 
-    function apendObject(o) {
+    function apendObject(o, moveToTop) {
         listViewModel.append(o);
+        if (moveToTop)
+            listViewModel.move(listViewModel.count - 1, 0, 1);
     }
 
-    onYContentChanged: {
-        if(yContent < -10 && requestYRepeat === true) {
-            request();
-            requestYRepeat = false;
-            timer.start();
+    function requestCallback(response, status) {
+        if (status !== 200)
+            return;
+        for (var prop in response) {
+            // se o usuário forçou a atualização e não há novidades
+            if (listViewModel.count === response[prop].length)
+                return;
+            else
+                listViewModel.clear();
+            var i = 0;
+            while (i < response[prop].length)
+                apendObject(response[prop][i++]);
         }
     }
 
-    Timer {
-        id: timer
-        interval: 2000
-        onTriggered: requestYRepeat = true
-    }
-
     function request() {
+        if (!userProfileData.id)
+            return;
         jsonListModel.source += "wall_messages/" + userProfileData.id;
-        jsonListModel.load(function(response, status) {
-            if (status !== 200)
-                return;
-            var i = 0;
-            if (listViewModel.count > 0)
-                listViewModel.clear();
-            for (var prop in response) {
-                while (i < response[prop].length)
-                    apendObject(response[prop][i++]);
-            }
-        });
+        jsonListModel.load(requestCallback);
     }
 
     Component.onCompleted: request();
 
+    Connections {
+        target: listView
+        onContentYChanged: {
+            busyIndicator.visible = false;
+            if (listView.contentY < -65 && !isPageBusy && !lockMultipleRequests.running)
+                lockMultipleRequests.running = true;
+            else
+                snackbar.show("Checking for update...");
+        }
+    }
+
+    Timer {
+        id: loopRequestUpdate
+        interval: 90000 // 1.5 min
+        running: true
+        onTriggered: {
+            busyIndicator.visible = false;
+            request();
+        }
+    }
+
+    Timer {
+        id: lockMultipleRequests
+        interval: 2000
+        onTriggered: request();
+    }
 
     Component {
         id: pageDelegate
@@ -61,12 +80,12 @@ BasePage {
             id: delegate
             color: "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
-            width: parent.width * 0.95; height: columnLayoutDelegate.height
+            width: page.width * 0.95; height: columnLayoutDelegate.height
 
             Pane {
                 z: parent.z-10
-                width: parent.width; height: parent.height
-                Material.elevation: 3
+                width: parent.width-1; height: parent.height-1
+                Material.elevation: 2
             }
 
             ColumnLayout {
@@ -113,8 +132,8 @@ BasePage {
 
                     Label {
                         id: dateLabel
-                        color: appSettings.theme.defaultTextColor
                         text: date || ""
+                        color: appSettings.theme.defaultTextColor
                     }
                 }
             }
@@ -125,7 +144,7 @@ BasePage {
         visible: window.userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
-            console.log("COnfigJson.root_folder: " + configJson.root_folder);
+            console.log("Config json: " + JSON.stringify(configJson));
             pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {"configJson": configJson});
         }
     }

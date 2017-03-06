@@ -12,9 +12,9 @@ Drawer {
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
-    property color userInfoTextColor: "#444"
-    property color menuItemTextColor: "#444"
-    property alias menuBackgroundColor: menuRectangle.color
+    property color userInfoTextColor: appSettings.theme.colorPrimary
+    property color menuItemTextColor: appSettings.theme.colorPrimary
+    property color menuBackgroundColor: appSettings.theme.colorWindowBackground
     property string userImageProfile: userProfileData.image_path ? appSettings.rest_service.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 

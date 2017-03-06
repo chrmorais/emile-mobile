@@ -7,17 +7,15 @@
 #include <QQuickStyle>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QApplication>
+#include <QGuiApplication>
 #include <QRegularExpression>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras>
-#include <QAndroidJniEnvironment>
-#include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
-Emile::Emile(QObject *parent) : QObject(parent),
-  m_qsettings(*new QSettings)
+Emile::Emile(QObject *parent) : QObject(parent)
+    ,m_qsettings(*new QSettings)
 {
     init();
 }
@@ -31,10 +29,10 @@ void Emile::init()
 {
     loadConfigMap();
 
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setApplicationName(m_configMap.value("applicationName").toString());
-    QApplication::setOrganizationName(m_configMap.value("organizationName").toString());
-    QApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setApplicationName(m_configMap.value("applicationName").toString());
+    QGuiApplication::setOrganizationName(m_configMap.value("organizationName").toString());
+    QGuiApplication::setOrganizationDomain(m_configMap.value("organizationDomain").toString());
     QQuickStyle::setStyle(QLatin1String("Material"));
 
     m_qsettings.setParent(this);
@@ -136,4 +134,3 @@ void Emile::registerToken(const QVariant &token)
 {
     saveData(QStringLiteral("push_notification_token"), token);
 }
-

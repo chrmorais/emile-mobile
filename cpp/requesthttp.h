@@ -5,6 +5,7 @@
 #include <QString>
 #include <QVariant>
 #include <QNetworkReply>
+#include <QNetworkAccessManager>
 
 class QUrl;
 class QFile;
@@ -13,7 +14,6 @@ class QHttpPart;
 class QMimeDatabase;
 class QHttpMultiPart;
 class QNetworkRequest;
-class QNetworkAccessManager;
 
 class RequestHttp : public QObject
 {
@@ -45,7 +45,7 @@ private slots:
 
 private:
     QByteArray m_requestHeaderAuthorization;
-    QNetworkAccessManager* m_networkAccessManager;
+    QNetworkAccessManager m_networkAccessManager;
 };
 
 #endif // REQUESTHTTP_H
