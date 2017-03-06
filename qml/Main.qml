@@ -247,12 +247,11 @@ ApplicationWindow {
         Keys.onReleased: {
             if (event.key === Qt.Key_Back) {
                 if (pageStack.depth > 1) {
-                    popPage();
-                    event.accepted = false;
-                } else {
-                    if (!isIOS)
-                        Emile.minimizeApp();
+                    pageStack.pop();
                     event.accepted = true;
+                } else if (!isIOS) {
+                    Emile.minimizeApp();
+                    event.accepted = false;
                 }
             }
         }
