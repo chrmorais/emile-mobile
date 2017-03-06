@@ -198,11 +198,7 @@ ApplicationWindow {
         id: toolBarLoader
         asynchronous: false
         active: false; source: "components/ToolBar/CustomToolBar.qml"
-        onLoaded: {
-            window.header = toolBarLoader.item;
-            window.header.toolBarColor = appSettings.theme.colorPrimary;
-            window.header.defaultTextColor = appSettings.theme.colorHintText;
-        }
+        onLoaded: window.header = toolBarLoader.item;
     }
 
     Component {
