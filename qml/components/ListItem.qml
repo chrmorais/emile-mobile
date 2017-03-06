@@ -62,11 +62,12 @@ Item {
 
     property int badgeRadius: 9999
     property int badgeBorderWidth: 0
-    property color badgeTextColor: "#fff"
+    property color badgeTextColor: appSettings.theme.textColorPrimary
     property color badgeBorderColor: "transparent"
-    property color badgeBackgroundColor: "#" + Math.random().toString(16).slice(2,8)
+    property color badgeBackgroundColor: "transparent"
     property string badgeText
     property bool badgeInRightSide: false
+    property real badgeWidth: 50
 
     signal clicked()
     signal pressAndHold()
@@ -88,6 +89,7 @@ Item {
 
         Rectangle {
             radius: badgeRadius; color: badgeBackgroundColor
+            width: badgeWidth
             border { width: badgeBorderWidth; color: badgeBorderColor }
             anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
 
@@ -116,7 +118,12 @@ Item {
                 asynchronous: true; active: badgeText.length > 0 && !primaryActionImage.visible && !primaryActionIcon.visible
                 onLoaded: {
                     item.parent = primaryAction
-                    item.width = primaryAction.width * 0.75; item.height = width
+                    if(badgeRadius != 0) {
+                        item.width = primaryAction.width * 0.75; item.height = width
+                    }
+                    else {
+                        item.width = primaryAction.width; item.height = width / 2
+                    }
                 }
             }
 
