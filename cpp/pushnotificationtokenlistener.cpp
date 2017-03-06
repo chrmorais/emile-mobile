@@ -1,7 +1,5 @@
 #include "pushnotificationtokenlistener.h"
 
-#include <QtDebug>
-
 PushNotificationTokenListener* PushNotificationTokenListener::m_instance = nullptr;
 
 PushNotificationTokenListener::PushNotificationTokenListener(QObject *parent) : QObject(parent)
