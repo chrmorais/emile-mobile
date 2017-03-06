@@ -36,9 +36,11 @@ BasePage {
         ListItem {
             id: wrapper
             showSeparator: true
-            badgeText: course !== undefined ? course.id : ""
-            primaryLabelText: name + ""
-            secondaryLabelText: code + ""
+            badgeRadius: 0
+            badgeText: course_section_period
+            badgeBackgroundColor: colocarCor(course_section_period)
+            primaryLabelText: code + ""
+            secondaryLabelText: name + ""
             onClicked: pushPage(root_folder+"/RealizarChamada.qml", {"section_times_id": course.id, "course_section_id": id});
         }
     }

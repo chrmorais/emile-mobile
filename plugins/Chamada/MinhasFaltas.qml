@@ -33,9 +33,10 @@ BasePage {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            badgeText: course.id
-            primaryLabelText: name + ""
-            secondaryLabelText: code + ""
+            badgeRadius: 0
+            badgeText: course_section_period
+            primaryLabelText: code + ""
+            secondaryLabelText: name + ""
             onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "courseId": id})
         }
     }
