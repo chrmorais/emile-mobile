@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.0
 
 import "../../qml/components/"
@@ -10,7 +10,6 @@ BasePage {
     id: page
     objectName: qsTr("Login")
     hasListView: false
-    hasRemoteRequest: true
     centralizeBusyIndicator: false
 
     Component.onCompleted: if (window.menu) window.menu.enabled = false;
