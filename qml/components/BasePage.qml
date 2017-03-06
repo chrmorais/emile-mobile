@@ -1,5 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
 
 Page {
     id: basePage
@@ -16,21 +17,29 @@ Page {
     property bool hasListView: true
     property bool hasRemoteRequest: true
     property bool centralizeBusyIndicator: true
+    property bool isPageBusy: jsonListModel.state === "loading"
 
     // for toolbar
     property string toolBarState: ""
     property var toolBarActions: []
 
-    // for pageData
+    // for page data
     property var json: {}
 
     // to keep the plugin config.json
     property var configJson: {}
+
+    // A component implemented by child page that uses ListView
     property var listViewDelegate: {}
 
-    // to allow the child class to access follow itens
+    // empty list is a item to show a warning when list view is empty
     property alias emptyList: _emptyList
+
+    // a alias to busyIndicator to child pages manage them
     property alias busyIndicator: _busyIndicator
+
+    // a alias to progressBar to child pages manage them
+    property alias progressBar: _progressBar
 
     property ListView listView
     property ListModel listViewModel
@@ -40,13 +49,21 @@ Page {
     BusyIndicator {
         id: _busyIndicator
         visible: jsonListModel.state === "loading"
+        z: parent.z + 1
         anchors {
             centerIn: centralizeBusyIndicator ? parent : undefined
             top: centralizeBusyIndicator ? undefined : parent.top
             topMargin: centralizeBusyIndicator ? undefined : 20
             horizontalCenter: centralizeBusyIndicator ? undefined : parent.horizontalCenter
         }
-        z: parent.z + 1
+    }
+
+    ProgressBar {
+        id: _progressBar
+        visible: !_busyIndicator.visible && jsonListModel.state === "loading"
+        indeterminate: visible
+        width: parent.width; z: parent.z + 100
+        anchors { top: parent.top; topMargin: 0 }
     }
 
     EmptyList {
@@ -61,15 +78,30 @@ Page {
         id: listViewComponent
         ListView {
             model: listViewModel
-            spacing: listViewSpacing
-            cacheBuffer: width; focus: true
+            highlightMoveDuration: 1250; clip: true
+            spacing: listViewSpacing; cacheBuffer: width
             topMargin: listViewTopMargin; bottomMargin: listViewBottomMargin
             delegate: basePage.listViewDelegate ? basePage.listViewDelegate : null
             width: basePage.width; height: basePage.height
             onRemoveChanged: update()
             Keys.onUpPressed: scrollBar.decrease()
             Keys.onDownPressed: scrollBar.increase()
-            ScrollBar.vertical: ScrollBar { id: scrollBar; size: 0.01 }
+            moveDisplaced: Transition {
+                NumberAnimation { properties: "x,y"; duration: 250 }
+            }
+            ScrollBar.vertical: ScrollBar {
+                id: scrollBar
+                contentItem: Rectangle {
+                    implicitWidth: 0.1
+                    implicitHeight: scrollBar.height
+                    opacity: enabled ? 1 : 0.7
+                    color: Material.highlightedRippleColor
+                    radius: 100
+                }
+                background: Rectangle {
+                    width: 1; height: scrollBar.height; color: Material.highlightedRippleColor
+                }
+            }
         }
     }
 
