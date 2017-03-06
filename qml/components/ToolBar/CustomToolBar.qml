@@ -104,7 +104,7 @@ ToolBar {
     RowLayout {
         id: toolBarItens
         z: parent.z+1
-        anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
+        anchors { fill: parent; leftMargin: 8; rightMargin: 8 }
 
         CustomToolButton {
             id: toolButtonDrawer
