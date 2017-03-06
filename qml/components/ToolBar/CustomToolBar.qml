@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtGraphicalEffects 1.0
 
 import "../AwesomeIcon/" as Awesome
@@ -8,7 +8,7 @@ import "../AwesomeIcon/" as Awesome
 ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
-    z: 100; height: visible ? 50 : 0
+    height: visible ? 50 : 0; z: 50
     state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
     states: [
         State {
@@ -31,8 +31,8 @@ ToolBar {
     ]
 
     property bool hasMenuList: false
-    property string toolBarColor
-    property color defaultTextColor: "#fff"
+    property string toolBarColor: appSettings.theme.colorPrimary
+    property color defaultTextColor: appSettings.theme.colorAccent
 
     /**
      * a list of objects to the toolbar actions.
@@ -87,10 +87,10 @@ ToolBar {
     Connections {
         target: window
         onPageChanged: {
-            var fixBind = []
-            hasMenuList = false
-            toolBarActions = fixBind
-            searchToolbar.visible = false
+            var fixBind = [];
+            hasMenuList = false;
+            toolBarActions = fixBind;
+            searchToolbar.visible = false;
 
             if (currentPage.toolBarActions)
                 toolBarActions = currentPage.toolBarActions;
@@ -106,7 +106,8 @@ ToolBar {
 
     RowLayout {
         id: toolBarItens
-        anchors.fill: parent
+        z: parent.z+1
+        anchors { fill: parent; leftMargin: 16; rightMargin: 16 }
 
         CustomToolButton {
             id: toolButtonDrawer
@@ -117,55 +118,63 @@ ToolBar {
             id: title
             width: visible ? parent.width * 0.55 : 0; height: parent.height
             visible: toolBar.state === "normal" || toolBar.state === "goback"
-            anchors { left: toolButtonDrawer.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
+            anchors { left: toolButtonDrawer.right; leftMargin: 12; verticalCenter: parent.verticalCenter }
 
             Text {
                 elide: Text.ElideRight
                 text: currentPage.title || ""; color: defaultTextColor
                 anchors.verticalCenter: parent.verticalCenter
-                font { weight: Font.DemiBold; pointSize: 14 }
+                font { weight: Font.DemiBold; pointSize: appSettings.theme.bigFontSize }
             }
         }
 
         SearchToolbar {
             id: searchToolbar
-            visible: toolBar.state == "search"
+            visible: toolBar.state == "search"; defaultTextColor: defaultTextColor
             onSearchTextChanged: if (currentPage.searchText) currentPage.searchText = searchToolbar.searchText
             anchors { left: title.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
         }
 
         CustomToolButton {
             id: toolButtonSave
-            iconColor: defaultTextColor
-            action: "save"; iconName: "save"
+            iconColor: defaultTextColor; action: "save"; iconName: "save"
             anchors.right: toolButtonDelete.left
             visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButtonDelete
-            iconColor: defaultTextColor
-            action: "delete"; iconName: "trash"
+            iconColor: defaultTextColor; action: "delete"; iconName: "trash"
             anchors.right: toolButtonSearch.left
             visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButtonSearch
-            iconColor: defaultTextColor
-            action: "search"; iconName: "search"
+            iconColor: defaultTextColor; action: "search"; iconName: "search"
             anchors.right: toolButtonMenuList.left
             visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButtonMenuList
-            iconColor: defaultTextColor
-            action: "submenu"; iconName: "ellipsis_v"
+            iconColor: defaultTextColor; action: "submenu"; iconName: "ellipsis_v"
             anchors.right: parent.right
             visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
 
-            CustomMenu { id: optionsToolbarMenu }
+            Menu {
+                id: optionsToolbarMenu
+                x: parent ? (parent.width - width) : 0
+                y: parent ? parent.height : 0
+                transformOrigin: Menu.BottomRight
+
+                function reset() {
+                    for (var i = 0; i < optionsToolbarMenu.contentData.length; i++) {
+                        optionsToolbarMenu.removeItem(0);
+                        optionsToolbarMenu.removeItem(i);
+                    }
+                }
+            }
         }
     }
 }
