@@ -92,7 +92,7 @@
     <message>
         <location filename="../plugins/Session/Functions.js" line="24"/>
         <source>Login done successfully!</source>
-        <translation>Login terminado com sucesso!</translation>
+        <translation>Login feito com sucesso!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="29"/>
@@ -165,17 +165,17 @@
     <message>
         <location filename="../plugins/Session/Login.qml" line="64"/>
         <source>Email</source>
-        <translation></translation>
+        <translation>Email</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Login.qml" line="82"/>
         <source>Password</source>
-        <translation></translation>
+        <translation>Senha</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Login.qml" line="100"/>
         <source>LOG IN</source>
-        <translation>LOGIN</translation>
+        <translation>ENTRAR</translation>
     </message>
     <message>
         <source>LOST PASSWORD</source>
@@ -229,32 +229,32 @@
     <message>
         <location filename="../plugins/Session/Profile.qml" line="84"/>
         <source>Name: </source>
-        <translation>Nome:</translation>
+        <translation>Nome: </translation>
     </message>
     <message>
         <location filename="../plugins/Session/Profile.qml" line="91"/>
         <source>Email: </source>
-        <translation>Email:</translation>
+        <translation>Email: </translation>
     </message>
     <message>
         <location filename="../plugins/Session/Profile.qml" line="98"/>
         <source>Username: </source>
-        <translation>Nome de usuário:</translation>
+        <translation>Nome de usuário: </translation>
     </message>
     <message>
         <location filename="../plugins/Session/Profile.qml" line="105"/>
         <source>User type: </source>
-        <translation>Tipo de usuário:</translation>
+        <translation>Tipo de usuário: </translation>
     </message>
     <message>
         <location filename="../plugins/Session/Profile.qml" line="112"/>
         <source>Adress: </source>
-        <translation>Endereço:</translation>
+        <translation>Endereço: </translation>
     </message>
     <message>
         <location filename="../plugins/Session/Profile.qml" line="119"/>
         <source>Gender: </source>
-        <translation>Sexo:</translation>
+        <translation>Sexo: </translation>
     </message>
 </context>
 <context>
@@ -327,7 +327,7 @@
         <location filename="../plugins/WallMessage/SendMessage.qml" line="22"/>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="87"/>
         <source> chars left</source>
-        <translation>Caracteres restantes</translation>
+        <translation> Caracteres restantes</translation>
     </message>
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="40"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="40"/>
         <source>The message was successfully sended</source>
-        <translation></translation>
+        <translation>A mensagem foi enviada com sucesso</translation>
     </message>
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="40"/>
@@ -348,7 +348,7 @@
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="42"/>
         <source>Warning!</source>
-        <translation>Perigo!</translation>
+        <translation>Aviso!</translation>
     </message>
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="42"/>

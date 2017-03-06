@@ -1,0 +1,267 @@
+<!DOCTYPE QPH>
+<QPH language="pt_BR" sourcelanguage="en_US">
+<phrase>
+    <source>New Aluno</source>
+    <target>Novo Aluno</target>
+</phrase>
+<phrase>
+    <source>Students</source>
+    <target>Aluno</target>
+</phrase>
+<phrase>
+    <source>List of students</source>
+    <target>Lista de alunos</target>
+</phrase>
+<phrase>
+    <source>Students</source>
+    <target>Alunos</target>
+</phrase>
+<phrase>
+    <source>Send to:</source>
+    <target>Enviar para:</target>
+</phrase>
+<phrase>
+    <source>Course Sections</source>
+    <target>Disciplinas</target>
+</phrase>
+<phrase>
+    <source>Warning! No itens found</source>
+    <target>Aviso! Nenhum item encontrado</target>
+</phrase>
+<phrase>
+    <source>Touch to try again!</source>
+    <target>Toque para tentar novamente!</target>
+</phrase>
+<phrase>
+    <source>My attendance</source>
+    <target>Faltas por disciplina</target>
+</phrase>
+<phrase>
+    <source>Enter your Email!</source>
+    <target>Insira seu Email!</target>
+</phrase>
+<phrase>
+    <source>Enter a valid Email!</source>
+    <target>Insira um Email válido!</target>
+</phrase>
+<phrase>
+    <source>Enter your password!</source>
+    <target>Insira sua senha!</target>
+</phrase>
+<phrase>
+    <source>Error!</source>
+    <target>Erro!</target>
+</phrase>
+<phrase>
+    <source>Email or password is invalid. Try again!</source>
+    <target>Email ou senha é inválida. Tente novamente!</target>
+</phrase>
+<phrase>
+    <source>Login done successfully!</source>
+    <target>Login terminado com sucesso!</target>
+</phrase>
+<phrase>
+    <source>Failed to connect to the server!</source>
+    <target>Falha para conectar com o servidor!</target>
+</phrase>
+<phrase>
+    <source>Courses in progress</source>
+    <target>Disciplina em andamento</target>
+</phrase>
+<phrase>
+    <source>Checkin for courses in progress...</source>
+    <target>Chamada de disciplina em andamento</target>
+</phrase>
+<phrase>
+    <source>Check for courses in progress...</source>
+    <target>Verifique as disciplinas em progresso...</target>
+</phrase>
+<phrase>
+    <source>Do you want register attendance?</source>
+    <target>Deseja registrar chamada?</target>
+</phrase>
+<phrase>
+    <source>None courses in progress!</source>
+    <target>Nenhuma disciplina em andamento!</target>
+</phrase>
+<phrase>
+    <source>Student attendance</source>
+    <target>Realizar chamada</target>
+</phrase>
+<phrase>
+    <source>My courses</source>
+    <target>Minhas turmas</target>
+</phrase>
+<phrase>
+    <source>Cannot connect to server!</source>
+    <target>Não foi possível conectar com o servidor!</target>
+</phrase>
+<phrase>
+    <source>The server returned error </source>
+    <target>O servidor retornou um erro</target>
+</phrase>
+<phrase>
+    <source>The server returned an empty response!</source>
+    <target>O servidor retornou uma resposta vazia!</target>
+</phrase>
+<phrase>
+    <source>Login</source>
+    <target>Login</target>
+</phrase>
+<phrase>
+    <source>Email</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Password</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>LOG IN</source>
+    <target>LOGIN</target>
+</phrase>
+<phrase>
+    <source>LOST PASSWORD</source>
+    <target>RECUPERAR SENHA</target>
+</phrase>
+<phrase>
+    <source>Logout</source>
+    <target>Logout</target>
+</phrase>
+<phrase>
+    <source>Back to login</source>
+    <target>Voltar para o login</target>
+</phrase>
+<phrase>
+    <source>Submit</source>
+    <target>Enviar</target>
+</phrase>
+<phrase>
+    <source>My attendance</source>
+    <target>Minhas faltas</target>
+</phrase>
+<phrase>
+    <source>Name :</source>
+    <target>Nome</target>
+</phrase>
+<phrase>
+    <source>Email :</source>
+    <target>Email</target>
+</phrase>
+<phrase>
+    <source>My profile</source>
+    <target>Meu perfil</target>
+</phrase>
+<phrase>
+    <source>Name: </source>
+    <target>Nome:</target>
+</phrase>
+<phrase>
+    <source>Email: </source>
+    <target>Email:</target>
+</phrase>
+<phrase>
+    <source>Username: </source>
+    <target>Nome de usuário:</target>
+</phrase>
+<phrase>
+    <source>User type: </source>
+    <target>Tipo de usuário:</target>
+</phrase>
+<phrase>
+    <source>Adress: </source>
+    <target>Endereço:</target>
+</phrase>
+<phrase>
+    <source>Gender: </source>
+    <target>Sexo:</target>
+</phrase>
+<phrase>
+    <source>Student attendance</source>
+    <target>Realizar chamada</target>
+</phrase>
+<phrase>
+    <source>Success!</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Attendance was successfully registered</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Warning!</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>The attendance date is already registered for this course section! Set another date.</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>The attendance date is invalid for this course section!</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>The students list is empty!</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>You need to inform the attendance date for this course section!</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Saving attendance register...</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>Search</source>
+    <target>Pesquisar</target>
+</phrase>
+<phrase>
+    <source>Write the message </source>
+    <target>Escrever mensagem</target>
+</phrase>
+<phrase>
+    <source> chars left</source>
+    <target>Caracteres restantes</target>
+</phrase>
+<phrase>
+    <source>Success!</source>
+    <target>Sucesso!</target>
+</phrase>
+<phrase>
+    <source>The message was successfully sended</source>
+    <target></target>
+</phrase>
+<phrase>
+    <source>CANCEL</source>
+    <target>Cancelar</target>
+</phrase>
+<phrase>
+    <source>Warning!</source>
+    <target>Perigo!</target>
+</phrase>
+<phrase>
+    <source>The message was not sent!</source>
+    <target>A mensagem não foi enviada!</target>
+</phrase>
+<phrase>
+    <source>Sending message...</source>
+    <target>Enviando mensagem...</target>
+</phrase>
+<phrase>
+    <source>Send message</source>
+    <target>Enviar mensagem</target>
+</phrase>
+<phrase>
+    <source>My courses</source>
+    <target>Minhas disciplinas</target>
+</phrase>
+<phrase>
+    <source>Wall messages</source>
+    <target>Muro de notificações</target>
+</phrase>
+<phrase>
+    <source>Message wall</source>
+    <target>Muro de notificações</target>
+</phrase>
+</QPH>
