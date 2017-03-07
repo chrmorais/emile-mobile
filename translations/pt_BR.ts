@@ -267,12 +267,12 @@
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="48"/>
         <source>Success!</source>
-        <translation></translation>
+        <translation>Sucesso!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="48"/>
         <source>Attendance was successfully registered</source>
-        <translation></translation>
+        <translation>A chamada foi registrada com sucesso</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="50"/>
@@ -280,32 +280,32 @@
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="58"/>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="62"/>
         <source>Warning!</source>
-        <translation></translation>
+        <translation>Aviso!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="50"/>
         <source>The attendance date is already registered for this course section! Set another date.</source>
-        <translation></translation>
+        <translation>A data desta chamada já foi registrada para essa turma! Escolha outra data.</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="52"/>
         <source>The attendance date is invalid for this course section!</source>
-        <translation></translation>
+        <translation>A data desta chamada é inválida para essa turma!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="58"/>
         <source>The students list is empty!</source>
-        <translation></translation>
+        <translation>A lista de alunos está vazia!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="62"/>
         <source>You need to inform the attendance date for this course section!</source>
-        <translation></translation>
+        <translation>Você precisa informar a data desta chamada para essa turma!</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/RealizarChamada.qml" line="71"/>
         <source>Saving attendance register...</source>
-        <translation></translation>
+        <translation>Salvando o registro da chamada...</translation>
     </message>
 </context>
 <context>
