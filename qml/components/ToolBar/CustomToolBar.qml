@@ -8,7 +8,7 @@ import "../AwesomeIcon/" as Awesome
 ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
-    height: visible ? 50 : 0; z: 50
+    height: visible ? 50 : 0
     state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
     states: [
         State {
@@ -103,7 +103,6 @@ ToolBar {
 
     RowLayout {
         id: toolBarItens
-        z: parent.z+1
         anchors { fill: parent; leftMargin: 8; rightMargin: 8 }
 
         CustomToolButton {
