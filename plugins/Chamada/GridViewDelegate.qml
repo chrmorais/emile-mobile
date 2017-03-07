@@ -28,9 +28,8 @@ Item {
             Image {
                 id: imgProfile
                 asynchronous: true
-                source: defaultUserImage
-                width: 55; height: 55
-                fillMode: Image.PreserveAspectCrop
+                source: image_path ? appSettings.rest_service.baseImagesUrl + image_path : defaultUserImage
+                width: 60; height: 60
                 clip: true; cache: true; smooth: true
                 sourceSize { width: width; height: height }
                 anchors.horizontalCenter: parent.horizontalCenter
