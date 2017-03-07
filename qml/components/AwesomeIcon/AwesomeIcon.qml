@@ -54,17 +54,11 @@ Item {
 
     MouseArea {
         id: _control
-        anchors.fill: parent
-        hoverEnabled: true; z: 1
+        anchors.fill: clickEnabled ? parent : undefined
         onClicked: if(clickEnabled) widget.clicked();
         onPressAndHold: if(clickEnabled) widget.pressAndHold();
-        onExited: widget.exited();
-        onEntered: {
-            if (clickEnabled) {
-                cursorShape = cursorType;
-                widget.entered();
-            }
-        }
+        onExited: if(clickEnabled) widget.exited();
+        onEntered: if (clickEnabled) widget.entered();
     }
 
     Ripple {
