@@ -77,48 +77,50 @@ BasePage {
                 }
             }
 
-            Item { width: parent.width; height: 55 }
+            Item { width: parent.width; height: 30 }
 
-            Label {
-                textFormat: Text.RichText
-                text: "<b>" + qsTr("Name: ") + "</b>" + userProfileData.name
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
+            ListItem {
+                showSeparator: true
+                primaryLabelText: "<b>" + qsTr("Name: ") + "</b>"
+                secondaryLabelText: userProfileData.name
+                primaryIconName: "tag"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Label {
-                text: "<b>" + qsTr("Email: ") + "</b>" + userProfileData.email
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
+            ListItem {
+                showSeparator: true
+                primaryLabelText: "<b>" + qsTr("Email: ") + "</b>"
+                secondaryLabelText: userProfileData.email
+                primaryIconName: "envelope"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Label {
-                text: "<b>" + qsTr("Username: ") + "</b>" + userProfileData.username
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
+            ListItem {
+                showSeparator: true
+                primaryLabelText: "<b>" + qsTr("Username: ") + "</b>"
+                secondaryLabelText: userProfileData.username
+                primaryIconName: "user"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Label {
-                text: "<b>" + qsTr("User type: ") + "</b>" + userProfileData.type.name
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
+            ListItem {
+                showSeparator: true
+                primaryLabelText: "<b>" + qsTr("Address: ") + "</b>"
+                secondaryLabelText: userProfileData.address
+                primaryIconName: "map_marker"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-            Label {
-                text: "<b>" + qsTr("Adress: ") + "</b>" + userProfileData.address
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
-                anchors.horizontalCenter: parent.horizontalCenter
-            }
-
-            Label {
-                text: "<b>" + qsTr("Gender: ") + "</b>" + userProfileData.gender
-                font { pointSize: 13; weight: Font.DemiBold }
-                color: appSettings.theme.defaultTextColor
+            ListItem {
+                showSeparator: true
+                primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
+                secondaryLabelText: userProfileData.gender
+                primaryIconName: "arrows_alt"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 anchors.horizontalCenter: parent.horizontalCenter
             }
         }

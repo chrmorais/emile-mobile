@@ -227,32 +227,35 @@
         <translation>Meu perfil</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="84"/>
+        <location filename="../plugins/Session/Profile.qml" line="85"/>
         <source>Name: </source>
         <translation>Nome: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="91"/>
+        <location filename="../plugins/Session/Profile.qml" line="94"/>
         <source>Email: </source>
         <translation>Email: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="98"/>
+        <location filename="../plugins/Session/Profile.qml" line="103"/>
         <source>Username: </source>
         <translation>Nome de usuário: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="105"/>
-        <source>User type: </source>
-        <translation>Tipo de usuário: </translation>
-    </message>
-    <message>
         <location filename="../plugins/Session/Profile.qml" line="112"/>
-        <source>Adress: </source>
+        <source>Address: </source>
         <translation>Endereço: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="119"/>
+        <source>User type: </source>
+        <translation type="vanished">Tipo de usuário: </translation>
+    </message>
+    <message>
+        <source>Adress: </source>
+        <translation type="vanished">Endereço: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Profile.qml" line="121"/>
         <source>Gender: </source>
         <translation>Sexo: </translation>
     </message>
