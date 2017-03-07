@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 import QtQuick.Controls.Material.impl 2.1
 
@@ -106,7 +106,7 @@ Drawer {
 
                 Rectangle {
                     id: item
-                    width: menu.width; height: 50
+                    width: menu.width; height: 50; z: width
                     color: isSelected ? Qt.lighter(menuItemTextColor, 4.5) : "transparent"
                     visible: {
                         if (!window.userProfileData || !window.userProfileData.type)
@@ -122,14 +122,14 @@ Drawer {
                         anchors { left: parent.left; leftMargin: 16; right: parent.right; rightMargin: 16; verticalCenter: parent.verticalCenter }
 
                         AwesomeIcon {
-                            name:  modelData.icon_name
-                            color: menuItemTextColor
+                            color: menuItemTextColor; size: 20; z: 0
+                            name:  modelData.icon_name; clickEnabled: false
                         }
 
                         Text {
                             text: modelData.menu_name
                             color: menuItemTextColor
-                            font { pointSize: 14; bold: true }
+                            font { pointSize: appSettings.theme.bigFontSize; bold: true }
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
