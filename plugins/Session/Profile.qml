@@ -85,7 +85,6 @@ BasePage {
                 secondaryLabelText: userProfileData.name
                 primaryIconName: "tag"
                 backgroundColor: appSettings.theme.colorWindowBackground
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             ListItem {
@@ -94,7 +93,6 @@ BasePage {
                 secondaryLabelText: userProfileData.email
                 primaryIconName: "envelope"
                 backgroundColor: appSettings.theme.colorWindowBackground
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             ListItem {
@@ -103,7 +101,6 @@ BasePage {
                 secondaryLabelText: userProfileData.username
                 primaryIconName: "user"
                 backgroundColor: appSettings.theme.colorWindowBackground
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             ListItem {
@@ -112,7 +109,6 @@ BasePage {
                 secondaryLabelText: userProfileData.address
                 primaryIconName: "map_marker"
                 backgroundColor: appSettings.theme.colorWindowBackground
-                anchors.horizontalCenter: parent.horizontalCenter
             }
 
             ListItem {
@@ -121,7 +117,6 @@ BasePage {
                 secondaryLabelText: userProfileData.gender
                 primaryIconName: "arrows_alt"
                 backgroundColor: appSettings.theme.colorWindowBackground
-                anchors.horizontalCenter: parent.horizontalCenter
             }
         }
     }

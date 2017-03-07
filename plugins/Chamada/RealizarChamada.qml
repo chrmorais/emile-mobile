@@ -113,7 +113,7 @@ BasePage {
 
     Connections {
         target: window
-        onPageChanged: jsonListModel.stateChanged.disconnect(saveAttendenceValidateStatus);
+        onPageChanged: jsonListModel.stateChanged.disconnect(saveAttendenceCallback);
     }
 
     DatePicker {
