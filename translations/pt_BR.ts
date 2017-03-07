@@ -227,22 +227,22 @@
         <translation>Meu perfil</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="85"/>
+        <location filename="../plugins/Session/Profile.qml" line="84"/>
         <source>Name: </source>
         <translation>Nome: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="94"/>
+        <location filename="../plugins/Session/Profile.qml" line="92"/>
         <source>Email: </source>
         <translation>Email: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="103"/>
+        <location filename="../plugins/Session/Profile.qml" line="100"/>
         <source>Username: </source>
         <translation>Nome de usuário: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="112"/>
+        <location filename="../plugins/Session/Profile.qml" line="108"/>
         <source>Address: </source>
         <translation>Endereço: </translation>
     </message>
@@ -255,7 +255,7 @@
         <translation type="vanished">Endereço: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="121"/>
+        <location filename="../plugins/Session/Profile.qml" line="116"/>
         <source>Gender: </source>
         <translation>Sexo: </translation>
     </message>
@@ -389,6 +389,11 @@
         <location filename="../plugins/WallMessage/Wall.qml" line="12"/>
         <source>Message wall</source>
         <translation>Muro de notificações</translation>
+    </message>
+    <message>
+        <location filename="../plugins/WallMessage/Wall.qml" line="106"/>
+        <source>You</source>
+        <translation>Você</translation>
     </message>
 </context>
 </TS>

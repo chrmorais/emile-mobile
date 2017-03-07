@@ -103,7 +103,7 @@ BasePage {
 
                     Label {
                         id: authorLabel
-                        text: sender ? sender.name || "" : ""; color: "#444"
+                        text: userProfileData.name === sender.name ? qsTr("You") : sender ? sender.name || "" : ""; color: "#444"
                     }
                 }
 
@@ -141,7 +141,7 @@ BasePage {
     }
 
     FloatingButton {
-        visible: window.userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
+        visible: userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
             console.log("Config json: " + JSON.stringify(configJson));
