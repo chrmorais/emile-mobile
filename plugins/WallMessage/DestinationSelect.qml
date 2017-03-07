@@ -36,11 +36,10 @@ BasePage {
 
         ListItem {
             id: wrapper
-            // parent: listView.contentItem
+            parent: listView.contentItem
             showSeparator: true
             badgeRadius: 0
             badgeText: course_section_period
-            badgeBackgroundColor: colocarCor(course_section_period)
             primaryLabelText: code + ""
             secondaryLabelText: name + ""
             onClicked: pushPage(configJson.root_folder + "/SendMessage.qml", {"userTypeDestinationId": userTypeDestinationId, "parameter": id});
