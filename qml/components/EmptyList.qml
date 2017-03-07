@@ -44,8 +44,6 @@ Rectangle {
             visibleFalse()
     }
 
-    MouseArea { anchors.fill: parent; onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold() }
-
     Column {
         spacing: 10
         anchors.centerIn: parent
@@ -60,6 +58,7 @@ Rectangle {
                 id: awesomeIcon
                 size: iconSize; color: textColor; name: iconName
                 anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold()
             }
         }
 
@@ -68,13 +67,13 @@ Rectangle {
             renderType: Text.NativeRendering
             fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
             anchors.horizontalCenter: parent.horizontalCenter
-            font { weight: Font.DemiBold; pointSize: 13 }
+            font { weight: Font.DemiBold; pointSize: appSettings.theme.middleFontSize }
         }
 
         Text {
             renderType: Text.NativeRendering
             fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
-            color: textColor; text: secondText; font.pointSize: 11
+            color: textColor; text: secondText; font.pointSize: appSettings.theme.smallFontSize
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }
