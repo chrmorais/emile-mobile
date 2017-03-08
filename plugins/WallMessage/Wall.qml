@@ -146,7 +146,7 @@ BasePage {
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
             console.log("Config json: " + JSON.stringify(configJson));
-            pageStack.push(configJson.root_folder+"/DestinationGroupSelect.qml", {"configJson": configJson});
+            pageStack.push(Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml"), {"configJson": configJson});
         }
     }
 }
