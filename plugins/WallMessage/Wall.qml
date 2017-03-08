@@ -52,15 +52,13 @@ BasePage {
             busyIndicator.visible = false;
             if (listView.contentY < -65 && !isPageBusy && !lockMultipleRequests.running)
                 lockMultipleRequests.running = true;
-            else
-                snackbar.show("Checking for update...");
         }
     }
 
     Timer {
         id: loopRequestUpdate
         interval: 90000 // 1.5 min
-        running: true
+        running: page.isActivePage
         onTriggered: {
             busyIndicator.visible = false;
             request();
@@ -70,7 +68,10 @@ BasePage {
     Timer {
         id: lockMultipleRequests
         interval: 2000
-        onTriggered: request();
+        onTriggered: {
+            request();
+            lockMultipleRequests.interval = 2000;
+        }
     }
 
     Component {
@@ -145,7 +146,7 @@ BasePage {
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
             console.log("Config json: " + JSON.stringify(configJson));
-            pushPage(configJson.root_folder+"/DestinationGroupSelect.qml", {"configJson": configJson});
+            pageStack.push(configJson.root_folder+"/DestinationGroupSelect.qml", {"configJson": configJson});
         }
     }
 }
