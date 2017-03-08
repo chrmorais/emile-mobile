@@ -58,7 +58,7 @@ BasePage {
     Timer {
         id: loopRequestUpdate
         interval: 90000 // 1.5 min
-        running: page.isActivePage
+        running: currentPage.objectName && objectName === page.objectName
         onTriggered: {
             busyIndicator.visible = false;
             request();

@@ -19,7 +19,7 @@ Page {
     property bool centralizeBusyIndicator: true
     property bool isPageBusy: jsonListModel.state === "loading"
 
-    property bool isActivePage: currentPage.objectName && objectName === page.objectName
+    //property bool isActivePage: currentPage.objectName && objectName === page.objectName
 
     // for toolbar
     property string toolBarState: ""
