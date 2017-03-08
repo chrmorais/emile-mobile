@@ -247,6 +247,33 @@
         <translation>Endereço: </translation>
     </message>
     <message>
+        <location filename="../plugins/Session/Profile.qml" line="119"/>
+        <source>Male</source>
+        <translation>Masculino</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Profile.qml" line="121"/>
+        <source>Female</source>
+        <translation>Feminino</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Profile.qml" line="123"/>
+        <source>Other</source>
+        <translation>Outro</translation>
+    </message>
+    <message>
+        <source>Masculino</source>
+        <translation type="vanished">Male</translation>
+    </message>
+    <message>
+        <source>Feminino</source>
+        <translation type="vanished">Female</translation>
+    </message>
+    <message>
+        <source>Outro</source>
+        <translation type="vanished">Other</translation>
+    </message>
+    <message>
         <source>User type: </source>
         <translation type="vanished">Tipo de usuário: </translation>
     </message>

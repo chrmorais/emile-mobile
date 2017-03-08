@@ -114,7 +114,13 @@ BasePage {
             ListItem {
                 showSeparator: true
                 primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
-                secondaryLabelText: userProfileData.gender
+                secondaryLabelText:
+                    if(userProfileData.gender === "M")
+                        secondaryLabelText = qsTr("Male")
+                    else if(userProfileData.gender === "F")
+                        secondaryLabelText = qsTr("Female")
+                    else
+                        secondaryLabelText = qsTr("Other")
                 primaryIconName: "arrows_alt"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
