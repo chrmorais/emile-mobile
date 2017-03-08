@@ -50,9 +50,9 @@ android: {
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
 
-        ANDROID_EXTRA_LIBS = \
-            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libcrypto.so \
-            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libssl.so
+    ANDROID_EXTRA_LIBS = \
+        $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libcrypto.so \
+        $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libssl.so
 }
 
 ios: {
