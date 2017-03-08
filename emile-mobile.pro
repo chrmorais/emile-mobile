@@ -1,3 +1,15 @@
+# To android:
+# Install dependences in sdk-folder/tools/android:
+# In 'Tools' checkbox:
+#   1: Android SDK Tools;
+#   2: Platform-tools;
+#   3: Build-tools.
+# In 'Extras' checkbox:
+#   1: Android Support Repository;
+#   2: Google Play services;
+#   3: Google Repository;
+# As well as the most recent Android API Version!
+
 QT += qml quick quickcontrols2 svg core
 
 CONFIG += c++11
@@ -37,6 +49,10 @@ android: {
         android/src/gsort/pos/engsisubiq/EmileMobile/TokenToApplication.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
+
+        ANDROID_EXTRA_LIBS = \
+            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libcrypto.so \
+            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libssl.so
 }
 
 ios: {
