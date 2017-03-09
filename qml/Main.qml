@@ -36,15 +36,17 @@ ApplicationWindow {
     }
 
     onEndSession: {
+        while (pageStack.depth > 1)
+            pageStack.pop();
         isUserLoggedIn = false;
+        setIndexPage();
         var objectTemp = {};
         userProfileData = objectTemp;
-        setIndexPage();
     }
 
     onStarSession: {
-        isUserLoggedIn = true;
         userProfileData = userData;
+        isUserLoggedIn = true;
         setIndexPage();
     }
 
@@ -66,13 +68,10 @@ ApplicationWindow {
             "post_message": { "push_notification_token": token }
         };
 
-        jsonListModel.requestMethod = "POST";
-        jsonListModel.contentType = "application/json";
-        jsonListModel.source += "/token_register/"+userProfileData.id;
-        jsonListModel.requestParams = JSON.stringify(params);
-        jsonListModel.load(function(result, status) {
+        httpRequest.requestParams = JSON.stringify(params);
+        httpRequest.load("token_register/" + userProfileData.id, function(result, status) {
             Emile.saveObject("user_profile_data", result.user);
-        });
+        }, "POST");
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
@@ -134,8 +133,6 @@ ApplicationWindow {
             pageArgs = menuPages.length > 0 ? menuPages[0] : {};
             pageUrl = "/plugins/WallMessage/Wall.qml";
         }
-        while (pageStack.depth > 1)
-            pageStack.pop();
         if (pageStack.depth >= 1)
             pageStack.replace(Qt.resolvedUrl(pageUrl), pageArgs);
         else
@@ -150,6 +147,13 @@ ApplicationWindow {
     }
 
     Component.onCompleted: setIndexPage();
+
+    onClosing: {
+        if (!isIOS && pageStack.depth <= 1) {
+            Emile.minimizeApp();
+            close.accepted = false;
+        }
+    }
 
     Connections {
         target: header
@@ -222,9 +226,9 @@ ApplicationWindow {
     }
 
     JSONListModel {
-        id: jsonListModel
+        id: httpRequest
+        debug: true
         source: appSettings.rest_service.baseUrl
-        onStateChanged: if (state === "ready" || state === "error") jsonListModel.source = appSettings.rest_service.baseUrl;
     }
 
     Snackbar {
@@ -244,16 +248,11 @@ ApplicationWindow {
         id: pageStack
         focus: true; anchors.fill: parent
 
-        Keys.onReleased: {
-            if (event.key === Qt.Key_Back) {
-                if (pageStack.depth > 1) {
-                    pageStack.pop();
-                    event.accepted = true;
-                } else if (!isIOS) {
-                    Emile.minimizeApp();
-                    event.accepted = false;
-                }
-            }
+        Keys.onBackPressed: {
+            if (pageStack.depth > 1)
+                pageStack.pop()
+            else
+                event.accepted = false
         }
 
         pushEnter: Transition {
