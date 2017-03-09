@@ -142,11 +142,11 @@ BasePage {
     }
 
     FloatingButton {
-        visible: userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
+        visible: userProfileData.type && userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
-            console.log("Config json: " + JSON.stringify(configJson));
-            pageStack.push(Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml"), {"configJson": configJson});
+            var url = Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml");
+            pageStack.push(url, {"configJson": configJson});
         }
     }
 }

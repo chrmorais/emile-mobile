@@ -40,7 +40,6 @@ function requestLogin() {
         }
     };
     jsonListModel.requestMethod = "POST";
-    jsonListModel.contentType = "application/json";
     jsonListModel.requestParams = JSON.stringify(params);
     jsonListModel.source += "login";
     jsonListModel.load(loginCallback);
