@@ -24,7 +24,7 @@ BasePage {
     Timer {
         id: loginPopShutdown
         repeat: false; running: false; interval: 2000
-        onTriggered: starSession(requestResult);
+        onTriggered: starSession(requestResult); // is a signal on the main.qml
     }
 
     Flickable {
@@ -87,8 +87,8 @@ BasePage {
                     border { width: 1; color: appSettings.theme.colorPrimary }
                 }
                 AwesomeIcon {
-                    z: parent.z + 10; size: 20
-                    name: password.echoMode == TextInput.Password ? "eye" : "eye_slash"; color: parent.color
+                    z: parent.z + 50; size: 20
+                    opacity: password.echoMode == TextInput.Password ? 0.5 : 1.0; color: parent.color
                     anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: 0 }
                     onClicked: parent.echoMode = parent.echoMode == TextInput.Password ? TextInput.Normal : TextInput.Password
                 }
@@ -101,7 +101,9 @@ BasePage {
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
-                    lockerButtons.running = true
+                    email.focus = false;
+                    password.focus = false;
+                    lockerButtons.running = true;
                     LoginFunctions.requestLogin();
                 }
             }
