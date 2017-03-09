@@ -17,9 +17,9 @@ Page {
     property bool hasListView: true
     property bool hasRemoteRequest: true
     property bool centralizeBusyIndicator: true
-    property bool isPageBusy: jsonListModel.state === "loading"
+    property bool isPageBusy: httpRequest.state === "loading"
 
-    //property bool isActivePage: currentPage.objectName && objectName === page.objectName
+    property bool isActivePage: currentPage.objectName && currentPage.objectName === objectName
 
     // for toolbar
     property string toolBarState: ""
@@ -50,7 +50,7 @@ Page {
 
     BusyIndicator {
         id: _busyIndicator
-        visible: jsonListModel.state === "loading"
+        visible: httpRequest.state === "loading"
         z: parent.z + 1
         anchors {
             centerIn: centralizeBusyIndicator ? parent : undefined
@@ -62,7 +62,7 @@ Page {
 
     ProgressBar {
         id: _progressBar
-        visible: !_busyIndicator.visible && jsonListModel.state === "loading"
+        visible: !_busyIndicator.visible && httpRequest.state === "loading"
         indeterminate: visible
         width: parent.width; z: parent.z + 100
         anchors { top: parent.top; topMargin: 0 }
@@ -71,8 +71,8 @@ Page {
     EmptyList {
         id: _emptyList
         z: basePage.z+1
-        visible: hasListView && listView.count === 0 && !_busyIndicator.visible
-        enabled: jsonListModel.state !== "loading"
+        visible: hasListView && listView && listView.count === 0 && !_busyIndicator.visible
+        enabled: httpRequest.state !== "loading"
         onClicked: updatePage();
     }
 
