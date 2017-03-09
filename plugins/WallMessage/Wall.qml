@@ -40,8 +40,7 @@ BasePage {
     function request() {
         if (!userProfileData.id)
             return;
-        jsonListModel.source += "wall_messages/" + userProfileData.id;
-        jsonListModel.load(requestCallback);
+        httpRequest.load("wall_messages/" + userProfileData.id, requestCallback, "GET");
     }
 
     Component.onCompleted: request();
@@ -58,7 +57,7 @@ BasePage {
     Timer {
         id: loopRequestUpdate
         interval: 90000 // 1.5 min
-        running: currentPage.objectName && objectName === page.objectName
+        running: isActivePage
         onTriggered: {
             busyIndicator.visible = false;
             request();
@@ -99,7 +98,7 @@ BasePage {
                     anchors { top: parent.top; topMargin: 5; left: parent.left; leftMargin: 10 }
 
                     AwesomeIcon.AwesomeIcon {
-                        size: 12; name: "commenting"; color: authorLabel.color
+                        size: 12; name: "commenting"; color: authorLabel.color; clickEnabled: false
                     }
 
                     Label {
@@ -128,7 +127,7 @@ BasePage {
                     anchors { bottom: parent.bottom; bottomMargin: 5; left: parent.left; leftMargin: 10 }
 
                     AwesomeIcon.AwesomeIcon {
-                        size: 12; name: "clock_o"; color: dateLabel.color
+                        size: 12; name: "clock_o"; color: dateLabel.color; clickEnabled: false
                     }
 
                     Label {
@@ -142,7 +141,7 @@ BasePage {
     }
 
     FloatingButton {
-        visible: userProfileData.type && userProfileData.type.name !== "student" && jsonListModel.state !== "loading"
+        enabled: typeof userProfileData.type !== "undefined" && userProfileData.type.name !== "student" && httpRequest.state !== "loading"
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         onClicked: {
             var url = Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml");
