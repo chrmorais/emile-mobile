@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 import QtQuick.Controls.Material.impl 2.1
 
@@ -112,16 +112,17 @@ BasePage {
             }
 
             ListItem {
-                showSeparator: true
+                showSeparator: true; showIconBold: true
                 primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
-                secondaryLabelText:
-                    if(userProfileData.gender === "M")
-                        secondaryLabelText = qsTr("Male")
-                    else if(userProfileData.gender === "F")
-                        secondaryLabelText = qsTr("Female")
+                secondaryLabelText: {
+                    if (userProfileData.gender === "M")
+                        return qsTr("Male");
+                    else if (userProfileData.gender === "F")
+                        return qsTr("Female");
                     else
-                        secondaryLabelText = qsTr("Other")
-                primaryIconName: "arrows_alt"
+                        return qsTr("Other");
+                }
+                primaryIconName: userProfileData.gender === "M" ? "mars" : "venus"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
         }
