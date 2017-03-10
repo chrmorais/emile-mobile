@@ -23,7 +23,7 @@ BasePage {
     }
 
     function request() {
-        requestHttp.load("destinations_by_user_type/" + userProfileData.id, requestCallback);
+        requestHttp.load("destinations_by_user_type/" + userProfileData.type.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -35,6 +35,8 @@ BasePage {
             id: wrapper
             showSeparator: true
             badgeText: id
+            badgeTextColor: appSettings.theme.colorPrimary
+            badgeBackgroundColor: "transparent"
             primaryLabelText: name + ""
             secondaryLabelText: ""
             onClicked: {
