@@ -44,6 +44,14 @@ Rectangle {
             visibleFalse()
     }
 
+    MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        onEntered: noItemRec.opacity = 0.7
+        onExited: noItemRec.opacity = 1.0
+        onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold()
+    }
+
     Column {
         spacing: 10
         anchors.centerIn: parent
@@ -57,8 +65,7 @@ Rectangle {
             Awesome.AwesomeIcon {
                 id: awesomeIcon
                 size: iconSize; color: textColor; name: iconName
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold()
+                anchors.horizontalCenter: parent.horizontalCenter; clickEnabled: false
             }
         }
 
