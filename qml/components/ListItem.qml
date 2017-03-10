@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 import "AwesomeIcon/"
 
@@ -30,6 +30,7 @@ Item {
     }
 
     property int margins: 16
+    property bool showIconBold: false
     property alias radius: rect.radius
 
     property int separatorInset: primaryAction.visible ? listItem.height : 0
@@ -136,8 +137,8 @@ Item {
 
             AwesomeIcon {
                 id: primaryActionIcon
-                color: __primaryLabelItem.color
-                width: parent.width * 0.75; height: width
+                color: __primaryLabelItem.color; clickEnabled: false
+                width: parent.width * 0.75; height: width; weight: showIconBold ? Font.Bold : Font.Light
                 visible: (!primaryActionLoader.active || !primaryActionImage.visible) && name.length > 0
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
@@ -212,8 +213,8 @@ Item {
             AwesomeIcon {
                 id: secondaryActionIcon
                 color: __primaryLabelItem.color
-                width: parent.width * 0.75; height: width
-                visible: !secondaryActionImage.visible && name.length > 0
+                width: parent.width * 0.75; height: width; clickEnabled: false
+                visible: !secondaryActionImage.visible && name.length > 0; weight: showIconBold ? Font.Bold : Font.Light
                 anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
             }
 
@@ -223,9 +224,9 @@ Item {
 
     Rectangle {
         id: divider
+        color: Qt.rgba(0,0,0,0.1)
         width: parent.width; height: 1
         antialiasing: true; visible: showSeparator
-        color: Qt.rgba(0,0,0,0.1)
         anchors { bottom: parent.bottom; leftMargin: separatorInset }
     }
 }
