@@ -25,7 +25,7 @@ Drawer {
 
         AwesomeIcon {
             id: awesomeIcon
-            name: "camera"
+            name: "photo"
             size: 64; color: userInfoTextColor
             visible: !userImageProfile
             anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
