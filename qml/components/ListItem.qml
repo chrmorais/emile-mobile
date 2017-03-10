@@ -10,23 +10,23 @@ Item {
     width: parent.width; height: 50; implicitHeight: height
     anchors { left: parent ? parent.left : undefined; right: parent ? parent.right : undefined }
     implicitWidth: {
-        var width = listItem.margins * 2
+        var width = listItem.margins * 2;
 
         if (primaryAction.visible)
-            width += primaryAction.width + row.spacing
+            width += primaryAction.width + row.spacing;
 
         if (__primaryLabelItem.visible)
-            width += __primaryLabelItem.implicitWidth + row.spacing
+            width += __primaryLabelItem.implicitWidth + row.spacing;
         else
-            width += __primaryLabelItem.implicitWidth + row.spacing
+            width += __primaryLabelItem.implicitWidth + row.spacing;
 
         if (__secondaryLabelItem.visible)
-            width += secondaryLabel.width + row.spacing
+            width += secondaryLabel.width + row.spacing;
 
         if (secondaryAction.visible)
-            width += secondaryAction.width + row.spacing
+            width += secondaryAction.width + row.spacing;
 
-        return width
+        return width;
     }
 
     property int margins: 16
@@ -80,6 +80,7 @@ Item {
         clip: true; anchors.fill: parent
         color: selected ? selectedBackgroundColor : backgroundColor
         antialiasing: radius > 0
+
         Behavior on color {
             ColorAnimation { duration: 200 }
         }
@@ -118,12 +119,13 @@ Item {
                 sourceComponent: badgeComponent
                 asynchronous: true; active: badgeText.length > 0 && !primaryActionImage.visible && !primaryActionIcon.visible
                 onLoaded: {
-                    item.parent = primaryAction
-                    if(badgeRadius != 0) {
-                        item.width = primaryAction.width * 0.75; item.height = width
-                    }
-                    else {
-                        item.width = primaryAction.width; item.height = width / 2
+                    item.parent = primaryAction;
+                    if (badgeRadius != 0) {
+                        item.height = width;
+                        item.width = primaryAction.width * 0.75;
+                    } else {
+                        item.height = width / 2;
+                        item.width = primaryAction.width;
                     }
                 }
             }
@@ -198,8 +200,9 @@ Item {
                 sourceComponent: badgeComponent
                 asynchronous: true; active: badgeText.length > 0 && badgeInRightSide && !secondaryActionImage.visible && !secondaryActionIcon.visible
                 onLoaded: {
-                    item.parent = secondaryAction
-                    item.width = secondaryAction.width * 0.75; item.height = width
+                    item.height = width;
+                    item.parent = secondaryAction;
+                    item.width = secondaryAction.width * 0.75;
                 }
             }
 
