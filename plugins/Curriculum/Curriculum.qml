@@ -70,14 +70,9 @@ BasePage {
         return "Images/green-circle-void.png"
     }
 
-    function getBold(status) {
-        return (status === 1);
-    }
-
     Flickable {
-        width: window.width * 0.90
-        height: window.height * 0.90
         flickableDirection: Flickable.AutoFlickDirection
+        width: window.width * 0.90;  height: window.height * 0.90
         contentWidth: contentItem.childrenRect.width
         contentHeight: contentItem.childrenRect.height
         anchors { top: parent.top; topMargin: 16; left: parent.left; leftMargin: 16; right: parent.right; rightMargin: 8}
@@ -98,64 +93,61 @@ BasePage {
                     model: modelData
                     delegate: Rectangle {
                         id: rect
+                        antialiasing: true
                         width: window.width*0.35
                         height: window.height/10+30
-                        radius: 8
-                        border.color: "black"
-                        color: getColor(modelData.grade, modelData.times)
+                        radius: 8; border.color: "black"
                         opacity: getOpacity(modelData.status.id)
+                        color: getColor(modelData.grade, modelData.times)
 
                         RowLayout {
                             width: parent.width
                             anchors { top: parent.top; topMargin: 5 }
 
                             Label {
+                                antialiasing: true
                                 text: " " + modelData.course.code
-                                font { bold: true; pointSize: 9 }
+                                font { bold: true; pointSize: 9; italic: getFontStyle(modelData.status.id) }
                                 anchors { left: parent.left; leftMargin: 5 }
-                                font.italic: getFontStyle(modelData.status.id)
                             }
 
                             AwesomeIcon {
                                 name: "check_circle"
                                 color: "#00FF00"
                                 size: 15
-                                anchors { right: parent.right; rightMargin: 5}
                                 visible: printIcon(modelData.status.id)
+                                anchors { right: parent.right; rightMargin: 5 }
                             }
                         }
 
                         RowLayout {
                             width: parent.width
-                            anchors {bottom:parent.bottom; bottomMargin: 5}
+                            anchors { bottom:parent.bottom; bottomMargin: 5 }
 
-                            Label{
-                                anchors { left: parent.left; bottom: parent.bottom }
+                            Label {
+                                antialiasing: true
                                 text: "  " + getTimes(modelData.times)
-                                font.bold: false
-                                font.pointSize: 9
-                                font.italic: getFontStyle(modelData.status.id)
+                                font { bold: false; pointSize: 9; italic: getFontStyle(modelData.status.id) }
+                                anchors { left: parent.left; bottom: parent.bottom }
                             }
 
-                            Label{
-                                anchors { right: parent.right; rightMargin: 5 }
+                            Label {
+                                antialiasing: true
                                 text: modelData.course.hours + " - " + modelData.course.credits
-                                font.bold: false
-                                font.pointSize: 9
-                                font.italic: getFontStyle(modelData.status.id)
+                                font { bold: false; pointSize: 9; italic: getFontStyle(modelData.status.id) }
+                                anchors { right: parent.right; rightMargin: 5 }
                             }
                         }
 
                         Text {
-                            anchors.centerIn: parent
-                            text: modelData.course.name
-                            font.bold: getBold(modelData.status.id)
-                            font.italic : getFontStyle(modelData.status.id)
-                            font.pointSize: 8
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                            antialiasing: true
                             width: parent.width
                             wrapMode: Text.WordWrap
+                            anchors.centerIn: parent
+                            text: modelData.course.name
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignHCenter
+                            font { bold: modelData.status.id === 1; italic : getFontStyle(modelData.status.id); pointSize: 8 }
                         }
                     }
                 }
