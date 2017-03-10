@@ -1,6 +1,6 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 import "../../qml/components/"
 
@@ -41,8 +41,7 @@ BasePage {
         }
     ]
 
-    function saveAttendenceCallback(result, status) {
-        // after get server response, close the current page
+    function saveAttendenceCallback(status, response) {
         if (status === 200) {
             gridView.visible = listView.visible = false;
             alert(qsTr("Success!"), qsTr("Attendance was successfully registered"), "OK", function() { popPage() }, "CANCEL", function() { });
@@ -63,11 +62,8 @@ BasePage {
             return;
         }
         attendance["section_time_date"] = attendanceDate;
-        jsonListModel.requestMethod = "POST";
-        jsonListModel.contentType = "application/json";
-        jsonListModel.requestParams = JSON.stringify(attendance);
-        jsonListModel.source += "student_attendance_register/"+section_times_id;
-        jsonListModel.load(saveAttendenceCallback);
+        requestHttp.requestParams = JSON.stringify(attendance);
+        requestHttp.load("student_attendance_register/"+section_times_id, saveAttendenceCallback, "POST");
         toast.show(qsTr("Saving attendance register..."));
     }
 
@@ -82,10 +78,7 @@ BasePage {
                 attendance["student_attendance"].splice(i,1);
         }
         attendance["student_attendance"].push({"student_id": student_id, "status": status});
-        if(status === "F")
-            checkedAll = false;
-        else
-            checkedAll = true;
+        checkedAll = status === "F" ? false : true;
         updateStatus(student_id, status);
     }
 
@@ -98,22 +91,17 @@ BasePage {
     }
 
     Component.onCompleted: {
-        jsonListModel.source += "course_sections_students/" + course_section_id
-        jsonListModel.load(function(response, status) {
+        requestHttp.load("course_sections_students/" + course_section_id, function(status, response) {
             if (status !== 200)
                 return;
             var i = 0;
-            listModel.clear()
+            if (listViewModel && listViewModel.count > 0)
+                listModel.clear();
             for (var prop in response) {
                 while (i < response[prop].length)
                    listModel.append(response[prop][i++]);
             }
         });
-    }
-
-    Connections {
-        target: window
-        onPageChanged: jsonListModel.stateChanged.disconnect(saveAttendenceCallback);
     }
 
     DatePicker {
@@ -127,7 +115,7 @@ BasePage {
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: jsonListModel.state === "loading"
+        visible: requestHttp.state === "loading"
     }
 
     GridView {

@@ -9,19 +9,20 @@ BasePage {
     listViewDelegate: pageDelegate
     onUpdatePage: request();
 
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        var i = 0;
+        if (listViewModel && listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
+    }
+
     function request() {
-        jsonListModel.source += "students_course_sections/" + userProfileData.id;
-        jsonListModel.load(function(result, status) {
-            if (status !== 200)
-                return;
-            var i = 0;
-            if (listViewModel && listViewModel.count > 0)
-                listViewModel.clear();
-            for (var prop in result) {
-                while (i < result[prop].length)
-                    listViewModel.append(result[prop][i++]);
-            }
-        });
+        requestHttp.load("students_course_sections/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
