@@ -21,7 +21,7 @@ Column {
                 id: imgProfile
                 asynchronous: true
                 width: 40; height: 40
-                source: image_path ? appSettings.rest_service.baseImagesUrl + image_path : defaultUserImage
+                source: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : defaultUserImage
                 clip: true; cache: true; smooth: true
                 sourceSize { width: width; height: height }
                 anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }

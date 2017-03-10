@@ -28,7 +28,7 @@ Item {
             Image {
                 id: imgProfile
                 asynchronous: true
-                source: image_path ? appSettings.rest_service.baseImagesUrl + image_path : defaultUserImage
+                source: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : defaultUserImage
                 width: 60; height: 60
                 clip: true; cache: true; smooth: true
                 sourceSize { width: width; height: height }
