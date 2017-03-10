@@ -17,7 +17,7 @@ Page {
     property bool hasListView: true
     property bool hasRemoteRequest: true
     property bool centralizeBusyIndicator: true
-    property bool isPageBusy: httpRequest.state === "loading"
+    property bool isPageBusy: requestHttp.state === "loading"
 
     property bool isActivePage: currentPage.objectName && currentPage.objectName === objectName
 
@@ -50,7 +50,7 @@ Page {
 
     BusyIndicator {
         id: _busyIndicator
-        visible: httpRequest.state === "loading"
+        visible: isPageBusy
         z: parent.z + 1
         anchors {
             centerIn: centralizeBusyIndicator ? parent : undefined
@@ -62,7 +62,7 @@ Page {
 
     ProgressBar {
         id: _progressBar
-        visible: !_busyIndicator.visible && httpRequest.state === "loading"
+        visible: !_busyIndicator.visible && isPageBusy
         indeterminate: visible
         width: parent.width; z: parent.z + 100
         anchors { top: parent.top; topMargin: 0 }
@@ -72,7 +72,7 @@ Page {
         id: _emptyList
         z: basePage.z+1
         visible: hasListView && listView && listView.count === 0 && !_busyIndicator.visible
-        enabled: httpRequest.state !== "loading"
+        enabled: !isPageBusy
         onClicked: updatePage();
     }
 
