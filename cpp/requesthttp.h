@@ -35,9 +35,8 @@ private:
     bool setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVariant &filePath);
 
 signals:
-    void error(int statusCode, const QVariant &errorMessage);
-    void finished(int statusCode, const QVariant &result);
-    void statusChanged(int statusCode, const QVariant &result);
+    void error(int statusCode, const QVariant &message);
+    void finished(int statusCode, const QVariant &response);
 
 private slots:
     void requestFinished(QNetworkReply *reply);
