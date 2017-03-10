@@ -4,7 +4,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
 import "../../qml/components/"
-import "../../qml/components/AwesomeIcon/" as AwesomeIcon
+import "../../qml/components/AwesomeIcon/"
 
 BasePage {
     id: page
@@ -40,7 +40,7 @@ BasePage {
     function request() {
         if (!userProfileData.id)
             return;
-        httpRequest.load("wall_messages/" + userProfileData.id, requestCallback);
+        requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -83,21 +83,19 @@ BasePage {
             width: page.width * 0.95; height: columnLayoutDelegate.height
 
             Pane {
-                z: parent.z-10
+                z: parent.z-10; Material.elevation: 2
                 width: parent.width-1; height: parent.height-1
-                Material.elevation: 2
             }
 
             ColumnLayout {
                 id: columnLayoutDelegate
-                spacing: 15
-                width: parent.width
+                spacing: 15; width: parent.width
 
                 Row {
                     spacing: 4
                     anchors { top: parent.top; topMargin: 5; left: parent.left; leftMargin: 10 }
 
-                    AwesomeIcon.AwesomeIcon {
+                    AwesomeIcon {
                         size: 12; name: "commenting"; color: authorLabel.color; clickEnabled: false
                     }
 
@@ -126,7 +124,7 @@ BasePage {
                     spacing: 4
                     anchors { bottom: parent.bottom; bottomMargin: 5; left: parent.left; leftMargin: 10 }
 
-                    AwesomeIcon.AwesomeIcon {
+                    AwesomeIcon {
                         size: 12; name: "clock_o"; color: dateLabel.color; clickEnabled: false
                     }
 
@@ -141,8 +139,9 @@ BasePage {
     }
 
     FloatingButton {
-        enabled: typeof userProfileData.type !== "undefined" && userProfileData.type.name !== "student" && httpRequest.state !== "loading"
+        enabled: !isPageBusy
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
+        visible: typeof userProfileData.type !== "undefined" && userProfileData.type.name !== "student"
         onClicked: {
             var url = Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml");
             pageStack.push(url, {"configJson": configJson});
