@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
@@ -11,22 +11,23 @@ BasePage {
     hasRemoteRequest: true
     onUpdatePage: request();
 
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        if (response.section_times)
+            json = response.section_times[0];
+        else
+            json = {};
+    }
+
     function request() {
-        jsonListModel.source += "section_time_in_progress/" + userProfileData.id
-        jsonListModel.load(function(response, status) {
-            if (status !== 200)
-                return;
-            if (response.section_times)
-                json = response.section_times[0];
-            else
-                json = {};
-        });
+        requestHttp.load("section_time_in_progress/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
 
     Column {
-        visible: !busyIndicator.visible
+        visible: !isPageBusy
         spacing: 25
         anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
@@ -36,13 +37,13 @@ BasePage {
 
             Label {
                 font { pointSize: 16; weight: Font.Bold }
+                color: appSettings.theme.defaultTextColor
+                anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (json && typeof json != "undefined")
                         return json.course_section.course.code + " - " + json.course_section.course.name;
                     return "";
                 }
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: appSettings.theme.defaultTextColor
             }
 
             Label {
@@ -65,7 +66,7 @@ BasePage {
                 font { pointSize: 16; weight: Font.Bold }
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
-                    if (jsonListModel.state === "running")
+                    if (requestHttp.state === "loading")
                         qsTr("Check for courses in progress...")
                     else if (json)
                         qsTr("Do you want register attendance?")
@@ -75,7 +76,7 @@ BasePage {
             }
 
             CustomButton {
-                enabled: json !== undefined && jsonListModel.state !== "running"
+                enabled: json !== undefined && !isPageBusy
                 text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
@@ -90,8 +91,8 @@ BasePage {
     }
 
     CustomButton {
-        visible: jsonListModel.state !== "loading"
         text: qsTr("My courses")
+        enabled: !isPageBusy
         textColor: appSettings.theme.colorPrimary
         backgroundColor: appSettings.theme.colorAccent
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
