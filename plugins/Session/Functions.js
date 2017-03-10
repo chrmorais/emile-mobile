@@ -15,14 +15,14 @@ function isValidLoginForm() {
     return true;
 }
 
-function loginCallback(result, status) {
+function loginCallback(status, response) {
     switch (status) {
     case 404:
         alert(qsTr("Error!"), qsTr("Email or password is invalid. Try again!"));
         break;
     case 200:
         toast.show(qsTr("Login done successfully!"));
-        requestResult = result.user;
+        requestResult = response.user;
         loginPopShutdown.start();
         break;
     default:
@@ -39,8 +39,6 @@ function requestLogin() {
             "password": password.text
         }
     };
-    jsonListModel.requestMethod = "POST";
-    jsonListModel.requestParams = JSON.stringify(params);
-    jsonListModel.source += "login";
-    jsonListModel.load(loginCallback);
+    requestHttp.requestParams = JSON.stringify(params);
+    requestHttp.load("login", loginCallback, "POST");
 }
