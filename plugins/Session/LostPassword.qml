@@ -92,7 +92,7 @@ BasePage {
             }
 
             CustomButton {
-                enabled: jsonListModel.state !== "running"
+                enabled: requestHttp.state !== "running"
                 text: qsTr("Submit")
                 radius: 25; textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary

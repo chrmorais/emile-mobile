@@ -18,6 +18,13 @@ BasePage {
             json = response.section_times[0];
         else
             json = {};
+        var i = 0;
+        if (listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
     }
 
     function request() {
@@ -67,11 +74,11 @@ BasePage {
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (requestHttp.state === "loading")
-                        qsTr("Check for courses in progress...")
+                       return qsTr("Check for courses in progress...");
                     else if (json)
-                        qsTr("Do you want register attendance?")
+                        return qsTr("Do you want register attendance?");
                     else
-                        qsTr("None courses in progress!")
+                        return qsTr("None courses in progress!");
                 }
             }
 
