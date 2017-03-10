@@ -19,7 +19,7 @@ BasePage {
         if (status !== 200)
             return;
         var i = 0;
-        if (listViewModel.count > 0)
+        if (listViewModel && listViewModel.count > 0)
             listViewModel.clear();
         for (var prop in response) {
             while (i < response[prop].length)
