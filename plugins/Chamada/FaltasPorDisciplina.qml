@@ -1,6 +1,5 @@
-import QtQuick 2.7
-import QtQml.Models 2.2
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 
 import "../../qml/components/"
 import "../../qml/js/Utils.js" as Util
@@ -16,19 +15,20 @@ BasePage {
 
     onUpdatePage: request();
 
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        var i = 0;
+        if (listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
+    }
+
     function request() {
-        jsonListModel.source += "students_attendance/" + courseId + "/" + userProfileData.id
-        jsonListModel.load(function(response, status) {
-            if (status !== 200)
-                return;
-            var i = 0;
-            if (listViewModel.count > 0)
-                listViewModel.clear();
-            for (var prop in response) {
-                while (i < response[prop].length)
-                    listViewModel.append(response[prop][i++]);
-            }
-        });
+        requestHttp.load("students_attendance/" + courseId + "/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
