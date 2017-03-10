@@ -23,7 +23,7 @@ BasePage {
     }
 
     function request() {
-        requestHttp.load("destinations_by_user_type/" + userProfileData.id, requestCallback);
+        requestHttp.load("destinations_by_user_type/" + 2, requestCallback);
     }
 
     Component.onCompleted: request();
