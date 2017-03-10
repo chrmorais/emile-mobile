@@ -1,0 +1,12 @@
+{
+    "name": "Curriculum",
+    "description": "A plugin to show the student curriculum flow",
+    "pages": [
+        {
+            "main_qml": "Curriculum.qml",
+            "menu_name": "Matriz curricular",
+            "icon_name": "table",
+            "roles": ["student"]
+        }
+    ]
+}

@@ -22,5 +22,10 @@
         <file alias="WallMessage/DestinationGroupSelect.qml">plugins/WallMessage/DestinationGroupSelect.qml</file>
         <file alias="WallMessage/DestinationSelect.qml">plugins/WallMessage/DestinationSelect.qml</file>
         <file alias="WallMessage/SendMessage.qml">plugins/WallMessage/SendMessage.qml</file>
+
+	<file alias="Curriculum/Curriculum.qml">plugins/Curriculum/Curriculum.qml</file>
+        <file alias="Curriculum/config.json">plugins/Curriculum/config.json</file>
+        <file alias="Curriculum/green-circle1.png">plugins/Curriculum/green-circle1.png</file>
+        <file alias="Curriculum/green-circle-void.png">plugins/Curriculum/green-circle-void.png</file>
     </qresource>
 </RCC>
