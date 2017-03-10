@@ -43,9 +43,9 @@ Item {
                 if (callback) {
                     rootItem.state = "ready";
                     try {
-                        callback(JSON.parse(xhr.responseText), rootItem.httpStatus);
+                        callback(rootItem.httpStatus, JSON.parse(xhr.responseText));
                     } catch(e) {
-                        callback({}, rootItem.httpStatus);
+                        callback(rootItem.httpStatus, {});
                     }
                 }
             }

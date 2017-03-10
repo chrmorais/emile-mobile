@@ -2,18 +2,20 @@
     <qresource prefix="/">
         <file>plugins.qrc</file>
         <file>settings.json</file>
+
         <file>assets/left.svg</file>
         <file>assets/right.svg</file>
+
         <file>qml/Main.qml</file>
         <file>qml/js/Utils.js</file>
 
         <file>qml/components/CustomButton.qml</file>
         <file>qml/components/DatePicker.qml</file>
-        <file>qml/components/JSONListModel.qml</file>
         <file>qml/components/EmptyList.qml</file>
         <file>qml/components/FloatingButton.qml</file>
         <file>qml/components/ListItem.qml</file>
         <file>qml/components/Menu.qml</file>
+        <file>qml/components/RequestHttp.qml</file>
         <file>qml/components/RoundedImage.qml</file>
         <file>qml/components/Snackbar.qml</file>
         <file>qml/components/Toast.qml</file>
