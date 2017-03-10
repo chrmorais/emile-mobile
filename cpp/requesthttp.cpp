@@ -63,16 +63,13 @@ bool RequestHttp::setMultiPartRequest(QHttpMultiPart *httpMultiPart, const QVari
 
     if (!file->exists()) {
         delete file;
-        emit statusChanged(404, QVariant("File '"+fpath+"' not found! Request aborted!"));
+        emit error(404, QVariant("File '"+fpath+"' not found! Request aborted!"));
         return false;
     }
 
-    bool isOpened = file->open(QIODevice::ReadOnly);
-    file->open(QIODevice::ReadOnly);
-
-    if (!isOpened) {
+    if (!file->open(QIODevice::ReadOnly)) {
         delete file;
-        emit statusChanged(400, QVariant("File '"+fpath+"' cannot be open! Request aborted!"));
+        emit error(400, QVariant("File '"+fpath+"' cannot be open! Request aborted!"));
         return false;
     }
 
@@ -121,7 +118,7 @@ void RequestHttp::requestFinished(QNetworkReply *reply)
 {
     QString serverReply = QString(reply->readAll());
     int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    emit statusChanged(statusCode, QVariant(serverReply));
+    emit error(statusCode, QVariant(serverReply));
     if (reply->isFinished()) {
         emit finished(statusCode, serverReply);
         delete reply;
@@ -130,5 +127,5 @@ void RequestHttp::requestFinished(QNetworkReply *reply)
 
 void RequestHttp::requestError(QNetworkReply::NetworkError code)
 {
-    emit statusChanged(code, QVariant(QString("Network reply error %1").arg(code)));
+    emit error(code, QVariant(QString("Network reply error %1").arg(code)));
 }

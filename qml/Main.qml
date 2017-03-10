@@ -172,10 +172,10 @@ ApplicationWindow {
     Connections {
         target: PostFile
         onFinished: {
-            if (parseInt(statusCode) === 200 && result) {
-                var response = JSON.parse(result);
+            if (parseInt(statusCode) === 200 && response) {
+                var objc = JSON.parse(result);
                 userProfileData.image_path = response.image_path;
-                Emile.saveObject("user_profile_data", response.user);
+                Emile.saveObject("user_profile_data", objc.user);
                 userProfileData = response.user;
             }
         }
@@ -206,7 +206,7 @@ ApplicationWindow {
             folder: shortcuts.pictures
             onAccepted: {
                 menu.userImageProfile = fileUrl;
-                PostFile.postFile(appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id, [fileUrl]);
+                PostFile.postFile(appSettings.restService.baseUrl + "update_user_image/" + userProfileData.id, [fileUrl]);
                 fileDialog.destroy();
             }
         }
@@ -219,7 +219,7 @@ ApplicationWindow {
             target: androidGallery
             onImagePathSelected: {
                 menu.userImageProfile = "file://"+imagePath;
-                var url = appSettings.rest_service.baseUrl + "/update_user_image/" + userProfileData.id;
+                var url = appSettings.restService.baseUrl + "update_user_image/" + userProfileData.id;
                 PostFile.postFile(url, [imagePath]);
             }
         }
@@ -228,7 +228,7 @@ ApplicationWindow {
     RequestHttp {
         id: requestHttp
         debug: true
-        source: appSettings.rest_service.baseUrl
+        source: appSettings.restService.baseUrl
     }
 
     Snackbar {
