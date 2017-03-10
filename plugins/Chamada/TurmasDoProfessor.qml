@@ -26,7 +26,7 @@ BasePage {
     }
 
     function request() {
-        jsonListModel.load("teachers_course_sections/" + userProfileData.id, requestCallback);
+        requestHttp.load("teachers_course_sections/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
