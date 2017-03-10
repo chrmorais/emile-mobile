@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 
 import "../../qml/components/"
 
@@ -14,19 +14,20 @@ BasePage {
     property string destination
     property int userTypeDestinationId
 
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        var i = 0;
+        if (listViewModel && listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
+    }
+
     function request() {
-        jsonListModel.source += destination
-        jsonListModel.load(function(response, status) {
-            if (status !== 200)
-                return;
-            var i = 0;
-            if (listViewModel && listViewModel.count > 0)
-                listViewModel.clear();
-            for (var prop in response) {
-                while (i < response[prop].length)
-                    listViewModel.append(response[prop][i++]);
-            }
-        });
+        requestHttp.load(destination, requestCallback);
     }
 
     Component.onCompleted: request();

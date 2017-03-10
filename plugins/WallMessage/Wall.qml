@@ -22,7 +22,7 @@ BasePage {
             listViewModel.move(listViewModel.count - 1, 0, 1);
     }
 
-    function requestCallback(response, status) {
+    function requestCallback(status, response) {
         if (status !== 200)
             return;
         for (var prop in response) {
@@ -40,7 +40,7 @@ BasePage {
     function request() {
         if (!userProfileData.id)
             return;
-        httpRequest.load("wall_messages/" + userProfileData.id, requestCallback, "GET");
+        httpRequest.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();

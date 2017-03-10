@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
 
 import "../../qml/components/"
 
@@ -27,14 +27,16 @@ BasePage {
         var post_messageTemp = post_message["post_message"];
         post_messageTemp.user_type_destination_id = userTypeDestinationId;
         post_messageTemp.parameter = parameter;
-        post_messageTemp.message = textarea.text
-        post_messageTemp.sender = window.userProfileData.id
+        post_messageTemp.message = textarea.text;
+        post_messageTemp.sender = window.userProfileData.id;
         post_message["post_message"] = post_messageTemp;
         requestToSave();
+        textarea.focus = false;
+        textarea.readOnly = false;
         page.forceActiveFocus();
     }
 
-    function requestCallback(result, status) {
+    function requestCallback(status, response) {
         if (status === 200) {
             textarea.enabled = false;
             alert(qsTr("Success!"), qsTr("The message was successfully sended"), "OK", function() { popPage(); }, qsTr("CANCEL"), function() { });
@@ -44,12 +46,9 @@ BasePage {
     }
 
     function requestToSave() {
-        jsonListModel.requestMethod = "POST";
-        jsonListModel.contentType = "application/json";
-        jsonListModel.source += "wall_push_notification";
-        jsonListModel.requestParams = JSON.stringify(post_message);
-        jsonListModel.load(requestCallback);
         toast.show(qsTr("Sending message..."), true);
+        requestHttp.requestParams = JSON.stringify(post_message);
+        requestHttp.load("wall_push_notification", requestCallback, "POST");
     }
 
     Rectangle {
