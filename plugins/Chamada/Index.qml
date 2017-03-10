@@ -11,16 +11,20 @@ BasePage {
     hasRemoteRequest: true
     onUpdatePage: request();
 
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        var i = 0;
+        if (listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
+    }
+
     function request() {
-        jsonListModel.source += "section_time_in_progress/" + userProfileData.id
-        jsonListModel.load(function(response, status) {
-            if (status !== 200)
-                return;
-            if (response.section_times)
-                json = response.section_times[0];
-            else
-                json = {};
-        });
+        requestHttp.load("section_time_in_progress/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -65,7 +69,7 @@ BasePage {
                 font { pointSize: 16; weight: Font.Bold }
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
-                    if (jsonListModel.state === "running")
+                    if (requestHttp.state === "running")
                         qsTr("Check for courses in progress...")
                     else if (json)
                         qsTr("Do you want register attendance?")
@@ -75,7 +79,7 @@ BasePage {
             }
 
             CustomButton {
-                enabled: json !== undefined && jsonListModel.state !== "running"
+                enabled: json !== undefined && requestHttp.state !== "running"
                 text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
@@ -90,7 +94,7 @@ BasePage {
     }
 
     CustomButton {
-        visible: jsonListModel.state !== "loading"
+        visible: requestHttp.state !== "loading"
         text: qsTr("My courses")
         textColor: appSettings.theme.colorPrimary
         backgroundColor: appSettings.theme.colorAccent
