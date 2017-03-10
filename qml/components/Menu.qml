@@ -15,7 +15,7 @@ Drawer {
     property color userInfoTextColor: appSettings.theme.colorPrimary
     property color menuItemTextColor: appSettings.theme.colorPrimary
     property color menuBackgroundColor: appSettings.theme.colorWindowBackground
-    property string userImageProfile: userProfileData.image_path ? appSettings.rest_service.baseImagesUrl + userProfileData.image_path : ""
+    property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 
     ColumnLayout {
