@@ -59,7 +59,7 @@ BasePage {
 
         Flickable {
             id: flickable
-            width: parent.width; height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight
+            width: parent.width; height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight+12
 
             TextArea.flickable: TextArea {
                 id: textarea

@@ -57,8 +57,6 @@ Item {
         anchors.fill: clickEnabled ? parent : undefined
         onClicked: if(clickEnabled) widget.clicked();
         onPressAndHold: if(clickEnabled) widget.pressAndHold();
-        onExited: if(clickEnabled) widget.exited();
-        onEntered: if (clickEnabled) widget.entered();
     }
 
     Ripple {
