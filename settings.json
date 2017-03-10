@@ -3,7 +3,7 @@
     "organizationName": "Emile",
     "organizationDomain": "emile.com",
     "applicationDescription": "A educational application",
-    "rest_service": {
+    "restService": {
         "userServiceName": "",
         "userServicePassword": "",
         "baseUrl": "https://emile-server.herokuapp.com/",
