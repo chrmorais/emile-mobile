@@ -1,8 +1,8 @@
-import QtQuick 2.7
-import QtQuick.Window 2.0
+import QtQuick 2.8
+import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 import "components/"
 import "js/Utils.js" as Util
@@ -68,9 +68,9 @@ ApplicationWindow {
             "post_message": { "push_notification_token": token }
         };
 
-        httpRequest.requestParams = JSON.stringify(params);
-        httpRequest.load("token_register/" + userProfileData.id, function(result, status) {
-            Emile.saveObject("user_profile_data", result.user);
+        requestHttp.requestParams = JSON.stringify(params);
+        requestHttp.load("token_register/" + userProfileData.id, function(status, response) {
+            Emile.saveObject("user_profile_data", response.user);
         }, "POST");
     }
 
@@ -225,8 +225,8 @@ ApplicationWindow {
         }
     }
 
-    JSONListModel {
-        id: httpRequest
+    RequestHttp {
+        id: requestHttp
         debug: true
         source: appSettings.rest_service.baseUrl
     }
