@@ -57,11 +57,16 @@ BasePage {
                 id: email
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
+                echoMode: TextInput.Password
                 selectByMouse: true
-                inputMethodHints: Qt.ImhLowercaseOnly
+                inputMethodHints: Qt.ImhNoPredictiveText
                 anchors.horizontalCenter: parent.horizontalCenter
+                font.capitalization: Font.AllLowercase
                 onAccepted: password.focus = true
+                renderType: Text.NativeRendering
                 placeholderText: qsTr("Email")
+                onFocusChanged: echoMode = TextInput.Normal
+                onEditingFinished: text = text.toLocaleLowerCase().trim();
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (email.height-height) - (email.bottomPadding / 2)
@@ -74,9 +79,9 @@ BasePage {
                 id: password
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
-                echoMode: TextInput.Password; font.letterSpacing: 1
+                echoMode: TextInput.Password
                 anchors.horizontalCenter: parent.horizontalCenter
-                selectByMouse: true
+                selectByMouse: true; renderType: Text.NativeRendering
                 onAccepted: loginButton.clicked()
                 inputMethodHints: Qt.ImhNoPredictiveText
                 placeholderText: qsTr("Password")
@@ -86,8 +91,9 @@ BasePage {
                     width: password.width; height: password.activeFocus ? 2 : 1
                     border { width: 1; color: appSettings.theme.colorPrimary }
                 }
+
                 AwesomeIcon {
-                    z: parent.z + 50; size: 20
+                    z: parent.z + 150; size: 20
                     name: password.echoMode == TextInput.Password ? "eye" : "eye_slash"
                     opacity: password.echoMode == TextInput.Password ? 0.7 : 1.0; color: parent.color
                     anchors { verticalCenter: parent.verticalCenter; right: parent.right; rightMargin: 0 }
