@@ -29,7 +29,7 @@ BasePage {
 
             AwesomeIcon {
                 id: awesomeIcon
-                name: "camera"
+                name: "photo"
                 size: 64; color: appSettings.theme.colorPrimary
                 visible: !userImageProfile
                 anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: undefined }
@@ -37,7 +37,7 @@ BasePage {
                 MouseArea {
                     id: awesomeIconControl
                     hoverEnabled: true
-                    anchors.fill: parent; onClicked: profileImageConfigure();
+                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
                 }
 
                 Ripple {
@@ -62,7 +62,7 @@ BasePage {
                 MouseArea {
                     id: drawerUserImageProfileControl
                     hoverEnabled: true
-                    anchors.fill: parent; onClicked: profileImageConfigure();
+                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
                 }
 
                 Ripple {
@@ -114,6 +114,8 @@ BasePage {
             ListItem {
                 showSeparator: true; showIconBold: true
                 primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
+                primaryIconName: userProfileData.gender === "M" ? "mars" : "venus"
+                backgroundColor: appSettings.theme.colorWindowBackground
                 secondaryLabelText: {
                     if (userProfileData.gender === "M")
                         return qsTr("Male");
@@ -122,8 +124,6 @@ BasePage {
                     else
                         return qsTr("Other");
                 }
-                primaryIconName: userProfileData.gender === "M" ? "mars" : "venus"
-                backgroundColor: appSettings.theme.colorWindowBackground
             }
         }
     }
