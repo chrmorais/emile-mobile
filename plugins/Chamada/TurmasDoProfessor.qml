@@ -11,7 +11,7 @@ BasePage {
     listViewDelegate: pageDelegate
     onUpdatePage: request();
 
-    property string root_folder: {}
+    property string root_folder: ""
 
     function requestCallback(status, response) {
         if (status !== 200)
@@ -26,7 +26,7 @@ BasePage {
     }
 
     function request() {
-        jsonListModel.load("teachers_course_sections/" + userProfileData.id, requestCallback);
+        requestHttp.load("teachers_course_sections/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
