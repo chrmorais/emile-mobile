@@ -81,7 +81,7 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Password
                 anchors.horizontalCenter: parent.horizontalCenter
-                selectByMouse: true; renderType: Text.NativeRendering
+                selectByMouse: true; renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 onAccepted: loginButton.clicked()
                 inputMethodHints: Qt.ImhNoPredictiveText
                 placeholderText: qsTr("Password")
