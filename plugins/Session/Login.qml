@@ -63,7 +63,7 @@ BasePage {
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.capitalization: Font.AllLowercase
                 onAccepted: password.focus = true
-                renderType: Text.NativeRendering
+                renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("Email")
                 onFocusChanged: echoMode = TextInput.Normal
                 onEditingFinished: text = text.toLocaleLowerCase().trim();
