@@ -90,23 +90,37 @@ BasePage {
         checkedStatus = fixBind;
     }
 
-    Component.onCompleted: request();
-
-    function requestCallback(status, response) {
-        if (status !== 200)
-            return;
-        var i = 0;
-        if (listViewModel.count > 0)
-            listViewModel.clear();
-        for (var prop in response) {
-            while (i < response[prop].length)
-                listViewModel.append(response[prop][i++]);
-        }
+    Component.onCompleted: {
+         requestHttp.load("course_sections_students/" + course_section_id, function(status, response) {
+             if (status !== 200)
+                 return;
+             var i = 0;
+             if (listViewModel && listViewModel.count > 0)
+                 listModel.clear();
+             for (var prop in response) {
+                 while (i < response[prop].length)
+                    listModel.append(response[prop][i++]);
+             }
+        });
     }
 
-    function request() {
-        requestHttp.load("course_sections_students/" + course_section_id, requestCallback);
-    }
+//    Component.onCompleted: request();
+
+//    function requestCallback(status, response) {
+//        if (status !== 200)
+//            return;
+//        var i = 0;
+//        if (listViewModel.count > 0)
+//            listViewModel.clear();
+//        for (var prop in response) {
+//            while (i < response[prop].length)
+//                listViewModel.append(response[prop][i++]);
+//        }
+//    }
+
+//    function request() {
+//        requestHttp.load("course_sections_students/" + course_section_id, requestCallback);
+//    }
 
     DatePicker {
         id: datePicker
