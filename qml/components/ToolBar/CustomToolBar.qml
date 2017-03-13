@@ -13,19 +13,19 @@ ToolBar {
     states: [
         State {
             name: "normal"
-            PropertyChanges { target: toolButtonDrawer; iconName: "bars"; action: "openMenu" }
+            PropertyChanges { target: toolButtonFirst; iconName: "bars"; action: "openMenu" }
         },
         State {
             name: "action"
-            PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "cancel" }
+            PropertyChanges { target: toolButtonFirst; iconName: "arrow_left"; action: "cancel" }
         },
         State {
             name: "goback"
-            PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "goback" }
+            PropertyChanges { target: toolButtonFirst; iconName: "arrow_left"; action: "goback" }
         },
         State {
             name: "search"
-            PropertyChanges { target: toolButtonDrawer; iconName: "arrow_left"; action: "cancel" }
+            PropertyChanges { target: toolButtonFirst; iconName: "arrow_left"; action: "cancel" }
             PropertyChanges { target: searchToolbar; visible: true }
         }
     ]
@@ -33,6 +33,14 @@ ToolBar {
     property bool hasMenuList: false
     property string toolBarColor: appSettings.theme.colorPrimary
     property color defaultTextColor: appSettings.theme.colorAccent
+
+    property alias toolButtonFirst: toolButtonFirst
+    property alias toolButton2: toolButton2
+    property alias toolButton3: toolButton3
+    property alias toolButton4: toolButton4
+    property alias toolButtonLast: toolButtonLast
+
+    property var toolBarIcons: []
 
     /**
      * a list of objects to the toolbar actions.
@@ -78,7 +86,10 @@ ToolBar {
     Connections {
         target: window.currentPage && window.currentPage.toolBarActions ? window.currentPage : null
         ignoreUnknownSignals: true
-        onToolBarActionsChanged: if (currentPage.toolBarActions) toolBarActions = currentPage.toolBarActions;
+        onToolBarActionsChanged: {
+            if (currentPage.toolBarActions)
+                toolBarActions = currentPage.toolBarActions;
+        }
     }
 
     Connections {
@@ -88,6 +99,9 @@ ToolBar {
             hasMenuList = false;
             toolBarActions = fixBind;
             searchToolbar.visible = false;
+
+            if (currentPage.toolBarIcons)
+                toolBarIcons = currentPage.toolBarIcons;
 
             if (currentPage.toolBarActions)
                 toolBarActions = currentPage.toolBarActions;
@@ -106,7 +120,7 @@ ToolBar {
         anchors { fill: parent; leftMargin: 8; rightMargin: 8 }
 
         CustomToolButton {
-            id: toolButtonDrawer
+            id: toolButtonFirst
             iconColor: defaultTextColor
         }
 
@@ -114,7 +128,7 @@ ToolBar {
             id: title
             width: visible ? parent.width * 0.55 : 0; height: parent.height
             visible: toolBar.state === "normal" || toolBar.state === "goback"
-            anchors { left: toolButtonDrawer.right; leftMargin: 12; verticalCenter: parent.verticalCenter }
+            anchors { left: toolButtonFirst.right; leftMargin: 12; verticalCenter: parent.verticalCenter }
 
             Text {
                 elide: Text.ElideRight
@@ -132,28 +146,28 @@ ToolBar {
         }
 
         CustomToolButton {
-            id: toolButtonSave
+            id: toolButton2
             iconColor: defaultTextColor; action: "save"; iconName: "save"
-            anchors.right: toolButtonDelete.left
+            anchors.right: toolButton3.left
             visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
-            id: toolButtonDelete
+            id: toolButton3
             iconColor: defaultTextColor; action: "delete"; iconName: "trash"
-            anchors.right: toolButtonSearch.left
+            anchors.right: toolButton4.left
             visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
-            id: toolButtonSearch
+            id: toolButton4
             iconColor: defaultTextColor; action: "search"; iconName: "search"
-            anchors.right: toolButtonMenuList.left
+            anchors.right: toolButtonLast.left
             visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
         }
 
         CustomToolButton {
-            id: toolButtonMenuList
+            id: toolButtonLast
             iconColor: defaultTextColor; action: "submenu"; iconName: "ellipsis_v"
             anchors.right: parent.right
             visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
