@@ -19,12 +19,6 @@ BasePage {
         else
             json = {};
         var i = 0;
-        if (listViewModel.count > 0)
-            listViewModel.clear();
-        for (var prop in response) {
-            while (i < response[prop].length)
-                listViewModel.append(response[prop][i++]);
-        }
     }
 
     function request() {
@@ -83,7 +77,7 @@ BasePage {
             }
 
             CustomButton {
-                enabled: json !== undefined && !isPageBusy
+                visible: json !== undefined && !isPageBusy
                 text: qsTr("Student attendance")
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
@@ -99,7 +93,7 @@ BasePage {
 
     CustomButton {
         text: qsTr("My courses")
-        enabled: !isPageBusy
+        visible: !isPageBusy
         textColor: appSettings.theme.colorPrimary
         backgroundColor: appSettings.theme.colorAccent
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
