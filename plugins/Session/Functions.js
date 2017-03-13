@@ -1,5 +1,25 @@
 .import "../../qml/js/Utils.js" as Util
 
+function callbackLoadPrograms(status, response) {
+    if (!status || !response || status !== 200) {
+        alert(qsTr("Error!", qsTr("Cannot load the programs available! Try again.")));
+        return;
+    }
+    var list = [];
+    for (var prop in response) {
+        if (!prop)
+            return;
+        var i = -1;
+        while (i++ < response[prop])
+            list.push(response[prop].name)
+    }
+    programsList.model = list;
+}
+
+function loadPrograms() {
+    requestHttp.load("programs/", callbackLoadPrograms);
+}
+
 function isValidLoginForm() {
     var message = "";
     if (email.text.length === 0)
