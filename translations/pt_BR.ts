@@ -71,26 +71,26 @@
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="101"/>
+        <location filename="../plugins/Session/Functions.js" line="104"/>
         <source>Enter your Email!</source>
         <translation>Insira seu Email!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="103"/>
+        <location filename="../plugins/Session/Functions.js" line="106"/>
         <source>Enter a valid Email!</source>
         <translation>Insira um Email válido!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="105"/>
+        <location filename="../plugins/Session/Functions.js" line="108"/>
         <source>Enter your password!</source>
         <translation>Insira sua senha!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="5"/>
         <location filename="../plugins/Session/Functions.js" line="30"/>
-        <location filename="../plugins/Session/Functions.js" line="107"/>
-        <location filename="../plugins/Session/Functions.js" line="116"/>
-        <location filename="../plugins/Session/Functions.js" line="124"/>
+        <location filename="../plugins/Session/Functions.js" line="110"/>
+        <location filename="../plugins/Session/Functions.js" line="119"/>
+        <location filename="../plugins/Session/Functions.js" line="127"/>
         <source>Error!</source>
         <translation>Erro!</translation>
     </message>
@@ -132,6 +132,7 @@
         <location filename="../plugins/Session/Functions.js" line="64"/>
         <location filename="../plugins/Session/Functions.js" line="67"/>
         <location filename="../plugins/Session/Functions.js" line="70"/>
+        <location filename="../plugins/Session/Functions.js" line="73"/>
         <source>Ops!</source>
         <translation></translation>
     </message>
@@ -171,17 +172,22 @@
         <translation>Escolha pelo menos uma turma!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="116"/>
+        <location filename="../plugins/Session/Functions.js" line="73"/>
+        <source>The number of course section checked is above the limit (7). Fix this and try again.</source>
+        <translation>O número de turmas marcadas estão acima do limite (7). Corrija isso e tente novamente.</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Functions.js" line="119"/>
         <source>Email or password is invalid. Try again!</source>
         <translation>Email ou senha é inválida. Tente novamente!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="119"/>
+        <location filename="../plugins/Session/Functions.js" line="122"/>
         <source>Login done successfully!</source>
         <translation>Login feito com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="124"/>
+        <location filename="../plugins/Session/Functions.js" line="127"/>
         <source>Failed to connect to the server!</source>
         <translation>Falha para conectar com o servidor!</translation>
     </message>
@@ -263,7 +269,7 @@
     <message>
         <location filename="../plugins/Session/Login.qml" line="121"/>
         <source>Register</source>
-        <translation>Cadastro</translation>
+        <translation>Cadastrar</translation>
     </message>
     <message>
         <source>LOST PASSWORD</source>
@@ -431,35 +437,35 @@
     <message>
         <location filename="../plugins/Session/Register.qml" line="12"/>
         <source>Register</source>
-        <translation>Cadastro</translation>
+        <translation>Cadastrar</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="73"/>
+        <location filename="../plugins/Session/Register.qml" line="79"/>
         <source>Enter your name</source>
         <translation>Insira seu nome</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="94"/>
+        <location filename="../plugins/Session/Register.qml" line="100"/>
         <source>youremail@example.com</source>
         <translation>seuemail@exemplo.com</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="114"/>
+        <location filename="../plugins/Session/Register.qml" line="120"/>
         <source>Create a password</source>
         <translation>Escolha uma senha</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="140"/>
+        <location filename="../plugins/Session/Register.qml" line="146"/>
         <source>Confirm your password</source>
         <translation>Confirme sua senha</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="185"/>
+        <location filename="../plugins/Session/Register.qml" line="197"/>
         <source>Check the programs course sections</source>
-        <translation>Marque as turmas que você está matriculado</translation>
+        <translation>Marque as turmas corrente</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="227"/>
+        <location filename="../plugins/Session/Register.qml" line="268"/>
         <source>Create Account</source>
         <translation>Crie sua conta</translation>
     </message>
