@@ -117,6 +117,7 @@ ApplicationWindow {
                 // append the plugin config json
                 pageObject.configJson = crudModel[i];
                 menuPagesTemp.push(pageObject);
+                console.log("pageObject.configJson: " + pageObject.configJson);
             }
         }
         menuPagesTemp.sort(Util.sortArrayByObjectKey("order_priority"));
@@ -173,7 +174,7 @@ ApplicationWindow {
         target: PostFile
         onFinished: {
             if (parseInt(statusCode) === 200 && response) {
-                var objc = JSON.parse(result);
+                var objc = JSON.parse(response);
                 userProfileData.image_path = response.image_path;
                 Emile.saveObject("user_profile_data", objc.user);
                 userProfileData = response.user;
