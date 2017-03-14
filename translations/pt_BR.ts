@@ -456,7 +456,7 @@
     <message>
         <location filename="../plugins/Session/Register.qml" line="185"/>
         <source>Check the programs course sections</source>
-        <translation>Verifique as turmas do curso</translation>
+        <translation>Marque as turmas que você está matriculado</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Register.qml" line="227"/>
