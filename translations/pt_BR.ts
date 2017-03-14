@@ -120,9 +120,8 @@
         <translation>Sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="47"/>
         <source>Your register account is created with success!</source>
-        <translation>Sua conta foi criada com sucesso!</translation>
+        <translation type="vanished">Sua conta foi criada com sucesso!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="49"/>
@@ -137,9 +136,18 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="49"/>
         <source>Your register account cannot be created! The email is already registered for another account!</source>
-        <translation>Sua conta não foi possível ser criada! o email já foi cadastrado por outra conta!</translation>
+        <translation type="vanished">Sua conta não foi possível ser criada! o email já foi cadastrado por outra conta!</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Functions.js" line="47"/>
+        <source>Your register account was created with success!</source>
+        <translation>Sua conta foi criada com sucesso!</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Functions.js" line="49"/>
+        <source>Cannot create the account! The email is already associated to another user!</source>
+        <translation>Sua conta não foi criada! O email já está associado a outro usuário!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="51"/>
@@ -440,32 +448,32 @@
         <translation>Cadastrar</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="79"/>
+        <location filename="../plugins/Session/Register.qml" line="80"/>
         <source>Enter your name</source>
         <translation>Insira seu nome</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="100"/>
+        <location filename="../plugins/Session/Register.qml" line="101"/>
         <source>youremail@example.com</source>
         <translation>seuemail@exemplo.com</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="120"/>
+        <location filename="../plugins/Session/Register.qml" line="121"/>
         <source>Create a password</source>
         <translation>Escolha uma senha</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="146"/>
+        <location filename="../plugins/Session/Register.qml" line="147"/>
         <source>Confirm your password</source>
         <translation>Confirme sua senha</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="197"/>
+        <location filename="../plugins/Session/Register.qml" line="198"/>
         <source>Check the programs course sections</source>
         <translation>Marque as turmas corrente</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Register.qml" line="268"/>
+        <location filename="../plugins/Session/Register.qml" line="269"/>
         <source>Create Account</source>
         <translation>Crie sua conta</translation>
     </message>
