@@ -27,7 +27,7 @@ function appendCourseSection(id, status) {
 
 function callbackCourseSections(status, response) {
     if (status !== 200) {
-        alert(qsTr("Error!", qsTr("Cannot load the availables course sections! Try again.")));
+        alert(qsTr("Error!"), qsTr("Cannot load the availables course sections! Try again."));
         return;
     }
     for (var prop in response) {
@@ -44,9 +44,9 @@ function callbackCourseSections(status, response) {
 
 function callbackRegister(status, response) {
     if (status === 200)
-        alert(qsTr("Success!"), qsTr("Your register account is created with success!"), "OK", function() { pageStack.pop(); }, function() { pageStack.pop(); });
+        alert(qsTr("Success!"), qsTr("Your register account was created with success!"), "OK", function() { pageStack.pop(); }, function() { pageStack.pop(); });
     else if (status === 400)
-        alert(qsTr("Ops!"), qsTr("Your register account cannot be created! The email is already registered for another account!"));
+        alert(qsTr("Ops!"), qsTr("Cannot create the account! The email is already associated to another user!"));
     else
         alert(qsTr("Ops!"), qsTr("Cannot load response from the server! Try again."));
 }
