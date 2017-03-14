@@ -65,9 +65,12 @@ function isValidRegisterForm() {
     } else if (password1.text !== password2.text) {
         status = false;
         alert(qsTr("Ops!"), qsTr("These passwords don't match!"));
-    } else if (courseSectionsArray.length > 0) {
+    } else if (courseSectionsArray.length === 0) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Choose at least one course section!"));
+    } else if (courseSectionsArray.length > 7) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("The number of course section checked is above the limit (7). Fix this and try again."));
     }
 
     return status;
@@ -82,7 +85,7 @@ function requestRegister() {
           "program_id": programsList.currentIndex + 1,
           "course_sections": courseSectionsArray
         });
-        requestHttp.requestParams = params;
+        requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("add_student", callbackRegister, "POST");
     }
 }
