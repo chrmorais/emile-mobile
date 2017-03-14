@@ -39,7 +39,13 @@ BasePage {
         id: pageFlickable
         anchors.fill: parent
         contentHeight: Math.max(content.implicitHeight, height) + 35
-        //boundsBehavior: Flickable.DragOverBounds
+
+        AwesomeIcon {
+            id: backButton
+            size: 22; name: "arrow_left"; color: appSettings.theme.colorPrimary
+            anchors { top: parent.top; topMargin: 16; left: parent.left; leftMargin: 16 }
+            onClicked: pageStack.pop();
+        }
 
         Column {
             id: content
@@ -108,7 +114,7 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Password
                 anchors.horizontalCenter: parent.horizontalCenter
-                selectByMouse: true; renderType: Text.NativeRendering
+                selectByMouse: true; renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 onAccepted: password2.focus = true;
                 inputMethodHints: Qt.ImhNoPredictiveText
                 placeholderText: qsTr("Create a password")
@@ -134,8 +140,8 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Password
                 anchors.horizontalCenter: parent.horizontalCenter
-                selectByMouse: true; renderType: Text.NativeRendering
-                onAccepted: courseSections.forceActiveFocus();
+                selectByMouse: true; renderType: isIOS ? Text.NativeRendering : Text.QtRendering
+                onAccepted: programsList.visible = true;
                 inputMethodHints: Qt.ImhNoPredictiveText
                 placeholderText: qsTr("Confirm your password")
                 background: Rectangle {
@@ -161,8 +167,11 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 anchors.horizontalCenter: parent.horizontalCenter
                 onCurrentIndexChanged: {
-                    if (currentIndex > 0)
+                    if (programsListModel.count > 0 && currentIndex > 0) {
                         RegisterFunctions.loadProgramsCourseSections(currentIndex);
+                        var courseSectionsArrayTemp = [];
+                        courseSectionsArray = courseSectionsArrayTemp;
+                    }
                 }
             }
 
@@ -173,7 +182,10 @@ BasePage {
 
                 MouseArea {
                     z: 10; anchors.fill: parent
-                    onClicked: courseSectionsChooserDialog.open();
+                    onClicked: {
+                        if (programCourseSectionsList.model && courseSectionsListModel.count > 0)
+                            courseSectionsChooserDialog.open();
+                    }
                 }
             }
 
@@ -187,7 +199,7 @@ BasePage {
                 standardButtons: Dialog.Ok
 
                 onAccepted: {
-                    courseSectionsChooserDialog.close()
+                    courseSectionsChooserDialog.close();
                 }
                 onRejected: {
                     programsList.currentIndex = -1;
@@ -195,28 +207,57 @@ BasePage {
                 }
 
                 contentItem: ListView {
-                    spacing: 1
-                    width: courseSectionsChooserDialog.width
-                    height: courseSectionsChooserDialog.height
+                    id: courseSectionListView
                     displayMarginBeginning: 10
                     model: courseSectionsListModel
+                    width: courseSectionsChooserDialog.width
+                    height: courseSectionsChooserDialog.height
                     delegate: Rectangle {
-                        color: "#fff"
+                        color: "#fff"; opacity: (courseSectionsArray.indexOf(id) >= 0) ? 0.5 : 1.0
                         width: parent.width; height: 50
 
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: control.checked = !control.checked;
+                        }
+
                         Label {
+                            id: label
                             width: parent.width * 0.65
                             text: description; elide: Text.ElideRight
                             verticalAlignment: Label.AlignVCenter
+                            color: appSettings.theme.colorPrimary
                             anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }
                         }
 
                         CheckBox {
+                            id: control
                             anchors { right: parent.right; rightMargin: 15; verticalCenter: parent.verticalCenter }
-                            onClicked: RegisterFunctions.appendCourseSection(id, checked);
+                            onCheckedChanged: RegisterFunctions.appendCourseSection(id, checked);
+                            indicator: Rectangle {
+                                x: control.leftPadding
+                                y: parent.height / 2 - height / 2
+                                implicitWidth: 22; implicitHeight: 22
+                                radius: 3; border.color: label.color
+
+                                Rectangle {
+                                    radius: 3
+                                    color: label.color
+                                    width: 12; height: 12
+                                    visible: control.checked
+                                    anchors.centerIn: parent
+                                }
+                            }
                         }
 
-                        Rectangle { width: parent.width; color: "#ccc"; height: 1; anchors.bottom: parent.bottom }
+                        Rectangle { width: parent.width; color: appSettings.theme.colorAccent; height: 1; anchors.bottom: parent.bottom }
+                    }
+
+                    EmptyList {
+                        z: courseSectionsChooserDialog.z+1
+                        visible: courseSectionsChooserDialog.visible && courseSectionListView.count <= 0 && !isPageBusy
+                        enabled: !isPageBusy
+                        onClicked: loadProgramsCourseSections(programsList.currentIndex);
                     }
                 }
             }
@@ -228,8 +269,10 @@ BasePage {
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
+                    username.focus = false;
                     email.focus = false;
-                    password.focus = false;
+                    password1.focus = false;
+                    password2.focus = false;
                     lockerButtons.running = true;
                     RegisterFunctions.requestRegister();
                 }
