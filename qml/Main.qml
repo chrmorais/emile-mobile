@@ -55,6 +55,13 @@ ApplicationWindow {
         submitTokenToServer(token);
     }
 
+    function callbackTokenRegister(status, response) {
+        console.log("callbackTokenRegister: token registered!");
+        console.log("response: " + JSON.stringify(response));
+        if (status === 200 && response && response.user)
+            Emile.saveObject("user_profile_data", response.user);
+    }
+
     function submitTokenToServer(token) {
         var savedToken = Emile.readData("push_notification_token");
 
@@ -64,14 +71,14 @@ ApplicationWindow {
         if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
             return;
 
-        var params = {
+        var params = JSON.stringify({
             "post_message": { "push_notification_token": token }
-        };
+        });
 
-        requestHttp.requestParams = JSON.stringify(params);
-        requestHttp.load("token_register/" + userProfileData.id, function(status, response) {
-            Emile.saveObject("user_profile_data", response.user);
-        }, "POST");
+        console.log("send token to register to user: " + userProfileData.id);
+        console.log("params: " + params);
+        console.log("requestHttp.source: " + requestHttp.source);
+        requestHttp.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
@@ -117,7 +124,6 @@ ApplicationWindow {
                 // append the plugin config json
                 pageObject.configJson = crudModel[i];
                 menuPagesTemp.push(pageObject);
-                console.log("pageObject.configJson: " + pageObject.configJson);
             }
         }
         menuPagesTemp.sort(Util.sortArrayByObjectKey("order_priority"));

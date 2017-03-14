@@ -16,7 +16,7 @@ Item {
     property string requestParams: ""
     property var xhr: new XMLHttpRequest
 
-    function load(path, callback, method, contentType) {
+    function load(path, callback, method, contentType, params) {
         var url = source + path;
         if (!xhr)
             xhr = new XMLHttpRequest;
@@ -50,7 +50,7 @@ Item {
                 }
             }
         }
-        xhr.send(requestParams);
+        xhr.send(params ? params : requestParams);
         rootItem.state = "loading";
         rootItem.requestParams = "";
     }
