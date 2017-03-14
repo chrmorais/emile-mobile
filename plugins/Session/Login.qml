@@ -114,6 +114,20 @@ BasePage {
                     LoginFunctions.requestLogin();
                 }
             }
+
+            CustomButton {
+                id: registerButton
+                enabled: !lockerButtons.running && !isPageBusy
+                text: qsTr("Register");
+                textColor: appSettings.theme.colorAccent
+                backgroundColor: appSettings.theme.colorPrimary
+                onClicked: {
+                    email.focus = false;
+                    password.focus = false;
+                    lockerButtons.running = true;
+                    pushPage("/plugins/Session/Register.qml", {});
+                }
+            }
         }
     }
 }
