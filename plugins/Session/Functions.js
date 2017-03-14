@@ -8,7 +8,7 @@ function callbackPrograms(status, response) {
     for (var prop in response) {
         if (!prop) return;
         var i = 0;
-        programsListModel.append({"id": -1, "name": qsTr("Select the course program"), "abbreviation": ""});
+        programsListModel.append({"id": -1, "name": qsTr("Select the course"), "abbreviation": ""});
         while (i < response[prop].length)
             programsListModel.append(response[prop][i++]);
         programsList.currentIndex = 0;
