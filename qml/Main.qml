@@ -228,7 +228,7 @@ ApplicationWindow {
 
     RequestHttp {
         id: requestHttp
-        debug: true
+        debug: false
         source: appSettings.restService.baseUrl
     }
 
