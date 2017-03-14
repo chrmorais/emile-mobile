@@ -37,6 +37,27 @@ BasePage {
         }
     }
 
+    function messageLink(message) {
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var text = message
+        var temp = text.replace(exp,"<a href=\"$1\" target=\"_blank\">$1</a>");
+        var result = "";
+        while (temp.length > 0) {
+            var pos = temp.indexOf("href=\"");
+            if (pos == -1) {
+                result += temp;
+                break;
+            }
+            result += temp.substring(0, pos + 6);
+
+            temp = temp.substring(pos + 6, temp.length);
+            if ((temp.indexOf("://") > 8) || (temp.indexOf("://") == -1)) {
+                result += "http://";
+            }
+        }
+        return result;
+    }
+
     function request() {
         if (!userProfileData.id)
             return;
@@ -111,10 +132,12 @@ BasePage {
 
                     Label {
                         id: labelMessage
-                        text: message || ""
+                        text: messageLink(message) || ""
                         width: parent.width * 0.95
                         wrapMode: Text.Wrap
                         font.wordSpacing: 1
+                        textFormat: Text.RichText
+                        onLinkActivated: Qt.openUrlExternally(link)
                         color: appSettings.theme.defaultTextColor
                         anchors { right: parent.right; left: parent.left; margins: 10 }
                     }
