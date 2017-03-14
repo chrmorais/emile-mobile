@@ -55,8 +55,8 @@ Item {
     MouseArea {
         id: _control
         anchors.fill: clickEnabled ? parent : undefined
-        onClicked: if(clickEnabled) widget.clicked();
-        onPressAndHold: if(clickEnabled) widget.pressAndHold();
+        onClicked: if (clickEnabled) widget.clicked();
+        onPressAndHold: if (clickEnabled) widget.pressAndHold();
     }
 
     Ripple {
