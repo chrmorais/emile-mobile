@@ -45,6 +45,7 @@ BasePage {
             size: 22; name: "arrow_left"; color: appSettings.theme.colorPrimary
             anchors { top: parent.top; topMargin: 16; left: parent.left; leftMargin: 16 }
             onClicked: pageStack.pop();
+            visible: !isPageBusy
         }
 
         Column {
