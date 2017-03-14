@@ -1,23 +1,98 @@
 .import "../../qml/js/Utils.js" as Util
 
-function callbackLoadPrograms(status, response) {
-    if (!status || !response || status !== 200) {
-        alert(qsTr("Error!", qsTr("Cannot load the programs available! Try again.")));
+function callbackPrograms(status, response) {
+    if (status !== 200) {
+        alert(qsTr("Error!", qsTr("Cannot load the available programs! Try again.")));
         return;
     }
-    var list = [];
     for (var prop in response) {
-        if (!prop)
-            return;
-        var i = -1;
-        while (i++ < response[prop])
-            list.push(response[prop].name)
+        if (!prop) return;
+        var i = 0;
+        programsListModel.append({"id": -1, "name": qsTr("Select the course program"), "abbreviation": ""});
+        while (i < response[prop].length)
+            programsListModel.append(response[prop][i++]);
+        programsList.currentIndex = 0;
     }
-    programsList.model = list;
+}
+
+function appendCourseSection(id, status) {
+    var arrayTemp = courseSectionsArray;
+    var itemIndex = arrayTemp.indexOf(id);
+    if (itemIndex === -1)
+        arrayTemp.push(id);
+    else if (itemIndex > -1)
+        arrayTemp.splice(itemIndex, 1);
+    courseSectionsArray = arrayTemp;
+}
+
+function callbackCourseSections(status, response) {
+    if (status !== 200) {
+        alert(qsTr("Error!", qsTr("Cannot load the availables course sections! Try again.")));
+        return;
+    }
+    for (var prop in response) {
+        if (!prop) return;
+        var i = 0;
+        if (courseSectionsListModel.count > 0)
+            courseSectionsListModel.clear();
+        while (i < response[prop].length)
+            courseSectionsListModel.append(response[prop][i++]);
+    }
+    var model = [qsTr("Select the course sections")];
+    programCourseSectionsList.model = model;
+}
+
+function callbackRegister(status, response) {
+    if (status === 200)
+        alert(qsTr("Success!"), qsTr("Your register account is created with success!"), "OK", function() { pageStack.pop(); }, function() { pageStack.pop(); });
+    else if (status === 400)
+        alert(qsTr("Ops!"), qsTr("Your register account cannot be created! The email is already registered for another account!"));
+    else
+        alert(qsTr("Ops!"), qsTr("Cannot load response from the server! Try again."));
+}
+
+function isValidRegisterForm() {
+    var status = true;
+    if (!username.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter your name!"));
+    } else if (!email.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter your email!"));
+    } else if (!email.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
+    } else if (password1.text !== password2.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("These passwords don't match!"));
+    } else if (courseSectionsArray.length > 0) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Choose at least one course section!"));
+    }
+
+    return status;
+}
+
+function requestRegister() {
+    if (isValidRegisterForm()) {
+        var params = ({
+          "name": username.text,
+          "email": email.text,
+          "password": password1.text,
+          "program_id": programsList.currentIndex + 1,
+          "course_sections": courseSectionsArray
+        });
+        requestHttp.requestParams = params;
+        requestHttp.load("register_user", callbackRegister, "POST");
+    }
 }
 
 function loadPrograms() {
-    requestHttp.load("programs/", callbackLoadPrograms);
+    requestHttp.load("programs", callbackPrograms);
+}
+
+function loadProgramsCourseSections(programId) {
+    requestHttp.load("programs_course_sections/"+programId, callbackCourseSections);
 }
 
 function isValidLoginForm() {
