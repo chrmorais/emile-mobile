@@ -14,20 +14,16 @@ Item {
     property bool debug: false
     property string source: ""
     property string requestParams: ""
-    property var xhr: new XMLHttpRequest
 
     function load(path, callback, method, contentType, params) {
         var url = source + path;
-        if (!xhr)
-            xhr = new XMLHttpRequest;
+        var xhr = new XMLHttpRequest();
         if (!method)
             method = "GET";
         if (method === "GET" && requestParams)
             url += "?" + requestParams;
-        if (!contentType)
-            contentType = "application/json";
-        xhr.open(method, url);
-        xhr.setRequestHeader("Content-type", contentType);
+        xhr.open(method, url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.onerror = function() {
             rootItem.errorString = qsTr("Cannot connect to server!");
             rootItem.state = "error";
@@ -42,6 +38,7 @@ Item {
                 }
                 if (callback) {
                     rootItem.state = "ready";
+                    rootItem.requestParams = "";
                     try {
                         callback(rootItem.httpStatus, JSON.parse(xhr.responseText));
                     } catch(e) {
@@ -49,9 +46,8 @@ Item {
                     }
                 }
             }
-        }
+        };
         xhr.send(params ? params : requestParams);
         rootItem.state = "loading";
-        rootItem.requestParams = "";
     }
 }
