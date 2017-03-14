@@ -56,8 +56,6 @@ ApplicationWindow {
     }
 
     function callbackTokenRegister(status, response) {
-        console.log("callbackTokenRegister: token registered!");
-        console.log("response: " + JSON.stringify(response));
         if (status === 200 && response && response.user)
             Emile.saveObject("user_profile_data", response.user);
     }
@@ -72,12 +70,9 @@ ApplicationWindow {
             return;
 
         var params = JSON.stringify({
-            "post_message": { "push_notification_token": token }
+            "post_message": {"push_notification_token": token}
         });
 
-        console.log("send token to register to user: " + userProfileData.id);
-        console.log("params: " + params);
-        console.log("requestHttp.source: " + requestHttp.source);
         requestHttp.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
     }
 
@@ -179,7 +174,7 @@ ApplicationWindow {
     Connections {
         target: PostFile
         onFinished: {
-            if (parseInt(statusCode) === 200 && response) {
+            if (parseInt(statusCode) === 200 && response && response.user) {
                 var objc = JSON.parse(response);
                 userProfileData.image_path = response.image_path;
                 Emile.saveObject("user_profile_data", objc.user);
