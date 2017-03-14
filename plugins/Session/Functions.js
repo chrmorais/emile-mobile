@@ -59,7 +59,7 @@ function isValidRegisterForm() {
     } else if (!email.text) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter your email!"));
-    } else if (!email.text) {
+    } else if (!Util.isValidEmail(email.text)) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
     } else if (password1.text !== password2.text) {
@@ -83,7 +83,7 @@ function requestRegister() {
           "course_sections": courseSectionsArray
         });
         requestHttp.requestParams = params;
-        requestHttp.load("register_user", callbackRegister, "POST");
+        requestHttp.load("add_student", callbackRegister, "POST");
     }
 }
 
