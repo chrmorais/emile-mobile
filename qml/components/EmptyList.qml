@@ -30,7 +30,7 @@ Rectangle {
     property string iconColor: textColor
     property string iconName: "warning"
     property string firstText: qsTr("Warning! No itens found")
-    property string secondText: qsTr("Touch to try again!")
+    property string secondText: qsTr("Check your internet connection, Touch to try again!")
 
     signal clicked()
     signal pressAndHold()

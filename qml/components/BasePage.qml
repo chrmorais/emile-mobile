@@ -43,6 +43,9 @@ Page {
     // a alias to progressBar to child pages manage them
     property alias progressBar: _progressBar
 
+    // a alias to firstText of emptyList to child pages manage them
+    property alias firstText: _emptyList.firstText
+
     property ListView listView
     property ListModel listViewModel
 
