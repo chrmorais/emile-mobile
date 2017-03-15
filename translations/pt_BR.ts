@@ -24,14 +24,6 @@
     </message>
 </context>
 <context>
-    <name>Curriculum</name>
-    <message>
-        <location filename="../plugins/Curriculum/Curriculum.qml" line="10"/>
-        <source>My curriculum</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DestinationGroupSelect</name>
     <message>
         <location filename="../plugins/WallMessage/DestinationGroupSelect.qml" line="8"/>
@@ -46,6 +38,11 @@
         <source>Course Sections</source>
         <translation>Disciplinas</translation>
     </message>
+    <message>
+        <location filename="../plugins/WallMessage/DestinationSelect.qml" line="13"/>
+        <source>Warning! No courses sections found!</source>
+        <translation>Aviso! Nenhuma turma encontrada!</translation>
+    </message>
 </context>
 <context>
     <name>EmptyList</name>
@@ -56,8 +53,12 @@
     </message>
     <message>
         <location filename="../qml/components/EmptyList.qml" line="33"/>
+        <source>Check your internet connection, Touch to try again!</source>
+        <translation>Verifique sua conexão com a internet, Toque aqui para tentar de novo!</translation>
+    </message>
+    <message>
         <source>Touch to try again!</source>
-        <translation>Toque para tentar novamente!</translation>
+        <translation type="vanished">Toque para tentar novamente!</translation>
     </message>
 </context>
 <context>
@@ -66,6 +67,11 @@
         <location filename="../plugins/Chamada/FaltasPorDisciplina.qml" line="9"/>
         <source>My attendance</source>
         <translation>Faltas por disciplina</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Chamada/FaltasPorDisciplina.qml" line="12"/>
+        <source>Warning! No attendance found!</source>
+        <translation>Aviso! Nenhum registro de comparecimento encontrado!</translation>
     </message>
 </context>
 <context>
@@ -312,6 +318,11 @@
         <source>My attendance</source>
         <translation>Minhas faltas</translation>
     </message>
+    <message>
+        <location filename="../plugins/Chamada/MinhasFaltas.qml" line="11"/>
+        <source>Warning! No attendance found!</source>
+        <translation>Aviso! Nenhuma turma encontrada!</translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -397,45 +408,50 @@
         <translation>Realizar chamada</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="47"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="13"/>
+        <source>Warning! No students found!</source>
+        <translation>Aviso! Nenhum aluno encontrado!</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="48"/>
         <source>Success!</source>
         <translation>Sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="47"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="48"/>
         <source>Attendance was successfully registered</source>
         <translation>A chamada foi registrada com sucesso</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="49"/>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="51"/>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="57"/>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="61"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="50"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="52"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="58"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="62"/>
         <source>Warning!</source>
         <translation>Aviso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="49"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="50"/>
         <source>The attendance date is already registered for this course section! Set another date.</source>
         <translation>A data desta chamada já foi registrada para essa turma! Escolha outra data.</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="51"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="52"/>
         <source>The attendance date is invalid for this course section!</source>
         <translation>A data desta chamada é inválida para essa turma!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="57"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="58"/>
         <source>The students list is empty!</source>
         <translation>A lista de alunos está vazia!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="61"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="62"/>
         <source>You need to inform the attendance date for this course section!</source>
         <translation>Você precisa informar a data desta chamada para essa turma!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/RealizarChamada.qml" line="67"/>
+        <location filename="../plugins/Chamada/RealizarChamada.qml" line="68"/>
         <source>Saving attendance register...</source>
         <translation>Salvando o registro da chamada...</translation>
     </message>
@@ -481,7 +497,7 @@
 <context>
     <name>RequestHttp</name>
     <message>
-        <location filename="../qml/components/RequestHttp.qml" line="32"/>
+        <location filename="../qml/components/RequestHttp.qml" line="28"/>
         <source>Cannot connect to server!</source>
         <translation>Não foi possível conectar com o servidor!</translation>
     </message>
@@ -552,6 +568,11 @@
         <source>My courses</source>
         <translation>Minhas disciplinas</translation>
     </message>
+    <message>
+        <location filename="../plugins/Chamada/TurmasDoProfessor.qml" line="13"/>
+        <source>Warning! No courses sections found!</source>
+        <translation>Aviso! Nenhuma turma encontrada!</translation>
+    </message>
 </context>
 <context>
     <name>Wall</name>
@@ -566,7 +587,12 @@
         <translation>Muro de notificações</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="125"/>
+        <location filename="../plugins/WallMessage/Wall.qml" line="18"/>
+        <source>Warning! No Wall message found!</source>
+        <translation>Aviso! Nenhuma notificação encontrada!</translation>
+    </message>
+    <message>
+        <location filename="../plugins/WallMessage/Wall.qml" line="135"/>
         <source>You</source>
         <translation>Você</translation>
     </message>
