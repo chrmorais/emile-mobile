@@ -10,6 +10,7 @@ BasePage {
     toolBarState: "goback"
     listViewDelegate: pageDelegate
     onUpdatePage: request();
+    firstText: qsTr("Warning! No courses sections found!")
 
     property string destination
     property int userTypeDestinationId

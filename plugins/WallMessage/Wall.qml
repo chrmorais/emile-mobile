@@ -15,6 +15,7 @@ BasePage {
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
     onUpdatePage: request();
+    firstText: qsTr("Warning! No Wall message found!")
 
     function apendObject(o, moveToTop) {
         listViewModel.append(o);
@@ -117,7 +118,7 @@ BasePage {
                     anchors { top: parent.top; topMargin: 5; left: parent.left; leftMargin: 10 }
 
                     AwesomeIcon {
-                        size: 12; name: "commenting"; color: authorLabel.color; clickEnabled: false
+                        size: 12; name: userProfileData.name === sender.name ? "arrow_right" : "commenting"; color: authorLabel.color; clickEnabled: false
                     }
 
                     Label {

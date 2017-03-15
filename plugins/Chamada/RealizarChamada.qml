@@ -10,6 +10,7 @@ BasePage {
     toolBarState: "goback"
     toolBarActions: ["save"]
     hasListView: false
+    firstText: qsTr("Warning! No students found!")
 
     property bool checkedAll: true
     property int section_times_id: 0

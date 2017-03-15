@@ -8,6 +8,7 @@ BasePage {
     objectName: title
     listViewDelegate: pageDelegate
     onUpdatePage: request();
+    firstText: qsTr("Warning! No attendance found!")
 
     function requestCallback(status, response) {
         if (status !== 200)
