@@ -73,7 +73,7 @@ BasePage {
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
                 selectByMouse: true
-                inputMethodHints: Qt.ImhNoPredictiveText
+                inputMethodHints: isIOS ? Qt.ImhNoPredictiveText : Qt.ImhNone
                 anchors.horizontalCenter: parent.horizontalCenter
                 onAccepted: email.focus = true
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
@@ -93,7 +93,7 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Password
                 selectByMouse: true
-                inputMethodHints: Qt.ImhNoPredictiveText
+                inputMethodHints: isIOS ? Qt.ImhNoPredictiveText : Qt.ImhNone
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.capitalization: Font.AllLowercase
                 onAccepted: password.focus = true

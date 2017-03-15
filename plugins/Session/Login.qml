@@ -59,7 +59,7 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 echoMode: TextInput.Password
                 selectByMouse: true
-                inputMethodHints: Qt.ImhNoPredictiveText
+                inputMethodHints: isIOS ? Qt.ImhNoPredictiveText : Qt.ImhNone
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.capitalization: Font.AllLowercase
                 onAccepted: password.focus = true
