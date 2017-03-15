@@ -9,6 +9,7 @@ BasePage {
     title: qsTr("My attendance")
     objectName: title
     listViewDelegate: pageDelegate
+    firstText: qsTr("Warning! No attendance found!")
 
     property int courseId: 0
     property string toolBarState: "goback"

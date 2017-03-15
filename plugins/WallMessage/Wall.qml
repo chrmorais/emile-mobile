@@ -40,7 +40,7 @@ BasePage {
 
     function messageLink(message) {
         var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        var text = message
+        var text = urlify(message)
         var temp = text.replace(exp,"<a href=\"$1\" target=\"_blank\">$1</a>");
         var result = "";
         while (temp.length > 0) {
@@ -57,6 +57,15 @@ BasePage {
             }
         }
         return result;
+    }
+
+    function urlify(text) {
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        //var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url,b,c) {
+            var url2 = (c == 'www.') ?  'https://' +url : url;
+            return '<a href="' +url2 + '</a>';
+        })
     }
 
     function request() {
