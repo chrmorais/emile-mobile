@@ -18,7 +18,6 @@ BasePage {
 
     Flickable {
         id: flickable
-        visible: true
         anchors.fill: parent
         contentHeight: Math.max(column.implicitHeight, height)
 
@@ -81,7 +80,8 @@ BasePage {
 
             ListItem {
                 showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Name: ") + "</b>"
+                primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Name: ")
                 secondaryLabelText: userProfileData.name
                 primaryIconName: "tag"
                 backgroundColor: appSettings.theme.colorWindowBackground
@@ -89,7 +89,8 @@ BasePage {
 
             ListItem {
                 showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Email: ") + "</b>"
+                primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Email: ")
                 secondaryLabelText: userProfileData.email
                 primaryIconName: "envelope"
                 backgroundColor: appSettings.theme.colorWindowBackground
@@ -97,23 +98,17 @@ BasePage {
 
             ListItem {
                 showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Username: ") + "</b>"
-                secondaryLabelText: userProfileData.username
-                primaryIconName: "user"
-                backgroundColor: appSettings.theme.colorWindowBackground
-            }
-
-            ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Address: ") + "</b>"
-                secondaryLabelText: userProfileData.address
+                primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Address: ")
+                secondaryLabelText: userProfileData.address || ""
                 primaryIconName: "map_marker"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
                 showSeparator: true; showIconBold: true
-                primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
+                primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Gender: ")
                 primaryIconName: userProfileData.gender === "M" ? "mars" : "venus"
                 backgroundColor: appSettings.theme.colorWindowBackground
                 secondaryLabelText: {
