@@ -82,11 +82,59 @@ function requestRegister() {
           "name": username.text,
           "email": email.text,
           "password": password1.text,
-          "program_id": programsList.currentIndex + 1,
+          "program_id": programsList.currentIndex,
           "course_sections": courseSectionsArray
         });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("add_student", callbackRegister, "POST");
+    }
+}
+
+function callbackEditUser(status, response) {
+    if (status === 200)
+        alert(qsTr("Success!"), qsTr("Your account was edited with success!"), "OK", function() { pageStack.pop(); }, function() { pageStack.pop(); });
+    else if (status === 400)
+        alert(qsTr("Ops!"), qsTr("Cannot edit the account! The email is already associated to another user!"));
+    else
+        alert(qsTr("Ops!"), qsTr("Cannot load response from the server! Try again."));
+}
+
+function isValidEditForm() {
+    var status = true;
+    if (!username.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter your name!"));
+    } else if (!email.text) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter your email!"));
+    } else if (!Util.isValidEmail(email.text)) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
+    } /*else if (courseSectionsArray.length === 0) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Choose at least one course section!"));
+    } else if (courseSectionsArray.length > 7) {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("The number of course section checked is above the limit (7). Fix this and try again."));
+    }*/
+
+    return status;
+}
+
+function requestEditUser(username, email, address, gender) {
+    if (isValidEditForm()) {
+        var params = ({
+          "name": username,
+          "email": email,
+          "birth_date": "",
+          "address": address,
+          "type": 1,
+          "gender": gender,
+          "program_id": programsList.currentIndex,
+          "course_sections": courseSectionsArray
+        });
+        requestHttp.requestParams = JSON.stringify(params);
+        requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
 }
 
