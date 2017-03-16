@@ -134,7 +134,6 @@ BasePage {
                 text: userProfileData.address || ""
                 color: appSettings.theme.colorPrimary
                 width: window.width - (window.width*0.15)
-                echoMode: TextInput.Password
                 selectByMouse: true
                 inputMethodHints: isIOS ? Qt.ImhNoPredictiveText : Qt.ImhNone
                 anchors.horizontalCenter: parent.horizontalCenter

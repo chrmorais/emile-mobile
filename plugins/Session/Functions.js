@@ -131,7 +131,7 @@ function requestEditUser(username, email, address, gender) {
           "type": 1,
           "gender": gender,
           "program_id": programsList.currentIndex,
-          "course_sections": courseSectionsArray
+ //         "course_sections": courseSectionsArray
         });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
