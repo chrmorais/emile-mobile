@@ -1,18 +1,14 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.1
 
 // implementation of Google Material Snackbar.
 // https://material.google.com/components/snackbars-toasts.html
 
 Item {
     id: snackbar
-    width: parent.width
-    height: 48
-    anchors {
-        bottom: parent.bottom
-        bottomMargin: -48
-    }
+    width: parent.width; height: 48
+    anchors { bottom: parent.bottom; bottomMargin: -48 }
 
     NumberAnimation {
         id: animateShowOpacity
@@ -21,6 +17,7 @@ Item {
         from: -48
         to: 0
         duration: 400
+        onStopped: if (closePending) closed();
     }
 
     NumberAnimation {
@@ -30,6 +27,7 @@ Item {
         from: 0
         to: -48
         duration: 350
+        onStopped: if (openPending) opened();
     }
 
     signal opened()
@@ -37,7 +35,8 @@ Item {
     signal restarted()
 
     property bool isOpen: false
-    property bool isAutoDestroy: true
+    property bool openPending: false
+    property bool closePending: false
     property bool isLongDuration: false
     property alias message: message.text
     property alias actionText: action.text
@@ -47,63 +46,53 @@ Item {
     property var actionCallback
 
     function close() {
-        closed()
-        if (closeCallback)
-            closeCallback()
+        closed();
+        if (closeCallback) closeCallback();
     }
 
     function show(s) {
-        message.text = s
         if (isOpen) {
-            restarted()
-            close()
+            restarted();
+            close();
+            message.text = s;
         } else {
-            opened()
+            opened();
         }
     }
 
     onClosed: {
-        isOpen = false
-        animateHideOpacity.start()
-        countdownToDestroy.running = true
+        if (!animateHideOpacity.running) {
+            isOpen = false;
+            animateHideOpacity.start();
+        } else {
+            closePending = true;
+        }
     }
 
     onOpened: {
-        isOpen = true
-        countdownToClose.start()
-        animateShowOpacity.start()
+        if (!animateShowOpacity.running) {
+            isOpen = true;
+            countdownToClose.start();
+            animateShowOpacity.start();
+        } else {
+            openPending = true;
+        }
     }
 
-    onRestarted: {
-        countdownToReopen.start()
-        countdownToDestroy.stop()
-    }
+    onRestarted: countdownToReopen.start();
 
     Timer {
         id: countdownToClose
         repeat: false
-        interval: isLongDuration ? 8000 : 4000
-        onTriggered: closed()
+        interval: isLongDuration ? 8000 : 3500
+        onTriggered: closed();
     }
 
     Timer {
         id: countdownToReopen
         repeat: false
         interval: 700
-        onTriggered: opened()
-    }
-
-    Timer {
-        id: countdownToDestroy
-        repeat: false
-        interval: 10000
-        onTriggered: {
-            message.text = ""
-            actionText = ""
-            actionTextColor = "#e7f740"
-            if (isAutoDestroy)
-                snackbar.destroy()
-        }
+        onTriggered: opened();
     }
 
     Rectangle {
@@ -133,7 +122,7 @@ Item {
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 onTextChanged: {
                     while (snackbar.height < message.text.contentHeight)
-                        snackbar.height *= 1.2
+                        snackbar.height *= 1.2;
                 }
             }
 
@@ -160,10 +149,10 @@ Item {
                     onEntered: actionRec.color = Qt.rgba(0,0,0,0.2)
                     onExited: actionRec.color = "transparent"
                     onClicked: {
-                        countdownToClose.running = false
-                        animateHideOpacity.start()
+                        countdownToClose.running = false;
+                        animateHideOpacity.start();
                         if (actionCallback)
-                            actionCallback()
+                            actionCallback();
                     }
                 }
             }
