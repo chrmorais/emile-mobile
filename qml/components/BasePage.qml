@@ -83,29 +83,16 @@ Page {
         id: listViewComponent
         ListView {
             model: listViewModel
-            highlightMoveDuration: 1250; clip: true
-            spacing: listViewSpacing; cacheBuffer: width
+            clip: true; spacing: listViewSpacing; cacheBuffer: width
             topMargin: listViewTopMargin; bottomMargin: listViewBottomMargin
             delegate: basePage.listViewDelegate ? basePage.listViewDelegate : null
             width: basePage.width; height: basePage.height
-            onRemoveChanged: update()
-            Keys.onUpPressed: scrollBar.decrease()
-            Keys.onDownPressed: scrollBar.increase()
+            onRemoveChanged: update();
+            Keys.onUpPressed: scrollBar.decrease();
+            Keys.onDownPressed: scrollBar.increase();
+            ScrollBar.vertical: ScrollBar { id: scrollBar }
             moveDisplaced: Transition {
                 NumberAnimation { properties: "x,y"; duration: 250 }
-            }
-            ScrollBar.vertical: ScrollBar {
-                id: scrollBar
-                contentItem: Rectangle {
-                    implicitWidth: 0.1
-                    implicitHeight: scrollBar.height
-                    opacity: enabled ? 1 : 0.7
-                    color: Material.highlightedRippleColor
-                    radius: 100
-                }
-                background: Rectangle {
-                    width: 1; height: scrollBar.height; color: Material.highlightedRippleColor
-                }
             }
         }
     }
