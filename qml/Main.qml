@@ -151,7 +151,7 @@ ApplicationWindow {
     Component.onCompleted: setIndexPage();
 
     onClosing: {
-        if (!isIOS && pageStack.depth <= 1) {
+        if (!isIOS) {
             Emile.minimizeApp();
             close.accepted = false;
         }
@@ -174,11 +174,10 @@ ApplicationWindow {
     Connections {
         target: PostFile
         onFinished: {
-            if (parseInt(statusCode) === 200 && response && response.user) {
+            if (parseInt(statusCode) === 200 && response) {
                 var objc = JSON.parse(response);
-                userProfileData.image_path = response.image_path;
                 Emile.saveObject("user_profile_data", objc.user);
-                userProfileData = response.user;
+                userProfileData = objc.user;
             }
         }
     }
@@ -235,6 +234,7 @@ ApplicationWindow {
 
     Snackbar {
         id: snackbar
+        z: pageStack.z + 100
     }
 
     Toast {
