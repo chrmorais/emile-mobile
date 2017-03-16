@@ -23,12 +23,12 @@ Page {
 
     // for toolbar
     property string toolBarState: ""
-    property var toolBarActions: []
+    property var toolBarActions: ({})
 
     // for page data
     property var json: {}
 
-    // to keep the plugin config.json
+    // to keep the plugin config.json for current page
     property var configJson: {}
 
     // A component implemented by child page that uses ListView
