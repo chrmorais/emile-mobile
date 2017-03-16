@@ -9,7 +9,7 @@ ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
     height: visible ? 50 : 0
-    state: currentPage.toolBarState ? currentPage.toolBarState : "normal"
+    state: window.currentPage.toolBarState ? window.currentPage.toolBarState : "normal"
     states: [
         State {
             name: "normal"
@@ -40,20 +40,20 @@ ToolBar {
     property alias toolButton4: toolButton4
     property alias toolButtonLast: toolButtonLast
 
-    property var toolBarIcons: []
-
     /**
-     * a list of objects to the toolbar actions.
-     * each page must be set the lists for the visible itens that will be use in the page
-     * binding with ToolBar state. The object needs to be like this: {"action": "copy", "iconName": "copy", "when": "action"},
+     * A object to the toolbar actions for the current page.
+     * Each page can set the icons that needs to be used.
+     * For the, needs to be set a object like this:
+     *    {
+     *       "toolButton3": {"action":"delete", "icon":"trash"},
+     *       "toolButton4": {"action":"copy", "icon":"copy"}
+     *    }
      */
-    property var toolBarActions: []
+    property var toolBarActions: ({})
 
-    // emited when user click in any button from toolbar sending the action name
+    // emited when user click in any button from toolbar
     signal actionExec(var actionName)
 
-    // if current page defines a list of itens to submenu (the last item displayed in ToolBar),
-    // the itens will be append into a dropdown list
     onActionExec: {
         if (actionName === "submenu" && optionsToolbarMenu != null)
             optionsToolbarMenu.open();
@@ -77,8 +77,8 @@ ToolBar {
             layer.effect: DropShadow {
                 visible: toolBar.visible
                 verticalOffset: 1; horizontalOffset: 0
-                color: toolBarColor; spread: 0.3
-                samples: 17
+                color: toolBarColor; spread: 0.4
+                samples: 15
             }
         }
     }
@@ -100,17 +100,16 @@ ToolBar {
             toolBarActions = fixBind;
             searchToolbar.visible = false;
 
-            if (currentPage.toolBarIcons)
-                toolBarIcons = currentPage.toolBarIcons;
-
             if (currentPage.toolBarActions)
-                toolBarActions = currentPage.toolBarActions;
+                toolBarActions = window.currentPage.toolBarActions;
 
-            if (currentPage.toolBarMenuList && currentPage.toolBarMenuList.length > 0) {
+            // if current page define a list of itens to submenu (the last item displayed in ToolBar),
+            // the itens will be append into a dropdown list
+            if (window.currentPage.toolBarMenuList && window.currentPage.toolBarMenuList.length > 0) {
                 hasMenuList = true;
                 optionsToolbarMenu.reset();
-                for (var i = 0; i < currentPage.toolBarMenuList.length; i++)
-                    optionsToolbarMenu.addItem(currentPage.toolBarMenuList[i]);
+                for (var i = 0; i < window.currentPage.toolBarMenuList.length; i++)
+                    optionsToolbarMenu.addItem(window.currentPage.toolBarMenuList[i]);
             }
         }
     }
@@ -147,29 +146,36 @@ ToolBar {
 
         CustomToolButton {
             id: toolButton2
-            iconColor: defaultTextColor; action: "save"; iconName: "save"
+            iconColor: defaultTextColor
             anchors.right: toolButton3.left
-            visible: toolBarActions.indexOf("save") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            action: toolBarActions.hasOwnProperty("toolButton2") ? toolBarActions.toolButton2.action : "save"
+            iconName: toolBarActions.hasOwnProperty("toolButton2") ? toolBarActions.toolButton2.icon : "save"
+            visible: toolBarActions.hasOwnProperty("toolButton2") && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButton3
-            iconColor: defaultTextColor; action: "delete"; iconName: "trash"
+            iconColor: defaultTextColor
             anchors.right: toolButton4.left
-            visible: toolBarActions.indexOf("delete") !== -1 && (toolBar.state === "action" || toolBar.state === "goback")
+            action: toolBarActions.hasOwnProperty("toolButton3") ? toolBarActions.toolButton3.action : "delete"
+            iconName: toolBarActions.hasOwnProperty("toolButton3") ? toolBarActions.toolButton3.icon : "trash"
+            visible: toolBarActions.hasOwnProperty("toolButton3") && (toolBar.state === "action" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButton4
-            iconColor: defaultTextColor; action: "search"; iconName: "search"
+            iconColor: defaultTextColor
             anchors.right: toolButtonLast.left
-            visible: toolBarActions.indexOf("search") !== -1 && (toolBar.state === "normal" || toolBar.state === "goback")
+            action: toolBarActions.hasOwnProperty("toolButton4") ? toolBarActions.toolButton4.action : "search"
+            iconName: toolBarActions.hasOwnProperty("toolButton4") ? toolBarActions.toolButton4.icon : "search"
+            visible: toolBarActions.hasOwnProperty("toolButton4") && (toolBar.state === "normal" || toolBar.state === "goback")
         }
 
         CustomToolButton {
             id: toolButtonLast
-            iconColor: defaultTextColor; action: "submenu"; iconName: "ellipsis_v"
+            iconColor: defaultTextColor;
             anchors.right: parent.right
+            action: "submenu"; iconName: "ellipsis_v"
             visible: hasMenuList && (toolBar.state === "normal" || toolBar.state === "goback")
 
             Menu {
