@@ -114,7 +114,7 @@ BasePage {
             width: page.width * 0.95; height: columnLayoutDelegate.height
 
             Pane {
-                z: parent.z-10; Material.elevation: 2
+                z: parent.z-10; Material.elevation: 1
                 width: parent.width-1; height: parent.height-1
             }
 
