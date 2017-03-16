@@ -252,9 +252,9 @@ ApplicationWindow {
 
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
-                pageStack.pop()
+                pageStack.pop();
             else
-                event.accepted = false
+                event.accepted = false;
         }
 
         pushEnter: Transition {

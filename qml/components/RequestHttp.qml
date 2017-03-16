@@ -20,14 +20,14 @@ Item {
         var xhr = new XMLHttpRequest();
         if (!method)
             method = "GET";
-        if (method === "GET" && requestParams)
+        if (method === "GET" && requestParams && !params)
             url += "?" + requestParams;
         xhr.open(method, url, true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onerror = function() {
             rootItem.errorString = qsTr("Cannot connect to server!");
             rootItem.state = "error";
-        }
+        };
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 rootItem.httpStatus = parseInt(xhr.status);

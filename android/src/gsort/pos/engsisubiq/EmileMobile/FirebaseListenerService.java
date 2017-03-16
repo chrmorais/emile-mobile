@@ -83,7 +83,7 @@ public class FirebaseListenerService extends FirebaseMessagingService
         Random random = new Random();
         int messageId = random.nextInt(9999-1000) + 1000;
 
-        Intent notificationIntent = new Intent(this, QtActivity.class);
+        Intent notificationIntent = new Intent(this, CustomActivity.class);
         notificationIntent.putExtra("actionType", actionType);
         notificationIntent.putExtra("actionTypeId", actionTypeId);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
