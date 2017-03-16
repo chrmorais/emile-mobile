@@ -38,15 +38,14 @@ BasePage {
     function requestCallback(status, response) {
         if (status === 200) {
             textarea.text = "";
-            textarea.forceActiveFocus();
-            alert(qsTr("Success!"), qsTr("The message was successfully sended"));
+            snackbar.show(qsTr("The message was successfully sended!"));
         } else if (status === 404) {
-            alert(qsTr("Warning!"), qsTr("The message was not sent!"));
+            snackbar.show(qsTr("The message was not sent!"));
         }
     }
 
     function requestToSave(postMessage) {
-        toast.show(qsTr("Sending message..."), true);
+        snackbar.show(qsTr("Sending message..."), true);
         requestHttp.requestParams = JSON.stringify(postMessage);
         requestHttp.load("wall_push_notification", requestCallback, "POST");
     }
@@ -64,26 +63,28 @@ BasePage {
 
         Flickable {
             id: flickable
-            width: parent.width
-            height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight + 12
+            width: parent.width * 0.98
+            height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight + 4
 
             TextArea.flickable: TextArea {
                 id: textarea
                 z: parent.z + 1; text: ""
                 enabled: !isPageBusy; readOnly: isPageBusy
-                focus: enabled; width: parent.width * 0.98
+                focus: enabled; width: parent.width
                 opacity: isPageBusy ? 0.8 : 1.0
                 overwriteMode: true; wrapMode: TextArea.Wrap
                 selectByMouse: true; persistentSelection: true
                 onTextChanged: {
                     if (textarea.text.length > 139) {
                         textarea.remove(140, textarea.text.length);
-                        textarea.cursorPosition = 139;
+                        textarea.cursorPosition = 140;
                     }
                 }
             }
 
-            ScrollBar.vertical: ScrollBar { }
+            Keys.onUpPressed: scrollBar.decrease();
+            Keys.onDownPressed: scrollBar.increase();
+            ScrollBar.vertical: ScrollBar { id: scrollBar }
         }
     }
 
