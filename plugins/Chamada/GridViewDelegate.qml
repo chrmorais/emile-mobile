@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
+import "../../qml/components/"
+
 Item {
     id: item
     width: gridView.cellWidth; height: gridView.cellHeight
@@ -25,13 +27,10 @@ Item {
             spacing: 15; width: parent.width - parent.width * 0.05
             anchors { top: parent.top; topMargin: 5; }
 
-            Image {
+            RoundedImage {
                 id: imgProfile
-                asynchronous: true
-                source: image_path ? appSettings.restService.baseImagesUrl + image_path : defaultUserImage
                 width: 60; height: 60
-                clip: true; cache: true; smooth: true
-                sourceSize { width: width; height: height }
+                imgSource: image_path ? appSettings.restService.baseImagesUrl + image_path : defaultUserImage
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 

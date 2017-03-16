@@ -1,7 +1,9 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
+
+import "../../qml/components/"
 
 Column {
     spacing: 0; width: parent.width; height: 60
@@ -17,13 +19,10 @@ Column {
             width: parent.width; height: parent.height
             anchors.verticalCenter: parent.verticalCenter
 
-            Image {
+            RoundedImage {
                 id: imgProfile
-                asynchronous: true
                 width: 40; height: 40
-                source: image_path ? appSettings.restService.baseImagesUrl + image_path : defaultUserImage
-                clip: true; cache: true; smooth: true
-                sourceSize { width: width; height: height }
+                imgSource: image_path ? appSettings.restService.baseImagesUrl + image_path : defaultUserImage
                 anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }
             }
 
