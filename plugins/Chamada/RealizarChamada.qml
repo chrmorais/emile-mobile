@@ -8,9 +8,9 @@ BasePage {
     id: page
     title: qsTr("Student attendance")
     toolBarState: "goback"
-    toolBarActions: ["save"]
-    hasListView: false
     firstText: qsTr("Warning! No students found!")
+    toolBarActions: ({"toolButton4": {"action":"send", "icon":"send"}})
+    listViewDelegate: pageDefaultDelegate
 
     property bool checkedAll: true
     property int section_times_id: 0
@@ -23,11 +23,11 @@ BasePage {
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
-            text: "Exibir em " + (listView.visible ? "grade" : "lista")
-            onTriggered: gridView.visible = !gridView.visible
+            text: qsTr("Show in ") + (listView.visible ? qsTr("grid") : qsTr("list"))
+            onTriggered: listView.visible = !listView.visible
         },
         MenuItem {
-            text: checkedAll ? "Desmarcar todos" : "Marcar todos"
+            text: checkedAll ? qsTr("Uncheck all") : qsTr("Check all")
             onTriggered: {
                 var attendanceTemp = attendance["student_attendance"];
                 for (var i = 0; i < attendanceTemp.length; i++) {
@@ -64,12 +64,12 @@ BasePage {
         }
         attendance["section_time_date"] = attendanceDate;
         requestHttp.requestParams = JSON.stringify(attendance);
-        requestHttp.load("student_attendance_register/"+section_times_id, saveAttendenceCallback, "POST");
+        requestHttp.load("student_attendance_register/" + section_times_id, saveAttendenceCallback, "POST");
         toast.show(qsTr("Saving attendance register..."));
     }
 
     function actionExec(action) {
-        if (action === "save")
+        if (action === "send")
             requestToSave();
     }
 
@@ -91,18 +91,27 @@ BasePage {
         checkedStatus = fixBind;
     }
 
-    Component.onCompleted: {
-         requestHttp.load("course_sections_students/" + course_section_id, function(status, response) {
-             if (status !== 200)
-                 return;
-             var i = 0;
-             if (listViewModel && listViewModel.count > 0)
-                 listModel.clear();
-             for (var prop in response) {
-                 while (i < response[prop].length)
-                    listModel.append(response[prop][i++]);
-             }
-        });
+    function requestCallback(status, response) {
+        if (status !== 200)
+            return;
+        var i = 0;
+        if (listViewModel && listViewModel.count > 0)
+            listViewModel.clear();
+        for (var prop in response) {
+            while (i < response[prop].length)
+                listViewModel.append(response[prop][i++]);
+        }
+    }
+
+    function request() {
+        requestHttp.load("course_sections_students/" + course_section_id, requestCallback);
+    }
+
+    Component.onCompleted: request();
+
+    Component {
+        id: pageDefaultDelegate
+        ListViewDelegate { }
     }
 
     DatePicker {
@@ -113,32 +122,15 @@ BasePage {
         }
     }
 
-    BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: requestHttp.state === "loading"
-    }
-
     GridView {
         id: gridView
-        visible: false
+        visible: !listView.visible && listViewModel && listViewModel.count > 0
         anchors.fill: parent
-        model: listModel
+        model: listViewModel
         delegate: GridViewDelegate { }
         cellWidth: parent.width > parent.height ? parent.width * 0.25 : parent.width * 0.50; cellHeight: cellWidth
         Keys.onUpPressed: gridViewScrollBar.decrease()
         Keys.onDownPressed: gridViewScrollBar.increase()
         ScrollBar.vertical: ScrollBar { id: gridViewScrollBar }
-    }
-
-    ListView {
-        id: listView
-        visible: !busyIndicator.visible && !gridView.visible
-        anchors.fill: parent
-        model: ListModel { id: listModel }
-        delegate: ListViewDelegate { }
-        Keys.onUpPressed: listViewScrollBar.decrease()
-        Keys.onDownPressed: listViewScrollBar.increase()
-        ScrollBar.vertical: ScrollBar { id: listViewScrollBar }
     }
 }
