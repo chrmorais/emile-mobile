@@ -15,7 +15,13 @@ BasePage {
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
     onUpdatePage: request();
+    onLoadItens: if (paginateIndex > 0) request();
     firstText: qsTr("Warning! No Wall message found!")
+
+    property int totalItens: 0
+    property int paginateIndex: 0
+    property string nextPage
+    property string searchUrl: "search_wall_messages/id_usuario/search_term"
 
     function apendObject(o, moveToTop) {
         listViewModel.append(o);
@@ -26,52 +32,48 @@ BasePage {
     function requestCallback(status, response) {
         if (status !== 200)
             return;
-        for (var prop in response) {
-            // se o usuário forçou a atualização e não há novidades
-            if (listViewModel.count === response[prop].length)
-                return;
-            else
-                listViewModel.clear();
-            var i = 0;
-            while (i < response[prop].length)
-                apendObject(response[prop][i++]);
-        }
+        totalItens = response.count;
+        if (!nextPage && listViewModel.count === response.results.length)
+            listViewModel.clear();
+        nextPage = response.next;
+        var i = 0;
+        while (i < response.results.length)
+            apendObject(response.results[i++]);
+        paginateIndex++;
     }
 
     function messageLink(message) {
-        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-        var text = urlify(message)
-        var temp = text.replace(exp,"<a href=\"$1\" target=\"_blank\">$1</a>");
+        var pos = 0;
         var result = "";
+        var text = urlify(message);
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        var temp = text.replace(exp, "<a href=\"$1\" target=\"_blank\">$1</a>");
         while (temp.length > 0) {
-            var pos = temp.indexOf("href=\"");
-            if (pos == -1) {
+            pos = temp.indexOf("href=\"");
+            if (pos === -1) {
                 result += temp;
                 break;
             }
             result += temp.substring(0, pos + 6);
-
             temp = temp.substring(pos + 6, temp.length);
-            if ((temp.indexOf("://") > 8) || (temp.indexOf("://") == -1)) {
+            if ((temp.indexOf("://") > 8) || (temp.indexOf("://") == -1))
                 result += "http://";
-            }
         }
         return result;
     }
 
     function urlify(text) {
         var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-        //var urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function(url,b,c) {
-            var url2 = (c == 'www.') ?  'https://' +url : url;
-            return '<a href="' +url2 + '</a>';
-        })
+            var url2 = (c === "www.") ?  "https://" + url : url;
+            return '<a href="%1!"/a>'.arg(url2);
+        });
     }
 
     function request() {
-        if (!userProfileData.id)
+        if (!userProfileData.id || (listViewModel && listViewModel.count === totalItens))
             return;
-        requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
+        requestHttp.load(nextPage ? nextPage : "wall_messages/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -80,18 +82,14 @@ BasePage {
         target: listView
         onContentYChanged: {
             busyIndicator.visible = false;
-            if (listView.contentY < -65 && !isPageBusy && !lockMultipleRequests.running)
+            if (listView.contentY < -65 && !isPageBusy && !lockMultipleRequests.running) {
+                nextPage = "";
                 lockMultipleRequests.running = true;
+            }
         }
-    }
-
-    Timer {
-        id: loopRequestUpdate
-        interval: 90000 // 1.5 min
-        running: isActivePage
-        onTriggered: {
-            busyIndicator.visible = false;
-            request();
+        onFlickingVerticallyChanged: {
+            if (listView.flickingVertically)
+                console.log("flikiing vertically");
         }
     }
 
@@ -112,6 +110,27 @@ BasePage {
             color: "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.95; height: columnLayoutDelegate.height
+            opacity: isFullyVisible ? 1.0 : 0.8
+
+            property int yoff: Math.round(delegate.y - delegate.ListView.view.contentY)
+            property bool isFullyVisible: (yoff > delegate.ListView.view.y && ((yoff + height) < (delegate.ListView.view.y + delegate.ListView.view.height)))
+
+            SequentialAnimation on opacity {
+                id: anim
+                running: false
+
+                NumberAnimation {
+                    to: 0.8
+                    duration: 350
+                }
+                PauseAnimation {
+                    duration: 350
+                }
+                NumberAnimation {
+                    to: 1.0
+                    duration: 350
+                }
+            }
 
             Pane {
                 z: parent.z-10; Material.elevation: 1
