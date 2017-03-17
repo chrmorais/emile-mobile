@@ -50,6 +50,7 @@ Page {
     property ListModel listViewModel
 
     signal updatePage()
+    signal loadItens()
 
     BusyIndicator {
         id: _busyIndicator
@@ -91,9 +92,7 @@ Page {
             Keys.onUpPressed: scrollBar.decrease();
             Keys.onDownPressed: scrollBar.increase();
             ScrollBar.vertical: ScrollBar { id: scrollBar }
-            moveDisplaced: Transition {
-                NumberAnimation { properties: "x,y"; duration: 250 }
-            }
+            onAtYEndChanged: if (atYEnd) loadItens();
         }
     }
 
