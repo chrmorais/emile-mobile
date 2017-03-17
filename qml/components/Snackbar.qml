@@ -38,7 +38,7 @@ Item {
     property bool openPending: false
     property bool closePending: false
     property bool isLongDuration: false
-    property alias message: message.text
+    property string messageTemp: ""
     property alias actionText: action.text
     property alias actionTextColor: action.color
 
@@ -51,10 +51,10 @@ Item {
     }
 
     function show(s) {
+        messageTemp = s;
         if (isOpen) {
             restarted();
             close();
-            message.text = s;
         } else {
             opened();
         }
@@ -65,15 +65,16 @@ Item {
             isOpen = false;
             animateHideOpacity.start();
         } else {
-            closePending = true;
+            openPending = true;
         }
     }
 
     onOpened: {
         if (!animateShowOpacity.running) {
             isOpen = true;
-            countdownToClose.start();
-            animateShowOpacity.start();
+            message.text = messageTemp;
+            countdownToClose.restart();
+            animateShowOpacity.restart();
         } else {
             openPending = true;
         }
