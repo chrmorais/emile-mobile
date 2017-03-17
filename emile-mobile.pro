@@ -50,9 +50,11 @@ android: {
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
 
-    ANDROID_EXTRA_LIBS = \
-        $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libcrypto.so \
-        $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libssl.so
+    contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+        ANDROID_EXTRA_LIBS = \
+            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libcrypto.so \
+            $$PWD/android/libs/openssl-1.0.2/armeabi-v7a/lib/libssl.so
+    }
 }
 
 ios: {
@@ -71,46 +73,17 @@ ios: {
     OBJECTIVE_SOURCES += ios/QtAppDelegate.mm
 
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseAnalytics
-
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseInstanceID
-
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseMessaging
-
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework FirebaseInstanceID
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleUtilities
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleIPhoneUtilities
+    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleSymbolUtilities
     mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleInterchangeUtilities
 
-    INCLUDEPATH += $$PWD/ios/Firebase
     DEPENDPATH += $$PWD/ios/Firebase
-
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleIPhoneUtilities
-
     INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleSymbolUtilities
-
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
-
-    mac: LIBS += -F$$PWD/ios/Firebase/ -framework GoogleUtilities
-
-    INCLUDEPATH += $$PWD/ios/Firebase
-    DEPENDPATH += $$PWD/ios/Firebase
 }
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS =
-}
-
