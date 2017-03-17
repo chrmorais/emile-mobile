@@ -2,6 +2,7 @@ import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
+import QtQuick.Controls.Material.impl 2.1
 
 import "../../qml/components/"
 import "../../qml/components/AwesomeIcon"
@@ -14,17 +15,32 @@ BasePage {
     hasListView: false
     hasRemoteRequest: false
 
+    Component.onCompleted: RegisterFunctions.loadPrograms();
+
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
-
-    Component.onCompleted: {
-        RegisterFunctions.loadPrograms();
-    }
-
     property var requestResult
     property var courseSectionsArray: []
     property ListModel programsListModel: ListModel { }
     property ListModel courseSectionsListModel: ListModel { }
     property var gender: userProfileData.gender || ""
+    property var birthDate: userProfileData.birth_date
+    property bool editMode: false
+
+    signal setProgramsFinish()
+
+    onSetProgramsFinish: {
+        if (userProfileData.program_id) {
+            var object = {};
+            for (var i = 0; i < programsListModel.count; i++) {
+                object = programsListModel.get(i);
+                if (object.id === userProfileData.program_id) {
+                    programsList.currentIndex = i;
+                    return;
+                }
+            }
+        }
+    }
+
 
     Timer {
         id: lockerButtons
@@ -37,6 +53,15 @@ BasePage {
         onTriggered: window.starSession(requestResult); // is a signal on the main.qml
     }
 
+    DatePicker {
+        id: datePicker
+        anchors.centerIn: parent.center
+        z: parent.z + 1
+        onDateSelected: {
+            birthDate = date.month + "-" + date.day + "-" + date.year;
+            requestToSave();
+        }
+    }
 
     Flickable {
         id: pageFlickable
@@ -50,33 +75,34 @@ BasePage {
             width: parent.width * 0.90
             anchors.horizontalCenter: parent.horizontalCenter
 
-            //            AwesomeIcon {
-            //                id: awesomeIcon
-            //                name: "photo"
-            //                size: 64; color: appSettings.theme.colorPrimary
-            //                visible: !userImageProfile
-            //                anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: undefined }
+            AwesomeIcon {
+                id: awesomeIcon
+                name: "photo"
+                size: 64; color: appSettings.theme.colorPrimary
+                visible: !userImageProfile
+                anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
 
-            //                MouseArea {
-            //                    id: awesomeIconControl
-            //                    hoverEnabled: true
-            //                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
-            //                }
+                MouseArea {
+                    id: awesomeIconControl
+                    hoverEnabled: true
+                    anchors.fill: parent; onClicked: profileImageConfigure()
+                }
 
-            //                Ripple {
-            //                    z: -1
-            //                    x: (parent.width - width) / 2
-            //                    y: (parent.height - height) / 2
-            //                    width: drawerUserImageProfile.width; height: width
-            //                    anchor: awesomeIconControl
-            //                    pressed: awesomeIconControl.pressed
-            //                    active: awesomeIconControl.pressed
-            //                    color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
-            //                }
-            //            }
+                Ripple {
+                    z: -1
+                    x: (parent.width - width) / 2
+                    y: (parent.height - height) / 2
+                    width: drawerUserImageProfile.width; height: width
+                    anchor: awesomeIconControl
+                    pressed: awesomeIconControl.pressed
+                    active: awesomeIconControl.pressed
+                    color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                }
+            }
 
             RoundedImage {
                 id: drawerUserImageProfile
+                visible: !awesomeIcon.visible
                 width: 90; height: width
                 imgSource: userImageProfile
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -84,7 +110,18 @@ BasePage {
                 MouseArea {
                     id: drawerUserImageProfileControl
                     hoverEnabled: true
-                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
+                    anchors.fill: parent; onClicked: editMode ? window.profileImageConfigure() : "" // is a function on main.qml
+                }
+
+                Ripple {
+                    z: -1
+                    x: (parent.width - width) / 2
+                    y: (parent.height - height) / 2
+                    width: drawerUserImageProfile.width; height: width
+                    anchor: awesomeIconControl
+                    pressed: awesomeIconControl.pressed
+                    active: awesomeIconControl.pressed
+                    color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
                 }
             }
 
@@ -100,6 +137,7 @@ BasePage {
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("Enter your name")
                 onEditingFinished: text = text.toLocaleLowerCase().trim();
+                readOnly: !editMode
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (username.height-height) - (username.bottomPadding / 2)
@@ -121,6 +159,7 @@ BasePage {
                 placeholderText: qsTr("youremail@example.com")
                 onFocusChanged: echoMode = TextInput.Normal
                 onEditingFinished: text = text.toLocaleLowerCase().trim();
+                readOnly: !editMode
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (email.height-height) - (email.bottomPadding / 2)
@@ -142,6 +181,7 @@ BasePage {
                 placeholderText: qsTr("Address")
                 onFocusChanged: echoMode = TextInput.Normal
                 onEditingFinished: text = text.toLocaleLowerCase().trim();
+                readOnly: !editMode
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (email.height-height) - (email.bottomPadding / 2)
@@ -159,6 +199,7 @@ BasePage {
                     width: parent.width / 3
                     checked: userProfileData.gender === "M"
                     onCheckedChanged: gender = "M"
+                    enabled: editMode
                 }
 
                 RadioButton {
@@ -167,6 +208,7 @@ BasePage {
                     width: parent.width / 3
                     checked: userProfileData.gender === "F"
                     onCheckedChanged: gender = "F"
+                    enabled: editMode
                 }
 
                 RadioButton {
@@ -175,9 +217,37 @@ BasePage {
                     width: parent.width / 3
                     checked: userProfileData.gender === "O"
                     onCheckedChanged: gender = "O"
+                    enabled: editMode
                 }
             }
 
+            TextField {
+                id: brthdate
+                text: birthDate || ""
+                color: appSettings.theme.colorPrimary
+                width: window.width - (window.width*0.15)
+                selectByMouse: true
+                inputMethodHints: isIOS ? Qt.ImhNoPredictiveText : Qt.ImhNone
+                anchors.horizontalCenter: parent.horizontalCenter
+                font.capitalization: Font.AllLowercase
+                renderType: isIOS ? Text.NativeRendering : Text.QtRendering
+                placeholderText: qsTr("birthdate")
+                onFocusChanged: echoMode = TextInput.Normal
+                onEditingFinished: text = text.toLocaleLowerCase().trim();
+                readOnly: true
+                background: Rectangle {
+                    color: appSettings.theme.colorPrimary
+                    y: (email.height-height) - (email.bottomPadding / 2)
+                    width: email.width; height: email.activeFocus ? 2 : 1
+                    border { width: 1; color: appSettings.theme.colorPrimary }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    z: parent.z + 1
+                    onClicked: editMode ? datePicker.open() : ""
+                }
+            }
 
             ComboBox {
                 id: programsList
@@ -186,9 +256,9 @@ BasePage {
                 width: window.width - (window.width*0.15)
                 anchors.horizontalCenter: parent.horizontalCenter
                 onCurrentIndexChanged: {
+                    var courseSectionsArrayTemp = [];
                     if (programsListModel.count > 0 && currentIndex > 0) {
                         RegisterFunctions.loadProgramsCourseSections(currentIndex);
-                        var courseSectionsArrayTemp = [];
                         courseSectionsArray = courseSectionsArrayTemp;
                     }
                 }
@@ -227,6 +297,7 @@ BasePage {
 
                 contentItem: ListView {
                     id: courseSectionListView
+                    enabled: editMode
                     displayMarginBeginning: 10
                     model: courseSectionsListModel
                     width: courseSectionsChooserDialog.width
@@ -253,6 +324,12 @@ BasePage {
                             id: control
                             anchors { right: parent.right; rightMargin: 15; verticalCenter: parent.verticalCenter }
                             onCheckedChanged: RegisterFunctions.appendCourseSection(id, checked);
+                            checked: {
+                                for(var i = 0; i < userProfileData.course_sections.length; i++) {
+                                    if(userProfileData.course_sections[i] && userProfileData.course_sections[i] === id)
+                                        control.checked = true;
+                                }
+                            }
                             indicator: Rectangle {
                                 x: control.leftPadding
                                 y: parent.height / 2 - height / 2
@@ -288,13 +365,24 @@ BasePage {
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
-                    username.focus = false;
-                    email.focus = false;
-                    address.focus = false;
-                    lockerButtons.running = true;
-                    RegisterFunctions.requestEditUser(username.text, email.text, address.text, gender);
+                    if(editMode) {
+                        username.focus = false;
+                        email.focus = false;
+                        address.focus = false;
+                        lockerButtons.running = true;
+                        RegisterFunctions.requestEditUser(username.text, email.text, address.text, gender, birthDate);
+                    }
                 }
             }
+        }
+    }
+
+    FloatingButton {
+        visible: !isPageBusy
+        z: parent.z + 1
+        iconName: "pencil"; iconColor: appSettings.theme.colorAccent
+        onClicked: {
+            editMode ? editMode = false : editMode = true
         }
     }
 }

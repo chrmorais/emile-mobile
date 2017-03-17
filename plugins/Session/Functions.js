@@ -11,7 +11,10 @@ function callbackPrograms(status, response) {
         programsListModel.append({"id": -1, "name": qsTr("Select the course"), "abbreviation": ""});
         while (i < response[prop].length)
             programsListModel.append(response[prop][i++]);
-        programsList.currentIndex = 0;
+        if (userProfileData)
+            setProgramsFinish();
+        else
+            programsList.currentIndex = 0;
     }
 }
 
@@ -91,8 +94,10 @@ function requestRegister() {
 }
 
 function callbackEditUser(status, response) {
-    if (status === 200)
-        alert(qsTr("Success!"), qsTr("Your account was edited with success!"), "OK", function() { pageStack.pop(); }, function() { pageStack.pop(); });
+    if (status === 200) {
+        alert(qsTr("Success!"), qsTr("Your account was edited with success!"), "OK", function() { }, function() { });
+        userProfileData = response.user[0]
+    }
     else if (status === 400)
         alert(qsTr("Ops!"), qsTr("Cannot edit the account! The email is already associated to another user!"));
     else
@@ -121,17 +126,17 @@ function isValidEditForm() {
     return status;
 }
 
-function requestEditUser(username, email, address, gender) {
+function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
         var params = ({
           "name": username,
           "email": email,
-          "birth_date": "",
+          "birth_date": birthDate,
           "address": address,
           "type": 1,
           "gender": gender,
           "program_id": programsList.currentIndex,
- //         "course_sections": courseSectionsArray
+          "course_sections": courseSectionsArray
         });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
