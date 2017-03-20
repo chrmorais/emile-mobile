@@ -82,12 +82,12 @@ function isValidRegisterForm() {
 function requestRegister() {
     if (isValidRegisterForm()) {
         var params = ({
-          "name": username.text,
-          "email": email.text,
-          "password": password1.text,
-          "program_id": programsList.currentIndex,
-          "course_sections": courseSectionsArray
-        });
+                          "name": username.text,
+                          "email": email.text,
+                          "password": password1.text,
+                          "program_id": programsList.currentIndex,
+                          "course_sections": courseSectionsArray
+                      });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("add_student", callbackRegister, "POST");
     }
@@ -115,29 +115,39 @@ function isValidEditForm() {
     } else if (!Util.isValidEmail(email.text)) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
-    } /*else if (courseSectionsArray.length === 0) {
+    } else if (courseSectionsArray.length === 0 && userProfileData.type.id === 1) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Choose at least one course section!"));
-    } else if (courseSectionsArray.length > 7) {
+    } else if (courseSectionsArray.length > 7 && userProfileData.type.id === 1) {
         status = false;
         alert(qsTr("Ops!"), qsTr("The number of course section checked is above the limit (7). Fix this and try again."));
-    }*/
+    }
 
     return status;
 }
 
 function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
-        var params = ({
-          "name": username,
-          "email": email,
-          "birth_date": birthDate,
-          "address": address,
-          "type": 1,
-          "gender": gender,
-          "program_id": programsList.currentIndex,
-          "course_sections": courseSectionsArray
-        });
+        if(userProfileData.type.id === 1)
+            var params = ({
+                              "name": username,
+                              "email": email,
+                              "birth_date": birthDate,
+                              "address": address,
+                              "type": userProfileData.type.id,
+                              "gender": gender,
+                              "program_id": programsList.currentIndex,
+                              "course_sections": courseSectionsArray
+                          });
+        else
+            var params = ({
+                              "name": username,
+                              "email": email,
+                              "birth_date": birthDate,
+                              "address": address,
+                              "type": userProfileData.type.id,
+                              "gender": gender
+                          });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
