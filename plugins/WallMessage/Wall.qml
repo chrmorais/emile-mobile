@@ -14,7 +14,7 @@ BasePage {
     listViewTopMargin: 10
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
-    onUpdatePage: request();
+    onUpdatePage: requestEmptyList();
     onLoadItens: if (paginateIndex > 0) request();
     firstText: qsTr("Warning! No Wall message found!")
 
@@ -73,6 +73,10 @@ BasePage {
     function request() {
         if (!userProfileData.id || (listViewModel && listViewModel.count === totalItens))
             return;
+        requestHttp.load(nextPage ? nextPage : "wall_messages/" + userProfileData.id, requestCallback);
+    }
+
+    function requestEmptyList() {
         requestHttp.load(nextPage ? nextPage : "wall_messages/" + userProfileData.id, requestCallback);
     }
 
