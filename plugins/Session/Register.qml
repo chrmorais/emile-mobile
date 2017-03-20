@@ -78,7 +78,6 @@ BasePage {
                 onAccepted: email.focus = true
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("Enter your name")
-                onEditingFinished: text = text.toLocaleLowerCase().trim();
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
                     y: (username.height-height) - (username.bottomPadding / 2)
