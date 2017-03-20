@@ -15,7 +15,7 @@ BasePage {
     hasListView: false
     hasRemoteRequest: false
 
-    Component.onCompleted: RegisterFunctions.loadPrograms();
+    Component.onCompleted: userProfileData.type.id === 1 ? RegisterFunctions.loadPrograms() : ""
 
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
     property var requestResult
@@ -80,7 +80,7 @@ BasePage {
                 name: "photo"
                 size: 64; color: appSettings.theme.colorPrimary
                 visible: !userImageProfile
-                anchors { top: parent.top; topMargin: 10; horizontalCenter: parent.horizontalCenter }
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 MouseArea {
                     id: awesomeIconControl
@@ -136,7 +136,6 @@ BasePage {
                 onAccepted: email.focus = true
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("Enter your name")
-                onEditingFinished: text = text.toLocaleLowerCase().trim();
                 readOnly: !editMode
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
@@ -180,7 +179,6 @@ BasePage {
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("Address")
                 onFocusChanged: echoMode = TextInput.Normal
-                onEditingFinished: text = text.toLocaleLowerCase().trim();
                 readOnly: !editMode
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
@@ -233,7 +231,6 @@ BasePage {
                 renderType: isIOS ? Text.NativeRendering : Text.QtRendering
                 placeholderText: qsTr("birthdate")
                 onFocusChanged: echoMode = TextInput.Normal
-                onEditingFinished: text = text.toLocaleLowerCase().trim();
                 readOnly: true
                 background: Rectangle {
                     color: appSettings.theme.colorPrimary
@@ -255,9 +252,10 @@ BasePage {
                 model: programsListModel
                 width: window.width - (window.width*0.15)
                 anchors.horizontalCenter: parent.horizontalCenter
+                visible: userProfileData.type.id === 1
                 onCurrentIndexChanged: {
                     var courseSectionsArrayTemp = [];
-                    if (programsListModel.count > 0 && currentIndex > 0) {
+                    if (programsListModel.count > 0 && currentIndex > 0 && userProfileData.type.id === 1) {
                         RegisterFunctions.loadProgramsCourseSections(currentIndex);
                         courseSectionsArray = courseSectionsArrayTemp;
                     }
@@ -268,11 +266,12 @@ BasePage {
                 id: programCourseSectionsList
                 z: 1; width: window.width - (window.width * 0.15)
                 anchors.horizontalCenter: parent.horizontalCenter
+                visible: userProfileData.type.id === 1
 
                 MouseArea {
                     z: 10; anchors.fill: parent
                     onClicked: {
-                        if (programCourseSectionsList.model && courseSectionsListModel.count > 0)
+                        if (programCourseSectionsList.model && courseSectionsListModel.count > 0 && userProfileData.type.id === 1)
                             courseSectionsChooserDialog.open();
                     }
                 }
@@ -359,7 +358,7 @@ BasePage {
             }
 
             CustomButton {
-                id: registerButton
+                id: editButton
                 enabled: !lockerButtons.running && !isPageBusy
                 text: qsTr("Edit Account");
                 textColor: appSettings.theme.colorAccent
