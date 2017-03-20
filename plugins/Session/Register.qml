@@ -165,6 +165,7 @@ BasePage {
                 textRole: "name"
                 model: programsListModel
                 width: window.width - (window.width*0.15)
+                currentIndex: 0
                 anchors.horizontalCenter: parent.horizontalCenter
                 onCurrentIndexChanged: {
                     if (programsListModel.count > 0 && currentIndex > 0) {

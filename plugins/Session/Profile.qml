@@ -361,6 +361,7 @@ BasePage {
                 id: editButton
                 enabled: !lockerButtons.running && !isPageBusy
                 text: qsTr("Edit Account");
+                visible: editMode
                 textColor: appSettings.theme.colorAccent
                 backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
