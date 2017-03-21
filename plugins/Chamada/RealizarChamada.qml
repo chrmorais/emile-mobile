@@ -9,7 +9,7 @@ BasePage {
     title: qsTr("Student attendance")
     toolBarState: "goback"
     firstText: qsTr("Warning! No students found!")
-    toolBarActions: ({"toolButton4": {"action":"send", "icon":"send"}})
+    toolBarActions: ({"toolButton4": {"action":"send", "icon":"paperclip"}})
     listViewDelegate: pageDefaultDelegate
 
     property bool checkedAll: true
