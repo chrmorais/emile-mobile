@@ -25,7 +25,7 @@ BasePage {
     property var gender: userProfileData.gender || ""
     property var birthDate: userProfileData.birth_date
     property bool editMode: false
-    toolBarActions: ({"toolButton4": {"action":"edit", "icon":"pencil"}})
+    toolBarActions: ({"toolButton4": {"action":"edit", "icon":"lock"}})
 
     signal setProgramsFinish()
 
@@ -44,11 +44,10 @@ BasePage {
 
     function actionExec(action) {
         if (action === "edit") {
-            if(editMode) {
+            if (editMode) {
                 editMode = false;
                 snackbar.show(qsTr("Edit deactivated"));
-            }
-            else {
+            } else {
                 editMode = true;
                 snackbar.show(qsTr("Edit activated"));
             }
@@ -375,8 +374,6 @@ BasePage {
                 enabled: !lockerButtons.running && !isPageBusy
                 text: qsTr("Edit Account");
                 visible: editMode
-                textColor: appSettings.theme.colorAccent
-                backgroundColor: appSettings.theme.colorPrimary
                 onClicked: {
                     if(editMode) {
                         username.focus = false;
