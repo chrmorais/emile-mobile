@@ -1,5 +1,7 @@
-import QtQuick 2.7
+import QtQuick 2.8
 import QtQuick.Layouts 1.3
+import QtQuick.Controls.Material 2.1
+import QtQuick.Controls.Material.impl 2.1
 
 import "AwesomeIcon/" as Awesome
 
@@ -29,8 +31,8 @@ Rectangle {
     property string textColor: "#888"
     property string iconColor: textColor
     property string iconName: "warning"
-    property string firstText: qsTr("Warning! No itens found")
-    property string secondText: qsTr("Check your internet connection, Touch to try again!")
+    property string firstText: qsTr("Ops!")
+    property string secondText: qsTr("No itens found. Touch to reload!")
 
     signal clicked()
     signal pressAndHold()
@@ -39,17 +41,28 @@ Rectangle {
 
     onVisibleChanged: {
         if (visible)
-            visibleTrue()
+            visibleTrue();
         else
-            visibleFalse()
+            visibleFalse();
     }
 
     MouseArea {
-        anchors.fill: parent
         hoverEnabled: true
+        anchors.fill: parent
         onEntered: noItemRec.opacity = 0.7
         onExited: noItemRec.opacity = 1.0
-        onClicked: noItemRec.clicked(); onPressAndHold: noItemRec.pressAndHold()
+        onClicked: noItemRec.clicked();
+        onPressAndHold: noItemRec.pressAndHold();
+
+        Ripple {
+            z: 0; anchor: parent
+            x: (parent.width - width) / 2
+            y: (parent.height - height) / 2
+            width: parent.width; height: width
+            pressed: parent.pressed
+            active: parent.pressed
+            color: parent.pressed ? Material.highlightedRippleColor : Material.rippleColor
+        }
     }
 
     Column {
