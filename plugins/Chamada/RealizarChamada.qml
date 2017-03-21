@@ -9,7 +9,7 @@ BasePage {
     title: qsTr("Student attendance")
     toolBarState: "goback"
     firstText: qsTr("Warning! No students found!")
-    toolBarActions: ({"toolButton4": {"action":"send", "icon":"paperclip"}})
+    toolBarActions: ({"toolButton4": {"action":"send","icon":"floppy_o"}})
     listViewDelegate: pageDefaultDelegate
 
     property bool checkedAll: true
@@ -18,8 +18,8 @@ BasePage {
     property var checkedStatus: ({})
     property var attendance: {"student_attendance": []};
 
+    property string root_folder: ""
     property string attendanceDate: ""
-    property string defaultUserImage: "user-default.png"
 
     property list<MenuItem> toolBarMenuList: [
         MenuItem {
@@ -129,8 +129,8 @@ BasePage {
         model: listViewModel
         delegate: GridViewDelegate { }
         cellWidth: parent.width > parent.height ? parent.width * 0.25 : parent.width * 0.50; cellHeight: cellWidth
-        Keys.onUpPressed: gridViewScrollBar.decrease()
-        Keys.onDownPressed: gridViewScrollBar.increase()
+        Keys.onUpPressed: gridViewScrollBar.decrease();
+        Keys.onDownPressed: gridViewScrollBar.increase();
         ScrollBar.vertical: ScrollBar { id: gridViewScrollBar }
     }
 }
