@@ -4,6 +4,7 @@ import QtQuick.Controls 2.1
 import QtQuick.Controls.Material 2.1
 
 import "../../qml/components/"
+import "../../qml/components/AwesomeIcon"
 
 Column {
     spacing: 0; width: parent.width; height: 60
@@ -19,10 +20,18 @@ Column {
             width: parent.width; height: parent.height
             anchors.verticalCenter: parent.verticalCenter
 
+            AwesomeIcon {
+                id: userNoImageIcon
+                width: 40; height: 40; size: 30
+                visible: typeof image_path == "undefined"
+                name: "user"; clickEnabled: false; color: appSettings.theme.colorPrimary
+                anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }
+            }
+
             RoundedImage {
                 id: imgProfile
-                width: 40; height: 40
-                imgSource: image_path ? appSettings.restService.baseImagesUrl + image_path : defaultUserImage
+                width: 40; height: 40; visible: !userNoImageIcon.visible
+                imgSource: visible ? appSettings.restService.baseImagesUrl + image_path : ""
                 anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }
             }
 
