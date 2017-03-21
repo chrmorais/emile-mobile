@@ -64,7 +64,7 @@ BasePage {
         }
         attendance["section_time_date"] = attendanceDate;
         requestHttp.requestParams = JSON.stringify(attendance);
-        requestHttp.load("student_attendance_register/" + section_times_id, saveAttendenceCallback, "POST");
+        requestHttp.load("student_attendance_register/" + course_section_id, saveAttendenceCallback, "POST");
         toast.show(qsTr("Saving attendance register..."));
     }
 
