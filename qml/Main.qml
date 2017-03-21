@@ -107,8 +107,18 @@ ApplicationWindow {
     function loadMenuPages() {
         if (menuPages.length > 0)
             return;
+        var menuPagesTemp = Emile.readObject("menuPages");
+
+        // if the app pages is already saved, load from local as json
+        if (menuPagesTemp && menuPagesTemp.menuPages) {
+            menuPagesTemp = menuPagesTemp["menuPages"];
+            menuPages = menuPagesTemp;
+            return;
+        } else {
+            menuPagesTemp = [];
+        }
+
         var pageObject = {};
-        var menuPagesTemp = [];
         for (var i = 0; i < crudModel.length; i++) {
             for (var j = 0; j < crudModel[i].pages.length; j++) {
                 pageObject = crudModel[i].pages[j];
@@ -124,6 +134,7 @@ ApplicationWindow {
         menuPagesTemp.sort(Util.sortArrayByObjectKey("order_priority"));
         menuPagesTemp.reverse();
         menuPages = menuPagesTemp;
+        Emile.saveObject("menuPages", {"menuPages": menuPages});
     }
 
     function setIndexPage() {
