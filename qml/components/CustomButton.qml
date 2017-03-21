@@ -9,12 +9,12 @@ Button {
     anchors.horizontalCenter: parent.horizontalCenter
     background: Rectangle {
         id: __backgroundButton
-        opacity: enabled ? 1 : 0.8
-        implicitWidth: 180; implicitHeight: 35
+        opacity: __customButton.opacity; color: appSettings.theme.colorPrimary
+        implicitWidth: 180; implicitHeight: 25
     }
     contentItem: Text {
         id: __customButtonText
-        elide: Text.ElideRight; font.bold: true
+        elide: Text.ElideRight; font.bold: true; color: appSettings.theme.colorAccent
         text: __customButton.text.toUpperCase(); opacity: __backgroundButton.opacity
         horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
     }
