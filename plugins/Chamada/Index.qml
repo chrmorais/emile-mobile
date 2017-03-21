@@ -85,7 +85,7 @@ BasePage {
                 onClicked: {
                     var date = new Date();
                     var attendanceDate = Qt.formatDateTime(new Date(), "MM-dd-yyyy");
-                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate,"section_times_id": json.id, "course_section_id": json.course_section.id});
+                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate.toString(),"section_times_id": json.id, "course_section_id": json.course_section.id});
                 }
             }
         }

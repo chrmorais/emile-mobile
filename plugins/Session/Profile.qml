@@ -25,6 +25,7 @@ BasePage {
     property var gender: userProfileData.gender || ""
     property var birthDate: userProfileData.birth_date
     property bool editMode: false
+    toolBarActions: ({"toolButton4": {"action":"edit", "icon":"pencil"}})
 
     signal setProgramsFinish()
 
@@ -41,6 +42,18 @@ BasePage {
         }
     }
 
+    function actionExec(action) {
+        if (action === "edit") {
+            if(editMode) {
+                editMode = false;
+                snackbar.show(qsTr("Edit deactivated"));
+            }
+            else {
+                editMode = true;
+                snackbar.show(qsTr("Edit activated"));
+            }
+        }
+    }
 
     Timer {
         id: lockerButtons
@@ -374,15 +387,6 @@ BasePage {
                     }
                 }
             }
-        }
-    }
-
-    FloatingButton {
-        visible: !isPageBusy
-        z: parent.z + 1
-        iconName: "pencil"; iconColor: appSettings.theme.colorAccent
-        onClicked: {
-            editMode ? editMode = false : editMode = true
         }
     }
 }

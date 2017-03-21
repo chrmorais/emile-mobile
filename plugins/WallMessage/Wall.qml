@@ -21,6 +21,7 @@ BasePage {
     property int totalItens: 0
     property int paginateIndex: 0
     property string nextPage
+    property string previousPage
     property string searchUrl: "search_wall_messages/id_usuario/search_term"
 
     function apendObject(o, moveToTop) {
@@ -36,6 +37,7 @@ BasePage {
         if (!nextPage && listViewModel.count === response.results.length)
             listViewModel.clear();
         nextPage = response.next;
+        previousPage = response.previous;
         var i = 0;
         while (i < response.results.length)
             apendObject(response.results[i++]);
@@ -73,11 +75,14 @@ BasePage {
     function request() {
         if (!userProfileData.id || (listViewModel && listViewModel.count === totalItens))
             return;
-        requestHttp.load(nextPage ? nextPage : "wall_messages/" + userProfileData.id, requestCallback);
+        if(nextPage)
+            requestHttp.load(nextPage, requestCallback);
+        else if(!previousPage)
+            requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
     function requestEmptyList() {
-        requestHttp.load(nextPage ? nextPage : "wall_messages/" + userProfileData.id, requestCallback);
+        requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -88,6 +93,7 @@ BasePage {
             busyIndicator.visible = false;
             if (listView.contentY < -65 && !isPageBusy && !lockMultipleRequests.running) {
                 nextPage = "";
+                previousPage = "";
                 lockMultipleRequests.running = true;
             }
         }
