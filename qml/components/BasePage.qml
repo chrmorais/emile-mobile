@@ -89,10 +89,8 @@ Page {
             delegate: basePage.listViewDelegate ? basePage.listViewDelegate : null
             width: basePage.width; height: basePage.height
             onRemoveChanged: update();
-            Keys.onUpPressed: scrollBar.decrease();
-            Keys.onDownPressed: scrollBar.increase();
-            ScrollBar.vertical: ScrollBar { id: scrollBar }
             onAtYEndChanged: if (atYEnd) loadItens();
+            ScrollIndicator.vertical: ScrollIndicator { }
         }
     }
 
