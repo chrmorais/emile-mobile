@@ -50,30 +50,31 @@ BasePage {
         requestHttp.load("wall_push_notification", requestCallback, "POST");
     }
 
-    Connections {
-        target: window.header
-        onActionExec: if (actionName === "send") send();
+    function actionExec(actionName) {
+        if (actionName === "send")
+            send();
     }
 
     Rectangle {
         id: rectangleTextarea
         color: "transparent"
         width: parent.width * 0.90; height: parent.height * 0.50
-        anchors { top: parent.top; topMargin: 50; horizontalCenter: parent.horizontalCenter }
+        anchors { top: parent.top; topMargin: 75; horizontalCenter: parent.horizontalCenter }
 
         Flickable {
             id: flickable
-            width: parent.width * 0.98
-            height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight + 4
+            width: parent.width
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: textarea.implicitHeight > parent.height ? parent.height : textarea.implicitHeight + 5
 
             TextArea.flickable: TextArea {
                 id: textarea
                 z: parent.z + 1; text: ""
                 enabled: !isPageBusy; readOnly: isPageBusy
                 focus: enabled; width: parent.width
-                opacity: isPageBusy ? 0.8 : 1.0
-                overwriteMode: true; wrapMode: TextArea.Wrap
+                overwriteMode: true; wrapMode: TextArea.WordWrap
                 selectByMouse: true; persistentSelection: true
+                placeholderText: qsTr("Write the text here...")
                 onTextChanged: {
                     if (textarea.text.length > 139) {
                         textarea.remove(140, textarea.text.length);
@@ -82,16 +83,15 @@ BasePage {
                 }
             }
 
-            Keys.onUpPressed: scrollBar.decrease();
-            Keys.onDownPressed: scrollBar.increase();
-            ScrollBar.vertical: ScrollBar { id: scrollBar }
+            ScrollIndicator.vertical: ScrollIndicator { }
         }
     }
 
     Text {
         id: textMessageCharsLength
         text: messageCharsCount + qsTr(" chars left")
-        color: appSettings.theme.defaultTextColor
+        font.pointSize: appSettings.theme.bigFontSize
+        color: appSettings.theme.textColorPrimary
         anchors { bottom: rectangleTextarea.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
     }
 }
