@@ -11,11 +11,10 @@
     },
     "theme": {
         "material": {
-            "defaultTextColor": "#333",
-            "colorAccent": "#c5e1a5",
-            "colorPrimary": "green",
+            "colorPrimary": "#795548",
+            "colorAccent": "#fff9c4",
             "colorHintText": "#fff",
-            "textColorPrimary": "#333",
+            "textColorPrimary": "#777",
             "colorWindowBackground": "#fafafa",
             "colorWindowForeground": "#fff",
             "smallFontSize": 10,
@@ -24,11 +23,10 @@
             "extraLargeFontSize": 22
         },
         "universal": {
-            "defaultTextColor": "#333",
-            "colorAccent": "#c5e1a5",
-            "colorPrimary": "green",
+            "colorPrimary": "#795548",
+            "colorAccent": "#fff9c4",
             "colorHintText": "#fff",
-            "textColorPrimary": "#333",
+            "textColorPrimary": "#777",
             "colorWindowBackground": "#fafafa",
             "colorWindowForeground": "#fff",
             "smallFontSize": 10,
