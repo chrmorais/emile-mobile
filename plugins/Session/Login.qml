@@ -48,7 +48,7 @@ BasePage {
                 Label {
                     id: brand
                     anchors.centerIn: parent
-                    text: appSettings.applicationName; color: appSettings.theme.defaultTextColor
+                    text: appSettings.applicationName; color: appSettings.theme.textColorPrimary
                     font { pointSize: appSettings.theme.extraLargeFontSize; weight: Font.Bold }
                 }
             }

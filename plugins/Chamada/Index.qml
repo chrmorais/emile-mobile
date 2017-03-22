@@ -37,8 +37,8 @@ BasePage {
             anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
-                font { pointSize: 16; weight: Font.Bold }
-                color: appSettings.theme.defaultTextColor
+                font { pointSize: appSettings.theme.middleFontSize; weight: Font.Bold }
+                color: appSettings.theme.textColorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (json && typeof json != "undefined")
@@ -48,8 +48,8 @@ BasePage {
             }
 
             Label {
-                font { pointSize: 14; weight: Font.Bold }
-                color: appSettings.theme.defaultTextColor
+                font { pointSize: appSettings.theme.smallFontSize; weight: Font.Bold }
+                color: appSettings.theme.textColorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
                     if (json && typeof json != "undefined")
@@ -63,12 +63,12 @@ BasePage {
             spacing: 5
 
             Label {
-                color: Material.color(Material.Red)
-                font { pointSize: 16; weight: Font.Bold }
+                color: appSettings.theme.colorAccent
+                font { pointSize: appSettings.theme.bigFontSize; weight: Font.Bold }
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
-                    if (requestHttp.state === "loading")
-                       return qsTr("Check for courses in progress...");
+                    if (isPageBusy)
+                       return qsTr("Checking for courses in progress...");
                     else if (json)
                         return qsTr("Do you want register attendance?");
                     else
@@ -83,7 +83,6 @@ BasePage {
                 backgroundColor: appSettings.theme.colorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
-                    var date = new Date();
                     var attendanceDate = Qt.formatDateTime(new Date(), "MM-dd-yyyy");
                     pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate.toString(),"section_times_id": json.id, "course_section_id": json.course_section.id});
                 }
