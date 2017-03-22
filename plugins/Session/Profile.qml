@@ -10,10 +10,11 @@ import "Functions.js" as RegisterFunctions
 
 BasePage {
     id: page
-    title: qsTr("My profile")
+    title: qsTr("Profile editable")
     objectName: title
     hasListView: false
     hasRemoteRequest: false
+    toolBarState: "goback"
 
     Component.onCompleted: userProfileData.type.id === 1 ? RegisterFunctions.loadPrograms() : ""
 
@@ -24,8 +25,8 @@ BasePage {
     property ListModel courseSectionsListModel: ListModel { }
     property var gender: userProfileData.gender || ""
     property var birthDate: userProfileData.birth_date
-    property bool editMode: false
-    toolBarActions: ({"toolButton4": {"action":"edit", "icon":"lock"}})
+    property bool editMode: true
+    toolBarActions: ({"toolButton5": {"action":"edit", "icon":"floppy_o"}})
 
     signal setProgramsFinish()
 
@@ -34,7 +35,7 @@ BasePage {
             var object = {};
             for (var i = 0; i < programsListModel.count; i++) {
                 object = programsListModel.get(i);
-                if (object.id === userProfileData.program_id) {
+                if (object.id === userProfileData.program_id[0].id) {
                     programsList.currentIndex = i;
                     return;
                 }
@@ -44,9 +45,12 @@ BasePage {
 
     function actionExec(action) {
         if (action === "edit") {
-            if (editMode) {
-                editMode = false;
-                snackbar.show(qsTr("Edit deactivated"));
+            if(editMode) {
+                username.focus = false;
+                email.focus = false;
+                address.focus = false;
+                lockerButtons.running = true;
+                RegisterFunctions.requestEditUser(username.text, email.text, address.text, gender, birthDate);
             } else {
                 editMode = true;
                 snackbar.show(qsTr("Edit activated"));
@@ -337,7 +341,7 @@ BasePage {
                             onCheckedChanged: RegisterFunctions.appendCourseSection(id, checked);
                             checked: {
                                 for(var i = 0; i < userProfileData.course_sections.length; i++) {
-                                    if(userProfileData.course_sections[i] && userProfileData.course_sections[i] === id)
+                                    if(userProfileData.course_sections[i].id === id)
                                         control.checked = true;
                                 }
                             }
