@@ -1,3 +1,4 @@
+import QtQml 2.2
 import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
@@ -15,7 +16,6 @@ BasePage {
     listViewBottomMargin: 10
     listViewDelegate: pageDelegate
     onUpdatePage: requestEmptyList();
-    onLoadItens: if (paginateIndex > 0) request();
     firstText: qsTr("Warning! No Wall message found!")
 
     property int totalItens: 0
@@ -58,7 +58,7 @@ BasePage {
             }
             result += temp.substring(0, pos + 6);
             temp = temp.substring(pos + 6, temp.length);
-            if ((temp.indexOf("://") > 8) || (temp.indexOf("://") == -1))
+            if ((temp.indexOf("://") > 8) || (temp.indexOf("://") === -1))
                 result += "http://";
         }
         return result;
@@ -75,9 +75,9 @@ BasePage {
     function request() {
         if (!userProfileData.id || (listViewModel && listViewModel.count === totalItens))
             return;
-        if(nextPage)
+        if (nextPage)
             requestHttp.load(nextPage, requestCallback);
-        else if(!previousPage)
+        else if (!previousPage)
             requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
@@ -97,9 +97,9 @@ BasePage {
                 lockMultipleRequests.running = true;
             }
         }
-        onFlickingVerticallyChanged: {
-            if (listView.flickingVertically)
-                console.log("flikiing vertically");
+        onCurrentIndexChanged: {
+            if (listView.currentIndex == (listView.count - 3) && paginateIndex > 0)
+                request();
         }
     }
 
@@ -124,6 +124,8 @@ BasePage {
 
             property int yoff: Math.round(delegate.y - delegate.ListView.view.contentY)
             property bool isFullyVisible: (yoff > delegate.ListView.view.y && ((yoff + height) < (delegate.ListView.view.y + delegate.ListView.view.height)))
+
+            onIsFullyVisibleChanged: if (isFullyVisible) delegate.ListView.view.currentIndex = index;
 
             SequentialAnimation on opacity {
                 id: anim
@@ -177,7 +179,7 @@ BasePage {
                         font.wordSpacing: 1
                         textFormat: Text.RichText
                         onLinkActivated: Qt.openUrlExternally(link)
-                        color: appSettings.theme.defaultTextColor
+                        color: appSettings.theme.colorPrimary
                         anchors { right: parent.right; left: parent.left; margins: 10 }
                     }
                 }
@@ -187,13 +189,16 @@ BasePage {
                     anchors { bottom: parent.bottom; bottomMargin: 5; left: parent.left; leftMargin: 10 }
 
                     AwesomeIcon {
-                        size: 12; name: "clock_o"; color: dateLabel.color; clickEnabled: false
+                        size: 10; name: "clock_o"; color: dateLabel.color; clickEnabled: false
+                        anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Label {
                         id: dateLabel
                         text: date || ""
-                        color: appSettings.theme.defaultTextColor
+                        font.pointSize: appSettings.theme.smallFontSize
+                        color: appSettings.theme.colorPrimary
+                        anchors.verticalCenter: parent.verticalCenter
                     }
                 }
             }
