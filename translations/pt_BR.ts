@@ -55,18 +55,26 @@
 <context>
     <name>EmptyList</name>
     <message>
-        <location filename="../qml/components/EmptyList.qml" line="32"/>
         <source>Warning! No itens found</source>
-        <translation>Aviso! Nenhum item encontrado</translation>
+        <translation type="vanished">Aviso! Nenhum item encontrado</translation>
     </message>
     <message>
-        <location filename="../qml/components/EmptyList.qml" line="33"/>
         <source>Check your internet connection, Touch to try again!</source>
-        <translation>Verifique sua conexão com a internet, Toque aqui para tentar de novo!</translation>
+        <translation type="vanished">Verifique sua conexão com a internet, Toque aqui para tentar de novo!</translation>
     </message>
     <message>
         <source>Touch to try again!</source>
         <translation type="vanished">Toque para tentar novamente!</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/EmptyList.qml" line="34"/>
+        <source>Ops!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/EmptyList.qml" line="35"/>
+        <source>No itens found. Touch to reload!</source>
+        <translation>Nenhum item encontrado, Toque aqui para recarregar!</translation>
     </message>
 </context>
 <context>
@@ -313,7 +321,7 @@
         <translation>ENTRAR</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Login.qml" line="121"/>
+        <location filename="../plugins/Session/Login.qml" line="119"/>
         <source>Register</source>
         <translation>Cadastrar</translation>
     </message>
@@ -367,47 +375,50 @@
         <translation type="vanished">Email</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="13"/>
         <source>My profile</source>
-        <translation>Meu perfil</translation>
+        <translation type="vanished">Meu perfil</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="49"/>
         <source>Edit deactivated</source>
-        <translation>Editar desativado</translation>
+        <translation type="vanished">Editar desativado</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="53"/>
+        <location filename="../plugins/Session/Profile.qml" line="13"/>
+        <source>Profile editable</source>
+        <translation>Perfil editável</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Profile.qml" line="56"/>
         <source>Edit activated</source>
         <translation>Editar ativado</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="151"/>
+        <location filename="../plugins/Session/Profile.qml" line="154"/>
         <source>Enter your name</source>
         <translation>Insira seu nome</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="171"/>
+        <location filename="../plugins/Session/Profile.qml" line="174"/>
         <source>youremail@example.com</source>
         <translation>seuemail@exemplo.com</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="193"/>
+        <location filename="../plugins/Session/Profile.qml" line="196"/>
         <source>Address</source>
         <translation>Endereço</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="245"/>
+        <location filename="../plugins/Session/Profile.qml" line="248"/>
         <source>birthdate</source>
         <translation>Data de nascimento</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="298"/>
+        <location filename="../plugins/Session/Profile.qml" line="301"/>
         <source>Check the programs course sections</source>
         <translation>Marque as turmas corrente</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="376"/>
+        <location filename="../plugins/Session/Profile.qml" line="379"/>
         <source>Edit Account</source>
         <translation>Editar conta</translation>
     </message>
@@ -436,7 +447,7 @@
         <translation type="vanished">Feminino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="227"/>
+        <location filename="../plugins/Session/Profile.qml" line="230"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
@@ -463,6 +474,69 @@
     <message>
         <source>Gender: </source>
         <translation type="vanished">Sexo: </translation>
+    </message>
+</context>
+<context>
+    <name>ProfileView</name>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="13"/>
+        <source>My profile</source>
+        <translation>Meu perfil</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="93"/>
+        <source>Name: </source>
+        <translation>Nome: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="101"/>
+        <source>Email: </source>
+        <translation>Email: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="109"/>
+        <source>Username: </source>
+        <translation>Nome de usuário: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="117"/>
+        <source>Address: </source>
+        <translation>Endereço: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="125"/>
+        <source>Gender: </source>
+        <translation>Sexo: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="130"/>
+        <source>Male</source>
+        <translation>Masculino</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="132"/>
+        <source>Female</source>
+        <translation>Feminino</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="134"/>
+        <source>Other</source>
+        <translation>Outro</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="140"/>
+        <source>Birthdate: </source>
+        <translation>Data de nascimento: </translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="148"/>
+        <source>Course: </source>
+        <translation>Curso:</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileView.qml" line="165"/>
+        <source>Course Sections: </source>
+        <translation>Disciplinas:</translation>
     </message>
 </context>
 <context>
