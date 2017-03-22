@@ -8,7 +8,7 @@
             "icon_name": ""
         },
         {
-            "main_qml": "Profile.qml",
+            "main_qml": "ProfileView.qml",
             "menu_name": "Meu perfil",
             "roles": ["teacher", "student"],
             "icon_name": "user",
