@@ -65,7 +65,7 @@ Item {
         anchor: widget
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
-        width: widget.width * 1.3; height: width
+        width: widget.width * 1.8; height: width
         pressed: clickEnabled && _control.pressed
         active: clickEnabled && _control.pressed
         color: clickEnabled && _control.pressed ? Material.highlightedRippleColor : Material.rippleColor

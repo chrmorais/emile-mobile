@@ -5,10 +5,9 @@ import QtQuick.Controls.Material.impl 2.1
 
 import "AwesomeIcon/" as Awesome
 
-Rectangle {
+Item {
     id: noItemRec
     anchors.centerIn: parent
-    color: backgroundColor; border.color: borderColor; radius: 5
     width: parent.width * 0.65; height: parent.width > parent.height ? parent.width * 0.30 : parent.height * 0.30
     transitions: Transition {
         NumberAnimation { property: "opacity"; duration: 500 }
@@ -24,27 +23,14 @@ Rectangle {
         }
     ]
 
-    property int iconSize: 75
-    property bool stateVisible: noItemRec.visible
-    property color borderColor: "transparent"
-    property color backgroundColor: "transparent"
-    property string textColor: "#888"
-    property string iconColor: textColor
-    property string iconName: "warning"
-    property string firstText: qsTr("Ops!")
-    property string secondText: qsTr("No itens found. Touch to reload!")
+    property alias iconSize: awesomeIcon.size
+    property alias textColor: primaryText.color
+    property alias iconName: awesomeIcon.name
+    property alias firstText: primaryText.text
+    property alias secondText: secondaryText.text
 
     signal clicked()
     signal pressAndHold()
-    signal visibleTrue()
-    signal visibleFalse()
-
-    onVisibleChanged: {
-        if (visible)
-            visibleTrue();
-        else
-            visibleFalse();
-    }
 
     MouseArea {
         hoverEnabled: true
@@ -77,23 +63,26 @@ Rectangle {
 
             Awesome.AwesomeIcon {
                 id: awesomeIcon
-                size: iconSize; color: textColor; name: iconName
+                size: 75; color: primaryText.color; name: "warning"
                 anchors.horizontalCenter: parent.horizontalCenter; clickEnabled: false
             }
         }
 
         Text {
-            color: textColor; text: firstText
-            renderType: Text.NativeRendering
+            id: primaryText
+            color: appSettings.theme.textColorPrimary
+            renderType: Text.NativeRendering; text: qsTr("No itens found!")
             fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
             anchors.horizontalCenter: parent.horizontalCenter
             font { weight: Font.DemiBold; pointSize: appSettings.theme.middleFontSize }
         }
 
         Text {
+            id: secondaryText
             renderType: Text.NativeRendering
-            fontSizeMode: isIOS ? Text.FixedSize : Text.Fit
-            color: textColor; text: secondText; font.pointSize: appSettings.theme.smallFontSize
+            fontSizeMode: isIOS ? Text.FixedSize : Text.Fit; opacity: 0.7
+            color: primaryText.color; text: qsTr("Touch to reload!")
+            font.pointSize: appSettings.theme.smallFontSize
             anchors.horizontalCenter: parent.horizontalCenter
         }
     }
