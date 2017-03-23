@@ -118,6 +118,7 @@ BasePage {
                 primaryLabelText: qsTr("Course: ")
                 secondaryLabelText: userProfileData.program_id[0].name
                 primaryIconName: "book"
+                visible: userProfileData.type.id === 1
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
@@ -125,6 +126,7 @@ BasePage {
                 showSeparator: false; primaryLabel.font.bold: true
                 primaryLabelText: qsTr("Course Sections: ")
                 primaryIconName: "gear"
+                visible: userProfileData.type.id === 1
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
@@ -135,6 +137,7 @@ BasePage {
                     showSeparator: true
                     primaryLabelText: modelData.code
                     primaryIconName: "thumb_tack"
+                    visible: userProfileData.type.id === 1
                     backgroundColor: appSettings.theme.colorWindowBackground
                 }
             }
