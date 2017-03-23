@@ -68,7 +68,7 @@ BasePage {
         var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
         return text.replace(urlRegex, function(url,b,c) {
             var url2 = (c === "www.") ?  "https://" + url : url;
-            return '<a href="%1!"/a>'.arg(url2);
+            return '<a href="%1'.arg(url2);
         });
     }
 
