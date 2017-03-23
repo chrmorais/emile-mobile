@@ -16,11 +16,11 @@ BasePage {
     hasRemoteRequest: false
     toolBarActions: ({"toolButton4": {"action":"edit", "icon":"pencil"}})
 
-    property string userImageProfile: userProfileData.image_path ? appSettings.rest_service.baseImagesUrl + userProfileData.image_path : ""
+    property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
 
     function actionExec(action) {
         if (action === "edit") {
-            var url = Qt.resolvedUrl(configJson.root_folder+"/Profile.qml");
+            var url = Qt.resolvedUrl(configJson.root_folder + "/ProfileEdit.qml");
             pageStack.push(url, {"configJson": configJson});
         }
     }
@@ -36,94 +36,64 @@ BasePage {
             width: parent.width; height: 100
             anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
-            AwesomeIcon {
-                id: awesomeIcon
-                name: "photo"
-                size: 64; color: appSettings.theme.colorPrimary
-                visible: !userImageProfile
-                anchors { horizontalCenter: parent.horizontalCenter; verticalCenter: undefined }
-
-                MouseArea {
-                    id: awesomeIconControl
-                    hoverEnabled: true
-                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
-                }
-
-                Ripple {
-                    z: -1
-                    x: (parent.width - width) / 2
-                    y: (parent.height - height) / 2
-                    width: drawerUserImageProfile.width; height: width
-                    anchor: awesomeIconControl
-                    pressed: awesomeIconControl.pressed
-                    active: awesomeIconControl.pressed
-                    color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
-                }
-            }
-
-            RoundedImage {
-                id: drawerUserImageProfile
-                visible: !awesomeIcon.visible
-                width: 90; height: width
-                imgSource: userImageProfile
+            Rectangle {
+                width: parent.width; height: 120; color: "transparent"
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                MouseArea {
-                    id: drawerUserImageProfileControl
-                    hoverEnabled: true
-                    anchors.fill: parent; onClicked: window.profileImageConfigure(); // is a function on main.qml
+                AwesomeIcon {
+                    id: awesomeIcon
+                    visible: !userImageProfile
+                    name: "photo"; clickEnabled: false
+                    size: 64; color: appSettings.theme.colorPrimary
+                    anchors { centerIn: parent; verticalCenter: undefined }
                 }
 
-                Ripple {
-                    z: -1
-                    x: (parent.width - width) / 2
-                    y: (parent.height - height) / 2
-                    width: drawerUserImageProfile.width; height: width
-                    anchor: drawerUserImageProfileControl
-                    pressed: drawerUserImageProfileControl.pressed
-                    active: drawerUserImageProfileControl.pressed
-                    color: drawerUserImageProfileControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                RoundedImage {
+                    id: drawerUserImageProfile
+                    visible: !awesomeIcon.visible
+                    width: 90; height: width
+                    imgSource: userImageProfile
+                    anchors.centerIn: parent
                 }
             }
 
-            Item { width: parent.width; height: 30 }
-
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Name: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Name: ")
                 secondaryLabelText: userProfileData.name
                 primaryIconName: "tag"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Email: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Email: ")
                 secondaryLabelText: userProfileData.email
                 primaryIconName: "envelope"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Username: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Username: ")
                 secondaryLabelText: userProfileData.username
                 primaryIconName: "user"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Address: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Address: ")
                 secondaryLabelText: userProfileData.address
                 primaryIconName: "map_marker"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
+                primaryLabel.font.bold: true
                 showSeparator: true; showIconBold: true
-                primaryLabelText: "<b>" + qsTr("Gender: ") + "</b>"
-                primaryIconName: userProfileData.gender === "M" ? "mars" : "venus"
+                primaryLabelText: qsTr("Gender: ")
+                primaryIconName: userProfileData.gender === "M" ? "mars" : userProfileData.gender === "F" ? "venus" : "transgender_alt"
                 backgroundColor: appSettings.theme.colorWindowBackground
                 secondaryLabelText: {
                     if (userProfileData.gender === "M")
@@ -136,33 +106,24 @@ BasePage {
             }
 
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Birthdate: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Birthdate: ")
                 secondaryLabelText: userProfileData.birth_date
                 primaryIconName: "birthday_cake"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
             ListItem {
-                showSeparator: true
-                primaryLabelText: "<b>" + qsTr("Course: ") + "</b>"
+                showSeparator: true; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Course: ")
                 secondaryLabelText: userProfileData.program_id[0].name
                 primaryIconName: "book"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
 
-//            Item {
-//                height: 10
-//            }
-
-//            Label {
-//                text: qsTr("Course Sections")
-//                font.bold : true
-//            }
-
             ListItem {
-                showSeparator: false
-                primaryLabelText: "<b>" + qsTr("Course Sections: ") + "</b>"
+                showSeparator: false; primaryLabel.font.bold: true
+                primaryLabelText: qsTr("Course Sections: ")
                 primaryIconName: "gear"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
