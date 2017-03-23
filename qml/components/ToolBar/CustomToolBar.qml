@@ -54,6 +54,25 @@ ToolBar {
     // emited when user click in any button from toolbar
     signal actionExec(var actionName)
 
+    function bindPropertys() {
+        var fixBind = ({});
+        hasMenuList = false;
+        toolBarActions = fixBind;
+        searchToolbar.visible = false;
+
+        if (window.currentPage.toolBarActions)
+            toolBarActions = window.currentPage.toolBarActions;
+
+        // if current page define a list of itens to submenu (the last item displayed in ToolBar),
+        // the itens will be append into a dropdown list
+        if (window.currentPage.toolBarMenuList && window.currentPage.toolBarMenuList.length > 0) {
+            hasMenuList = true;
+            optionsToolbarMenu.reset();
+            for (var i = 0; i < window.currentPage.toolBarMenuList.length; i++)
+                optionsToolbarMenu.addItem(window.currentPage.toolBarMenuList[i]);
+        }
+    }
+
     onActionExec: {
         if (actionName === "submenu" && optionsToolbarMenu != null)
             optionsToolbarMenu.open();
@@ -84,34 +103,8 @@ ToolBar {
     }
 
     Connections {
-        target: window.currentPage && window.currentPage.toolBarActions ? window.currentPage : null
-        ignoreUnknownSignals: true
-        onToolBarActionsChanged: {
-            if (currentPage.toolBarActions)
-                toolBarActions = currentPage.toolBarActions;
-        }
-    }
-
-    Connections {
         target: window
-        onPageChanged: {
-            var fixBind = [];
-            hasMenuList = false;
-            toolBarActions = fixBind;
-            searchToolbar.visible = false;
-
-            if (currentPage.toolBarActions)
-                toolBarActions = window.currentPage.toolBarActions;
-
-            // if current page define a list of itens to submenu (the last item displayed in ToolBar),
-            // the itens will be append into a dropdown list
-            if (window.currentPage.toolBarMenuList && window.currentPage.toolBarMenuList.length > 0) {
-                hasMenuList = true;
-                optionsToolbarMenu.reset();
-                for (var i = 0; i < window.currentPage.toolBarMenuList.length; i++)
-                    optionsToolbarMenu.addItem(window.currentPage.toolBarMenuList[i]);
-            }
-        }
+        onCurrentPageChanged: bindPropertys();
     }
 
     RowLayout {
