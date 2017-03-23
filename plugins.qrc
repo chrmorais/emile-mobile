@@ -4,7 +4,7 @@
         <file alias="Session/Functions.js">plugins/Session/Functions.js</file>
         <file alias="Session/Logout.qml">plugins/Session/Logout.qml</file>
         <file alias="Session/LostPassword.qml">plugins/Session/LostPassword.qml</file>
-        <file alias="Session/Profile.qml">plugins/Session/Profile.qml</file>
+        <file alias="Session/ProfileEdit.qml">plugins/Session/ProfileEdit.qml</file>
         <file alias="Session/Register.qml">plugins/Session/Register.qml</file>
         <file alias="Session/config.json">plugins/Session/config.json</file>
         <file alias="Session/ProfileView.qml">plugins/Session/ProfileView.qml</file>
