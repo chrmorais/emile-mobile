@@ -78,11 +78,12 @@ BasePage {
         if (nextPage)
             requestHttp.load(nextPage, requestCallback);
         else if (!previousPage)
-            requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
+            requestEmptyList();
     }
 
     function requestEmptyList() {
-        requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
+        if (!isPageBusy)
+            requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
     }
 
     Component.onCompleted: request();
@@ -125,24 +126,7 @@ BasePage {
             property int yoff: Math.round(delegate.y - delegate.ListView.view.contentY)
             property bool isFullyVisible: (yoff > delegate.ListView.view.y && ((yoff + height) < (delegate.ListView.view.y + delegate.ListView.view.height)))
 
-            onIsFullyVisibleChanged: if (isFullyVisible) delegate.ListView.view.currentIndex = index;
-
-            SequentialAnimation on opacity {
-                id: anim
-                running: false
-
-                NumberAnimation {
-                    to: 0.8
-                    duration: 350
-                }
-                PauseAnimation {
-                    duration: 350
-                }
-                NumberAnimation {
-                    to: 1.0
-                    duration: 350
-                }
-            }
+            onIsFullyVisibleChanged: if (isFullyVisible === true) delegate.ListView.view.currentIndex = index;
 
             Pane {
                 z: parent.z-10; Material.elevation: 1
@@ -210,7 +194,7 @@ BasePage {
         iconName: "pencil"; iconColor: appSettings.theme.colorAccent
         visible: typeof userProfileData.type !== "undefined" && userProfileData.type.name !== "student"
         onClicked: {
-            var url = Qt.resolvedUrl(configJson.root_folder+"/DestinationGroupSelect.qml");
+            var url = Qt.resolvedUrl(configJson.root_folder + "/DestinationGroupSelect.qml");
             pageStack.push(url, {"configJson": configJson});
         }
     }
