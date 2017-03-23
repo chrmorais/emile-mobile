@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR" sourcelanguage="en_US">
+<TS version="2.0" language="pt_BR" sourcelanguage="en_US">
 <context>
     <name>AlunoProfile</name>
     <message>
         <source>New Aluno</source>
-        <translation type="vanished">Novo Aluno</translation>
+        <translation>Novo Aluno</translation>
     </message>
     <message>
         <source>Students</source>
-        <translation type="vanished">Aluno</translation>
+        <translation>Aluno</translation>
     </message>
 </context>
 <context>
     <name>Alunos</name>
     <message>
         <source>List of students</source>
-        <translation type="vanished">Lista de alunos</translation>
+        <translation>Lista de alunos</translation>
     </message>
     <message>
         <source>Students</source>
-        <translation type="vanished">Alunos</translation>
-    </message>
-</context>
-<context>
-    <name>Curriculum</name>
-    <message>
-        <location filename="../plugins/Curriculum/Curriculum.qml" line="10"/>
-        <source>My curriculum</source>
-        <translation type="unfinished"></translation>
+        <translation>Alunos</translation>
     </message>
 </context>
 <context>
@@ -56,25 +48,29 @@
     <name>EmptyList</name>
     <message>
         <source>Warning! No itens found</source>
-        <translation type="vanished">Aviso! Nenhum item encontrado</translation>
+        <translation>Aviso! Nenhum item encontrado</translation>
     </message>
     <message>
         <source>Check your internet connection, Touch to try again!</source>
-        <translation type="vanished">Verifique sua conexão com a internet, Toque aqui para tentar de novo!</translation>
+        <translation>Verifique sua conexão com a internet, Toque aqui para tentar de novo!</translation>
     </message>
     <message>
         <source>Touch to try again!</source>
-        <translation type="vanished">Toque para tentar novamente!</translation>
+        <translation>Toque para tentar novamente!</translation>
     </message>
     <message>
-        <location filename="../qml/components/EmptyList.qml" line="34"/>
-        <source>Ops!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/components/EmptyList.qml" line="35"/>
         <source>No itens found. Touch to reload!</source>
         <translation>Nenhum item encontrado, Toque aqui para recarregar!</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/EmptyList.qml" line="74"/>
+        <source>No itens found!</source>
+        <translation>nenhum item encontrado!</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/EmptyList.qml" line="84"/>
+        <source>Touch to reload!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -144,7 +140,7 @@
     </message>
     <message>
         <source>Your register account is created with success!</source>
-        <translation type="vanished">Sua conta foi criada com sucesso!</translation>
+        <translation>Sua conta foi criada com sucesso!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="52"/>
@@ -167,7 +163,7 @@
     </message>
     <message>
         <source>Your register account cannot be created! The email is already registered for another account!</source>
-        <translation type="vanished">Sua conta não foi possível ser criada! o email já foi cadastrado por outra conta!</translation>
+        <translation>Sua conta não foi possível ser criada! o email já foi cadastrado por outra conta!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="50"/>
@@ -255,12 +251,16 @@
     </message>
     <message>
         <source>Checkin for courses in progress...</source>
-        <translation type="vanished">Chamada de disciplina em andamento</translation>
+        <translation>Chamada de disciplina em andamento...</translation>
+    </message>
+    <message>
+        <source>Check for courses in progress...</source>
+        <translation>Verifique as disciplinas em progresso...</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="71"/>
-        <source>Check for courses in progress...</source>
-        <translation>Verifique as disciplinas em progresso...</translation>
+        <source>Checking for courses in progress...</source>
+        <translation>Chamada de disciplina em andamento...</translation>
     </message>
     <message>
         <location filename="../plugins/Chamada/Index.qml" line="73"/>
@@ -278,7 +278,7 @@
         <translation>Realizar chamada</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="95"/>
+        <location filename="../plugins/Chamada/Index.qml" line="94"/>
         <source>My courses</source>
         <translation>Minhas turmas</translation>
     </message>
@@ -287,15 +287,15 @@
     <name>JSONListModel</name>
     <message>
         <source>Cannot connect to server!</source>
-        <translation type="vanished">Não foi possível conectar com o servidor!</translation>
+        <translation>Não foi possível conectar com o servidor!</translation>
     </message>
     <message>
         <source>The server returned error </source>
-        <translation type="vanished">O servidor retornou um erro</translation>
+        <translation>O servidor retornou um erro</translation>
     </message>
     <message>
         <source>The server returned an empty response!</source>
-        <translation type="vanished">O servidor retornou uma resposta vazia!</translation>
+        <translation>O servidor retornou uma resposta vazia!</translation>
     </message>
 </context>
 <context>
@@ -327,7 +327,7 @@
     </message>
     <message>
         <source>LOST PASSWORD</source>
-        <translation type="vanished">RECUPERAR SENHA</translation>
+        <translation>RECUPERAR SENHA</translation>
     </message>
 </context>
 <context>
@@ -368,112 +368,146 @@
     <name>Profile</name>
     <message>
         <source>Name :</source>
-        <translation type="vanished">Nome</translation>
+        <translation>Nome :</translation>
     </message>
     <message>
         <source>Email :</source>
-        <translation type="vanished">Email</translation>
+        <translation>Email :</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="vanished">Meu perfil</translation>
+        <translation>Meu perfil</translation>
     </message>
     <message>
         <source>Edit deactivated</source>
-        <translation type="vanished">Editar desativado</translation>
+        <translation>Editar desativado</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="13"/>
         <source>Profile editable</source>
         <translation>Perfil editável</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="56"/>
         <source>Edit activated</source>
         <translation>Editar ativado</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="154"/>
         <source>Enter your name</source>
         <translation>Insira seu nome</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="174"/>
         <source>youremail@example.com</source>
         <translation>seuemail@exemplo.com</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="196"/>
         <source>Address</source>
         <translation>Endereço</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="248"/>
         <source>birthdate</source>
         <translation>Data de nascimento</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="301"/>
         <source>Check the programs course sections</source>
         <translation>Marque as turmas corrente</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="379"/>
         <source>Edit Account</source>
         <translation>Editar conta</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="vanished">Nome: </translation>
+        <translation>Nome: </translation>
     </message>
     <message>
         <source>Email: </source>
-        <translation type="vanished">Email: </translation>
+        <translation>Email: </translation>
     </message>
     <message>
         <source>Username: </source>
-        <translation type="vanished">Nome de usuário: </translation>
+        <translation>Nome de usuário: </translation>
     </message>
     <message>
         <source>Address: </source>
-        <translation type="vanished">Endereço: </translation>
+        <translation>Endereço: </translation>
     </message>
     <message>
         <source>Male</source>
-        <translation type="vanished">Masculino</translation>
+        <translation>Masculino</translation>
     </message>
     <message>
         <source>Female</source>
-        <translation type="vanished">Feminino</translation>
+        <translation>Feminino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Profile.qml" line="230"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
         <source>Masculino</source>
-        <translation type="vanished">Male</translation>
+        <translation>Male</translation>
     </message>
     <message>
         <source>Feminino</source>
-        <translation type="vanished">Female</translation>
+        <translation>Female</translation>
     </message>
     <message>
         <source>Outro</source>
-        <translation type="vanished">Other</translation>
+        <translation>Other</translation>
     </message>
     <message>
         <source>User type: </source>
-        <translation type="vanished">Tipo de usuário: </translation>
+        <translation>Tipo de usuário: </translation>
     </message>
     <message>
         <source>Adress: </source>
-        <translation type="vanished">Endereço: </translation>
+        <translation>Endereço: </translation>
     </message>
     <message>
         <source>Gender: </source>
-        <translation type="vanished">Sexo: </translation>
+        <translation>Sexo: </translation>
+    </message>
+</context>
+<context>
+    <name>ProfileEdit</name>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="13"/>
+        <source>Profile editable</source>
+        <translation>Perfil editável</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="56"/>
+        <source>Edit activated</source>
+        <translation>Editar ativado</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="154"/>
+        <source>Enter your name</source>
+        <translation>Insira seu nome</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="174"/>
+        <source>youremail@example.com</source>
+        <translation>seuemail@exemplo.com</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="196"/>
+        <source>Address</source>
+        <translation>Endereço</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="230"/>
+        <source>Other</source>
+        <translation>Outro</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="248"/>
+        <source>birthdate</source>
+        <translation>Data de nascimento</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="301"/>
+        <source>Check the programs course sections</source>
+        <translation>Marque as turmas corrente</translation>
     </message>
 </context>
 <context>
@@ -484,57 +518,57 @@
         <translation>Meu perfil</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="93"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="62"/>
         <source>Name: </source>
         <translation>Nome: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="101"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="70"/>
         <source>Email: </source>
         <translation>Email: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="109"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="78"/>
         <source>Username: </source>
         <translation>Nome de usuário: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="117"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="86"/>
         <source>Address: </source>
         <translation>Endereço: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="125"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="95"/>
         <source>Gender: </source>
         <translation>Sexo: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="130"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="100"/>
         <source>Male</source>
         <translation>Masculino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="132"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="102"/>
         <source>Female</source>
         <translation>Feminino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="134"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="104"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="140"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="110"/>
         <source>Birthdate: </source>
         <translation>Data de nascimento: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="148"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="118"/>
         <source>Course: </source>
         <translation>Curso:</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="165"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="126"/>
         <source>Course Sections: </source>
         <translation>Disciplinas:</translation>
     </message>
@@ -683,7 +717,7 @@
     </message>
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="21"/>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="93"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="92"/>
         <source> chars left</source>
         <translation> Caracteres restantes</translation>
     </message>
@@ -693,20 +727,25 @@
         <translation>A mensagem foi enviada com sucesso!</translation>
     </message>
     <message>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="77"/>
+        <source>Write the text here...</source>
+        <translation>Escreva o texto aqui...</translation>
+    </message>
+    <message>
         <source>Success!</source>
-        <translation type="vanished">Sucesso!</translation>
+        <translation>Sucesso!</translation>
     </message>
     <message>
         <source>The message was successfully sended</source>
-        <translation type="vanished">A mensagem foi enviada com sucesso</translation>
+        <translation>A mensagem foi enviada com sucesso</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation type="vanished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Warning!</source>
-        <translation type="vanished">Aviso!</translation>
+        <translation>Aviso!</translation>
     </message>
     <message>
         <location filename="../plugins/WallMessage/SendMessage.qml" line="43"/>
@@ -741,11 +780,11 @@
     <name>Wall</name>
     <message>
         <source>Wall messages</source>
-        <translation type="vanished">Muro de notificações</translation>
+        <translation>Muro de notificações</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="11"/>
         <location filename="../plugins/WallMessage/Wall.qml" line="12"/>
+        <location filename="../plugins/WallMessage/Wall.qml" line="13"/>
         <source>Message wall</source>
         <translation>Muro de notificações</translation>
     </message>
@@ -755,7 +794,7 @@
         <translation>Aviso! Nenhuma notificação encontrada!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="164"/>
+        <location filename="../plugins/WallMessage/Wall.qml" line="150"/>
         <source>You</source>
         <translation>Você</translation>
     </message>
