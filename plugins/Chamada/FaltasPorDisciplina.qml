@@ -27,6 +27,10 @@ BasePage {
                 listViewModel.append(response[prop][i++]);
         }
     }
+    function changeDateSection(dateSection) {
+        var brDate = dateSection.split("-");
+        return brDate[1] + "-" + brDate[0] + "-" + brDate[2];
+    }
 
     function request() {
         requestHttp.load("students_attendance/" + courseId + "/" + userProfileData.id, requestCallback);
@@ -41,7 +45,7 @@ BasePage {
             id: wrapper
             parent: listView.contentItem
             showSeparator: true
-            primaryLabelText: typeof section_time_date !== "undefined" ? section_time_date : ""
+            primaryLabelText: typeof section_time_date !== "undefined" ? changeDateSection(section_time_date) : ""
             badgeText: typeof status !== "undefined" ? status : ""
             badgeTextColor: typeof status !== "undefined" ? status === "F" ? "red" : "blue" : ""
         }
