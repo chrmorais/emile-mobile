@@ -15,42 +15,51 @@ Page {
 
     // to auto-loader the listView
     property bool hasListView: true
-    property bool hasRemoteRequest: true
+
+    // if set to false, the busyIndicator will be put in the page top
     property bool centralizeBusyIndicator: true
+
+    // keep the state to page based on request state
+    // The requestHttp is a window object - window is Main.qml
     property bool isPageBusy: requestHttp.state === "loading"
 
+    // keep the status for current page
+    // The currentPage is a window alias to pageStack active page - window is Main.qml
     property bool isActivePage: currentPage.objectName && currentPage.objectName === objectName
 
-    // for toolbar
+    // for toolbar binds
     property string toolBarState: ""
     property var toolBarActions: ({})
 
     // for page data
-    property var json: {}
+    property var json: ({})
 
     // to keep the plugin config.json for current page
-    property var configJson: {}
+    property var configJson: ({})
 
     // A component implemented by child page that uses ListView
-    property var listViewDelegate: {}
+    property var listViewDelegate: ({})
+
+    // a alias to busyIndicator to child page manage them
+    property alias busyIndicator: _busyIndicator
+
+    // a alias to progressBar to child page manage them
+    property alias progressBar: _progressBar
 
     // empty list is a item to show a warning when list view is empty
     property alias emptyList: _emptyList
 
-    // a alias to busyIndicator to child pages manage them
-    property alias busyIndicator: _busyIndicator
-
-    // a alias to progressBar to child pages manage them
-    property alias progressBar: _progressBar
-
-    // a alias to firstText of emptyList to child pages manage them
+    // a alias to primary text of the emptyList to child page set a specific text
     property alias firstText: _emptyList.firstText
+
+    // a alias to secondary text of the emptyList to child page set a specific text
+    property alias secondText: _emptyList.secondText
 
     property ListView listView
     property ListModel listViewModel
 
-    signal updatePage()
     signal loadItens()
+    signal updatePage()
 
     BusyIndicator {
         id: _busyIndicator
