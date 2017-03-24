@@ -75,14 +75,6 @@ BasePage {
 
             ListItem {
                 showSeparator: true; primaryLabel.font.bold: true
-                primaryLabelText: qsTr("Username: ")
-                secondaryLabelText: userProfileData.username
-                primaryIconName: "user"
-                backgroundColor: appSettings.theme.colorWindowBackground
-            }
-
-            ListItem {
-                showSeparator: true; primaryLabel.font.bold: true
                 primaryLabelText: qsTr("Address: ")
                 secondaryLabelText: userProfileData.address
                 primaryIconName: "map_marker"
