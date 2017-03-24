@@ -363,6 +363,11 @@
         <source>Warning! No attendance found!</source>
         <translation>Aviso! Nenhuma turma encontrada!</translation>
     </message>
+    <message>
+        <location filename="../plugins/Chamada/MinhasFaltas.qml" line="42"/>
+        <source>Attendance in </source>
+        <translation>Comparecimento em </translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>
@@ -528,47 +533,46 @@
         <translation>Email: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="78"/>
         <source>Username: </source>
         <translation>Nome de usuário: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="86"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="78"/>
         <source>Address: </source>
         <translation>Endereço: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="95"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="87"/>
         <source>Gender: </source>
         <translation>Sexo: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="100"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="92"/>
         <source>Male</source>
         <translation>Masculino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="102"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="94"/>
         <source>Female</source>
         <translation>Feminino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="104"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="96"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="110"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="102"/>
         <source>Birthdate: </source>
         <translation>Data de nascimento: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="118"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="110"/>
         <source>Course: </source>
         <translation>Curso:</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="126"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="119"/>
         <source>Course Sections: </source>
         <translation>Disciplinas:</translation>
     </message>
