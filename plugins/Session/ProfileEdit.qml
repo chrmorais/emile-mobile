@@ -82,14 +82,14 @@ BasePage {
     Flickable {
         id: pageFlickable
         anchors.fill: parent
-        contentHeight: Math.max(content.implicitHeight, height) + 35
+        contentHeight: Math.max(content.implicitHeight + 100, height + 100)
 
         Column {
             id: content
             spacing: 25
             topPadding: 5
             width: parent.width * 0.90
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
             AwesomeIcon {
                 id: awesomeIcon
