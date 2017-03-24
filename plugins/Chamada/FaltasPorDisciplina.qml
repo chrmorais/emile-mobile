@@ -43,7 +43,7 @@ BasePage {
             showSeparator: true
             primaryLabelText: typeof section_time_date !== "undefined" ? section_time_date : ""
             badgeText: typeof status !== "undefined" ? status : ""
-            badgeBackgroundColor: typeof status !== "undefined" ? status === "F" ? "red" : "blue" : ""
+            badgeTextColor: typeof status !== "undefined" ? status === "F" ? "red" : "blue" : ""
         }
     }
 }

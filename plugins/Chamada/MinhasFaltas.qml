@@ -39,7 +39,7 @@ BasePage {
             badgeText: course_section_period
             primaryLabelText: code + ""
             secondaryLabelText: name + ""
-            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": "Attendance in " + primaryLabelText, "courseId": id})
+            onClicked: pushPage(configJson.root_folder+"/FaltasPorDisciplina.qml", {"title": qsTr("Attendance in ") + primaryLabelText, "courseId": id})
         }
     }
 }
