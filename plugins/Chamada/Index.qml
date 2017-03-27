@@ -63,7 +63,7 @@ BasePage {
             spacing: 5
 
             Label {
-                color: appSettings.theme.colorAccent
+                color:appSettings.theme.colorPrimary
                 font { pointSize: appSettings.theme.bigFontSize; weight: Font.Bold }
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
@@ -93,8 +93,8 @@ BasePage {
     CustomButton {
         text: qsTr("My courses")
         visible: !isPageBusy
-        textColor: appSettings.theme.colorPrimary
-        backgroundColor: appSettings.theme.colorAccent
+        textColor: appSettings.theme.colorAccent
+        backgroundColor: appSettings.theme.colorPrimary
         anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 15 }
         onClicked: pushPage(configJson.root_folder+"/TurmasDoProfessor.qml", {"root_folder":configJson.root_folder});
     }

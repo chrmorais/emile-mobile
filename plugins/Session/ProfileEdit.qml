@@ -82,14 +82,14 @@ BasePage {
     Flickable {
         id: pageFlickable
         anchors.fill: parent
-        contentHeight: Math.max(content.implicitHeight, height) + 35
+        contentHeight: Math.max(content.implicitHeight + 100, height + 100)
 
         Column {
             id: content
             spacing: 25
             topPadding: 5
             width: parent.width * 0.90
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 
             AwesomeIcon {
                 id: awesomeIcon
@@ -105,7 +105,7 @@ BasePage {
                 }
 
                 Ripple {
-                    z: -1
+                    z: parent.z + 1
                     x: (parent.width - width) / 2
                     y: (parent.height - height) / 2
                     width: drawerUserImageProfile.width; height: width
@@ -127,17 +127,17 @@ BasePage {
                     id: drawerUserImageProfileControl
                     hoverEnabled: true
                     anchors.fill: parent; onClicked: editMode ? window.profileImageConfigure() : "" // is a function on main.qml
-                }
 
-                Ripple {
-                    z: -1
-                    x: (parent.width - width) / 2
-                    y: (parent.height - height) / 2
-                    width: drawerUserImageProfile.width; height: width
-                    anchor: awesomeIconControl
-                    pressed: awesomeIconControl.pressed
-                    active: awesomeIconControl.pressed
-                    color: awesomeIconControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                    Ripple {
+                        z: parent.z + 1
+                        x: (parent.width - width) / 2
+                        y: (parent.height - height) / 2
+                        width: drawerUserImageProfile.width; height: width
+                        anchor: drawerUserImageProfileControl
+                        pressed: drawerUserImageProfileControl.pressed
+                        active: drawerUserImageProfileControl.pressed
+                        color: drawerUserImageProfileControl.pressed ? Material.highlightedRippleColor : Material.rippleColor
+                    }
                 }
             }
 
