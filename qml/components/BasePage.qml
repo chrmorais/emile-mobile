@@ -43,9 +43,6 @@ Page {
     // a alias to busyIndicator to child page manage them
     property alias busyIndicator: _busyIndicator
 
-    // a alias to progressBar to child page manage them
-    property alias progressBar: _progressBar
-
     // empty list is a item to show a warning when list view is empty
     property alias emptyList: _emptyList
 
@@ -71,14 +68,6 @@ Page {
             topMargin: centralizeBusyIndicator ? undefined : 20
             horizontalCenter: centralizeBusyIndicator ? undefined : parent.horizontalCenter
         }
-    }
-
-    ProgressBar {
-        id: _progressBar
-        visible: !_busyIndicator.visible && isPageBusy
-        indeterminate: visible
-        width: parent.width; z: parent.z + 100
-        anchors { top: parent.top; topMargin: 0 }
     }
 
     EmptyList {
