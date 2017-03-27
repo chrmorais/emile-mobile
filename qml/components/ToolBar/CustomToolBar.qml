@@ -82,7 +82,7 @@ ToolBar {
             toolBar.state = "search";
         else if (actionName === "cancel" && toolBar.state === "search")
             toolBar.state = "normal";
-        else if (currentPage.actionExec)
+        if (currentPage.actionExec)
             currentPage.actionExec(actionName);
     }
 
@@ -105,6 +105,14 @@ ToolBar {
     Connections {
         target: window
         onCurrentPageChanged: bindPropertys();
+    }
+
+    Connections {
+        target: searchToolbar
+        onSearchTextChanged: {
+            if (typeof window.currentPage.searchTerm !== "undefined")
+                window.currentPage.searchTerm = searchToolbar.searchText;
+        }
     }
 
     RowLayout {
@@ -132,9 +140,9 @@ ToolBar {
 
         SearchToolbar {
             id: searchToolbar
-            visible: toolBar.state == "search"; defaultTextColor: defaultTextColor
+            visible: toolBar.state == "search"
             onSearchTextChanged: if (currentPage.searchText) currentPage.searchText = searchToolbar.searchText
-            anchors { left: title.right; leftMargin: 10; verticalCenter: parent.verticalCenter }
+            anchors { left: title.right; leftMargin: 4; bottom: parent.bottom; bottomMargin: 0 }
         }
 
         CustomToolButton {
