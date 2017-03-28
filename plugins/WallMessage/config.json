@@ -7,14 +7,14 @@
             "main_qml": "Wall.qml",
             "menu_name": "Notificações",
             "icon_name": "commenting",
-            "roles": ["student","teacher"],
+            "roles": ["student","teacher","coordenator"],
             "order_priority": 100
         },
         {
             "main_qml": "DestinationGroupSelect.qml",
             "menu_name": "Enviar mensagem",
             "icon_name": "send",
-            "roles": ["teacher"],
+            "roles": ["teacher","coordenator"],
             "order_priority": 10
         }
     ]
