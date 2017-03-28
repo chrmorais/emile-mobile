@@ -71,7 +71,7 @@ BasePage {
         return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
     }
 
-    Component.onCompleted: request();
+    Component.onCompleted: openAsyncRequest.start();
 
     Connections {
         target: listView
@@ -92,9 +92,10 @@ BasePage {
 
         Rectangle {
             id: delegate
-            color: "#fff799"; radius: 4
+            color: sender.type.id === 3 ? "#DAB47C" : "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.94; height: columnLayoutDelegate.height
+            border { width: 1; color: sender.type.id === 3 ? "#7CC8D8" : "#b2cc9e" }
 
             // to add a shadow around of the item
             Pane {
