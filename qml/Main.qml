@@ -28,7 +28,7 @@ ApplicationWindow {
             if (userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
-        submitTokenToServer();
+        sendToken();
     }
 
     onIsUserLoggedInChanged: {
@@ -52,7 +52,18 @@ ApplicationWindow {
 
     // slot connected with pushNotificationTokenListener in main.cpp
     function sendToken(token) {
-        submitTokenToServer(token);
+        var savedToken = Emile.readData("push_notification_token");
+        if (savedToken && !token || savedToken !== token)
+            token = savedToken;
+        if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
+            return;
+        var params = JSON.stringify({
+            "post_message": {"push_notification_token": token}
+        });
+        // to solve first page request conflit
+        var args = ({"source": appSettings.restService.baseUrl});
+        var requestHttpTemporary = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window, args);
+        requestHttpTemporary.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
     }
 
     function callbackTokenRegister(status, response) {
@@ -60,30 +71,9 @@ ApplicationWindow {
             Emile.saveObject("user_profile_data", response.user);
     }
 
-    function submitTokenToServer(token) {
-        var savedToken = Emile.readData("push_notification_token");
-
-        if (savedToken && !token || savedToken !== token)
-            token = savedToken;
-
-        if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
-            return;
-
-        var params = JSON.stringify({
-            "post_message": {"push_notification_token": token}
-        });
-
-        // to solve first page request conflit
-        var args = ({"source": appSettings.restService.baseUrl});
-
-        var requestHttpTemporary = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window, args);
-        requestHttpTemporary.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
-    }
-
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
         messageDialog.title = title;
         messageDialog.informativeText = message;
-
         if (acceptedCallback) {
             messageDialog.accepted.connect(function() {
                 acceptedCallback();
@@ -94,7 +84,6 @@ ApplicationWindow {
                 rejectedCallback();
             });
         }
-
         messageDialog.open();
     }
 
@@ -270,8 +259,7 @@ ApplicationWindow {
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
                 pageStack.pop();
-            else
-                event.accepted = false;
+            event.accepted = false;
         }
 
         pushEnter: Transition {
