@@ -127,7 +127,6 @@ function isValidEditForm() {
 
 function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
-<<<<<<< HEAD
         if(userProfileData.type.id === 1)
             var params = ({
                               "name": username,
@@ -149,30 +148,6 @@ function requestEditUser(username, email, address, gender, birthDate) {
                               "program_id": userProfileData.program_id.id,
                               "gender": gender
                           });
-=======
-        var params = {};
-        if (userProfileData.type.id === 1) {
-            params = {
-              "name": username,
-              "email": email,
-              "birth_date": birthDate,
-              "address": address,
-              "type": userProfileData.type.id,
-              "gender": gender,
-              "program_id": programsList.currentIndex,
-              "course_sections": courseSectionsArray
-            };
-        } else {
-            params = {
-                "name": username,
-                "email": email,
-                "birth_date": birthDate,
-                "address": address,
-                "type": userProfileData.type.id,
-                "gender": gender
-            };
-        }
->>>>>>> e7e8ea42519ef4c157bf604116f5b307cfcfe979
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
