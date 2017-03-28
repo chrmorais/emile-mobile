@@ -73,7 +73,11 @@ ApplicationWindow {
             "post_message": {"push_notification_token": token}
         });
 
-        requestHttp.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
+        // to solve first page request conflit
+        var args = ({"source": appSettings.restService.baseUrl});
+
+        var requestHttpTemporary = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window, args);
+        requestHttpTemporary.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
@@ -108,16 +112,13 @@ ApplicationWindow {
         if (menuPages.length > 0)
             return;
         var menuPagesTemp = Emile.readObject("menuPages");
-
         // if the app pages is already saved, load from local as json
         if (menuPagesTemp && menuPagesTemp.menuPages) {
             menuPagesTemp = menuPagesTemp["menuPages"];
             menuPages = menuPagesTemp;
             return;
-        } else {
-            menuPagesTemp = [];
         }
-
+        menuPagesTemp = [];
         var pageObject = {};
         for (var i = 0; i < crudModel.length; i++) {
             for (var j = 0; j < crudModel[i].pages.length; j++) {
@@ -163,7 +164,11 @@ ApplicationWindow {
 
     onClosing: {
         if (!isIOS) {
-            Emile.minimizeApp();
+            if (pageStack.depth > 1) {
+                pageStack.pop();
+            } else {
+                Emile.minimizeApp();
+            }
             close.accepted = false;
         }
     }
@@ -186,6 +191,7 @@ ApplicationWindow {
         target: PostFile
         onFinished: {
             if (parseInt(statusCode) === 200 && response) {
+                console.log("response from PostFile: " + response);
                 var objc = JSON.parse(response);
                 Emile.saveObject("user_profile_data", objc.user);
                 userProfileData = objc.user;

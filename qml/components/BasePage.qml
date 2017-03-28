@@ -62,6 +62,7 @@ Page {
         id: _busyIndicator
         visible: isPageBusy
         z: parent.z + 1
+        width: 56; height: width
         anchors {
             centerIn: centralizeBusyIndicator ? parent : undefined
             top: centralizeBusyIndicator ? undefined : parent.top

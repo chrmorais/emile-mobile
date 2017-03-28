@@ -83,7 +83,7 @@ BasePage {
 
     Timer {
         id: openAsyncRequest
-        interval: 100
+        interval: 150
         onTriggered: request();
     }
 
@@ -97,7 +97,6 @@ BasePage {
             width: page.width * 0.94; height: columnLayoutDelegate.height
             border { width: 1; color: sender.type.id === 3 ? "#7CC8D8" : "#b2cc9e" }
 
-            // to add a shadow around of the item
             Pane {
                 z: parent.z-10; Material.elevation: 1
                 width: parent.width-1; height: parent.height-1
