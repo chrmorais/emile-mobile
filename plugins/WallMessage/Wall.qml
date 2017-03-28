@@ -78,7 +78,7 @@ BasePage {
 
     Timer {
         id: openAsyncRequest
-        interval: 100
+        interval: 150
         onTriggered: request();
     }
 
@@ -91,7 +91,6 @@ BasePage {
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.94; height: columnLayoutDelegate.height
 
-            // to add a shadow around of the item
             Pane {
                 z: parent.z-10; Material.elevation: 1
                 width: parent.width-1; height: parent.height-1
