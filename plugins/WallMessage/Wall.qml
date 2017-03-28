@@ -22,6 +22,7 @@ BasePage {
     property string nextPage
     property string previousPage
     property string searchTerm
+    property ListModel oldListModel
 
     onSearchTermChanged: if (searchTerm) request();
 
@@ -34,8 +35,10 @@ BasePage {
     function requestCallback(status, response) {
         if (status !== 200)
             return;
-        if (searchTerm || !nextPage)
+        if (searchTerm || !nextPage) {
+            oldListModel = listViewModel;
             listViewModel.clear();
+        }
         nextPage = response.next;
         previousPage = response.previous;
         var i = 0;
@@ -54,24 +57,27 @@ BasePage {
             requestHttp.load("search_wall_messages/%1/%2".arg(userProfileData.id).arg(searchTerm), requestCallback);
     }
 
+    // called by toolbar when user click in any buttons!
+    // for this page is: search icon to start a new search or
+    // the back or cancel button when cancel a search and back to normal page state
     function actionExec(actionName) {
-        if (actionName === "cancel")
-            resetWall();
+        if (actionName === "cancel") {
+            if (oldListModel && oldListModel.count > 0)
+                listViewModel = oldListModel;
+            else
+                openAsyncRequest.start();
+            searchTerm = "";
+            nextPage = "";
+            previousPage = "";
+        }
     }
 
-    function resetWall() {
-        openAsyncRequest.start();
-        searchTerm = "";
-        nextPage = "";
-        previousPage = "";
-    }
-
-    function changeDateSection(dateSection) {
+    function getHumanDate(dateSection) {
         var originalDate = new Date (dateSection * 1000);
         return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
     }
 
-    Component.onCompleted: openAsyncRequest.start();
+    Component.onCompleted: request();
 
     Connections {
         target: listView
@@ -92,10 +98,10 @@ BasePage {
 
         Rectangle {
             id: delegate
-            color: sender.type.id === 3 ? "#DAB47C" : "#fff799"; radius: 4
+            color: sender.type.id === 3 ? "#dab47c" : "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.94; height: columnLayoutDelegate.height
-            border { width: 1; color: sender.type.id === 3 ? "#7CC8D8" : "#b2cc9e" }
+            border { width: 1; color: sender.type.id === 3 ? "#7cc8d8" : "#b2cc9e" }
 
             Pane {
                 z: parent.z-10; Material.elevation: 1
@@ -155,7 +161,7 @@ BasePage {
 
                     Label {
                         id: dateLabel
-                        text: changeDateSection(date) || ""
+                        text: getHumanDate(date) || ""
                         font.pointSize: appSettings.theme.smallFontSize
                         color: appSettings.theme.colorPrimary
                         anchors.verticalCenter: parent.verticalCenter
