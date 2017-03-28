@@ -13,7 +13,6 @@ BasePage {
     title: qsTr("My profile")
     objectName: title
     hasListView: false
-    hasRemoteRequest: false
     toolBarActions: ({"toolButton4": {"action":"edit", "icon":"pencil"}})
 
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""

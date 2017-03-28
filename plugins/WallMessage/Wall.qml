@@ -66,7 +66,12 @@ BasePage {
         previousPage = "";
     }
 
-    Component.onCompleted: request();
+    function changeDateSection(dateSection) {
+        var originalDate = new Date (dateSection * 1000);
+        return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
+    }
+
+    Component.onCompleted: openAsyncRequest.start();
 
     Connections {
         target: listView
@@ -87,9 +92,10 @@ BasePage {
 
         Rectangle {
             id: delegate
-            color: "#fff799"; radius: 4
+            color: sender.type.id === 3 ? "#DAB47C" : "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.94; height: columnLayoutDelegate.height
+            border { width: 1; color: sender.type.id === 3 ? "#7CC8D8" : "#b2cc9e" }
 
             Pane {
                 z: parent.z-10; Material.elevation: 1
@@ -149,7 +155,7 @@ BasePage {
 
                     Label {
                         id: dateLabel
-                        text: date || ""
+                        text: changeDateSection(date) || ""
                         font.pointSize: appSettings.theme.smallFontSize
                         color: appSettings.theme.colorPrimary
                         anchors.verticalCenter: parent.verticalCenter

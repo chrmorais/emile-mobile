@@ -8,7 +8,6 @@ BasePage {
     id: page
     title: qsTr("Courses in progress")
     hasListView: false
-    hasRemoteRequest: true
     onUpdatePage: request();
 
     function requestCallback(status, response) {
