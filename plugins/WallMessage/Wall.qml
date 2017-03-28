@@ -66,6 +66,11 @@ BasePage {
         previousPage = "";
     }
 
+    function changeDateSection(dateSection) {
+        var originalDate = new Date (dateSection * 1000);
+        return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
+    }
+
     Component.onCompleted: request();
 
     Connections {
@@ -150,7 +155,7 @@ BasePage {
 
                     Label {
                         id: dateLabel
-                        text: date || ""
+                        text: changeDateSection(date) || ""
                         font.pointSize: appSettings.theme.smallFontSize
                         color: appSettings.theme.colorPrimary
                         anchors.verticalCenter: parent.verticalCenter
