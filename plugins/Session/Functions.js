@@ -81,13 +81,13 @@ function isValidRegisterForm() {
 
 function requestRegister() {
     if (isValidRegisterForm()) {
-        var params = ({
-                          "name": username.text,
-                          "email": email.text,
-                          "password": password1.text,
-                          "program_id": programsList.currentIndex,
-                          "course_sections": courseSectionsArray
-                      });
+        var params = {
+            "name": username.text,
+            "email": email.text,
+            "password": password1.text,
+            "program_id": programsList.currentIndex,
+            "course_sections": courseSectionsArray
+        };
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("add_student", callbackRegister, "POST");
     }
@@ -122,32 +122,33 @@ function isValidEditForm() {
         status = false;
         alert(qsTr("Ops!"), qsTr("The number of course section checked is above the limit (7). Fix this and try again."));
     }
-
     return status;
 }
 
 function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
-        if(userProfileData.type.id === 1)
-            var params = ({
-                              "name": username,
-                              "email": email,
-                              "birth_date": birthDate,
-                              "address": address,
-                              "type": userProfileData.type.id,
-                              "gender": gender,
-                              "program_id": programsList.currentIndex,
-                              "course_sections": courseSectionsArray
-                          });
-        else
-            var params = ({
-                              "name": username,
-                              "email": email,
-                              "birth_date": birthDate,
-                              "address": address,
-                              "type": userProfileData.type.id,
-                              "gender": gender
-                          });
+        var params = {};
+        if (userProfileData.type.id === 1) {
+            params = {
+              "name": username,
+              "email": email,
+              "birth_date": birthDate,
+              "address": address,
+              "type": userProfileData.type.id,
+              "gender": gender,
+              "program_id": programsList.currentIndex,
+              "course_sections": courseSectionsArray
+            };
+        } else {
+            params = {
+                "name": username,
+                "email": email,
+                "birth_date": birthDate,
+                "address": address,
+                "type": userProfileData.type.id,
+                "gender": gender
+            };
+        }
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
