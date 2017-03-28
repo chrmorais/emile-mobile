@@ -96,7 +96,7 @@ function requestRegister() {
 function callbackEditUser(status, response) {
     if (status === 200) {
         alert(qsTr("Success!"), qsTr("Your account was edited with success!"), "OK", function() { }, function() { });
-        userProfileData = response.user[0]
+        userProfileData = response.user
     }
     else if (status === 400)
         alert(qsTr("Ops!"), qsTr("Cannot edit the account! The email is already associated to another user!"));
@@ -127,28 +127,27 @@ function isValidEditForm() {
 
 function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
-        var params = {};
-        if (userProfileData.type.id === 1) {
-            params = {
-              "name": username,
-              "email": email,
-              "birth_date": birthDate,
-              "address": address,
-              "type": userProfileData.type.id,
-              "gender": gender,
-              "program_id": programsList.currentIndex,
-              "course_sections": courseSectionsArray
-            };
-        } else {
-            params = {
-                "name": username,
-                "email": email,
-                "birth_date": birthDate,
-                "address": address,
-                "type": userProfileData.type.id,
-                "gender": gender
-            };
-        }
+        if(userProfileData.type.id === 1)
+            var params = ({
+                              "name": username,
+                              "email": email,
+                              "birth_date": birthDate,
+                              "address": address,
+                              "type": userProfileData.type.id,
+                              "gender": gender,
+                              "program_id": programsList.currentIndex,
+                              "course_sections": courseSectionsArray
+                          });
+        else
+            var params = ({
+                              "name": username,
+                              "email": email,
+                              "birth_date": birthDate,
+                              "address": address,
+                              "type": userProfileData.type.id,
+                              "program_id": userProfileData.program_id.id,
+                              "gender": gender
+                          });
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
