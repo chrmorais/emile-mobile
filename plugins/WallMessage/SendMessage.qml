@@ -8,7 +8,6 @@ BasePage {
     title: qsTr("Write the message ")
     objectName: qsTr("Send message")
     hasListView: false
-    hasRemoteRequest: true
     toolBarState: "goback"
     centralizeBusyIndicator: false
     toolBarActions: ({"toolButton4": {"action":"send", "icon":"send"}})

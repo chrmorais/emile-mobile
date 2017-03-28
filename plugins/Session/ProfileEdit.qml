@@ -13,7 +13,6 @@ BasePage {
     title: qsTr("Profile editable")
     objectName: title
     hasListView: false
-    hasRemoteRequest: false
     toolBarState: "goback"
     toolBarActions: {"toolButton4": {"action":"update", "icon":"floppy_o"}}
 

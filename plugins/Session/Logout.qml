@@ -5,7 +5,6 @@ import "../../qml/components/"
 BasePage {
     objectName: qsTr("Logout")
     hasListView: false
-    hasRemoteRequest: false
     busyIndicator.visible: true
 
     Component.onCompleted: window.menu.enabled = false
