@@ -40,7 +40,7 @@ BasePage {
                 color: appSettings.theme.textColorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
-                    if (json && typeof json != "undefined")
+                    if (json && typeof json != "undefined" && json.course_section.course)
                         return json.course_section.course.code + " - " + json.course_section.course.name;
                     return "";
                 }
