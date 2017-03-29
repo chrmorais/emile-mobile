@@ -28,7 +28,7 @@ ApplicationWindow {
             if (userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
-        sendToken();
+        sendToken(Emile.readString("push_notification_token"));
     }
 
     onIsUserLoggedInChanged: {
@@ -52,9 +52,6 @@ ApplicationWindow {
 
     // slot connected with pushNotificationTokenListener in main.cpp
     function sendToken(token) {
-        var savedToken = Emile.readData("push_notification_token");
-        if (savedToken && !token || savedToken !== token)
-            token = savedToken;
         if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
             return;
         var params = JSON.stringify({
@@ -67,8 +64,10 @@ ApplicationWindow {
     }
 
     function callbackTokenRegister(status, response) {
-        if (status === 200 && response && response.user)
+        if (status === 200 && response && response.user) {
             Emile.saveObject("user_profile_data", response.user);
+            Emile.saveData("push_notification_token", "");
+        }
     }
 
     function alert(title, message, positiveButtonText, acceptedCallback, negativeButtonText, rejectedCallback) {
@@ -180,7 +179,6 @@ ApplicationWindow {
         target: PostFile
         onFinished: {
             if (parseInt(statusCode) === 200 && response) {
-                console.log("response from PostFile: " + response);
                 var objc = JSON.parse(response);
                 Emile.saveObject("user_profile_data", objc.user);
                 userProfileData = objc.user;
