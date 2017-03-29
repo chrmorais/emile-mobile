@@ -1,7 +1,7 @@
 #ifndef PUSHNOTIFICATIONTOKENLISTENER_H
 #define PUSHNOTIFICATIONTOKENLISTENER_H
 
-#include <QObject>
+#include <QDebug>
 #include <QSettings>
 
 class PushNotificationTokenListener : public QObject
@@ -10,11 +10,9 @@ class PushNotificationTokenListener : public QObject
 public:
     explicit PushNotificationTokenListener(QObject *parent = 0);
 
-    // called by Java (from jni connection) or ObjectiveC object to register the push notification
-    // token when is updated by Firebase.
+    // call by Java (from jni connection) or ObjectiveC object to register
+    // the push notification token when is updated by Firebase.
     static void tokenUpdateNotify(const QString &token);
-
-    QVariant pushNotificationToken();
 
 private:
     void sendSignal(const QString &token);
