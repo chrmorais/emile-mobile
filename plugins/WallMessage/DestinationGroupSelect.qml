@@ -34,19 +34,24 @@ BasePage {
         ListItem {
             id: wrapper
             showSeparator: true
-            badgeText: id
-            badgeTextColor: appSettings.theme.colorPrimary
+            primaryIconName: "thumb_tack"
+            primaryIconColor: appSettings.theme.colorPrimary
             badgeBackgroundColor: "transparent"
             primaryLabelText: name + ""
             secondaryLabelText: ""
             onClicked: {
                 var id = listViewModel.get(index).id;
-                var destination = listViewModel.get(index).param_values_service;
-                if (destination.indexOf("<%users%>") > -1) {
-                    pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
-                } else {
-                    destination = destination.replace("$", "") + window.userProfileData.id;
-                    pushPage(configJson.root_folder+"/DestinationSelect.qml", {"userTypeDestinationId": id, "configJson": configJson, "destination": destination});
+                if(userProfileData.type.id === 3) {
+                    pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": userProfileData.program_id.id});
+                }
+                else {
+                    var destination = listViewModel.get(index).param_values_service;
+                    if (destination.indexOf("<%users%>") > -1) {
+                        pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
+                    } else {
+                        destination = destination.replace("$", "") + window.userProfileData.id;
+                        pushPage(configJson.root_folder+"/DestinationSelect.qml", {"userTypeDestinationId": id, "configJson": configJson, "destination": destination});
+                    }
                 }
             }
         }
