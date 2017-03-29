@@ -98,7 +98,7 @@ BasePage {
 
         Rectangle {
             id: delegate
-            color: userProfileData.type.id === 3 ? "#dab47c" : "#fff799"; radius: 4
+            color: sender.type.id === 3 ? "#dab47c" : "#fff799"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
             width: page.width * 0.94; height: columnLayoutDelegate.height
             border { width: 1; color: sender.type.id === 3 ? "#7cc8d8" : "#b2cc9e" }
