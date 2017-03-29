@@ -10,14 +10,14 @@
         {
             "main_qml": "ProfileView.qml",
             "menu_name": "Meu perfil",
-            "roles": ["teacher","student","coordenator"],
+            "roles": ["teacher","student","coordinator"],
             "icon_name": "user",
             "order_priority": -1
         },
         {
             "main_qml": "Logout.qml",
             "menu_name": "Sair",
-            "roles": ["teacher","student","coordenator"],
+            "roles": ["teacher","student","coordinator"],
             "icon_name": "sign_out",
             "order_priority": -2
         }
