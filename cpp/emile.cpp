@@ -101,6 +101,11 @@ QVariant Emile::readData(const QString &key)
     return m_qsettings.value(key, QLatin1String(""));
 }
 
+QString Emile::readString(const QString &key)
+{
+    return m_qsettings.value(key, QLatin1String("")).toString();
+}
+
 bool Emile::readBool(const QString &key)
 {
     return m_qsettings.value(key, QLatin1String("")).toBool();

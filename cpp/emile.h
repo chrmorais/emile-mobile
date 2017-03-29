@@ -28,6 +28,9 @@ public:
     QVariant readData(const QString &key);
 
     Q_INVOKABLE
+    QString readString(const QString &key);
+
+    Q_INVOKABLE
     bool readBool(const QString &key);
 
     Q_INVOKABLE
