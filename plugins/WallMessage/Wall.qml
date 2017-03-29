@@ -123,7 +123,6 @@ BasePage {
                     Label {
                         id: authorLabel
                         text: userProfileData.name === sender.name ? qsTr("You") : sender ? sender.name || "" : ""; color: "#444"
-                        Component.onCompleted: if (userProfileData.name !== sender.name) text += " (%1)".arg(sender.email)
                     }
 
                     Label {
