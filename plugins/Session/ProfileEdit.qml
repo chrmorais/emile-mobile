@@ -313,6 +313,7 @@ BasePage {
                     id: courseSectionListView
                     enabled: editMode
                     displayMarginBeginning: 10
+                    boundsBehavior: Flickable.StopAtBounds
                     model: courseSectionsListModel
                     width: courseSectionsChooserDialog.width
                     height: courseSectionsChooserDialog.height

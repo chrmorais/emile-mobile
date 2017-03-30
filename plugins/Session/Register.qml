@@ -210,6 +210,7 @@ BasePage {
                 contentItem: ListView {
                     id: courseSectionListView
                     displayMarginBeginning: 10
+                    boundsBehavior: Flickable.StopAtBounds
                     model: courseSectionsListModel
                     width: courseSectionsChooserDialog.width
                     height: courseSectionsChooserDialog.height
