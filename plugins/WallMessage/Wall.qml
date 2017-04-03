@@ -24,7 +24,7 @@ BasePage {
     property string searchTerm
     property ListModel oldListModel
 
-    onSearchTermChanged: if (searchTerm) request();
+    onSearchTermChanged: if (searchTerm) request(); else requestFirst();
 
     function apendObject(o, moveToTop) {
         listViewModel.append(o);
@@ -35,7 +35,7 @@ BasePage {
     function requestCallback(status, response) {
         if (status !== 200)
             return;
-        if (searchTerm || !nextPage) {
+        if (searchTerm) {
             oldListModel = listViewModel;
             listViewModel.clear();
         }
@@ -46,6 +46,7 @@ BasePage {
             apendObject(response.results[i++]);
     }
 
+
     function request() {
         if (isPageBusy || !userProfileData.id)
             return;
@@ -55,6 +56,21 @@ BasePage {
             requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
         else if (!previousPage && searchTerm)
             requestHttp.load("search_wall_messages/%1/%2".arg(userProfileData.id).arg(searchTerm), requestCallback);
+    }
+
+    function requestCallbackFirst(status, response) {
+        if (status !== 200)
+            return;
+        listViewModel.clear();
+        nextPage = response.next;
+        previousPage = response.previous;
+        var i = 0;
+        while (i < response.results.length)
+            apendObject(response.results[i++]);
+    }
+
+    function requestFirst() {
+        requestHttp.load("wall_messages/" + userProfileData.id, requestCallbackFirst);
     }
 
     // called by toolbar when user click in any buttons!
@@ -77,7 +93,7 @@ BasePage {
         return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
     }
 
-    Component.onCompleted: request();
+    Component.onCompleted: requestFirst();
 
     Connections {
         target: listView
