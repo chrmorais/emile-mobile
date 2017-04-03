@@ -309,10 +309,11 @@ BasePage {
                     courseSectionsChooserDialog.close();
                 }
 
-                contentItem: ListView {
+                ListView {
                     id: courseSectionListView
                     enabled: editMode
-                    displayMarginBeginning: 10
+                    bottomMargin: 20
+                    anchors.horizontalCenter: parent.horizontalCenter
                     boundsBehavior: Flickable.StopAtBounds
                     model: courseSectionsListModel
                     width: courseSectionsChooserDialog.width
