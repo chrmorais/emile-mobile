@@ -40,12 +40,12 @@ BasePage {
             primaryLabelText: name + ""
             secondaryLabelText: ""
             onClicked: {
+                var destination = listViewModel.get(index).param_values_service;
                 var id = listViewModel.get(index).id;
-                if(userProfileData.type.id === 3) {
+                if(destination.indexOf("/programs") > -1) {
                     pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": userProfileData.program_id.id});
                 }
                 else {
-                    var destination = listViewModel.get(index).param_values_service;
                     if (destination.indexOf("<%users%>") > -1) {
                         pushPage(configJson.root_folder+"/SendMessage.qml", {"userTypeDestinationId": id, "parameter": window.userProfileData.id});
                     } else {
