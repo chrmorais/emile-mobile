@@ -216,7 +216,7 @@ BasePage {
                     width: courseSectionsChooserDialog.width
                     height: courseSectionsChooserDialog.height
                     delegate: Rectangle {
-                        color: "#fff"; opacity: (courseSectionsArray.indexOf(id) >= 0) ? 0.5 : 1.0
+                        color: "#fff";
                         width: parent.width; height: 50
 
                         MouseArea {
