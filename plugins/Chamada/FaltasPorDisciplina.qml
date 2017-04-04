@@ -27,6 +27,7 @@ BasePage {
                 listViewModel.append(response[prop][i++]);
         }
     }
+
     function changeDateSection(dateSection) {
         var brDate = dateSection.split("-");
         return brDate[1] + "-" + brDate[0] + "-" + brDate[2];
