@@ -24,6 +24,11 @@ BasePage {
         }
     }
 
+    function changeDateSection(dateSection) {
+        var brDate = dateSection.split("-");
+        return brDate[1] + "-" + brDate[0] + "-" + brDate[2];
+    }
+
     Flickable {
         id: flickable
         visible: true
@@ -99,7 +104,7 @@ BasePage {
             ListItem {
                 showSeparator: true; primaryLabel.font.bold: true
                 primaryLabelText: qsTr("Birthdate: ")
-                secondaryLabelText: userProfileData.birth_date
+                secondaryLabelText: changeDateSection(userProfileData.birth_date)
                 primaryIconName: "birthday_cake"
                 backgroundColor: appSettings.theme.colorWindowBackground
             }
