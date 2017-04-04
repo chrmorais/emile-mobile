@@ -54,10 +54,8 @@ BasePage {
             requestHttp.load(nextPage, requestCallback);
         else if (!previousPage && !searchTerm)
             requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
-        else if (!previousPage && searchTerm)
+        else if ((!previousPage || !nextPage) && searchTerm)
             requestHttp.load("search_wall_messages/%1/%2".arg(userProfileData.id).arg(searchTerm), requestCallback);
-        else if (searchTerm)
-            requestFirst();
     }
 
     function requestCallbackFirst(status, response) {
