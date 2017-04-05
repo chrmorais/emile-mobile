@@ -24,7 +24,12 @@ BasePage {
     property string searchTerm
     property ListModel oldListModel
 
-    onSearchTermChanged: if (searchTerm) request(); else requestFirst();
+    onSearchTermChanged: {
+        if (searchTerm)
+            request();
+        else
+            requestFirst();
+    }
 
     function apendObject(o, moveToTop) {
         listViewModel.append(o);
@@ -45,7 +50,6 @@ BasePage {
         while (i < response.results.length)
             apendObject(response.results[i++]);
     }
-
 
     function request() {
         if (isPageBusy || !userProfileData.id)
@@ -88,19 +92,19 @@ BasePage {
         }
     }
 
-    function getHumanDate(dateSection) {
-        var originalDate = new Date (dateSection * 1000);
-        return originalDate.toLocaleDateString("pt_BR") + " " + originalDate.toTimeString();
+    function getHumanDate(messageTimestamp) {
+        var dateArray = [];
+        var dateObject = new Date (messageTimestamp * 1000);
+        dateArray.push(dateObject.toLocaleDateString(Qt.locale()));
+        dateArray.push(dateObject.toTimeString());
+        return dateArray;
     }
 
     Component.onCompleted: requestFirst();
 
     Connections {
         target: listView
-        onAtYEndChanged: {
-            if (listView.atYEnd)
-                openAsyncRequest.start();
-        }
+        onAtYEndChanged: if (listView.atYEnd) openAsyncRequest.start();
     }
 
     Timer {
@@ -109,15 +113,23 @@ BasePage {
         onTriggered: request();
     }
 
+    // http://www.colorhexa.com/71da5e
     Component {
         id: pageDelegate
 
         Rectangle {
             id: delegate
-            color: sender.type.id === 3 ? "#dab47c" : "#fff799"; radius: 4
+            color: sender.type.id === 3 ? "#ffffe7ba" : "#f2dfa178"; radius: 4
             anchors.horizontalCenter: parent.horizontalCenter
-            width: page.width * 0.94; height: columnLayoutDelegate.height
-            border { width: 1; color: sender.type.id === 3 ? "#7cc8d8" : "#b2cc9e" }
+            width: page.width * 0.94; height: columnLayoutDelegate.height+5
+            border { width: 1; color: sender.type.id === 3 ? "#ff71da5e" : "#ffda5e71" }
+
+            property var messageDateTime: []
+
+            Component.onCompleted: {
+                var messageDateTimeT = getHumanDate(date);
+                messageDateTime = messageDateTimeT;
+            }
 
             Pane {
                 z: parent.z-10; Material.elevation: 1
@@ -126,7 +138,7 @@ BasePage {
 
             ColumnLayout {
                 id: columnLayoutDelegate
-                spacing: 15; width: parent.width
+                spacing: 16; width: parent.width
 
                 RowLayout {
                     spacing: 4
@@ -142,14 +154,14 @@ BasePage {
                     }
 
                     Label {
-                        text: "" // add o(s) destinatários da mensgems
+                        text: "" // add o(s) destinatários da mensagens
                         anchors { right: parent.right; rightMargin: 15 }
                     }
                 }
 
                 Item {
                     Layout.fillWidth: true
-                    height: labelMessage.implicitHeight; implicitHeight: height
+                    height: labelMessage.implicitHeight+5; implicitHeight: height
 
                     Label {
                         id: labelMessage
@@ -166,18 +178,35 @@ BasePage {
                 }
 
                 Row {
-                    spacing: 4
-                    anchors { bottom: parent.bottom; bottomMargin: 5; left: parent.left; leftMargin: 10 }
+                    spacing: 5
+                    anchors { bottom: parent.bottom; bottomMargin: 3; right: parent.right; rightMargin: 10 }
 
                     AwesomeIcon {
-                        size: 10; name: "clock_o"; color: dateLabel.color; clickEnabled: false
+                        size: 12; name: "calendar"
+                        visible: dateLabel.text.length > 0
+                        color: dateLabel.color; clickEnabled: false
                         anchors.verticalCenter: parent.verticalCenter
                     }
 
                     Label {
                         id: dateLabel
-                        text: getHumanDate(date) || ""
-                        font.pointSize: appSettings.theme.smallFontSize
+                        text: messageDateTime.length > 0 ? messageDateTime[0] : ""
+                        font.pointSize: appSettings.theme.smallFontSize+1
+                        color: appSettings.theme.colorPrimary
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    AwesomeIcon {
+                        size: 12; name: "clock_o"
+                        visible: timeLabel.text.length > 0
+                        color: dateLabel.color; clickEnabled: false
+                        anchors.verticalCenter: parent.verticalCenter
+                    }
+
+                    Label {
+                        id: timeLabel
+                        text: messageDateTime.length > 1 ? messageDateTime[1] : ""
+                        font.pointSize: appSettings.theme.smallFontSize+1
                         color: appSettings.theme.colorPrimary
                         anchors.verticalCenter: parent.verticalCenter
                     }
