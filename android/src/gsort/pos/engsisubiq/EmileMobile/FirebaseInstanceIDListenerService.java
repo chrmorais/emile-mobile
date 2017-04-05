@@ -26,14 +26,13 @@ public class FirebaseInstanceIDListenerService extends FirebaseInstanceIdService
     @Override
     public void onTokenRefresh()
     {
-        if (debug)
-            Log.i("FirebaseInstanceIDListenerService", "onTokenRefresh() called!");
-
         // Fetch updated Instance ID token and notify our app's server of any changes
         String token = FirebaseInstanceId.getInstance().getToken();
 
-        if (debug)
+        if (debug) {
+            Log.i("FirebaseInstanceIDListenerService", "onTokenRefresh() called!");
             Log.i("FirebaseInstanceIDListenerService", "token registered is: " + token);
+        }
 
         Context context = getApplicationContext();
         sharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
@@ -53,14 +52,6 @@ public class FirebaseInstanceIDListenerService extends FirebaseInstanceIdService
         prefsEditor.putString("app_version_registered", Integer.toString(appVersion));
         prefsEditor.putString("push_notification_token_id", token);
         prefsEditor.apply();
-
-        if (debug) {
-            Log.i("FirebaseInstanceIDListenerService", "The new token is: " + token);
-            Log.i("FirebaseInstanceIDListenerService", "token saved as push_notification_token_id key!");
-        }
-
-        if (debug)
-            Log.i("FirebaseInstanceIDListenerService", "Sending the token to cpp application!");
 
         TokenToApplication.notifyTokenUpdate(token);
     }

@@ -18,8 +18,6 @@ import android.app.NotificationManager;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
-import org.qtproject.qt5.android.bindings.QtActivity;
-
 public class FirebaseListenerService extends FirebaseMessagingService
 {
     private boolean debug = true;
@@ -41,58 +39,48 @@ public class FirebaseListenerService extends FirebaseMessagingService
     {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
         Map<String,String> map = remoteMessage.getData();
-
         if (debug) {
             Log.i("FirebaseListenerService", "Look for all keys in the map:");
             for (String key : map.keySet())
                 Log.i("FirebaseListenerService", key + ": " + map.get(key));
+            Log.i("FirebaseListenerService", "the messageData is: " + map.get("sender"));
         }
-
         if (map.get("body") != null)
             map.put("message", map.get("body"));
-
         if (notification != null) {
             if (notification.getTitle() != null && map.get("title") == null)
                 map.put("title", notification.getTitle());
             if (notification.getBody() != null)
                 map.put("message", notification.getBody());
         }
-
-        sendNotification(map.get("title"), map.get("message"), map.get("actionType"), map.get("actionTypeId"));
-
-        if (debug) {
-            Log.i("FirebaseListenerService", "new message received!");
-            Log.i("FirebaseListenerService", "the actionType is: " + map.get("actionType"));
-            Log.i("FirebaseListenerService", "the message is: " + map.get("message"));
-        }
+        sendNotification(map.get("title"), map.get("message"), map.get("sender"));
+        map.clear();
+        map = null;
     }
 
-    public void sendNotification(String title, String message, String actionType, String actionTypeId)
+    public void sendNotification(String title, String message, String messageData)
     {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder notificationBuilder = new Notification.Builder(this);
-
         // play default notification sound and start alert led(if available)
         notificationBuilder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI).setLights(Color.RED, 3000, 3000);
-
         // start vibration if user configured app to vibrate
         notificationBuilder.setVibrate(new long[] {500, 500, 500});
-
+        // to start LED
+        notificationBuilder.setLights(Color.RED, 3000, 3000);
         // each notification needs to have a unique ID, for that can be grouped one below the other
         // if the ID is not sent (like local notification) we need generate a random ID
         Random random = new Random();
         int messageId = random.nextInt(9999-1000) + 1000;
 
-        Intent notificationIntent = new Intent(this, CustomActivity.class);
-        notificationIntent.putExtra("actionType", actionType);
-        notificationIntent.putExtra("actionTypeId", actionTypeId);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Intent intent = new Intent(this, CustomActivity.class);
+        intent.putExtra("messageData", messageData);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         // create pending intent, mention the Activity which needs to be
         // triggered when user clicks on notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, messageId, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
-
+        PendingIntent contentIntent = PendingIntent.getActivity(this, messageId, intent, PendingIntent.FLAG_ONE_SHOT);
         notificationBuilder.setAutoCancel(true)
         .setContentTitle(title)
         .setContentText(message)
@@ -100,19 +88,16 @@ public class FirebaseListenerService extends FirebaseMessagingService
         .setDefaults(Notification.DEFAULT_SOUND);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // add app transparent icon
             notificationBuilder.setColor(0x222222);
             notificationBuilder.setGroupSummary(true);
             notificationBuilder.setSmallIcon(android.R.drawable.star_on);
-            notificationBuilder.setGroup(FirebaseListenerService.class.getSimpleName());
+            notificationBuilder.setGroup(FirebaseListenerService.class.getSimpleName()+CustomActivity.class);
         } else {
+            // add app icon
             notificationBuilder.setSmallIcon(android.R.drawable.star_on);
         }
 
         notificationManager.notify(messageId, notificationBuilder.build());
-
-        random = null;
-        contentIntent = null;
-        notificationManager = null;
-        notificationBuilder = null;
     }
 }
