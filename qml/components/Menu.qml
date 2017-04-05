@@ -122,6 +122,7 @@ Drawer {
                         anchors { left: parent.left; leftMargin: 16; right: parent.right; rightMargin: 16; verticalCenter: parent.verticalCenter }
 
                         AwesomeIcon {
+                            width: 35; implicitWidth: width
                             color: menuItemTextColor; size: 20; z: 0
                             name:  modelData.icon_name; clickEnabled: false
                         }
