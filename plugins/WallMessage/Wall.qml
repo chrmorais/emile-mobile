@@ -187,12 +187,8 @@ BasePage {
     }
 
     FloatingButton {
-        enabled: !isPageBusy
-        iconName: "pencil"; iconColor: appSettings.theme.colorAccent
+        iconName: "pencil"; enabled: !isPageBusy
         visible: typeof userProfileData.type !== "undefined" && userProfileData.type.name !== "student"
-        onClicked: {
-            var url = Qt.resolvedUrl(configJson.root_folder + "/DestinationGroupSelect.qml");
-            pageStack.push(url, {"configJson": configJson});
-        }
+        onClicked: pushPage(configJson.root_folder + "/DestinationGroupSelect.qml", {"configJson": configJson});
     }
 }

@@ -1,9 +1,6 @@
 .pragma library
 
-.import QtQuick 2.0 as QtQuick
-
-// doc for QML javascript functions and types:
-// http://doc.qt.io/qt-5/qtqml-javascript-functionlist.html
+.import QtQuick 2.8 as QtQuick
 
 /**
  * print messages in console to display debug informations - used in http requests
