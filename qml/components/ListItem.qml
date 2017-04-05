@@ -11,21 +11,16 @@ Item {
     anchors { left: parent ? parent.left : undefined; right: parent ? parent.right : undefined }
     implicitWidth: {
         var width = listItem.margins * 2;
-
         if (primaryAction.visible)
             width += primaryAction.width + row.spacing;
-
         if (__primaryLabelItem.visible)
             width += __primaryLabelItem.implicitWidth + row.spacing;
         else
             width += __primaryLabelItem.implicitWidth + row.spacing;
-
         if (__secondaryLabelItem.visible)
             width += secondaryLabel.width + row.spacing;
-
         if (secondaryAction.visible)
             width += secondaryAction.width + row.spacing;
-
         return width;
     }
 
@@ -47,11 +42,11 @@ Item {
 
     property alias primaryIconName: primaryActionIcon.name
     property alias primaryIconColor: primaryActionIcon.color
-    property alias primaryImageSource: primaryActionImage.source
+    property alias primaryImageSource: primaryActionImage.imgSource
 
     property alias secondaryIconName: secondaryActionIcon.name
     property alias secondaryIconColor: secondaryActionIcon.color
-    property alias secondaryImageSource: secondaryActionImage.source
+    property alias secondaryImageSource: secondaryActionImage.imgSource
 
     property bool selected: false
     property bool interactive: true
@@ -130,11 +125,10 @@ Item {
                 }
             }
 
-            Image {
+            RoundedImage {
                 id: primaryActionImage
-                asynchronous: true; cache: true; clip: true
                 width: parent.width * 0.75; height: width
-                visible: source.length > 0
+                visible: imgSource.length > 0
             }
 
             AwesomeIcon {
@@ -178,7 +172,6 @@ Item {
                 opacity: 0.7
                 visible: text != "" && __primaryLabelItem.text
                 elide: Text.ElideRight; wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                Component.onCompleted: text = text.length > 32 ? text.substring(0, 30) + "..." : text
                 anchors {
                     bottom: __primaryLabelItem.visible ? parent.bottom : undefined
                     bottomMargin: __primaryLabelItem.visible ? 10 : 0
@@ -206,11 +199,10 @@ Item {
                 }
             }
 
-            Image {
+            RoundedImage {
                 id: secondaryActionImage
-                asynchronous: true; cache: true; clip: true
                 width: parent.width * 0.75; height: width
-                visible: source.length > 0
+                visible: imgSource.length > 0
             }
 
             AwesomeIcon {
