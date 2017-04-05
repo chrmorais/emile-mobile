@@ -11,10 +11,10 @@ BasePage {
     Component.onCompleted: window.menu.enabled = false
 
     Label {
-        opacity: 0.7
         text: qsTr("You is exiting. Bye!")
         color: appSettings.theme.colorPrimary
-        anchors { bottom: parent.bottom; bottomMargin: 15 }
+        opacity: 0.7; font.pointSize: appSettings.theme.bigFontSize
+        anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
     }
 
     Timer {
