@@ -25,7 +25,7 @@ Page {
 
     // keep the status for current page
     // The currentPage is a window alias to pageStack active page - window is Main.qml
-    property bool isActivePage: currentPage.objectName && currentPage.objectName === objectName
+    property bool isActivePage: window.currentPage && window.currentPage.objectName === objectName
 
     // for toolbar binds
     property string toolBarState: ""

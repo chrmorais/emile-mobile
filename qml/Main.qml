@@ -22,28 +22,26 @@ ApplicationWindow {
     signal endSession()
     signal starSession(var userData)
 
+    onIsUserLoggedInChanged: {
+        Emile.saveData("is_user_logged_in", isUserLoggedIn);
+    }
     onUserProfileDataChanged: {
         var userProfileDataTemp = Emile.readObject("user_profile_data");
         for (var prop in userProfileData) {
             if (userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
-        sendToken(Emile.readString("push_notification_token"));
+        var savedToken = Emile.readString("push_notification_token");
+        console.log(savedToken);
+        sendToken(savedToken);
     }
-
-    onIsUserLoggedInChanged: {
-        Emile.saveData("is_user_logged_in", isUserLoggedIn);
-    }
-
     onEndSession: {
-        while (pageStack.depth > 1)
-            pageStack.pop();
+        pageStack.clear();
         isUserLoggedIn = false;
         setIndexPage();
         var objectTemp = {};
         userProfileData = objectTemp;
     }
-
     onStarSession: {
         userProfileData = userData;
         isUserLoggedIn = true;
@@ -52,15 +50,19 @@ ApplicationWindow {
 
     // slot connected with pushNotificationTokenListener in main.cpp
     function sendToken(token) {
-        if (!token || !userProfileData || !userProfileData.id || token === userProfileData.push_notification_token)
+        if (!token || !userProfileData || !userProfileData.id) {
+            console.log("token: " + token);
+            console.log("Can't end the token! the userProfileData: " + JSON.stringify(userProfileData));
             return;
+        }
         var params = JSON.stringify({
             "post_message": {"push_notification_token": token}
         });
         // to solve first page request conflit
         var args = ({"source": appSettings.restService.baseUrl});
-        var requestHttpTemporary = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window, args);
-        requestHttpTemporary.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
+        var requestHttpTemp = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window,args);
+        requestHttpTemp.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
+        console.log("send the token... params> " + JSON.stringify(params));
     }
 
     function callbackTokenRegister(status, response) {
@@ -152,12 +154,11 @@ ApplicationWindow {
 
     onClosing: {
         if (!isIOS) {
-            if (pageStack.depth > 1) {
-                pageStack.pop();
-            } else {
-                Emile.minimizeApp();
-            }
             close.accepted = false;
+            if (pageStack.depth > 1)
+                pageStack.pop();
+            else
+                Emile.minimizeApp();
         }
     }
 
@@ -253,20 +254,17 @@ ApplicationWindow {
     StackView {
         id: pageStack
         focus: true; anchors.fill: parent
-
         Keys.onBackPressed: {
             if (pageStack.depth > 1)
                 pageStack.pop();
             event.accepted = false;
         }
-
         pushEnter: Transition {
             PropertyAnimation {
                 property: "opacity"
                 from: 0; to: 1; duration: 450
             }
         }
-
         popExit: Transition {
             PropertyAnimation {
                 property: "opacity"

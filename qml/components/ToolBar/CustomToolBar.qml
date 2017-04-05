@@ -9,7 +9,7 @@ ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
     height: visible ? 50 : 0
-    state: window.currentPage.toolBarState ? window.currentPage.toolBarState : "normal"
+    state: window.currentPage && window.currentPage.toolBarState ? window.currentPage.toolBarState : "normal"
     states: [
         State {
             name: "normal"
@@ -59,10 +59,10 @@ ToolBar {
         hasMenuList = false;
         toolBarActions = fixBind;
         searchToolbar.visible = false;
-
+        if (!window.currentPage)
+            return;
         if (window.currentPage.toolBarActions)
             toolBarActions = window.currentPage.toolBarActions;
-
         // if current page define a list of itens to submenu (the last item displayed in ToolBar),
         // the itens will be append into a dropdown list
         if (window.currentPage.toolBarMenuList && window.currentPage.toolBarMenuList.length > 0) {
@@ -132,7 +132,7 @@ ToolBar {
 
             Text {
                 elide: Text.ElideRight
-                text: currentPage.title || ""; color: defaultTextColor
+                text: window.currentPage && currentPage.title || ""; color: defaultTextColor
                 anchors.verticalCenter: parent.verticalCenter
                 font { weight: Font.DemiBold; pointSize: appSettings.theme.bigFontSize }
             }
