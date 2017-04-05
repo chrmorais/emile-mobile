@@ -157,6 +157,8 @@ ApplicationWindow {
             close.accepted = false;
             if (pageStack.depth > 1)
                 pageStack.pop();
+            else if (pageStack.depth == 1)
+                return;
             else
                 Emile.minimizeApp();
         }
@@ -219,7 +221,7 @@ ApplicationWindow {
     }
 
     Loader {
-        active: !isIOS && Qt.platform.os === "android"
+        active: !isIOS
         asynchronous: active
         sourceComponent: Connections {
             target: androidGallery
@@ -255,7 +257,9 @@ ApplicationWindow {
         id: pageStack
         focus: true; anchors.fill: parent
         Keys.onBackPressed: {
-            if (pageStack.depth > 1)
+            if (messageDialog.visible)
+                messageDialog.close();
+            else if (pageStack.depth > 1)
                 pageStack.pop();
             event.accepted = false;
         }
