@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest package="gsort.pos.engsisubiq.EmileMobile" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0" android:versionCode="1" android:installLocation="auto">
-
+    <!-- necessário para vibrar o dispositivo ao receber notificações -->
     <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- necessário para lê e escrever o arquivo do qsettings -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -20,7 +20,7 @@
             </intent-filter>
         </service>
 
-        <!-- Utilizado pelo Firebase para registrar o device no Firebase - Também retornará o token que o enviaraá para o serviço REST -->
+        <!-- Utilizado pelo Firebase para registrar o device no Firebase - Também retornará o token que será enviado para o serviço REST -->
         <service
             android:enabled="true"
             android:exported="false"

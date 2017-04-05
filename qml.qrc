@@ -3,12 +3,10 @@
         <file>plugins.qrc</file>
         <file>settings.json</file>
 
-        <file>assets/left.svg</file>
-        <file>assets/right.svg</file>
-
         <file>qml/Main.qml</file>
         <file>qml/js/Utils.js</file>
 
+        <file>qml/components/BasePage.qml</file>
         <file>qml/components/CustomButton.qml</file>
         <file>qml/components/DatePicker.qml</file>
         <file>qml/components/EmptyList.qml</file>
@@ -19,12 +17,13 @@
         <file>qml/components/RoundedImage.qml</file>
         <file>qml/components/Snackbar.qml</file>
         <file>qml/components/Toast.qml</file>
-        <file>qml/components/ToolBar/CustomToolBar.qml</file>
-        <file>qml/components/ToolBar/CustomToolButton.qml</file>
-        <file>qml/components/ToolBar/SearchToolbar.qml</file>
+
         <file>qml/components/AwesomeIcon/Awesome.js</file>
         <file>qml/components/AwesomeIcon/FontAwesome.otf</file>
         <file>qml/components/AwesomeIcon/AwesomeIcon.qml</file>
-        <file>qml/components/BasePage.qml</file>
+
+        <file>qml/components/ToolBar/CustomToolBar.qml</file>
+        <file>qml/components/ToolBar/CustomToolButton.qml</file>
+        <file>qml/components/ToolBar/SearchToolbar.qml</file>
     </qresource>
 </RCC>
