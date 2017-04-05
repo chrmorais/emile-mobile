@@ -1,11 +1,11 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.0
-import QtQuick.Controls.Material 2.0
+import QtQuick 2.8
+import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
 
 Button {
     id: __customButton
     radius: 25
-    opacity: enabled ? 1.0 : 0.8
+    opacity: enabled ? 1.0 : 0.7
     anchors.horizontalCenter: parent.horizontalCenter
     background: Rectangle {
         id: __backgroundButton
@@ -22,11 +22,6 @@ Button {
     property alias radius: __backgroundButton.radius
     property alias textColor: __customButtonText.color
     property alias backgroundColor: __backgroundButton.color
-
-    signal clicked()
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: __customButton.clicked()
-    }
+    property alias maximumWidth: __backgroundButton.width
+    property alias maximumHeigth: __backgroundButton.height
 }

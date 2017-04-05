@@ -13,7 +13,7 @@ CustomButton {
     layer.effect: DropShadow {
         samples: 17; radius: 12
         verticalOffset: 1; horizontalOffset: 0
-        color: "#4D000000"; spread: 0
+        color: "#66000000"; spread: 0
     }
 
     contentItem: AwesomeIcon {
