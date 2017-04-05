@@ -60,7 +60,6 @@ void Emile::loadPlugins()
         m_pluginsArray = QJsonArray::fromVariantList(doc.toVariant().toList());
         return;
     }
-
     QJsonParseError error;
     QFile pluginsQrc(":/plugins.qrc");
     QRegularExpression regexp("alias=\"(.*\\.json)?\"");
@@ -78,11 +77,9 @@ void Emile::loadPlugins()
             }
         }
     }
-
     saveData(QStringLiteral("totalPlugins"), m_pluginsArray.size());
     QJsonDocument doc(m_pluginsArray);
     saveData(QStringLiteral("pluginsArray"), QVariant(doc.toJson(QJsonDocument::Compact)));
-
     pluginsQrc.close();
 }
 
@@ -137,5 +134,10 @@ void Emile::minimizeApp()
 
 void Emile::registerToken(const QVariant &token)
 {
-    saveData(QStringLiteral("push_notification_token"), token);
+    QString key(QStringLiteral("push_notification_token"));
+    QString savedToken = readString(key);
+    if (!savedToken.isEmpty())
+        m_qsettings.remove(key);
+    saveData(key, token);
+    qDebug() << "Emile::registerToken: " << savedToken;
 }

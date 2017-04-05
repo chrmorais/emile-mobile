@@ -1,8 +1,7 @@
 #ifndef PUSHNOTIFICATIONTOKENLISTENER_H
 #define PUSHNOTIFICATIONTOKENLISTENER_H
 
-#include <QDebug>
-#include <QSettings>
+#include <QObject>
 
 class PushNotificationTokenListener : public QObject
 {
