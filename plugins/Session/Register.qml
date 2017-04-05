@@ -63,7 +63,7 @@ BasePage {
                 Label {
                     id: brand
                     anchors.centerIn: parent
-                    text: appSettings.applicationName; color: appSettings.theme.defaultTextColor
+                    text: appSettings.applicationName; color: appSettings.theme.colorPrimary
                     font { pointSize: appSettings.theme.extraLargeFontSize; weight: Font.Bold }
                 }
             }
@@ -196,9 +196,7 @@ BasePage {
                 x: width > height ? -35 : -20; y : 0
                 width: window.width; height: window.height
                 title: qsTr("Check the programs course sections")
-
                 standardButtons: Dialog.Ok
-
                 onAccepted: {
                     courseSectionsChooserDialog.close();
                 }
