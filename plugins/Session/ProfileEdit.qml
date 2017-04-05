@@ -34,7 +34,7 @@ BasePage {
             var object = {};
             for (var i = 0; i < programsListModel.count; i++) {
                 object = programsListModel.get(i);
-                if (object.id === userProfileData.program_id[0].id) {
+                if (object.id === userProfileData.program_id.id) {
                     programsList.currentIndex = i;
                     return;
                 }
@@ -72,10 +72,7 @@ BasePage {
         id: datePicker
         anchors.centerIn: parent.center
         z: parent.z + 1
-        onDateSelected: {
-            birthDate = date.month + "-" + date.day + "-" + date.year;
-            requestToSave();
-        }
+        onDateSelected: birthDate = date.month + "-" + date.day + "-" + date.year;
     }
 
     Flickable {
@@ -86,7 +83,7 @@ BasePage {
         Column {
             id: content
             spacing: 25
-            topPadding: 5
+            topPadding: 0
             width: parent.width * 0.90
             anchors { top: parent.top; topMargin: 15; horizontalCenter: parent.horizontalCenter }
 

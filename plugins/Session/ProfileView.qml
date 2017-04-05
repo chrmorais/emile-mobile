@@ -107,7 +107,7 @@ BasePage {
             ListItem {
                 showSeparator: true; primaryLabel.font.bold: true
                 primaryLabelText: qsTr("Course: ")
-                secondaryLabelText: userProfileData.program_id[0].name
+                secondaryLabelText: userProfileData.program_id.name
                 primaryIconName: "book"
                 visible: userProfileData.type.id === 1
                 backgroundColor: appSettings.theme.colorWindowBackground
