@@ -89,26 +89,27 @@
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="167"/>
+        <location filename="../plugins/Session/Functions.js" line="170"/>
         <source>Enter your Email!</source>
         <translation>Insira seu Email!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="169"/>
+        <location filename="../plugins/Session/Functions.js" line="172"/>
         <source>Enter a valid Email!</source>
         <translation>Insira um Email válido!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="171"/>
+        <location filename="../plugins/Session/Functions.js" line="70"/>
+        <location filename="../plugins/Session/Functions.js" line="174"/>
         <source>Enter your password!</source>
         <translation>Insira sua senha!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="5"/>
         <location filename="../plugins/Session/Functions.js" line="33"/>
-        <location filename="../plugins/Session/Functions.js" line="173"/>
-        <location filename="../plugins/Session/Functions.js" line="182"/>
-        <location filename="../plugins/Session/Functions.js" line="190"/>
+        <location filename="../plugins/Session/Functions.js" line="176"/>
+        <location filename="../plugins/Session/Functions.js" line="185"/>
+        <location filename="../plugins/Session/Functions.js" line="193"/>
         <source>Error!</source>
         <translation>Erro!</translation>
     </message>
@@ -134,7 +135,7 @@
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="50"/>
-        <location filename="../plugins/Session/Functions.js" line="98"/>
+        <location filename="../plugins/Session/Functions.js" line="101"/>
         <source>Success!</source>
         <translation>Sucesso!</translation>
     </message>
@@ -151,13 +152,14 @@
         <location filename="../plugins/Session/Functions.js" line="70"/>
         <location filename="../plugins/Session/Functions.js" line="73"/>
         <location filename="../plugins/Session/Functions.js" line="76"/>
-        <location filename="../plugins/Session/Functions.js" line="102"/>
-        <location filename="../plugins/Session/Functions.js" line="104"/>
-        <location filename="../plugins/Session/Functions.js" line="111"/>
+        <location filename="../plugins/Session/Functions.js" line="79"/>
+        <location filename="../plugins/Session/Functions.js" line="105"/>
+        <location filename="../plugins/Session/Functions.js" line="107"/>
         <location filename="../plugins/Session/Functions.js" line="114"/>
         <location filename="../plugins/Session/Functions.js" line="117"/>
         <location filename="../plugins/Session/Functions.js" line="120"/>
         <location filename="../plugins/Session/Functions.js" line="123"/>
+        <location filename="../plugins/Session/Functions.js" line="126"/>
         <source>Ops!</source>
         <translation></translation>
     </message>
@@ -177,67 +179,67 @@
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="54"/>
-        <location filename="../plugins/Session/Functions.js" line="104"/>
+        <location filename="../plugins/Session/Functions.js" line="107"/>
         <source>Cannot load response from the server! Try again.</source>
         <translation>Não é possível carregar a resposta do servidor! Tente novamente.</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="61"/>
-        <location filename="../plugins/Session/Functions.js" line="111"/>
+        <location filename="../plugins/Session/Functions.js" line="114"/>
         <source>Enter your name!</source>
         <translation>Insira seu nome!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="64"/>
-        <location filename="../plugins/Session/Functions.js" line="114"/>
+        <location filename="../plugins/Session/Functions.js" line="117"/>
         <source>Enter your email!</source>
         <translation>Insira seu email!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="67"/>
-        <location filename="../plugins/Session/Functions.js" line="117"/>
+        <location filename="../plugins/Session/Functions.js" line="120"/>
         <source>Enter a valid email!</source>
         <translation>Insira um email válido!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="70"/>
+        <location filename="../plugins/Session/Functions.js" line="73"/>
         <source>These passwords don&apos;t match!</source>
         <translation>Essas senhas não correspondem!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="73"/>
-        <location filename="../plugins/Session/Functions.js" line="120"/>
+        <location filename="../plugins/Session/Functions.js" line="76"/>
+        <location filename="../plugins/Session/Functions.js" line="123"/>
         <source>Choose at least one course section!</source>
         <translation>Escolha pelo menos uma turma!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="76"/>
-        <location filename="../plugins/Session/Functions.js" line="123"/>
+        <location filename="../plugins/Session/Functions.js" line="79"/>
+        <location filename="../plugins/Session/Functions.js" line="126"/>
         <source>The number of course section checked is above the limit (7). Fix this and try again.</source>
         <translation>O número de turmas marcadas estão acima do limite (7). Corrija isso e tente novamente.</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="98"/>
+        <location filename="../plugins/Session/Functions.js" line="101"/>
         <source>Your account was edited with success!</source>
         <translation>Sua conta foi editada com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="102"/>
+        <location filename="../plugins/Session/Functions.js" line="105"/>
         <source>Cannot edit the account! The email is already associated to another user!</source>
         <translation>Não é possível editar sua conta! O email está associado a outro usuário!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="182"/>
+        <location filename="../plugins/Session/Functions.js" line="185"/>
         <source>Email or password is invalid. Try again!</source>
         <translation>Email ou senha é inválida. Tente novamente!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="185"/>
+        <location filename="../plugins/Session/Functions.js" line="188"/>
         <source>Login done successfully!</source>
         <translation>Login efetuado com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="190"/>
+        <location filename="../plugins/Session/Functions.js" line="193"/>
         <source>Failed to connect to the server!</source>
         <translation>Falha para conectar com o servidor!</translation>
     </message>
@@ -258,27 +260,27 @@
         <translation>Verifique as disciplinas em progresso...</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="71"/>
+        <location filename="../plugins/Chamada/Index.qml" line="70"/>
         <source>Checking for courses in progress...</source>
         <translation>Chamada de disciplina em andamento...</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="73"/>
+        <location filename="../plugins/Chamada/Index.qml" line="72"/>
         <source>Do you want register attendance?</source>
         <translation>Deseja registrar chamada?</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="75"/>
+        <location filename="../plugins/Chamada/Index.qml" line="74"/>
         <source>None courses in progress!</source>
         <translation>Nenhuma disciplina em andamento!</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="81"/>
+        <location filename="../plugins/Chamada/Index.qml" line="80"/>
         <source>Student attendance</source>
         <translation>Realizar chamada</translation>
     </message>
     <message>
-        <location filename="../plugins/Chamada/Index.qml" line="94"/>
+        <location filename="../plugins/Chamada/Index.qml" line="93"/>
         <source>My courses</source>
         <translation>Minhas turmas</translation>
     </message>
@@ -333,9 +335,14 @@
 <context>
     <name>Logout</name>
     <message>
-        <location filename="../plugins/Session/Logout.qml" line="6"/>
+        <location filename="../plugins/Session/Logout.qml" line="7"/>
         <source>Logout</source>
         <translation>Logout</translation>
+    </message>
+    <message>
+        <location filename="../plugins/Session/Logout.qml" line="14"/>
+        <source>You is exiting. Bye!</source>
+        <translation>Você está saindo. Tchau!</translation>
     </message>
 </context>
 <context>
@@ -480,37 +487,37 @@
         <translation>Perfil editável</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="56"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="55"/>
         <source>Edit activated</source>
         <translation>Editar ativado</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="154"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="150"/>
         <source>Enter your name</source>
         <translation>Insira seu nome</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="174"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="170"/>
         <source>youremail@example.com</source>
         <translation>seuemail@exemplo.com</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="196"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="192"/>
         <source>Address</source>
         <translation>Endereço</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="230"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="226"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="248"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="244"/>
         <source>birthdate</source>
         <translation>Data de nascimento</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileEdit.qml" line="301"/>
+        <location filename="../plugins/Session/ProfileEdit.qml" line="297"/>
         <source>Check the programs course sections</source>
         <translation>Marque as turmas corrente</translation>
     </message>
@@ -523,12 +530,12 @@
         <translation>Meu perfil</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="62"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="66"/>
         <source>Name: </source>
         <translation>Nome: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="70"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="74"/>
         <source>Email: </source>
         <translation>Email: </translation>
     </message>
@@ -537,42 +544,42 @@
         <translation>Nome de usuário: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="78"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="82"/>
         <source>Address: </source>
         <translation>Endereço: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="87"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="91"/>
         <source>Gender: </source>
         <translation>Sexo: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="92"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="96"/>
         <source>Male</source>
         <translation>Masculino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="94"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="98"/>
         <source>Female</source>
         <translation>Feminino</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="96"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="100"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="102"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="106"/>
         <source>Birthdate: </source>
         <translation>Data de nascimento: </translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="110"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="114"/>
         <source>Course: </source>
         <translation>Curso:</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/ProfileView.qml" line="119"/>
+        <location filename="../plugins/Session/ProfileView.qml" line="123"/>
         <source>Course Sections: </source>
         <translation>Disciplinas:</translation>
     </message>
@@ -707,7 +714,7 @@
 <context>
     <name>SearchToolbar</name>
     <message>
-        <location filename="../qml/components/ToolBar/SearchToolbar.qml" line="15"/>
+        <location filename="../qml/components/ToolBar/SearchToolbar.qml" line="14"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
     </message>
@@ -720,18 +727,18 @@
         <translation>Escrever mensagem</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="21"/>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="92"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="20"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="91"/>
         <source> chars left</source>
         <translation> Caracteres restantes</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="41"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="40"/>
         <source>The message was successfully sended!</source>
         <translation>A mensagem foi enviada com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="77"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="76"/>
         <source>Write the text here...</source>
         <translation>Escreva o texto aqui...</translation>
     </message>
@@ -752,12 +759,12 @@
         <translation>Aviso!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="43"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="42"/>
         <source>The message was not sent!</source>
         <translation>A mensagem não foi enviada!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/SendMessage.qml" line="48"/>
+        <location filename="../plugins/WallMessage/SendMessage.qml" line="47"/>
         <source>Sending message...</source>
         <translation>Enviando mensagem...</translation>
     </message>
@@ -793,12 +800,12 @@
         <translation>Muro de notificações</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="19"/>
+        <location filename="../plugins/WallMessage/Wall.qml" line="20"/>
         <source>Warning! No Wall message found!</source>
         <translation>Aviso! Nenhuma notificação encontrada!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="150"/>
+        <location filename="../plugins/WallMessage/Wall.qml" line="156"/>
         <source>You</source>
         <translation>Você</translation>
     </message>
