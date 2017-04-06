@@ -89,26 +89,27 @@
 <context>
     <name>Functions</name>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="167"/>
+        <location filename="../plugins/Session/Functions.js" line="170"/>
         <source>Enter your Email!</source>
         <translation>Insira seu Email!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="169"/>
+        <location filename="../plugins/Session/Functions.js" line="172"/>
         <source>Enter a valid Email!</source>
         <translation>Insira um Email válido!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="171"/>
+        <location filename="../plugins/Session/Functions.js" line="70"/>
+        <location filename="../plugins/Session/Functions.js" line="174"/>
         <source>Enter your password!</source>
         <translation>Insira sua senha!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="5"/>
         <location filename="../plugins/Session/Functions.js" line="33"/>
-        <location filename="../plugins/Session/Functions.js" line="173"/>
-        <location filename="../plugins/Session/Functions.js" line="182"/>
-        <location filename="../plugins/Session/Functions.js" line="190"/>
+        <location filename="../plugins/Session/Functions.js" line="176"/>
+        <location filename="../plugins/Session/Functions.js" line="185"/>
+        <location filename="../plugins/Session/Functions.js" line="193"/>
         <source>Error!</source>
         <translation>Erro!</translation>
     </message>
@@ -134,7 +135,7 @@
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="50"/>
-        <location filename="../plugins/Session/Functions.js" line="98"/>
+        <location filename="../plugins/Session/Functions.js" line="101"/>
         <source>Success!</source>
         <translation>Sucesso!</translation>
     </message>
@@ -151,13 +152,14 @@
         <location filename="../plugins/Session/Functions.js" line="70"/>
         <location filename="../plugins/Session/Functions.js" line="73"/>
         <location filename="../plugins/Session/Functions.js" line="76"/>
-        <location filename="../plugins/Session/Functions.js" line="102"/>
-        <location filename="../plugins/Session/Functions.js" line="104"/>
-        <location filename="../plugins/Session/Functions.js" line="111"/>
+        <location filename="../plugins/Session/Functions.js" line="79"/>
+        <location filename="../plugins/Session/Functions.js" line="105"/>
+        <location filename="../plugins/Session/Functions.js" line="107"/>
         <location filename="../plugins/Session/Functions.js" line="114"/>
         <location filename="../plugins/Session/Functions.js" line="117"/>
         <location filename="../plugins/Session/Functions.js" line="120"/>
         <location filename="../plugins/Session/Functions.js" line="123"/>
+        <location filename="../plugins/Session/Functions.js" line="126"/>
         <source>Ops!</source>
         <translation></translation>
     </message>
@@ -177,67 +179,67 @@
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="54"/>
-        <location filename="../plugins/Session/Functions.js" line="104"/>
+        <location filename="../plugins/Session/Functions.js" line="107"/>
         <source>Cannot load response from the server! Try again.</source>
         <translation>Não é possível carregar a resposta do servidor! Tente novamente.</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="61"/>
-        <location filename="../plugins/Session/Functions.js" line="111"/>
+        <location filename="../plugins/Session/Functions.js" line="114"/>
         <source>Enter your name!</source>
         <translation>Insira seu nome!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="64"/>
-        <location filename="../plugins/Session/Functions.js" line="114"/>
+        <location filename="../plugins/Session/Functions.js" line="117"/>
         <source>Enter your email!</source>
         <translation>Insira seu email!</translation>
     </message>
     <message>
         <location filename="../plugins/Session/Functions.js" line="67"/>
-        <location filename="../plugins/Session/Functions.js" line="117"/>
+        <location filename="../plugins/Session/Functions.js" line="120"/>
         <source>Enter a valid email!</source>
         <translation>Insira um email válido!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="70"/>
+        <location filename="../plugins/Session/Functions.js" line="73"/>
         <source>These passwords don&apos;t match!</source>
         <translation>Essas senhas não correspondem!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="73"/>
-        <location filename="../plugins/Session/Functions.js" line="120"/>
+        <location filename="../plugins/Session/Functions.js" line="76"/>
+        <location filename="../plugins/Session/Functions.js" line="123"/>
         <source>Choose at least one course section!</source>
         <translation>Escolha pelo menos uma turma!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="76"/>
-        <location filename="../plugins/Session/Functions.js" line="123"/>
+        <location filename="../plugins/Session/Functions.js" line="79"/>
+        <location filename="../plugins/Session/Functions.js" line="126"/>
         <source>The number of course section checked is above the limit (7). Fix this and try again.</source>
         <translation>O número de turmas marcadas estão acima do limite (7). Corrija isso e tente novamente.</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="98"/>
+        <location filename="../plugins/Session/Functions.js" line="101"/>
         <source>Your account was edited with success!</source>
         <translation>Sua conta foi editada com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="102"/>
+        <location filename="../plugins/Session/Functions.js" line="105"/>
         <source>Cannot edit the account! The email is already associated to another user!</source>
         <translation>Não é possível editar sua conta! O email está associado a outro usuário!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="182"/>
+        <location filename="../plugins/Session/Functions.js" line="185"/>
         <source>Email or password is invalid. Try again!</source>
         <translation>Email ou senha é inválida. Tente novamente!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="185"/>
+        <location filename="../plugins/Session/Functions.js" line="188"/>
         <source>Login done successfully!</source>
         <translation>Login efetuado com sucesso!</translation>
     </message>
     <message>
-        <location filename="../plugins/Session/Functions.js" line="190"/>
+        <location filename="../plugins/Session/Functions.js" line="193"/>
         <source>Failed to connect to the server!</source>
         <translation>Falha para conectar com o servidor!</translation>
     </message>
