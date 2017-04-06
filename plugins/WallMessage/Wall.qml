@@ -19,6 +19,7 @@ BasePage {
     toolBarActions: {"toolButton4":{"action":"search","icon":"search"}}
     firstText: qsTr("Warning! No Wall message found!")
 
+    property int totalMessages: 0
     property string nextPage
     property string previousPage
     property string searchTerm
@@ -44,6 +45,7 @@ BasePage {
             oldListModel = listViewModel;
             listViewModel.clear();
         }
+        totalMessages = response.count;
         nextPage = response.next;
         previousPage = response.previous;
         var i = 0;
@@ -52,11 +54,11 @@ BasePage {
     }
 
     function request() {
-        if (isPageBusy || !userProfileData.id)
+        if (isPageBusy || !userProfileData.id || (listView && listView.count == totalMessages))
             return;
         if (nextPage)
             requestHttp.load(nextPage, requestCallback);
-        else if (!previousPage && !searchTerm)
+        else if (!previousPage && !searchTerm && !nextPage)
             requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
         else if ((!previousPage || !nextPage) && searchTerm)
             requestHttp.load("search_wall_messages/%1/%2".arg(userProfileData.id).arg(searchTerm), requestCallback);
@@ -66,6 +68,7 @@ BasePage {
         if (status !== 200)
             return;
         listViewModel.clear();
+        totalMessages = response.count;
         nextPage = response.next;
         previousPage = response.previous;
         var i = 0;
