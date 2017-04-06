@@ -65,6 +65,9 @@ function isValidRegisterForm() {
     } else if (!Util.isValidEmail(email.text)) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
+    } else if (password1.text == "" || password2.text == "") {
+        status = false;
+        alert(qsTr("Ops!"), qsTr("Enter your password!"));
     } else if (password1.text !== password2.text) {
         status = false;
         alert(qsTr("Ops!"), qsTr("These passwords don't match!"));
