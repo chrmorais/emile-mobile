@@ -221,8 +221,7 @@ ApplicationWindow {
     }
 
     Loader {
-        active: !isIOS
-        asynchronous: active
+        active: !isIOS; asynchronous: active
         sourceComponent: Connections {
             target: androidGallery
             onImagePathSelected: {
@@ -235,7 +234,6 @@ ApplicationWindow {
 
     RequestHttp {
         id: requestHttp
-        debug: false
         source: appSettings.restService.baseUrl
     }
 
