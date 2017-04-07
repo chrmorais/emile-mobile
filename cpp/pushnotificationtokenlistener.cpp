@@ -1,6 +1,7 @@
 #include "pushnotificationtokenlistener.h"
 
 #include <QVariant>
+#include <QDebug>
 
 PushNotificationTokenListener* PushNotificationTokenListener::m_instance = nullptr;
 
@@ -13,10 +14,23 @@ void PushNotificationTokenListener::tokenUpdateNotify(const QString &token)
 {
     if (token.isEmpty())
         return;
-    m_instance->sendSignal(token);
+    m_instance->sendTokenSignal(token);
 }
 
-void PushNotificationTokenListener::sendSignal(const QString &token)
+void PushNotificationTokenListener::pushNotificationNotify(const QString &messageData)
+{
+    if (messageData.isEmpty())
+        return;
+    m_instance->sendNotificationSignal(messageData);
+    qDebug() << "pushNotificationNotify with params: " << messageData;
+}
+
+void PushNotificationTokenListener::sendNotificationSignal(const QString &messageData)
+{
+    emit pushNotificationUpdated(messageData);
+}
+
+void PushNotificationTokenListener::sendTokenSignal(const QString &token)
 {
     emit tokenUpdated(QVariant(token));
 }

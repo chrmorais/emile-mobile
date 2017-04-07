@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
     QObject::connect(&pushNotificationTokenListener, SIGNAL(tokenUpdated(QVariant)), &emile, SLOT(registerToken(QVariant)));
     QObject::connect(&pushNotificationTokenListener, SIGNAL(tokenUpdated(QVariant)), window, SLOT(sendToken(QVariant)));
+    QObject::connect(&pushNotificationTokenListener, SIGNAL(pushNotificationUpdated(QVariant)), window, SLOT(pushNotificationUpdated(QVariant)));
 
     return app.exec();
 }
