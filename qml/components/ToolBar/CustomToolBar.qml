@@ -8,7 +8,7 @@ import "../AwesomeIcon/" as Awesome
 ToolBar {
     id: toolBar
     visible: window.menu && window.menu.enabled
-    height: visible ? 50 : 0
+    height: visible ? isIOS ? 50 : 65 : 0
     state: window.currentPage && window.currentPage.toolBarState ? window.currentPage.toolBarState : "normal"
     states: [
         State {
@@ -90,15 +90,8 @@ ToolBar {
         onLoaded: toolBar.background = item
         asynchronous: false; active: toolBarColor.length > 0
         sourceComponent: Rectangle {
-            color: toolBarColor
-            width: toolBar.width; height: toolBar.height - 2
-            layer.enabled: true
-            layer.effect: DropShadow {
-                visible: toolBar.visible
-                verticalOffset: 1; horizontalOffset: 0
-                color: toolBarColor; spread: 0.4
-                samples: 15
-            }
+            color: toolBarColor; border.width: 0; radius: 0
+            width: toolBar.width; height: toolBar.height
         }
     }
 
@@ -117,7 +110,7 @@ ToolBar {
 
     RowLayout {
         id: toolBarItens
-        anchors { fill: parent; leftMargin: 8; rightMargin: 8 }
+        anchors { fill: parent; leftMargin: 8; rightMargin: 8; top: parent.top; topMargin: isIOS ? 0 : 15 }
 
         CustomToolButton {
             id: toolButtonFirst
