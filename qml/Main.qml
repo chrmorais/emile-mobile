@@ -31,9 +31,7 @@ ApplicationWindow {
             if (userProfileData[prop] !== userProfileDataTemp[prop])
                 Emile.saveObject("user_profile_data", userProfileData);
         }
-        var savedToken = Emile.readString("push_notification_token");
-        console.log(savedToken);
-        sendToken(savedToken);
+        sendToken(Emile.readString("push_notification_token"));
     }
     onEndSession: {
         pageStack.clear();
@@ -50,11 +48,8 @@ ApplicationWindow {
 
     // slot connected with pushNotificationTokenListener in main.cpp
     function sendToken(token) {
-        if (!token || !userProfileData || !userProfileData.id) {
-            console.log("token: " + token);
-            console.log("Can't end the token! the userProfileData: " + JSON.stringify(userProfileData));
+        if (!token || !userProfileData || !userProfileData.id)
             return;
-        }
         var params = JSON.stringify({
             "post_message": {"push_notification_token": token}
         });
@@ -62,7 +57,11 @@ ApplicationWindow {
         var args = ({"source": appSettings.restService.baseUrl});
         var requestHttpTemp = Qt.createComponent(Qt.resolvedUrl("components/RequestHttp.qml")).createObject(window,args);
         requestHttpTemp.load("token_register/" + userProfileData.id, callbackTokenRegister, "POST", "application/json", params);
-        console.log("send the token... params> " + JSON.stringify(params));
+    }
+
+    function pushNotificationUpdated(messageData) {
+        //console.log("messageData receive in Main.qml: ");
+        //console.log(messageData);
     }
 
     function callbackTokenRegister(status, response) {
