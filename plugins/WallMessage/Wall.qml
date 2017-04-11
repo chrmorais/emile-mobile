@@ -19,7 +19,7 @@ BasePage {
     toolBarActions: {"toolButton4":{"action":"search","icon":"search"}}
     firstText: qsTr("Warning! No Wall message found!")
 
-    property int totalMessages: -1
+    property int totalMessages: -2
     property string nextPage
     property string previousPage
     property string searchTerm
@@ -55,7 +55,7 @@ BasePage {
     function request(newSearchTerm, forceUpdate) {
         if (isPageBusy || !userProfileData.id)
             return;
-        if (listView && listView.count == totalMessages && !forceUpdate && !newSearchTerm)
+        if(listView && listView.count == totalMessages)
             return;
         if (nextPage && !forceUpdate)
             requestHttp.load(nextPage, requestCallback);
