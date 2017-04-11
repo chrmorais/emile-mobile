@@ -99,5 +99,7 @@ public class FirebaseListenerService extends FirebaseMessagingService
         }
 
         notificationManager.notify(messageId, notificationBuilder.build());
+        if (!messageData.equals(""))
+            ActivityToApplication.pushNotificationNotify(messageData);
     }
 }
