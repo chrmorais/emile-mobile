@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.1
 import "../../qml/components/"
 import "../../qml/components/AwesomeIcon/"
 
-// http://www.colorhexa.com/71da5e
 Rectangle {
     id: delegate
     color: sender.type.id === 3 ? "#ffffe7ba" : "#f2dfa178"; radius: 4
@@ -33,7 +32,7 @@ Rectangle {
         spacing: 16; width: parent.width
 
         RowLayout {
-            spacing: 4
+            spacing: 5
             anchors { top: parent.top; topMargin: 5; left: parent.left; leftMargin: 10; right: parent.right; rightMargin: 10 }
 
             AwesomeIcon {
@@ -46,8 +45,10 @@ Rectangle {
             }
 
             Label {
-                text: "" // add o(s) destinatários da mensagens
-                anchors { right: parent.right; rightMargin: 15 }
+                text: user_type_destination.group
+                font.pointSize: appSettings.theme.smallFontSize+1
+                color: appSettings.theme.colorPrimary
+                anchors { right: parent.right }
             }
         }
 
