@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.1
 import "../../qml/components/"
 import "../../qml/components/AwesomeIcon/"
 
-// http://www.colorhexa.com/71da5e
 Rectangle {
     id: delegate
     color: sender.type.id === 3 ? "#ffffe7ba" : "#f2dfa178"; radius: 4
