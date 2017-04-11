@@ -2,7 +2,6 @@
 
 #include <QDir>
 #include <QFile>
-#include <QtDebug>
 #include <QTextStream>
 #include <QQuickStyle>
 #include <QJsonObject>
@@ -139,5 +138,4 @@ void Emile::registerToken(const QVariant &token)
     if (!savedToken.isEmpty())
         m_qsettings.remove(key);
     saveData(key, token);
-    qDebug() << "Emile::registerToken: " << savedToken;
 }
