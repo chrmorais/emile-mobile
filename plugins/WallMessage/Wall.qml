@@ -55,11 +55,11 @@ BasePage {
     function request(newSearchTerm, forceUpdate) {
         if (isPageBusy || !userProfileData.id)
             return;
-        if (listView.count == totalMessages && !forceUpdate && !newSearchTerm)
+        if (listView && listView.count == totalMessages && !forceUpdate && !newSearchTerm)
             return;
-        if (nextPage && !newSearchTerm && !forceUpdate)
+        if (nextPage && !forceUpdate)
             requestHttp.load(nextPage, requestCallback);
-        else if (forceUpdate || (!previousPage && !searchTerm && !nextPage))
+        else if (forceUpdate || (!previousPage && !searchTerm && !nextPage && listView && listView.count != totalMessages))
             requestHttp.load("wall_messages/" + userProfileData.id, requestCallback);
         else if ((!previousPage || !nextPage) && searchTerm)
             requestHttp.load("search_wall_messages/%1/%2".arg(userProfileData.id).arg(searchTerm), requestCallback);
@@ -71,7 +71,7 @@ BasePage {
     function actionExec(actionName) {
         if (actionName === "cancel") {
             if (searchTerm) {
-                totalMessages = -1;
+                totalMessages = oldListModel.count;
                 searchTerm = "";
                 nextPage = "";
                 previousPage = "";
@@ -103,14 +103,15 @@ BasePage {
 
     Connections {
         target: listView
-        onAtYEndChanged: if (listView.atYEnd) request();
+        onAtYEndChanged: if (listView.atYEnd) request(null, false);
     }
 
     Timer {
         id: updatePageCountdown
         repeat: true
-        interval: 150000
-        onTriggered: request();
+        running: isActivePage
+        interval: 100000
+        onTriggered: request(null, true);
     }
 
     Timer {

@@ -22,7 +22,6 @@ void PushNotificationTokenListener::pushNotificationNotify(const QString &messag
     if (messageData.isEmpty())
         return;
     m_instance->sendNotificationSignal(messageData);
-    qDebug() << "pushNotificationNotify with params: " << messageData;
 }
 
 void PushNotificationTokenListener::sendNotificationSignal(const QString &messageData)
