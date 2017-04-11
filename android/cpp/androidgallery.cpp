@@ -1,4 +1,5 @@
 #include "androidgallery.h"
+
 #include <QtAndroid>
 #include <QAndroidJniEnvironment>
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -11,9 +12,7 @@ void AndroidGallery::open()
 {
     QAndroidJniObject ACTION_PICK = QAndroidJniObject::getStaticObjectField("android/content/Intent", "ACTION_PICK", "Ljava/lang/String;");
     QAndroidJniObject EXTERNAL_CONTENT_URI = QAndroidJniObject::getStaticObjectField("android/provider/MediaStore$Images$Media", "EXTERNAL_CONTENT_URI", "Landroid/net/Uri;");
-
     QAndroidJniObject intent = QAndroidJniObject("android/content/Intent", "(Ljava/lang/String;Landroid/net/Uri;)V", ACTION_PICK.object<jstring>(), EXTERNAL_CONTENT_URI.object<jobject>());
-
     if (ACTION_PICK.isValid() && intent.isValid()) {
         intent.callObjectMethod("setType", "(Ljava/lang/String;)Landroid/content/Intent;", QAndroidJniObject::fromString("image/*").object<jstring>());
         QtAndroid::startActivity(intent.object<jobject>(), 101, this);
@@ -23,7 +22,6 @@ void AndroidGallery::open()
 void AndroidGallery::handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data)
 {
     jint RESULT_OK = QAndroidJniObject::getStaticField<jint>("android/app/Activity", "RESULT_OK");
-
     if (receiverRequestCode == 101 && resultCode == RESULT_OK) {
         QAndroidJniEnvironment env;
         QAndroidJniObject uri = data.callObjectMethod("getData", "()Landroid/net/Uri;");
