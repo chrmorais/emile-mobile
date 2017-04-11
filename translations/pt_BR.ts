@@ -359,6 +359,14 @@
     </message>
 </context>
 <context>
+    <name>MessageDelegate</name>
+    <message>
+        <location filename="../plugins/WallMessage/MessageDelegate.qml" line="45"/>
+        <source>You</source>
+        <translation>Você</translation>
+    </message>
+</context>
+<context>
     <name>MinhasFaltas</name>
     <message>
         <location filename="../plugins/Chamada/MinhasFaltas.qml" line="7"/>
@@ -797,7 +805,7 @@
         <location filename="../plugins/WallMessage/Wall.qml" line="12"/>
         <location filename="../plugins/WallMessage/Wall.qml" line="13"/>
         <source>Message wall</source>
-        <translation>Muro de notificações</translation>
+        <translation>Notificações</translation>
     </message>
     <message>
         <location filename="../plugins/WallMessage/Wall.qml" line="20"/>
@@ -805,7 +813,6 @@
         <translation>Aviso! Nenhuma notificação encontrada!</translation>
     </message>
     <message>
-        <location filename="../plugins/WallMessage/Wall.qml" line="156"/>
         <source>You</source>
         <translation>Você</translation>
     </message>
