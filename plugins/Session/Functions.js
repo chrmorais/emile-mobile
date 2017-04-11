@@ -1,5 +1,3 @@
-.import "../../qml/js/Utils.js" as Util
-
 function callbackPrograms(status, response) {
     if (status !== 200) {
         alert(qsTr("Error!", qsTr("Cannot load the available programs! Try again.")));
@@ -54,6 +52,11 @@ function callbackRegister(status, response) {
         alert(qsTr("Ops!"), qsTr("Cannot load response from the server! Try again."));
 }
 
+function isValidEmail(strValue) {
+    var objRegExp  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return objRegExp.test(strValue);
+}
+
 function isValidRegisterForm() {
     var status = true;
     if (!username.text) {
@@ -62,7 +65,7 @@ function isValidRegisterForm() {
     } else if (!email.text) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter your email!"));
-    } else if (!Util.isValidEmail(email.text)) {
+    } else if (!isValidEmail(email.text)) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
     } else if (password1.text == "" || password2.text == "") {
@@ -115,7 +118,7 @@ function isValidEditForm() {
     } else if (!email.text) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter your email!"));
-    } else if (!Util.isValidEmail(email.text)) {
+    } else if (!isValidEmail(email.text)) {
         status = false;
         alert(qsTr("Ops!"), qsTr("Enter a valid email!"));
     } else if (courseSectionsArray.length === 0 && userProfileData.type.id === 1) {
@@ -168,7 +171,7 @@ function isValidLoginForm() {
     var message = "";
     if (email.text.length === 0)
         message = qsTr("Enter your Email!");
-    else if (!Util.isValidEmail(email.text))
+    else if (!isValidEmail(email.text))
         message = qsTr("Enter a valid Email!");
     else if (password.text.length === 0)
         message = qsTr("Enter your password!");
