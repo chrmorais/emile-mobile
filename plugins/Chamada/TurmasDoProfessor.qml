@@ -42,7 +42,9 @@ BasePage {
             badgeText: course_section_period
             primaryLabelText: code + ""
             secondaryLabelText: name + ""
-            onClicked: pushPage(root_folder+"/RealizarChamada.qml", {"root_folder":root_folder,"section_times_id":course.id,"course_section_id":id});
+            onClicked: {
+                pushPage(root_folder+"/RealizarChamada.qml", {"root_folder":root_folder, "course_section_id":id});
+            }
         }
     }
 }

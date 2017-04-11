@@ -13,7 +13,6 @@ BasePage {
     listViewDelegate: pageDefaultDelegate
 
     property bool checkedAll: true
-    property int section_times_id: 0
     property int course_section_id: 0
     property var checkedStatus: ({})
     property var attendance: {"student_attendance": []};
