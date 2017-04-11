@@ -40,8 +40,8 @@ BasePage {
                 color: appSettings.theme.textColorPrimary
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: {
-                    if (json && typeof json != "undefined" && json.course_section.course)
-                        return json.course_section.course.code + " - " + json.course_section.course.name;
+                    if (json && typeof json != "undefined" && json.course_section[0].course[0])
+                        return json.course_section[0].course[0].code + " - " + json.course_section[0].course[0].name;
                     return "";
                 }
             }
@@ -83,7 +83,7 @@ BasePage {
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     var attendanceDate = Qt.formatDateTime(new Date(), "MM-dd-yyyy");
-                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate.toString(),"section_times_id": json.id, "course_section_id": json.course_section.id});
+                    pushPage(configJson.root_folder+"/RealizarChamada.qml", {"attendanceDate":attendanceDate.toString(),"section_times_id": json.id, "course_section_id": json.course_section[0].id});
                 }
             }
         }
