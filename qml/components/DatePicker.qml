@@ -95,7 +95,7 @@ Item {
                         id: nextYear
                         text: datepicker.currentYear+1; color: previousYear.color
                         font { pointSize: 12; bold: false }
-                        anchors { right: nextYearIcon.left; verticalCenter: parent.verticalCenter }
+                        anchors { left: nextYearIcon.right; verticalCenter: parent.verticalCenter }
                     }
 
                     MouseArea {
