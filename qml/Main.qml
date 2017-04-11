@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 
 import "components/"
-import "js/Utils.js" as Util
 
 ApplicationWindow {
     id: window
@@ -44,6 +43,18 @@ ApplicationWindow {
         userProfileData = userData;
         isUserLoggedIn = true;
         setIndexPage();
+    }
+
+    function sortArrayByObjectKey(key) {
+        var sortOrder = 1;
+        if (key[0] === "-") {
+            sortOrder = -1;
+            key = key.substr(1);
+        }
+        return function (a,b) {
+            var result = (a[key] < b[key]) ? -1 : (a[key] > b[key]) ? 1 : 0;
+            return result * sortOrder;
+        }
     }
 
     // slot connected with pushNotificationTokenListener in main.cpp
