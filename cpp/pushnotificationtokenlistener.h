@@ -13,11 +13,15 @@ public:
     // the push notification token when is updated by Firebase.
     static void tokenUpdateNotify(const QString &token);
 
+    static void pushNotificationNotify(const QString &messageData);
+
 private:
-    void sendSignal(const QString &token);
+    void sendTokenSignal(const QString &token);
+    void sendNotificationSignal(const QString &messageData);
 
 signals:
     void tokenUpdated(const QVariant &token);
+    void pushNotificationUpdated(const QVariant &messageData);
 
 private:
     static PushNotificationTokenListener *m_instance;

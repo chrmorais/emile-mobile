@@ -13,7 +13,7 @@ BasePage {
     Label {
         text: qsTr("You is exiting. Bye!")
         color: appSettings.theme.colorPrimary
-        opacity: 0.7; font.pointSize: appSettings.theme.bigFontSize
+        opacity: 0.7; font { pointSize: appSettings.theme.bigFontSize; bold: true }
         anchors { bottom: parent.bottom; bottomMargin: 20; horizontalCenter: parent.horizontalCenter }
     }
 

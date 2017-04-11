@@ -46,8 +46,9 @@ android: {
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew.bat \
         android/src/gsort/pos/engsisubiq/EmileMobile/CustomActivity.java \
-        android/src/gsort/pos/engsisubiq/EmileMobile/TokenToApplication.java \
+        android/src/gsort/pos/engsisubiq/EmileMobile/ActivityToApplication.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseListenerService.java \
+        android/src/gsort/pos/engsisubiq/EmileMobile/PushNotificationTokenParse.java \
         android/src/gsort/pos/engsisubiq/EmileMobile/FirebaseInstanceIDListenerService.java
 
     contains(ANDROID_TARGET_ARCH,armeabi-v7a) {

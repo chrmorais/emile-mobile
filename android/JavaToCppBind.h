@@ -12,9 +12,17 @@ static void tokenUpdateNotify(JNIEnv *env, jobject obj, jstring token)
     PushNotificationTokenListener::tokenUpdateNotify(env->GetStringUTFChars(token,0));
 }
 
+static void pushNotificationNotify(JNIEnv *env, jobject obj, jstring messageData)
+{
+    Q_UNUSED(env)
+    Q_UNUSED(obj)
+    PushNotificationTokenListener::pushNotificationNotify(env->GetStringUTFChars(messageData,0));
+}
+
 static JNINativeMethod methodsArray[] =
 {
-    {"notifyTokenUpdate", "(Ljava/lang/String;)V", (void *) tokenUpdateNotify},
+    {"tokenUpdateNotify", "(Ljava/lang/String;)V", (void *) tokenUpdateNotify},
+    {"pushNotificationNotify", "(Ljava/lang/String;)V", (void *) pushNotificationNotify},
 };
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
@@ -24,7 +32,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
     jclass javaClass;
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK)
         return JNI_ERR;
-    javaClass = env->FindClass("gsort/pos/engsisubiq/EmileMobile/TokenToApplication");
+    javaClass = env->FindClass("gsort/pos/engsisubiq/EmileMobile/ActivityToApplication");
     if (!javaClass)
         return JNI_ERR;
     if (env->RegisterNatives(javaClass, methodsArray, sizeof(methodsArray) / sizeof(methodsArray[0])) < 0)

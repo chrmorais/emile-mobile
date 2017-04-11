@@ -1,7 +1,5 @@
 package gsort.pos.engsisubiq.EmileMobile;
 
-import android.util.Log;
-import android.os.Bundle;
 import android.content.Intent;
 
 public class CustomActivity extends org.qtproject.qt5.android.bindings.QtActivity
@@ -11,22 +9,43 @@ public class CustomActivity extends org.qtproject.qt5.android.bindings.QtActivit
         super();
     }
 
-    public void minimize()
+    @Override
+    public void onResume()
     {
-        moveTaskToBack(true);
+        super.onResume();
+        startPushNotificationCheck();
     }
 
     @Override
     protected void onNewIntent(Intent intent)
     {
         super.onNewIntent(intent);
-        Bundle bundle = intent.getExtras();
+        android.os.Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            String notificationData = bundle.getString("messageData");
-            Log.i("CustomActivity", "onNewIntent(Intent intent)");
-            Log.i("CustomActivity", "notificationData: " + notificationData);
-            // adicionar aqui a passagem dos dados para o app
-            // CustomQtActivity.setPushNotificationArgs(bundle.getString("actionType"), bundle.getString("actionTypeId"));
+            String messageData = bundle.getString("messageData");
+            if (!messageData.equals(""))
+                ActivityToApplication.pushNotificationNotify(messageData);
         }
+    }
+
+    private void startPushNotificationCheck()
+    {
+        java.lang.Thread t = new java.lang.Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try  {
+                    PushNotificationTokenParse pNTP = new PushNotificationTokenParse(getApplicationContext());
+                    pNTP.checkToken();
+                } catch (Exception e) { }
+            }
+        });
+        t.start();
+    }
+
+    public void minimize()
+    {
+        moveTaskToBack(true);
     }
 }

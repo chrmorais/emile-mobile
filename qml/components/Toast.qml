@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.8
 
 Column {
     id: root
@@ -68,9 +68,10 @@ Column {
             SequentialAnimation on opacity {
                 id: anim
                 running: false
+                onRunningChanged: if (!running && selfDestroying) root.destroy();
 
                 NumberAnimation {
-                    to: 0.9
+                    to: 0.7
                     duration: fadeTime
                 }
                 PauseAnimation {
@@ -79,11 +80,6 @@ Column {
                 NumberAnimation {
                     to: 0
                     duration: 2*fadeTime
-                }
-
-                onRunningChanged: {
-                    if (!running && selfDestroying)
-                        root.destroy();
                 }
             }
         }
