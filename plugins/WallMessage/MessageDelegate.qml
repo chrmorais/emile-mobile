@@ -10,7 +10,7 @@ import "../../qml/components/AwesomeIcon/"
 Rectangle {
     id: delegate
     color: sender.type.id === 3 ? "#ffffe7ba" : "#f2dfa178"; radius: 4
-    anchors.horizontalCenter: parent.horizontalCenter
+    anchors.horizontalCenter: parent ? parent.horizontalCenter : undefined
     width: page.width * 0.94; height: columnLayoutDelegate.height+5
     border { width: 1; color: sender.type.id === 3 ? "#ff71da5e" : "#ffda5e71" }
 
@@ -19,6 +19,8 @@ Rectangle {
     Component.onCompleted: {
         var messageDateTimeT = getDateTimeArray(date);
         messageDateTime = messageDateTimeT;
+        if (!anchors && parent)
+            delegate.anchors.horizontalCenter = parent.horizontalCenter;
     }
 
     Pane {
