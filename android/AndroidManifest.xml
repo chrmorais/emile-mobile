@@ -2,9 +2,6 @@
 <manifest package="gsort.pos.engsisubiq.EmileMobile" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.0" android:versionCode="1" android:installLocation="auto">
     <!-- necessário para vibrar o dispositivo ao receber notificações -->
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <!-- necessário para lê e escrever o arquivo do qsettings -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/app_name">
         <!-- Utilizado pelo Firebase para notificações no system tray - quando o app está fechado ou em background -->
