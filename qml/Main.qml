@@ -132,7 +132,7 @@ ApplicationWindow {
                 menuPagesTemp.push(pageObject);
             }
         }
-        menuPagesTemp.sort(Util.sortArrayByObjectKey("order_priority"));
+        menuPagesTemp.sort(sortArrayByObjectKey("order_priority"));
         menuPagesTemp.reverse();
         menuPages = menuPagesTemp;
         Emile.saveObject("menuPages", {"menuPages": menuPages});
@@ -192,9 +192,15 @@ ApplicationWindow {
         target: PostFile
         onFinished: {
             if (parseInt(statusCode) === 200 && response) {
-                var objc = JSON.parse(response);
-                Emile.saveObject("user_profile_data", objc.user);
-                userProfileData = objc.user;
+                try {
+                    // if the response is not a valid json string
+                    // a exception will be throw by js
+                    var objc = JSON.parse(response);
+                    if (objc && typeof objc.user !== "undefined") {
+                        Emile.saveObject("user_profile_data", objc.user);
+                        userProfileData = objc.user;
+                    }
+                } catch(e) { }
             }
         }
     }
