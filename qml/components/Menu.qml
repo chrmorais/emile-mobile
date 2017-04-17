@@ -12,9 +12,9 @@ Drawer {
     dragMargin: enabled ? Qt.styleHints.startDragDistance : 0
 
     property bool enabled: true
-    property color userInfoTextColor: appSettings.theme.colorPrimary
     property color menuItemTextColor: appSettings.theme.colorPrimary
     property color menuBackgroundColor: appSettings.theme.colorWindowBackground
+    property color userInfoTextColor: menuItemTextColor
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 
@@ -90,10 +90,7 @@ Drawer {
         anchors { top: userInfoColumn.bottom; topMargin: 55 }
         contentHeight: Math.max(content.implicitHeight, height)
         boundsBehavior: Flickable.StopAtBounds
-
-        Keys.onUpPressed: flickableScrollBar.decrease()
-        Keys.onDownPressed: flickableScrollBar.increase()
-        ScrollBar.vertical: ScrollBar { id: flickableScrollBar; size: 0.1 }
+        ScrollIndicator.vertical: ScrollIndicator { }
 
         Rectangle { id: menuRectangle; color: menuBackgroundColor; anchors.fill: parent }
 
