@@ -15,14 +15,14 @@ public class PushNotificationTokenParse
     public PushNotificationTokenParse(Context ctxt)
     {
         context = ctxt;
-        packageName  = context.getPackageName();
+        packageName = context.getPackageName();
         sharedPreferences = context.getSharedPreferences(packageName, Context.MODE_PRIVATE);
     }
 
     public void checkToken()
     {
-        int appVersion      = 0;
-        String savedToken   = "";
+        int appVersion = 0;
+        String savedToken = "";
 
         savedToken = sharedPreferences.getString("push_notification_token_id", "");
         appVersion = Integer.parseInt(sharedPreferences.getString("app_version_registered", "0"));
