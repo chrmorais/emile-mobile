@@ -18,6 +18,8 @@ import android.app.NotificationManager;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
+import org.json.JSONObject;
+
 public class FirebaseListenerService extends FirebaseMessagingService
 {
     private boolean debug = true;
@@ -60,6 +62,7 @@ public class FirebaseListenerService extends FirebaseMessagingService
 
     public void sendNotification(String title, String message, String messageData)
     {
+        JSONObject jObject = null;
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder notificationBuilder = new Notification.Builder(this);
         // play default notification sound and start alert led(if available)
@@ -87,17 +90,30 @@ public class FirebaseListenerService extends FirebaseMessagingService
         .setContentIntent(contentIntent)
         .setDefaults(Notification.DEFAULT_SOUND);
 
+        try {
+            jObject = new JSONObject(messageData);
+        } catch(Exception e) { }
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // add app transparent icon
             notificationBuilder.setColor(0x222222);
             notificationBuilder.setGroupSummary(true);
             notificationBuilder.setSmallIcon(android.R.drawable.star_on);
             notificationBuilder.setGroup(FirebaseListenerService.class.getSimpleName()+CustomActivity.class);
+
+            Notification.BigTextStyle bigText = new Notification.BigTextStyle();
+            bigText.bigText(message);
+            bigText.setBigContentTitle(title);
+            String sumaryText = "";
+            try {
+                sumaryText = jObject.getString("name");
+            } catch(Exception e) { }
+            bigText.setSummaryText(":: " + sumaryText);
+            notificationBuilder.setStyle(bigText);
         } else {
             // add app icon
             notificationBuilder.setSmallIcon(android.R.drawable.star_on);
         }
-
         notificationManager.notify(messageId, notificationBuilder.build());
         if (!messageData.equals(""))
             ActivityToApplication.pushNotificationNotify(messageData);
