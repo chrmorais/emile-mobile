@@ -210,6 +210,8 @@ ApplicationWindow {
         asynchronous: false
         active: isUserLoggedIn; source: "components/Menu.qml"
         onLoaded: {
+            item.menuItemTextColor = appSettings.theme.colorAccent;
+            item.menuBackgroundColor = appSettings.theme.colorPrimary;
             window.menu = item;
             toolBarLoader.active = true;
         }
