@@ -14,7 +14,7 @@ static void eventNotify(JNIEnv *env, jobject obj, jstring eventName, jstring eve
 
 static JNINativeMethod methodsArray[] =
 {
-    {"eventNotify", "(Ljava/lang/String,Ljava/lang/String;)V", (void *) eventNotify}
+    {"eventNotify", "(Ljava/lang/String;Ljava/lang/String;)V", (void *) eventNotify}
 };
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
