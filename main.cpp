@@ -46,13 +46,10 @@ int main(int argc, char *argv[])
         context->setContextProperty(QLatin1String("androidGallery"), &androidgallery);
     #endif
 
-    PushNotificationTokenListener pnTokenListener;
-
     engine.load(QUrl(QLatin1String("qrc:/qml/Main.qml")));
 
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
-    pnTokenListener.connect(&pnTokenListener, SIGNAL(tokenUpdated(QVariant)), &emile, SLOT(registerToken(QVariant)));
-    pnTokenListener.connect(&pnTokenListener, SIGNAL(tokenUpdated(QVariant)), window, SLOT(sendToken(QVariant)));
+    emile.setAppWindow(window);
 
     return app.exec();
 }

@@ -47,7 +47,7 @@ public class PushNotificationTokenParse
 
     public void notifyApplication(String token)
     {
-        ActivityToApplication.tokenUpdateNotify(token);
+        ActivityToApplication.eventNotify("push_notification_token", token);
     }
 
     private int getAppVersion()

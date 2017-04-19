@@ -3,26 +3,19 @@
 
 #include <jni.h>
 #include <QAndroidJniEnvironment>
+#include "../cpp/emile.h"
 #include "../cpp/pushnotificationtokenlistener.h"
 
-static void tokenUpdateNotify(JNIEnv *env, jobject obj, jstring token)
+static void eventNotify(JNIEnv *env, jobject obj, jstring eventName, jstring eventData)
 {
     Q_UNUSED(env)
     Q_UNUSED(obj)
-    PushNotificationTokenListener::tokenUpdateNotify(env->GetStringUTFChars(token,0));
-}
-
-static void pushNotificationNotify(JNIEnv *env, jobject obj, jstring messageData)
-{
-    Q_UNUSED(env)
-    Q_UNUSED(obj)
-    PushNotificationTokenListener::pushNotificationNotify(env->GetStringUTFChars(messageData,0));
+    Emile::appNativeEventNotify(env->GetStringUTFChars(eventName,0), env->GetStringUTFChars(eventData,0));
 }
 
 static JNINativeMethod methodsArray[] =
 {
-    {"tokenUpdateNotify", "(Ljava/lang/String;)V", (void *) tokenUpdateNotify},
-    {"pushNotificationNotify", "(Ljava/lang/String;)V", (void *) pushNotificationNotify},
+    {"eventNotify", "(Ljava/lang/String,Ljava/lang/String;)V", (void *) eventNotify}
 };
 
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)

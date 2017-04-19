@@ -18,7 +18,6 @@ public class CustomActivity extends org.qtproject.qt5.android.bindings.QtActivit
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -42,7 +41,7 @@ public class CustomActivity extends org.qtproject.qt5.android.bindings.QtActivit
         if (bundle != null) {
             String messageData = bundle.getString("messageData");
             if (!messageData.equals(""))
-                ActivityToApplication.pushNotificationNotify(messageData);
+                ActivityToApplication.eventNotify("new_push_message", messageData);
         }
     }
 

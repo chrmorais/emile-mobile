@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QSettings>
 #include <QJsonArray>
+#include <QQuickWindow>
 
 class Emile : public QObject
 {
@@ -45,10 +46,20 @@ public:
     Q_INVOKABLE
     void minimizeApp();
 
+    static void appNativeEventNotify(const QString &eventName, const QString &eventData);
+
+    void setAppWindow(QQuickWindow *appWindow);
+
 public slots:
     void registerToken(const QVariant &token);
 
+signals:
+    void tokenUpdated(const QVariant &token);
+    void pushNotificationUpdated(const QVariant &messageData);
+
 private:
+    QQuickWindow *m_appWindow;
+    static Emile *m_instance;
     QSettings &m_qsettings;
     QVariantMap m_configMap;
     QJsonArray m_pluginsArray;

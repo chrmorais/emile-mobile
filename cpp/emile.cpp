@@ -13,9 +13,13 @@
 #include <QtAndroidExtras>
 #endif
 
+
+Emile* Emile::m_instance = nullptr;
+
 Emile::Emile(QObject *parent) : QObject(parent)
     ,m_qsettings(*new QSettings)
 {
+    Emile::m_instance = this;
     init();
 }
 
@@ -37,6 +41,7 @@ void Emile::init()
     m_qsettings.setParent(this);
 
     loadPlugins();
+    connect(this, SIGNAL(tokenUpdated(QVariant)), m_appWindow, SLOT(sendToken(QVariant)));
 }
 
 void Emile::loadConfigMap()
@@ -128,7 +133,20 @@ void Emile::minimizeApp()
 {
     #ifdef Q_OS_ANDROID
         QtAndroid::androidActivity().callMethod<void>("minimize", "()V");
-    #endif
+#endif
+}
+
+void Emile::appNativeEventNotify(const QString &eventName, const QString &eventData)
+{
+    if (Emile::m_instance == nullptr)
+        return;
+    if (eventName.compare("push_notification_token") == 0)
+        Emile::m_instance->registerToken(eventData);
+}
+
+void Emile::setAppWindow(QQuickWindow *appWindow)
+{
+    m_appWindow = appWindow;
 }
 
 void Emile::registerToken(const QVariant &token)
@@ -138,4 +156,5 @@ void Emile::registerToken(const QVariant &token)
     if (!savedToken.isEmpty())
         m_qsettings.remove(key);
     saveData(key, token);
+    emit tokenUpdated(QVariant(token));
 }
