@@ -5,11 +5,12 @@ import QtQuick.Controls.Material 2.1
 
 import "AwesomeIcon/"
 
-Item {
+Rectangle {
     id: listItem
     antialiasing: true; opacity: enabled ? 1 : 0.6
     width: parent.width; height: 50; implicitHeight: height
     anchors { left: parent ? parent.left : undefined; right: parent ? parent.right : undefined }
+    color: selected ? selectedBackgroundColor : backgroundColor
     implicitWidth: {
         var width = listItem.margins * 2;
         if (primaryAction.visible)
@@ -25,9 +26,12 @@ Item {
         return width;
     }
 
+    Behavior on color {
+        ColorAnimation { duration: 200 }
+    }
+
     property int margins: 16
     property bool showIconBold: false
-    property alias radius: rect.radius
 
     property int separatorInset: primaryAction.visible ? listItem.height : 0
     property alias separatorColor: divider.color
@@ -76,17 +80,6 @@ Item {
 
     Pane { z: parent.z-10; width: parent.width-1; height: parent.height-1; Material.elevation: showShadow ? 1 : 0 }
 
-    Rectangle {
-        id: rect
-        clip: true; anchors.fill: parent
-        color: selected ? selectedBackgroundColor : backgroundColor
-        antialiasing: radius > 0
-
-        Behavior on color {
-            ColorAnimation { duration: 200 }
-        }
-    }
-
     Component {
         id: badgeComponent
 
@@ -107,7 +100,7 @@ Item {
     RowLayout {
         id: row
         spacing: 12
-        anchors { fill: listItem; leftMargin: listItem.margins; rightMargin: listItem.margins }
+        anchors { fill: parent; margins: listItem.margins }
 
         Item {
             id: primaryAction
@@ -143,15 +136,15 @@ Item {
             id: textContent
             spacing: 0
             Layout.alignment: Qt.AlignVCenter
-            Layout.preferredHeight: parent.height
-            Layout.preferredWidth: parent.width - (primaryAction.width + secondaryAction.width + 20)
+            Layout.preferredHeight: listItem.height
+            Layout.preferredWidth: listItem.width - (primaryAction.width + secondaryAction.width + 20)
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
                 id: __primaryLabelItem
                 Layout.fillWidth: true
                 elide: Text.ElideRight
-                Layout.alignment: Qt.AlignVCenter
+                Layout.alignment: __secondaryLabelItem.visible ? 0 : Qt.AlignVCenter
                 color: selected ? selectedTextColor : primaryLabelColor; fontSizeMode: Text.Fit
                 visible: text != ""; textFormat: Text.RichText
                 font { weight: Font.DemiBold; pointSize: 14 }
@@ -164,9 +157,9 @@ Item {
 
             Text {
                 id: __secondaryLabelItem
-                Layout.alignment: Qt.AlignVCenter
-                color: __primaryLabelItem.color; font.pointSize: 12
                 opacity: 0.7
+                Layout.alignment: __primaryLabelItem.visible ? 0 : Qt.AlignVCenter
+                color: __primaryLabelItem.color; font.pointSize: 12
                 visible: text != "" && __primaryLabelItem.text
                 elide: Text.ElideRight; wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                 anchors {
