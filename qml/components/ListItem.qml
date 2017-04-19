@@ -1,6 +1,7 @@
 import QtQuick 2.8
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
+import QtQuick.Controls.Material 2.1
 
 import "AwesomeIcon/"
 
@@ -56,19 +57,24 @@ Item {
     property color selectedTextColor: primaryLabelColor
     property color selectedBackgroundColor: Qt.rgba(0,0,0,0.1)
 
-    property int badgeRadius: 9999
     property int badgeBorderWidth: 0
     property color badgeTextColor: appSettings.theme.textColorPrimary
     property color badgeBorderColor: "transparent"
     property color badgeBackgroundColor: "transparent"
     property string badgeText
     property bool badgeInRightSide: false
-    property real badgeWidth: 50
+    property real badgeWidth: listItem.height * 0.80
+
+    property bool showShadow: false
 
     signal clicked()
     signal pressAndHold()
     signal secondaryActionClicked()
     signal secondaryActionPressAndHold()
+
+    MouseArea { onClicked: listItem.clicked(); onPressAndHold: listItem.pressAndHold(); anchors.fill: parent }
+
+    Pane { z: parent.z-10; width: parent.width-1; height: parent.height-1; Material.elevation: showShadow ? 1 : 0 }
 
     Rectangle {
         id: rect
@@ -85,8 +91,8 @@ Item {
         id: badgeComponent
 
         Rectangle {
-            radius: badgeRadius; color: badgeBackgroundColor
-            width: badgeWidth
+            radius: 200; color: badgeBackgroundColor
+            width: badgeWidth; height: width
             border { width: badgeBorderWidth; color: badgeBorderColor }
             anchors { verticalCenter: parent.verticalCenter; horizontalCenter: parent.horizontalCenter }
 
@@ -113,16 +119,7 @@ Item {
                 anchors.centerIn: parent
                 sourceComponent: badgeComponent
                 asynchronous: true; active: badgeText.length > 0 && !primaryActionImage.visible && !primaryActionIcon.visible
-                onLoaded: {
-                    item.parent = primaryAction;
-                    if (badgeRadius != 0) {
-                        item.height = width;
-                        item.width = primaryAction.width * 0.75;
-                    } else {
-                        item.height = width / 2;
-                        item.width = primaryAction.width;
-                    }
-                }
+                onLoaded: item.parent = primaryAction;
             }
 
             RoundedImage {
@@ -178,8 +175,6 @@ Item {
                     verticalCenter: __primaryLabelItem.visible ? undefined : parent.verticalCenter
                 }
             }
-
-            MouseArea { onClicked: listItem.clicked(); onPressAndHold: listItem.pressAndHold(); anchors.fill: parent }
         }
 
         Item {

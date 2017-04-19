@@ -16,18 +16,19 @@ BasePage {
     toolBarState: "goback"
     toolBarActions: {"toolButton4": {"action":"update", "icon":"floppy_o"}}
 
-    Component.onCompleted: userProfileData.type.id === 1 ? RegisterFunctions.loadPrograms() : ""
+    Component.onCompleted: if (userProfileData.type.id === 1) RegisterFunctions.loadPrograms();
 
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
     property var requestResult
     property var courseSectionsArray: []
-    property ListModel programsListModel: ListModel { }
-    property ListModel courseSectionsListModel: ListModel { }
     property var gender: userProfileData.gender || ""
     property var birthDate: userProfileData.birth_date
     property bool editMode: true
 
     signal setProgramsFinish()
+
+    ListModel { id: programsListModel }
+    ListModel { id: courseSectionsListModel }
 
     onSetProgramsFinish: {
         if (userProfileData.program_id) {
@@ -35,11 +36,18 @@ BasePage {
             for (var i = 0; i < programsListModel.count; i++) {
                 object = programsListModel.get(i);
                 if (object.id === userProfileData.program_id.id) {
-                    programsList.currentIndex = i;
+                    programsListModel.get(i).isCheckedButton = true;
                     return;
                 }
             }
         }
+    }
+
+    function userIsOnCourseSection(id) {
+        for (var i = 0; i < userProfileData.course_sections.length; i++)
+            if (userProfileData.course_sections[i].id == id)
+                return true;
+        return false;
     }
 
     function actionExec(action) {
@@ -258,35 +266,104 @@ BasePage {
                 }
             }
 
-            ComboBox {
-                id: programsList
-                textRole: "name"
-                model: programsListModel
-                width: window.width - (window.width*0.15)
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: userProfileData.type.id === 1
-                onCurrentIndexChanged: {
-                    var courseSectionsArrayTemp = [];
-                    if (programsListModel.count > 0 && currentIndex > 0 && userProfileData.type.id === 1) {
-                        RegisterFunctions.loadProgramsCourseSections(currentIndex);
-                        courseSectionsArray = courseSectionsArrayTemp;
+            ListItem {
+                showShadow: true
+                badgeText: typeof userProfileData.program_id != "undefined" ? "1" : ""
+                primaryLabelText: userProfileData.program_id.abbreviation
+                secondaryLabelText: userProfileData.program_id.name
+                visible: userCourseSection.visible
+                badgeTextColor: userCourseSection.badgeTextColor
+                badgeBackgroundColor: userCourseSection.badgeBackgroundColor
+                onClicked: if (programsListModel.count > 0) programChooserDialog.open();
+            }
+
+            Dialog {
+                id: programChooserDialog
+                modal: true; focus: true
+                x: width > height ? -35 : -20; y : -65
+                width: window.width; height: window.height
+                title: qsTr("Check your program course")
+                standardButtons: Dialog.Ok
+                onAccepted: close();
+                onRejected: close();
+
+                ListView {
+                    enabled: editMode; bottomMargin: 20
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    boundsBehavior: Flickable.StopAtBounds
+                    model: programsListModel
+                    width: window.width; height: window.height
+                    delegate: Rectangle {
+                        width: parent.width; height: 50
+
+                        property bool isCheckedButton: false
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: radioButton.checked = !radioButton.checked;
+                        }
+
+                        Label {
+                            id: label
+                            width: parent.width * 0.90
+                            text: name; elide: Text.ElideRight
+                            verticalAlignment: Label.AlignVCenter
+                            color: appSettings.theme.colorPrimary
+                            anchors { left: parent.left; leftMargin: 15; verticalCenter: parent.verticalCenter }
+                        }
+
+                        RadioButton {
+                            id: radioButton
+                            anchors { right: parent.right; rightMargin: 15; verticalCenter: parent.verticalCenter }
+                            checked: isCheckedButton ? isCheckedButton : (userProfileData.program_id.id === id)
+                            onCheckedChanged: {
+                                RegisterFunctions.loadProgramsCourseSections(id);
+                                programChooserDialog.close();
+                            }
+
+                            Component.onCompleted: {
+                                if (userProfileData.program_id.id === id)
+                                    RegisterFunctions.loadProgramsCourseSections(id);
+                            }
+
+                            indicator: Rectangle {
+                                x: radioButton.leftPadding
+                                y: parent.height / 2 - height / 2
+                                implicitWidth: 22; implicitHeight: 22
+                                radius: 3; border.color: label.color
+
+                                Rectangle {
+                                    radius: 200
+                                    color: label.color
+                                    width: 12; height: 12
+                                    visible: radioButton.checked
+                                    anchors.centerIn: parent
+                                }
+                            }
+                        }
+
+                        Rectangle { opacity: 0.2; width: parent.width; color: appSettings.theme.colorPrimary; height: 1; anchors.bottom: parent.bottom }
+                    }
+
+                    EmptyList {
+                        z: courseSectionsChooserDialog.z+1
+                        enabled: !isPageBusy
+                        visible: parent.visible && programsListModel.count <= 0 && enabled
+                        onClicked: RegisterFunctions.loadPrograms();
                     }
                 }
             }
 
-            ComboBox {
-                id: programCourseSectionsList
-                z: 1; width: window.width - (window.width * 0.15)
-                anchors.horizontalCenter: parent.horizontalCenter
+            ListItem {
+                id: userCourseSection
+                showShadow: true
+                badgeText: typeof userProfileData.course_sections != "undefined" ? userProfileData.course_sections.length : 0
+                primaryLabelText: qsTr("Course sections selected")
+                secondaryLabelText: qsTr("Touch to edit/view the options")
                 visible: userProfileData.type.id === 1
-
-                MouseArea {
-                    z: 10; anchors.fill: parent
-                    onClicked: {
-                        if (programCourseSectionsList.model && courseSectionsListModel.count > 0 && userProfileData.type.id === 1)
-                            courseSectionsChooserDialog.open();
-                    }
-                }
+                badgeTextColor: badgeText ? appSettings.theme.colorAccent : "transparent"
+                badgeBackgroundColor: badgeText ? appSettings.theme.colorPrimary : "transparent"
+                onClicked: if (courseSectionsListModel.count > 0) courseSectionsChooserDialog.open()
             }
 
             Dialog {
@@ -295,38 +372,29 @@ BasePage {
                 x: width > height ? -35 : -20; y : 0
                 width: window.width; height: window.height
                 title: qsTr("Check the programs course sections")
-
                 standardButtons: Dialog.Ok
-
-                onAccepted: {
-                    courseSectionsChooserDialog.close();
-                }
-                onRejected: {
-                    programsList.currentIndex = -1;
-                    courseSectionsChooserDialog.close();
-                }
+                onAccepted: close();
+                onRejected: close();
 
                 ListView {
                     id: courseSectionListView
                     enabled: editMode
-                    bottomMargin: 20
-                    anchors.horizontalCenter: parent.horizontalCenter
                     boundsBehavior: Flickable.StopAtBounds
+                    width: page.width; height: page.height
+                    topMargin: 15; bottomMargin: 20
+                    anchors.horizontalCenter: parent.horizontalCenter
                     model: courseSectionsListModel
-                    width: courseSectionsChooserDialog.width
-                    height: courseSectionsChooserDialog.height
                     delegate: Rectangle {
-                        color: "#fff";
                         width: parent.width; height: 50
 
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: control.checked = !control.checked;
+                            onClicked: checkBox.checked = !checkBox.checked;
                         }
 
                         Label {
-                            id: label
-                            width: parent.width * 0.65
+                            id: labelDescription
+                            width: parent.width * 0.70
                             text: description; elide: Text.ElideRight
                             verticalAlignment: Label.AlignVCenter
                             color: appSettings.theme.colorPrimary
@@ -334,39 +402,32 @@ BasePage {
                         }
 
                         CheckBox {
-                            id: control
+                            id: checkBox
                             anchors { right: parent.right; rightMargin: 15; verticalCenter: parent.verticalCenter }
-                            onCheckedChanged: RegisterFunctions.appendCourseSection(id, checked);
-                            checked: {
-                                for (var i = 0; i < userProfileData.course_sections.length; i++) {
-                                    if (userProfileData.course_sections[i].id === id)
-                                        return true;
-                                }
-                                return false;
-                            }
-
+                            checked: userIsOnCourseSection(id)
+                            onCheckedChanged: if (checked) RegisterFunctions.appendCourseSection(id, checked);
                             indicator: Rectangle {
-                                x: control.leftPadding
+                                x: checkBox.leftPadding
                                 y: parent.height / 2 - height / 2
                                 implicitWidth: 22; implicitHeight: 22
-                                radius: 3; border.color: label.color
+                                radius: 3; border.color: labelDescription.color
 
                                 Rectangle {
                                     radius: 3
-                                    color: label.color
+                                    color: labelDescription.color
                                     width: 12; height: 12
-                                    visible: control.checked
+                                    visible: checkBox.checked
                                     anchors.centerIn: parent
                                 }
                             }
                         }
 
-                        Rectangle { width: parent.width; color: appSettings.theme.colorAccent; height: 1; anchors.bottom: parent.bottom }
+                        Rectangle { opacity: 0.2; width: parent.width; color: appSettings.theme.colorPrimary; height: 1; anchors.bottom: parent.bottom }
                     }
 
                     EmptyList {
                         z: courseSectionsChooserDialog.z+1
-                        visible: courseSectionsChooserDialog.visible && courseSectionListView.count <= 0 && !isPageBusy
+                        visible: courseSectionsChooserDialog.visible && courseSectionListView.count <= 0 && enabled
                         enabled: !isPageBusy
                         onClicked: loadProgramsCourseSections(programsList.currentIndex);
                     }

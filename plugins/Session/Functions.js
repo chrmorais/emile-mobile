@@ -3,16 +3,14 @@ function callbackPrograms(status, response) {
         alert(qsTr("Error!", qsTr("Cannot load the available programs! Try again.")));
         return;
     }
+    if (programsListModel.count > 0)
+        programsListModel.clear();
     for (var prop in response) {
-        if (!prop) return;
         var i = 0;
-        programsListModel.append({"id": -1, "name": qsTr("Select the course"), "abbreviation": ""});
         while (i < response[prop].length)
             programsListModel.append(response[prop][i++]);
         if (userProfileData)
             setProgramsFinish();
-        else
-            programsList.currentIndex = 0;
     }
 }
 
@@ -39,8 +37,6 @@ function callbackCourseSections(status, response) {
         while (i < response[prop].length)
             courseSectionsListModel.append(response[prop][i++]);
     }
-    var model = [qsTr("Select the course sections")];
-    programCourseSectionsList.model = model;
 }
 
 function callbackRegister(status, response) {
@@ -133,27 +129,29 @@ function isValidEditForm() {
 
 function requestEditUser(username, email, address, gender, birthDate) {
     if (isValidEditForm()) {
-        if(userProfileData.type.id === 1)
-            var params = ({
-                              "name": username,
-                              "email": email,
-                              "birth_date": birthDate,
-                              "address": address,
-                              "type": userProfileData.type.id,
-                              "gender": gender,
-                              "program_id": programsList.currentIndex,
-                              "course_sections": courseSectionsArray
-                          });
-        else
-            var params = ({
-                              "name": username,
-                              "email": email,
-                              "birth_date": birthDate,
-                              "address": address,
-                              "type": userProfileData.type.id,
-                              "program_id": userProfileData.program_id.id,
-                              "gender": gender
-                          });
+        var params = {};
+        if (userProfileData.type.id === 1) {
+            params = {
+                "name": username,
+                "email": email,
+                "birth_date": birthDate,
+                "address": address,
+                "type": userProfileData.type.id,
+                "gender": gender,
+                "program_id": programsList.currentIndex,
+                "course_sections": courseSectionsArray
+            };
+        } else {
+            params = {
+                "name": username,
+                "email": email,
+                "birth_date": birthDate,
+                "address": address,
+                "type": userProfileData.type.id,
+                "program_id": userProfileData.program_id.id,
+                "gender": gender
+            };
+        }
         requestHttp.requestParams = JSON.stringify(params);
         requestHttp.load("update_user/" + userProfileData.id, callbackEditUser, "POST");
     }
