@@ -11,7 +11,6 @@
 
 #include "cpp/emile.h"
 #include "cpp/requesthttp.h"
-#include "cpp/pushnotificationtokenlistener.h"
 
 int main(int argc, char *argv[])
 {

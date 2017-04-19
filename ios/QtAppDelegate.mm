@@ -1,8 +1,9 @@
 #include "Firebase/Firebase.h"
 #import <UIKit/UIKit.h>
-#import <QString>
+
+#include <QString>
 #include <QtCore>
-#include "../cpp/pushnotificationtokenlistener.h"
+#include "../cpp/emile.h"
 
 @interface QIOSApplicationDelegate
 @end
@@ -29,7 +30,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     Q_UNUSED(application)
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // Restart any tasks that were paused (or not yet started) while the application was inactive.
+    // If the application was previously in the background, optionally refresh the user interface.
     [self connectToFcm];
     NSLog(@"Conectou com o FCM");
     NSLog(@"enter in applicationDidBecomeActive method");
@@ -77,10 +79,8 @@
     NSString *title = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"title"];
     NSString *message = [[[userInfo valueForKey:@"aps"] valueForKey:@"alert"] valueForKey:@"body"];
 
-    if (state != UIApplicationStateActive) {
-        // NotificationClient::setPushNotificationArgs(QString::fromNSString(userInfo[@"gcm.notification.actionType"]), QString::fromNSString(userInfo[@"gcm.notification.actionTypeId"]));
-        // só notifica se o app estiver inativo em background
-    }
+    if (state != UIApplicationStateActive)
+        Emile::appNativeEventNotify("new_push_message", QString::fromNSString(userInfo[@"gcm.notification.messageData"]));
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
             message:message
@@ -92,6 +92,7 @@
     [alertController addAction:actionOk];
     UIViewController* rootViewController = [[UIApplication sharedApplication].keyWindow rootViewController];
     [rootViewController presentViewController:alertController animated:YES completion:nil];
+    Emile::appNativeEventNotify("new_push_message", QString::fromNSString(message));
 }
 
 - (void)tokenRefreshNotification:(NSNotification *)notification {
@@ -99,7 +100,7 @@
     NSString *refreshedToken = [[FIRInstanceID instanceID] token];
     NSLog(@"Ops! The token was updated: %@", refreshedToken);
 
-    PushNotificationTokenListener::tokenUpdateNotify(QString::fromNSString(refreshedToken));
+    Emile::appNativeEventNotify("push_notification_token", QString::fromNSString(refreshedToken));
 
     // Connect to FCM since connection may have failed when attempted before having a token.
     [self connectToFcm];
@@ -117,24 +118,20 @@
 + (BOOL)notificationServicesEnabled {
     BOOL isEnabled = NO;
 
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]){
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(currentUserNotificationSettings)]) {
+
         UIUserNotificationSettings *notificationSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
 
-        if (!notificationSettings || (notificationSettings.types == UIUserNotificationTypeNone)) {
+        if (!notificationSettings || (notificationSettings.types == UIUserNotificationTypeNone))
             isEnabled = NO;
-        } else {
+        else
             isEnabled = YES;
-        }
+        
     } else {
         UIRemoteNotificationType types = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-        if (types & UIRemoteNotificationTypeAlert) {
-            isEnabled = YES;
-        } else{
-            isEnabled = NO;
-        }
+        isEnabled = (types & UIRemoteNotificationTypeAlert);
     }
 
     return isEnabled;
 }
-
 @end

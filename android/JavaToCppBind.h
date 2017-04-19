@@ -4,7 +4,6 @@
 #include <jni.h>
 #include <QAndroidJniEnvironment>
 #include "../cpp/emile.h"
-#include "../cpp/pushnotificationtokenlistener.h"
 
 static void eventNotify(JNIEnv *env, jobject obj, jstring eventName, jstring eventData)
 {
