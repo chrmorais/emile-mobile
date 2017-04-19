@@ -18,6 +18,12 @@ Drawer {
     property string userImageProfile: userProfileData.image_path ? appSettings.restService.baseImagesUrl + userProfileData.image_path : ""
     property string pageSource: ""
 
+    Rectangle {
+        id: menuRectangle
+        anchors.fill: parent
+        color: menuBackgroundColor
+    }
+
     ColumnLayout {
         id: userInfoColumn
         width: parent.width; height: 100
@@ -92,8 +98,6 @@ Drawer {
         boundsBehavior: Flickable.StopAtBounds
         ScrollIndicator.vertical: ScrollIndicator { }
 
-        Rectangle { id: menuRectangle; color: menuBackgroundColor; anchors.fill: parent }
-
         Column {
             id: content
 
@@ -101,49 +105,26 @@ Drawer {
                 id: repeater
                 model: menuPages
 
-                Rectangle {
-                    id: item
-                    width: menu.width; height: 50; z: width
-                    color: isSelected ? Qt.lighter(menuItemTextColor, 4.5) : "transparent"
+                ListItem {
+                    width: menu.width; showSeparator: true
+                    primaryIconName: modelData.icon_name
+                    primaryLabelText: modelData.menu_name
+                    primaryLabelColor: appSettings.theme.colorAccent
+                    anchors { left: undefined; right: undefined }
+                    selected: modelData.menu_name === window.currentPage.objectName
+                    backgroundColor: menuBackgroundColor; selectedBackgroundColor: menuBackgroundColor
                     visible: {
                         if (!window.userProfileData || !window.userProfileData.type)
                             return false;
                         return modelData.roles.indexOf(window.userProfileData.type.name) > -1;
                     }
-
-                    property bool isSelected: window.currentPage ? modelData.menu_name === window.currentPage.objectName : false
-
-                    Row {
-                        id: row
-                        spacing: 22
-                        anchors { left: parent.left; leftMargin: 16; right: parent.right; rightMargin: 16; verticalCenter: parent.verticalCenter }
-
-                        AwesomeIcon {
-                            width: 35; implicitWidth: width
-                            color: menuItemTextColor; size: 20; z: 0
-                            name:  modelData.icon_name; clickEnabled: false
-                        }
-
-                        Text {
-                            text: modelData.menu_name
-                            color: menuItemTextColor
-                            font { pointSize: appSettings.theme.bigFontSize; bold: true }
-                            anchors.verticalCenter: parent.verticalCenter
+                    onClicked: {
+                        menu.close();
+                        if (!selected) {
+                            pageSource = modelData.configJson.root_folder + "/" + modelData.main_qml;
+                            pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name});
                         }
                     }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            menu.close();
-                            if (!item.isSelected) {
-                                pageSource = modelData.configJson.root_folder + "/" + modelData.main_qml;
-                                pushPage(pageSource, {"configJson":modelData.configJson, "objectName": modelData.menu_name});
-                            }
-                        }
-                    }
-
-                    Rectangle { width: parent.width; height: 1; color: menuItemTextColor; opacity: 0.1; anchors.bottom: parent.bottom }
                 }
             }
         }
